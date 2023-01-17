@@ -1,0 +1,1 @@
+# NextJS-Django-CRUD-Recipe
