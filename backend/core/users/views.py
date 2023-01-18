@@ -1,26 +1,51 @@
 from django.shortcuts import render
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-
-from . import forms
-
 # Create your views here.
-def register(request):
-  if request.method == "POST":
-    form = forms.UserRegisterForm(request.POST)
-    if form.is_valid():
-      form.save()
-      # cleaned data is a dictionary
-      username = form.cleaned_data.get('username')
-      messages.success(request, f"{username}, you're account is created!")
-      return redirect('recipes-home')
-  else:
-    form = forms.UserRegisterForm()
-  return render(request, 'users/register.html', {'form': form})
+from django.contrib.auth import authenticate
+from django.shortcuts import render
+from rest_framework import generics, status
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-@login_required()
-def profile(request):
-  return render(request, 'users/profile.html')
+from .serializers import SignUpSerializer
+from .tokens import create_jwt_pair_for_user
+
+
+class SignUpView(generics.GenericAPIView):
+    serializer_class = SignUpSerializer
+    permission_classes = []
+
+    def post(self, request: Request):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+
+        if serializer.isvalid():
+            serializer.save()
+
+            response = {"message": "User created successfully!", "data":serializer.data }
+            
+            return Response(data=response, status = status.HTTP_201_CREATED)
+
+        return Response(data=serializer.errors, status = status.HTTP_40BAD_REQUEST)
+
+class LoginView(APIView):
+    permission_classes = []
+
+    def post(self, request: Request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        user = authenticate(email=email, password=password)
+
+        if user is not None: 
+            tokens = create_jwt_pair_for_user(user)
+            response = {"message": "Login successfully!", "tokens": tokens}
+            return Response(data=response, status=status.HTTP_200_OK)
+        else:
+            return Response(data={"message": "Invalid email or password."})
+
+    def get(self, request: Request):
+        content = {"user": str(request.user), "auth": str(request.auth)}
+
+        return Response(data=content, status=status.HTTP_200_OK)

@@ -1,9 +1,15 @@
-from django.contrib import admin
-from django.urls import path, include
-from users import views as user_views
+from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('recipes.urls')),
-    path('register/', user_views.register, name="user-register"),
+    path("signup/", views.SignUpView.as_view(), name="signup"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path('token/create', TokenObtainPairView.as_view(), name='token_create'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
