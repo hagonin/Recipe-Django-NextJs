@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .container {
+        @apply xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+    }
+}
