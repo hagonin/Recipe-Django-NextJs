@@ -9,17 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import cloudinary
-import os
-from pathlib import Path
-from datetime import timedelta
 
-cloudinary.config(
-    cloud_name='dfjtkh7ie',
-    api_key='253337247219181',
-    api_secret='290LChEdZs5J9qULsuWEj3XNDDc',
-    secure = True
-)
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bc0bjk8&gt-3oumnw(xyi%g1n6h(%&c21)8#!po4vjwmhv4@cs'
+SECRET_KEY = 'django-insecure-2rw=g$x0#6*rle30i*j5x%6+@oltlb+uqvnexetohuu-ve!f^z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,23 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #third-party apps
-    'rest_framework',
-    'corsheaders',
+
     #local apps
-    'users'
+    'recipes',
 ]
 
-REST_FRAMEWORK = {
-    "NON_FIELD_ERRORS_KEY": "errors",
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated"),
-
-}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -73,20 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
-    "SIGNING_KEY": SECRET_KEY,
-    "AUTH_HEADER_TYPES": ("Bearer",),
-    # "Bearer <Token>"
-}
-
 ROOT_URLCONF = 'core.urls'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
 
 TEMPLATES = [
     {
@@ -115,9 +81,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'cM8v3tX9XS5x54kPoy2o',
-        'HOST': 'containers-us-west-78.railway.app',
-        'PORT': '6094',
+        'PASSWORD': 'LfgEtFEnRB1MuWENvJhm',
+        'HOST': 'containers-us-west-199.railway.app',
+        'PORT': '7122',
     }
 }
 
@@ -162,5 +128,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL = 'users.User'
