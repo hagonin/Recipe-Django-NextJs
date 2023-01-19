@@ -16,11 +16,6 @@ export const NavLinks = [
 	},
 	{
 		id: 4,
-		name: 'signup',
-		href: '/signup',
-	},
-	{
-		id: 1,
 		name: 'login',
 		href: '/login',
 	},
