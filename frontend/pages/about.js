@@ -1,4 +1,4 @@
-import SideBarLayout from '../components/Layouts/SideBarLayout';
+import SideBarLayout from '@components/Layouts/SideBarLayout';
 
 function About() {
 	return <p>About</p>;

@@ -1,4 +1,4 @@
-import SideBarLayout from '../../components/Layouts/SideBarLayout';
+import SideBarLayout from '@layouts/SideBarLayout';
 
 function Category() {
 	return <span>Categories about breakfast</span>;

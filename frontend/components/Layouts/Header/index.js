@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { NavLinks } from '../../../utils/constants';
+import { NavLinks } from '@utils/constants';
 
 function Header() {
 	return (

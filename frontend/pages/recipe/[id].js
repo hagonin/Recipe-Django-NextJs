@@ -1,4 +1,4 @@
-import SideBarLayout from '../../components/Layouts/SideBarLayout';
+import SideBarLayout from '@layouts/SideBarLayout';
 
 function RecipeDetail() {
 	return <span>Recipe detail</span>;

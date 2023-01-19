@@ -1,6 +1,6 @@
-import RootLayout from '../components/Layouts/RootLayout';
-import '../styles/globals.css';
-import { nunito } from '../utils/fonts';
+import RootLayout from '@layouts/RootLayout';
+import '@styles/globals.css';
+import { nunito } from '@utils/fonts';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);

@@ -1,5 +1,5 @@
-import SideBarLayout from '../components/Layouts/SideBarLayout';
-import Slider from '../components/Slider';
+import SideBarLayout from '@layouts/SideBarLayout';
+import Slider from '@components/Slider';
 
 export default function Home() {
 	return (
@@ -10,6 +10,12 @@ export default function Home() {
 			<h2>Chocolate Heaven h2</h2>
 			<h3>ABOUT ME h3</h3>
 			<h4>Lucid Themes h4</h4>
+			<ul>
+				<li>Lorem ipsum dolor sit amet</li>
+				<li>Lorem ipsum dolor sit amet</li>
+				<li>Lorem ipsum dolor sit amet</li>
+				<li>Lorem ipsum dolor sit amet</li>
+			</ul>
 
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
