@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import RootLayout from '@layouts/RootLayout';
+import '@styles/globals.css';
+import { nunito } from '@utils/fonts';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+	const render = Component.getLayout || ((pages) => pages);
+	return (
+		<main className={nunito.className}>
+			<RootLayout>{render(<Component {...pageProps} />)}</RootLayout>
+		</main>
+	);
 }
 
-export default MyApp
+export default MyApp;
