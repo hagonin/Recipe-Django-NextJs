@@ -1,43 +1,31 @@
-import { HiMenu } from 'react-icons/hi';
-import { MdClose } from 'react-icons/md';
 import SocialLink from '@components/UI/SocialLink';
 import Navigate from './Navigate';
-import { useState } from 'react';
-import Logo from '@components/UI/Logo';
-import NaviMobi from './NavMobi';
+import NavMobi from './NavMobi/NavMobi';
+import Logo from '@components/Layouts/Header/Logo';
 import SearchForm from '@components/UI/Form/SearchForm';
+import User from '@components/Layouts/Header/User';
+import Button from '@components/UI/Button';
 
 function Header() {
-	const [showNavMobi, setShowNavMobi] = useState(true);
-	const toggleNavMobi = () => {
-		setShowNavMobi(!showNavMobi);
-	};
 	return (
 		<header>
-			<div className="bg-primary sm:h-10 h-14 text-white">
-				<div className="container h-full flex justify-between items-center">
+			<div className="bg-primary sm:h-12 h-14 text-white">
+				<div className="container h-full flex items-center">
 					<SearchForm />
-					<div className="sm:block hidden">
+					<div className="md:block hidden ml-auto">
 						<SocialLink />
+					</div>
+					<div className="border-l border-[rgba(255,255,255,0.5)] pl-5 ml-5 max-lg:hidden">
+						<User />
 					</div>
 				</div>
 			</div>
 			<div className="relative">
-				<div className="container flex lg:flex-col items-center justify-between">
+				<div className="container flex items-center lg:justify-center justify-between relative max-lg:border-b">
 					<Logo className="mx-auto" />
-					<button
-						className="cursor-pointer block lg:hidden"
-						onClick={toggleNavMobi}
-					>
-						{showNavMobi ? (
-							<MdClose className="text-4xl" />
-						) : (
-							<HiMenu className="text-4xl" />
-						)}
-					</button>
+					<NavMobi />
 				</div>
 				<Navigate />
-				{showNavMobi && <NaviMobi />}
 			</div>
 		</header>
 	);

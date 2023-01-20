@@ -41,6 +41,9 @@ function SocialLink({
 	],
 	size = '13',
 	color = 'white',
+	hover = 'opacity-80',
+	top = '0',
+	spacing = '12',
 }) {
 	return (
 		<div className="flex">
@@ -48,7 +51,7 @@ function SocialLink({
 				<a
 					key={item.id}
 					href={item.href}
-					className={`text-[${size}px] text-${color} px-3 cursor-pointer`}
+					className={`text-[${size}px] text-${color} px-[${spacing}px] cursor-pointer hover:${hover} block mt-[${top}px]`}
 				>
 					{item.icon}
 				</a>
