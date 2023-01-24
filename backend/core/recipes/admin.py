@@ -2,35 +2,46 @@ from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import Category, Recipe, RecipeIngredient, Instruction, RecipeImage
+from .models import Source, Category, Recipe, RecipeIngredient, Instruction, RecipeImage,RecipeReview
 
 User = get_user_model()
 
-admin.site.site_header = "Recipe App Admin"
-admin.site.unregister(Group)
 
-admin.site.register(RecipeIngredient)
+class SourceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url',)
 
-class IngredientInline(admin.StackedInline):
-    model = RecipeIngredient
+
+class RecipeInlineAdmin(admin.TabularInline):
+    model = Recipe
+    extra = 0
+
+class ImageInlineAdmin(admin.StackedInline):
+    model = RecipeImage
+    extra = 0
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type',)
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin): 
+    inlines = [ImageInlineAdmin]   
+    search_fields = ('title',)
+    list_display= ['title','author']
+    list_filter = ('categories',)
+    prepopulated_fields = {'slug':('title',)}
+    readonly_fields = ['created_at', 'updated_at']
+    raw_id_fields = ['author']
+
+@admin.register(RecipeIngredient)
+class IngredientAdmin(admin.ModelAdmin):
     extra = 0
     readonly_fields = ['quantity_as_float']
 
 
-class InstructionInline(admin.StackedInline):
-    model = Instruction
-    extra = 0
+admin.site.register(Source, SourceAdmin)
+admin.site.register(Instruction)
+admin.site.register(RecipeReview)
 
-class ImageInline(admin.StackedInline):
-    model = RecipeImage
-    extra = 0
-
-class RecipeAdmin(admin.ModelAdmin):
-    inlines = [IngredientInline,InstructionInline,ImageInline]
-    list_display= ['title','author']
-    readonly_fields = ['created_at', 'updated_at']
-    raw_id_fields = ['author']
-
-admin.site.register(Recipe,RecipeAdmin)
-
-admin.site.register(Category)
+admin.site.unregister(Group)
+admin.site.site_header = "Recipe App Admin"
