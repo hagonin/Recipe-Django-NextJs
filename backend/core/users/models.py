@@ -39,3 +39,4 @@ class Profile(models.Model):
     @property
     def filename(self):
         return os.path.basename(self.image.name)
+

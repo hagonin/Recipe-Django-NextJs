@@ -14,19 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import re_path as url, include
+from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from recipes.views import RecipeViewSet
 from rest_framework.routers import DefaultRouter
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+from recipes.views import RecipeViewSet
 
 router = DefaultRouter()
 router.register(r'recipe', RecipeViewSet, basename='Recipe')
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path('api/user/', include('users.urls', namespace='users')),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/user/password/reset/',
+        include('django_rest_passwordreset.urls', namespace='password_reset')),
 ] 
+
+# Schema URLs
+urlpatterns += [
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('', SpectacularSwaggerView.as_view(
+        url_name='schema'), name='swagger-ui'),
+]
 
 # Media Assets
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
