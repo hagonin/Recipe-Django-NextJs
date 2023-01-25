@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import re_path as url, include
+from django.conf import settings
+from django.conf.urls.static import static
 from recipes.views import RecipeViewSet
 from rest_framework.routers import DefaultRouter
 
@@ -24,4 +26,7 @@ router.register(r'recipe', RecipeViewSet, basename='Recipe')
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-]
+] 
+
+# Media Assets
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
