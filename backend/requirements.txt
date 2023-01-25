@@ -15,6 +15,7 @@ Pint==0.20.1
 psycopg2==2.9.5
 PyJWT==2.6.0
 pyrsistent==0.19.3
+python-decouple==3.7
 pytz==2022.7.1
 PyYAML==6.0
 sqlparse==0.4.3
