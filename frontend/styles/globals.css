@@ -4,7 +4,7 @@
 
 @layer base {
    html {
-      @apply text-sm text-second leading-7;
+      @apply  text-second leading-7;
    }
     h1 {
        @apply text-3xl font-medium text-black;

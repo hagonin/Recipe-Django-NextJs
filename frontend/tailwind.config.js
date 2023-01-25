@@ -8,14 +8,19 @@ module.exports = {
 	theme: {
 		container: {
 			center: true,
+			padding: {
+				DEFAULT: '1rem',
+				md: '0rem',
+			},
 		},
 		extend: {
 			colors: {
 				primary: '#95B5AC',
+				primaryDark: '#7ea399',
 				second: '#757575',
 				grey: '#EEEEEE',
 				black: '#111111',
-				border: '##e6e6e6',
+				border: '#e6e6e6',
 			},
 		},
 	},

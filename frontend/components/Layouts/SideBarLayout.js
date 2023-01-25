@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import SideBar from './SideBar';
 
 function SideBarLayout({ children }) {
