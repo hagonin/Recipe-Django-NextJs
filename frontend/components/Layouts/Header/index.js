@@ -16,7 +16,13 @@ function Header() {
 						<SocialLink />
 					</div>
 					<div className="border-l border-[rgba(255,255,255,0.5)] pl-5 ml-5 max-lg:hidden">
-						<User />
+						{/* <User /> */}
+						<Button
+							link="/"
+							rounded
+						>
+							Login
+						</Button>
 					</div>
 				</div>
 			</div>
