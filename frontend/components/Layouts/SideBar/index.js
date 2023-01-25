@@ -15,8 +15,9 @@ function SideBar() {
 			<Button primary>Subcribe</Button>
 			<Button iconLeft={<BsPrinter />}>Print Recipe</Button>
 			<div className="flex items-center gap-3">
-				{['dinner', 'breakfast', 'meal'].map((item) => (
+				{['dinner', 'breakfast', 'meal'].map((item, index) => (
 					<Button
+						key={index}
 						size="small"
 						secondary
 					>

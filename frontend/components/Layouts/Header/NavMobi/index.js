@@ -68,7 +68,7 @@ function NavMobi() {
 							</span>
 						</NavItem>
 						{/* navigate */}
-						<div className="border-y py-2 my-2">
+						<div className="border-y py-2 mt-2 mb-5">
 							{NavLinks.map((nav) =>
 								nav.children ? (
 									<div key={nav.id}>

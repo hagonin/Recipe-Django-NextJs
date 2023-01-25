@@ -42,7 +42,6 @@ function SocialLink({
 	size = '13',
 	color = 'white',
 	hover = 'opacity-80',
-	top = '0',
 	spacing = '12',
 }) {
 	return (
@@ -51,7 +50,7 @@ function SocialLink({
 				<a
 					key={item.id}
 					href={item.href}
-					className={`text-[${size}px] text-${color} px-[${spacing}px] cursor-pointer hover:${hover} block mt-[${top}px]`}
+					className={`text-[${size}px] text-${color} px-[${spacing}px] cursor-pointer hover:${hover} block`}
 				>
 					{item.icon}
 				</a>

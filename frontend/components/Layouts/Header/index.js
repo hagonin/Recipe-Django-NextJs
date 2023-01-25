@@ -1,6 +1,6 @@
 import SocialLink from '@components/UI/SocialLink';
 import Navigate from './Navigate';
-import NavMobi from './NavMobi/NavMobi';
+import NavMobi from './NavMobi';
 import Logo from '@components/Layouts/Header/Logo';
 import SearchForm from '@components/UI/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
