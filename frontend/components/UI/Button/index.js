@@ -6,7 +6,12 @@ function Button({
 	children,
 	primary = false,
 	secondary = false,
+	outline = false,
 	size = 'md',
+	full,
+	rounded,
+	iconLeft,
+	iconRight,
 	className,
 	...props
 }) {
@@ -26,26 +31,39 @@ function Button({
 		className += ' text-white bg-primary hover:bg-primaryDark';
 	} else if (secondary) {
 		className += ' text-black bg-grey hover:bg-primary hover:text-white';
+	} else if (outline) {
+		className += 'border border-primary';
 	} else {
 		className +=
-			' text-primary bg-white border rounded border-primary hover:bg-primary hover:text-white';
+			' text-black bg-white border border-border hover:bg-primary hover:text-white';
 	}
 
 	// size
 	if (size === 'small') {
-		className += ' font-light text-[0.7rem] h-[24px]';
+		className += ' font-light text-[0.7rem] h-[24px] px-3';
 	} else if (size === 'md') {
-		className += ' h-[38px]';
+		className += ' h-[36px] px-4';
 	} else if (size === 'lg') {
-		className += ' h-[47px]';
+		className += ' h-[47px] px-5';
 	}
+
+	// rounded
 
 	return (
 		<Component
-			className={`text-sm uppercase flex items-center justify-center w-full transition-all duration-300 mb-2 ${className}`}
+			className={`text-sm font-normal uppercase flex items-center justify-center ${
+				rounded ? 'rounded-full' : 'rounded'
+			} ${full ? 'w-full' : ''}
+			} transition-all duration-300 ${className}`}
 			{..._props}
 		>
+			{iconLeft && (
+				<span className="mr-3 relative -top-[1px]">{iconLeft}</span>
+			)}
 			{children}
+			{iconRight && (
+				<span className="ml-3 relative -top-[1px]">{iconRight}</span>
+			)}
 		</Component>
 	);
 }
