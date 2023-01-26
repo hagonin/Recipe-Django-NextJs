@@ -14,11 +14,10 @@ function Button({
 	className,
 	type = 'button',
 	linkoutside,
-	disabled,
 	...props
 }) {
 	let Component = 'button';
-	const _props = { ...props, disabled };
+	const _props = { ...props };
 
 	if (type === 'link' && href) {
 		Component = linkoutside ? 'a' : Link;
@@ -29,15 +28,14 @@ function Button({
 
 	// color
 	if (primary) {
-		className += ' text-white bg-primary enabled:hover:bg-primaryDark';
+		className += ' text-white bg-primary hover:bg-primaryDark';
 	} else if (secondary) {
-		className +=
-			' text-black bg-grey enabled:hover:bg-primary enabled:hover:text-white';
+		className += ' text-black bg-grey hover:bg-primary hover:text-white';
 	} else if (outline) {
-		className += 'border border-primary';
+		className += ' border border-primary hover:bg-primary hover:text-white';
 	} else {
 		className +=
-			' text-black bg-white border border-border enabled:hover:bg-primary enabled:hover:text-white';
+			' text-black bg-white border border-border hover:bg-primary hover:text-white';
 	}
 
 	// size
@@ -54,9 +52,7 @@ function Button({
 			className={`text-sm font-normal uppercase flex items-center justify-center ${
 				rounded ? 'rounded-full' : 'rounded'
 			} ${full ? 'w-full' : ''}
-			 transition-all duration-300  ${className} ${
-				disabled ? 'opacity-70 select-none' : 'select-auto '
-			}`}
+			 transition-all duration-300  ${className}`}
 			{..._props}
 		>
 			{iconLeft && (
