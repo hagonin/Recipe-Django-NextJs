@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 function Button({
-	type,
 	href,
 	children,
 	primary = false,
@@ -13,29 +12,32 @@ function Button({
 	iconLeft,
 	iconRight,
 	className,
+	type = 'button',
+	linkoutside,
+	disabled,
 	...props
 }) {
 	let Component = 'button';
-	const _props = { ...props };
+	const _props = { ...props, disabled };
 
-	if (type === 'link') {
-		Component = Link;
+	if (type === 'link' && href) {
+		Component = linkoutside ? 'a' : Link;
 		_props.href = href;
-	} else if (type === 'linkoutside') {
-		Component = 'a';
-		_props.href = href;
+	} else {
+		_props.type = type;
 	}
 
 	// color
 	if (primary) {
-		className += ' text-white bg-primary hover:bg-primaryDark';
+		className += ' text-white bg-primary enabled:hover:bg-primaryDark';
 	} else if (secondary) {
-		className += ' text-black bg-grey hover:bg-primary hover:text-white';
+		className +=
+			' text-black bg-grey enabled:hover:bg-primary enabled:hover:text-white';
 	} else if (outline) {
 		className += 'border border-primary';
 	} else {
 		className +=
-			' text-black bg-white border border-border hover:bg-primary hover:text-white';
+			' text-black bg-white border border-border enabled:hover:bg-primary enabled:hover:text-white';
 	}
 
 	// size
@@ -47,14 +49,14 @@ function Button({
 		className += ' h-[47px] px-5';
 	}
 
-	// rounded
-
 	return (
 		<Component
 			className={`text-sm font-normal uppercase flex items-center justify-center ${
 				rounded ? 'rounded-full' : 'rounded'
 			} ${full ? 'w-full' : ''}
-			} transition-all duration-300 ${className}`}
+			 transition-all duration-300  ${className} ${
+				disabled ? 'opacity-70 select-none' : 'select-auto '
+			}`}
 			{..._props}
 		>
 			{iconLeft && (
