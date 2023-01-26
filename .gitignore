@@ -1,5 +1,6 @@
 
 backend/env/
 backend/core/images/
+backend/core/core/media
 backend/core/.env
 

@@ -27,10 +27,10 @@ router.register(r'recipe', RecipeViewSet, basename='Recipe')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user/', include('users.urls', namespace='users')),
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/user/password/reset/',
+    
+    path('api/user/', include('users.urls', namespace='users')),
+    path('api/user/reset_password/',
         include('django_rest_passwordreset.urls', namespace='password_reset')),
 ] 
 

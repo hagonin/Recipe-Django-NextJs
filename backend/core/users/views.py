@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListCreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -14,42 +14,18 @@ from recipes.serializers import RecipeSerializer
 
 User = get_user_model()
 
-class UserRegistrationAPIView(GenericAPIView):
-    permission_classes =(AllowAny,)
+class RegisterView(CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
     serializer_class = serializers.UserRegistrationSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exceptional=True)
-        user = serializer.save()
-        token = RefreshToken.for_user(user)
-        data = serializer.data
-        data['tokens'] = {
-            'refresh': str(token), 
-            'access':str(token.access_token)}
-        return Response(data, status=status.HTTP_201_CREATED)
 
-class UserLoginAPIView(GenericAPIView):
-    permission_classes = (AllowAny,)
-    serializer_class = serializers.UserLoginSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        serializer = serializers.CustomUserSerializer(user)
-        token = RefreshToken.for_user(user)
-        data = serializer.data
-        data["tokens"] = {"refresh": str(token), "access": str(token.access_token)}
-        return Response(data, status=status.HTTP_200_OK)
-
-
-class UserLogoutAPIView(GenericAPIView):
+class UserLogoutView(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, *args,**kwargs):
+    def post(self, request):
         try:
-            refresh_token = request.data["refresh"]
+            refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
             
@@ -58,33 +34,14 @@ class UserLogoutAPIView(GenericAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserAPIView(RetrieveUpdateAPIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = serializers.CustomUserSerializer
 
-    def get_object(self):
-        return self.request.user
-
-
-class UserProfileAPIView(RetrieveUpdateAPIView):
+class UserProfileView(RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
     serializer_class = serializers.ProfileSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user.profile
 
 
-class UserAvatarAPIView(RetrieveUpdateAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = serializers.ProfileAvatarSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user.profile
-
-
-class UserBookmarkAPIView(ListCreateAPIView):
+class UserBookmarkView(ListCreateAPIView):
     serializer_class = RecipeSerializer
     permission_classes = (IsAuthenticated,)
     profile = Profile.objects.all()
@@ -114,9 +71,9 @@ class UserBookmarkAPIView(ListCreateAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class PasswordChangeAPIView(UpdateAPIView):
+class ChangePasswordView(UpdateAPIView):
+    queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = serializers.PasswordChangeSerializer
+    serializer_class = serializers.ChangePasswordSerializer
 
-    def get_object(self):
-        return self.request.user
+  

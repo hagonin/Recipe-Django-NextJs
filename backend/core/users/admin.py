@@ -50,5 +50,3 @@ class CustomUserAdmin(UserAdmin):
     ordering = ("email",)
     inlines = (ProfileInLine,)
     
-
-admin.site.register(Profile)

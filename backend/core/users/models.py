@@ -21,22 +21,16 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
     
-def get_image_filename(instance,filename):
-    name = instance.image_path
-    slug = slugify(name)
 
-    return f"users/{slug}-{filename}"
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by')
-    avatar = models.ImageField(upload_to=get_image_filename, blank=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
+    avatar = models.ImageField(upload_to="images/", blank=True)
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.user.email
     
-    @property
-    def filename(self):
-        return os.path.basename(self.image.name)
+
 

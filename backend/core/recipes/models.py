@@ -10,18 +10,6 @@ from django.utils.translation import gettext_lazy as _
 from .validators import validate_unit_of_measure
 from .utils import number_str_to_float
 
-class Source(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Source|url')
-    url = models.URLField(max_length=500, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _('Source')
-        verbose_name_plural = _('Sources')
-        ordering = ["name"]
-
 
 class Category(models.Model):
     name = models.CharField(
@@ -49,7 +37,6 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
-    sources =  models.ManyToManyField(Source, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     serving = models.IntegerField(blank=True, null=True)
     rating_value = models.IntegerField(null=True, blank=True)
@@ -81,6 +68,18 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
+class Source(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150, verbose_name='Source|url')
+    url = models.URLField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Source')
+        verbose_name_plural = _('Sources')
+        ordering = ["name"]
 
 class RecipeLike(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
