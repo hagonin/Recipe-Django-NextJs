@@ -22,6 +22,7 @@ module.exports = {
 				grey: '#EEEEEE',
 				black: '#111111',
 				border: '#e6e6e6',
+				red: '#F33A58',
 			},
 		},
 	},

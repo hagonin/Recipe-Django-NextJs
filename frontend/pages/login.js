@@ -1,4 +1,4 @@
-import LoginForm from '@components/UI/Form/LoginForm';
+import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 import { GrStatusGood } from 'react-icons/gr';
 

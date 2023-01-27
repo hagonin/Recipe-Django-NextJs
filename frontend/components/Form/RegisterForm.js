@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { Form } from 'react-final-form';
-import Button from '../Button';
-import Img from '../Image';
+import Button from '../UI/Button';
+import Img from '../UI/Image';
 import InputField from './InputField';
+import { required } from './Validate';
 
 function RegisterForm({ handleSubmit }) {
 	const onSubmit = (values) => {
 		handleSubmit(values);
 	};
 	return (
-		<div className="bg-white  rounded-xl py-6 px-8  border my-10 md:shadow-xl">
+		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center">
 				<h1 className="text-center">Register</h1>
 				<Img
@@ -18,9 +19,7 @@ function RegisterForm({ handleSubmit }) {
 					className="md:w-20 md:h-20 w-20 h-20"
 				/>
 			</div>
-			<p className="text-center">
-				Welcome. We are glad you are here.
-			</p>
+			<p className="text-center">Welcome. We are glad you are here.</p>
 
 			<Form
 				onSubmit={onSubmit}
@@ -28,21 +27,20 @@ function RegisterForm({ handleSubmit }) {
 				validate={(values) => {
 					const error = {};
 
-					if (!values.fullname) {
-						error.fullname = 'Required name';
-					}
+					error.email = required(values.email, 'Required email');
+					error.password = required(
+						values.password,
+						'Required password'
+					);
+					error['confirm-password'] = required(
+						values['confirm-password'],
+						'Required confirm password'
+					);
+					error.consent = required(
+						values.consent,
+						'Required consent'
+					);
 
-					if (!values.email) {
-						error.email = 'Required email';
-					}
-
-					if (!values.password) {
-						error.password = 'Required password';
-					}
-
-					if (!values['confirm-password']) {
-						error['confirm-password'] = 'Required confirm-password';
-					}
 					return error;
 				}}
 				subscription={{ submitting: true, pristine: true }}
@@ -53,14 +51,20 @@ function RegisterForm({ handleSubmit }) {
 						className="flex flex-col gap-4 mt-12"
 					>
 						<InputField
-							name="fullname"
+							name="first"
 							type="text"
-							placeholder="Enter your full name"
+							placeholder="Enter your first name"
+						/>
+
+						<InputField
+							name="last"
+							type="text"
+							placeholder="Enter your last name"
 						/>
 
 						<InputField
 							name="email"
-							type="text"
+							type="email"
 							placeholder="Enter your email"
 						/>
 
@@ -76,34 +80,26 @@ function RegisterForm({ handleSubmit }) {
 							placeholder="Confirm Password"
 						/>
 
-						<InputField
-							name="Remember"
-							type="checkbox"
-							labelRight="Remember me"
-						/>
+						<div className="my-2">
+							<InputField
+								name="consent"
+								type="checkbox"
+								labelRight='By clicking "Create Account", I consent to the Privacy Policy.'
+							/>
+						</div>
 
 						<Button
 							primary
 							type="submit"
+							size="lg"
 							full
-							rounded
 						>
 							Create Account
 						</Button>
 
-						<p className="text-center">
-							By clicking on <b>"Create account"</b> you are
-							agreeing to the{' '}
-							<span className="font-semibold text-primary">
-								Terms of Service
-							</span>{' '}
-							and the{' '}
-							<span className="font-semibold text-primary">
-								Privacy Policy
-							</span>
-						</p>
+						<p className="text-center"></p>
 
-						<p className="text-center mt-5">
+						<p className="text-center mt-4">
 							Have an account?
 							<Link
 								href="/login"

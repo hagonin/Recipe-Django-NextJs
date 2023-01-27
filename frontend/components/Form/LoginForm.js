@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { Form } from 'react-final-form';
-import Button from '../Button';
-import Img from '../Image';
+import Button from '../UI/Button';
+import Img from '../UI/Image';
 import InputField from './InputField';
+import { email, required } from './Validate';
 
 function LoginForm({ handleSubmit }) {
 	const onSubmit = (values) => {
 		handleSubmit(values);
 	};
 	return (
-		<div className="bg-white  rounded-xl py-6 px-8  border my-10 md:shadow-xl">
+		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center">
 				<h1 className="text-center">Login</h1>
 				<Img
@@ -24,13 +25,11 @@ function LoginForm({ handleSubmit }) {
 				initialValues={{ Remember: false }}
 				validate={(values) => {
 					const error = {};
-					if (!values.email) {
-						error.email = 'Required email';
-					}
-
-					if (!values.Password) {
-						error.Password = 'Required password';
-					}
+					error.email = required(values.email, 'Required email');
+					error.password = required(
+						values.password,
+						'Required password'
+					);
 					return error;
 				}}
 				subscription={{ submitting: true, pristine: true }}
@@ -47,14 +46,14 @@ function LoginForm({ handleSubmit }) {
 						/>
 
 						<InputField
-							name="Password"
+							name="password"
 							type="password"
 							placeholder="Enter your password"
 						/>
 
-						<div className="flex justify-between items-center  mb-10 mt-5 max-sm:flex-col">
+						<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">
 							<InputField
-								name="Remember"
+								name="remember"
 								type="checkbox"
 								labelRight="Remember me"
 							/>
@@ -68,9 +67,9 @@ function LoginForm({ handleSubmit }) {
 
 						<Button
 							primary
-							type="submit"
 							full
-							rounded
+							size="lg"
+							type="submit"
 						>
 							Login
 						</Button>
@@ -78,7 +77,7 @@ function LoginForm({ handleSubmit }) {
 						<p className="text-center mt-5">
 							Create an account?
 							<Link
-								href="/register"
+								href="/signup"
 								className="ml-2 underline font-semibold hover:text-primary "
 							>
 								Register

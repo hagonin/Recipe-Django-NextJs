@@ -1,4 +1,4 @@
-import RegisterForm from '@components/UI/Form/RegisterForm';
+import RegisterForm from '@components/Form/RegisterForm';
 import Img from '@components/UI/Image';
 import { GrStatusGood } from 'react-icons/gr';
 

@@ -42,14 +42,14 @@ function Button({
 	if (size === 'small') {
 		className += ' font-light text-[0.7rem] h-[24px] px-3';
 	} else if (size === 'md') {
-		className += ' h-[36px] px-4';
+		className += ' font-normal h-[36px] px-4';
 	} else if (size === 'lg') {
-		className += ' h-[47px] px-5';
+		className += ' font-semibold h-[46px] px-5';
 	}
 
 	return (
 		<Component
-			className={`text-sm font-normal uppercase flex items-center justify-center ${
+			className={`text-sm uppercase flex items-center justify-center ${
 				rounded ? 'rounded-full' : 'rounded'
 			} ${full ? 'w-full' : ''}
 			 transition-all duration-300  ${className}`}
