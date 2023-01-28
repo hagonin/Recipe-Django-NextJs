@@ -1,9 +1,9 @@
-import RegisterForm from '@components/Form/RegisterForm';
-import Img from '@components/UI/Image';
 import { GrStatusGood } from 'react-icons/gr';
+import SignUpForm from '@components/Form/SignUpForm';
+import Img from '@components/UI/Image';
 
-function Register() {
-	const handleSubmit = (data) => {
+function SignUp() {
+	const onSubmit = (data) => {
 		console.log(data);
 	};
 	return (
@@ -38,10 +38,10 @@ function Register() {
 						</li>
 					</ul>
 				</div>
-				<RegisterForm handleSubmit={handleSubmit} />
+				<SignUpForm onSubmit={onSubmit} />
 			</div>
 		</div>
 	);
 }
 
-export default Register;
+export default SignUp;

@@ -1,15 +1,14 @@
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
-import { GrStatusGood } from 'react-icons/gr';
 
 function Login() {
-	const handleSubmit = (data) => {
+	const onSubmit = (data) => {
 		console.log(data);
 	};
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1 gap-8">
-				<LoginForm handleSubmit={handleSubmit} />
+				<LoginForm onSubmit={onSubmit} />
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
 					<Img
 						alt="login"
