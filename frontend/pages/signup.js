@@ -1,15 +1,37 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 import { GrStatusGood } from 'react-icons/gr';
+
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
 
 function SignUp() {
+	const router = useRouter();
+	const [error, setError] = useState(false);
+
 	const onSubmit = (data) => {
-		console.log(data);
+		const fetchFake = new Promise((resolve, reject) =>
+			setTimeout(() => {
+				resolve({ status: 'Success', data: data });
+				// reject('Registration failed. Please try again.');
+			}, 2000)
+		);
+		return fetchFake
+			.then((data) => {
+				console.log(data);
+				router.push('user/username.js');
+			})
+			.catch((error) => {
+				setError(error);
+			});
 	};
+
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
 				<div className="flex flex-col items-center justify-center">
+					{error && <span>{error}</span>}
 					<Img
 						alt="login"
 						src="/static/images/girl-cooking-2.png"

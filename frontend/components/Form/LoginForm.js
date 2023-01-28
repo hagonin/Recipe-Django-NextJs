@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
 import Button from '../UI/Button';
 import Img from '../UI/Image';
 import Field from './Field';
+import Loader from '@components/UI/Loader';
 
 import { emailRules } from './Rules';
 
@@ -11,9 +13,13 @@ function LoginForm({ onSubmit }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isSubmitSuccessful, isSubmitting },
+		reset,
 	} = useForm();
-	console.log('errors', errors);
+
+	useEffect(() => {
+		reset();
+	}, [isSubmitSuccessful]);
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center">
@@ -71,6 +77,7 @@ function LoginForm({ onSubmit }) {
 					size="lg"
 					type="submit"
 				>
+					{isSubmitting && <Loader type="submitting" />}
 					Login
 				</Button>
 
