@@ -100,11 +100,7 @@ function NavMobi() {
 							</span>
 						</NavItem> */}
 						<div className="md:hidden block">
-							<SocialLink
-								color="black"
-								hover="text-primary"
-								top="20"
-							/>
+							<SocialLink color="black" />
 						</div>
 					</nav>
 				</div>
