@@ -36,5 +36,23 @@
     .container {
         @apply xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
+
+    .btn {
+      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary flex items-center justify-center transition-all duration-300 rounded
+    }
+
+    .btn.primary {
+      @apply text-white border-transparent bg-primary hover:bg-primaryDark
+    }
+
+    .btn.tag {
+      @apply text-black font-light text-[0.7rem] h-[24px] px-3 bg-grey hover:bg-primary hover:border-primary hover:text-white;
+    }
+
+    .btn.lgSize {
+      @apply font-medium h-[46px] px-5;
+    }
 }
+
+
 

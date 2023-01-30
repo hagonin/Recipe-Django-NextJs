@@ -3,34 +3,18 @@ import { BsChatLeftDots, BsInstagram, BsPrinter } from 'react-icons/bs';
 
 function SideBar() {
 	return (
-		<h3 className="min-h-[400px] border">
+		<h3 className="min-h-[400px] border py-10 px-10">
+			<Button>Follow Instagram</Button>
+			<Button className="w-full">Follow Instagram</Button>
 			<Button
-				iconLeft={<BsInstagram />}
-				size="lg"
+				icon={{ left: <BsInstagram /> }}
+				styles={{ lgSize: true }}
 			>
 				Follow Instagram
 			</Button>
-			<Button>Chocolate</Button>
-			<Button full>Subcribe</Button>
-			<Button primary>Subcribe</Button>
-			<Button iconLeft={<BsPrinter />}>Print Recipe</Button>
-			<div className="flex items-center gap-3">
-				{['dinner', 'breakfast', 'meal'].map((item, index) => (
-					<Button
-						key={index}
-						size="small"
-						secondary
-					>
-						{item}
-					</Button>
-				))}
-			</div>
-			<Button
-				size="small"
-				secondary
-			>
-				Reply
-			</Button>
+
+			<Button styles={{ primary: true }}>Follow Instagram</Button>
+			<Button styles={{ tag: true }}>Follow Instagram</Button>
 		</h3>
 	);
 }

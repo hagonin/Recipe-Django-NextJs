@@ -72,10 +72,9 @@ function LoginForm({ onSubmit }) {
 				</div>
 
 				<Button
-					primary
-					full
-					size="lg"
 					type="submit"
+					styles={{ primary: true, lgSize: true }}
+					className="w-full"
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					Login

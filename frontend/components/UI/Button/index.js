@@ -1,17 +1,18 @@
 import Link from 'next/link';
 
-function Button({
+export default function Button({
 	href,
 	children,
-	primary = false,
-	secondary = false,
-	outline = false,
-	size = 'md',
-	full,
-	rounded,
-	iconLeft,
-	iconRight,
-	className,
+	styles = {
+		tag: false,
+		primary: false,
+		lgSize: false,
+	},
+	className = '',
+	icon = {
+		left: false,
+		right: false,
+	},
 	type = 'button',
 	linkoutside,
 	...props
@@ -26,44 +27,22 @@ function Button({
 		_props.type = type;
 	}
 
-	// color
-	if (primary) {
-		className += ' text-white bg-primary hover:bg-primaryDark';
-	} else if (secondary) {
-		className += ' text-black bg-grey hover:bg-primary hover:text-white';
-	} else if (outline) {
-		className += ' border border-primary hover:bg-primary hover:text-white';
-	} else {
-		className +=
-			' text-black bg-white border border-border hover:bg-primary hover:text-white';
-	}
-
-	// size
-	if (size === 'small') {
-		className += ' font-light text-[0.7rem] h-[24px] px-3';
-	} else if (size === 'md') {
-		className += ' font-normal h-[36px] px-4';
-	} else if (size === 'lg') {
-		className += ' font-semibold h-[46px] px-5';
-	}
+	let style = Object.keys(styles)
+		.filter((key) => styles[key])
+		.join(' ');
 
 	return (
 		<Component
-			className={`text-sm uppercase flex items-center justify-center ${
-				rounded ? 'rounded-full' : 'rounded'
-			} ${full ? 'w-full' : ''}
-			 transition-all duration-300  ${className}`}
+			className={`btn ${style} ${className}`}
 			{..._props}
 		>
-			{iconLeft && (
-				<span className="mr-3 relative -top-[1px]">{iconLeft}</span>
+			{icon.left && (
+				<span className="mr-3 relative -top-[1px]">{icon.left}</span>
 			)}
 			{children}
-			{iconRight && (
-				<span className="ml-3 relative -top-[1px]">{iconRight}</span>
+			{icon.right && (
+				<span className="ml-3 relative -top-[1px]">{icon.right}</span>
 			)}
 		</Component>
 	);
 }
-
-export default Button;

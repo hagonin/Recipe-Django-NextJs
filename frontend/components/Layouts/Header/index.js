@@ -20,7 +20,7 @@ function Header() {
 						<Button
 							type="link"
 							href="/login"
-							rounded
+							className="rounded-full hover:border-white"
 						>
 							Login
 						</Button>

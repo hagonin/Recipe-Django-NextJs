@@ -97,10 +97,9 @@ function SignUpForm({ onSubmit }) {
 				</div>
 
 				<Button
-					primary
 					type="submit"
-					size="lg"
-					full
+					styles={{ primary: true, lgSize: true }}
+					className="w-full"
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					Create Account
