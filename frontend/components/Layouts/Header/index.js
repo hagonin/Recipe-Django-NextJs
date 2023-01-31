@@ -7,11 +7,19 @@ import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
 
 function Header() {
+	const handleSearch = (data) => {
+		const fetchFake = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve(data);
+			}, 3000);
+		});
+		return fetchFake.then((res) => console.log(res));
+	};
 	return (
 		<header>
 			<div className="bg-primary sm:h-12 h-14 text-white">
 				<div className="container h-full flex items-center">
-					<SearchForm />
+					<SearchForm onSubmit={handleSearch} />
 					<div className="md:block hidden ml-auto">
 						<SocialLink />
 					</div>

@@ -1,28 +1,19 @@
-import { useEffect } from 'react';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 
-import Button from '../UI/Button';
-import Img from '../UI/Image';
-import Field from './Field';
-import Loader from '@components/UI/Loader';
+import Img from '@components/UI/Image';
 
-import { emailRules } from './Rules';
+import {
+	Form,
+	Submit,
+	CheckboxField,
+	InputField,
+	emailRules,
+} from './FormControl';
 
 function LoginForm({ onSubmit }) {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors, isSubmitSuccessful, isSubmitting },
-		reset,
-	} = useForm();
-
-	useEffect(() => {
-		reset();
-	}, [isSubmitSuccessful]);
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
-			<div className="flex justify-center items-center">
+			<div className="flex justify-center items-center mb-10">
 				<h1 className="text-center">Login</h1>
 				<Img
 					alt="login_icon"
@@ -31,37 +22,27 @@ function LoginForm({ onSubmit }) {
 				/>
 			</div>
 
-			<form
-				onSubmit={handleSubmit(onSubmit)}
-				className="flex flex-col gap-4 mt-12"
-				noValidate={true}
-			>
-				<Field
+			<Form onSubmit={onSubmit}>
+				<InputField
 					name="email"
 					type="email"
 					placeholder="Enter your email"
-					register={register}
 					rules={emailRules}
-					error={errors.email}
 				/>
 
-				<Field
+				<InputField
 					name="password"
 					type="password"
 					placeholder="Enter your password"
-					register={register}
 					rules={{
 						required: 'Password is required',
 					}}
-					error={errors.password}
 				/>
 
 				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">
-					<Field
+					<CheckboxField
 						name="remember"
-						type="checkbox"
-						labelRight="Remember me"
-						register={register}
+						isSingle={{ label: 'Remember me' }}
 					/>
 					<Link
 						href="/resetpassword"
@@ -70,26 +51,18 @@ function LoginForm({ onSubmit }) {
 						Forgot Password?
 					</Link>
 				</div>
+				<Submit type="login" />
+			</Form>
 
-				<Button
-					type="submit"
-					styles={{ primary: true, lgSize: true }}
-					className="w-full"
+			<p className="text-center mt-5">
+				Create an account?
+				<Link
+					href="/signup"
+					className="ml-2 underline font-semibold hover:text-primary "
 				>
-					{isSubmitting && <Loader type="submitting" />}
-					Login
-				</Button>
-
-				<p className="text-center mt-5">
-					Create an account?
-					<Link
-						href="/signup"
-						className="ml-2 underline font-semibold hover:text-primary "
-					>
-						Register
-					</Link>
-				</p>
-			</form>
+					Register
+				</Link>
+			</p>
 		</div>
 	);
 }

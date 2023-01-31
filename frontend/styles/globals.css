@@ -50,7 +50,7 @@
     }
 
     .btn.lgSize {
-      @apply font-medium h-[46px] px-5;
+      @apply text-base font-medium h-[46px] px-5;
     }
 }
 

@@ -1,3 +1,5 @@
+import { RiLoader2Line } from 'react-icons/ri';
+
 function Loader({ type }) {
 	switch (type) {
 		case 'submitting':
@@ -23,6 +25,8 @@ function Loader({ type }) {
 					></path>
 				</svg>
 			);
+		case 'searching':
+			return <RiLoader2Line className=" h-5 w-5 animate-spin-slow" />;
 		default:
 			return <span>Loader</span>;
 	}

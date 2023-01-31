@@ -24,6 +24,9 @@ module.exports = {
 				border: '#e6e6e6',
 				red: '#F33A58',
 			},
+			animation: {
+				'spin-slow': 'spin 2s linear infinite',
+			},
 		},
 	},
 	plugins: [],
