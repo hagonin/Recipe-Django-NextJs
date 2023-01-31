@@ -20,10 +20,11 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from recipes.views import RecipeViewSet
+from recipes.views import RecipeViewSet,RecipeIngredientViewSet
 
 router = DefaultRouter()
 router.register(r'recipe', RecipeViewSet, basename='Recipe')
+router.register(r'ingredient', RecipeIngredientViewSet, basename='Ingredient')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

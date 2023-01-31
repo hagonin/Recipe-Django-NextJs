@@ -1,25 +1,27 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from .serializers import RecipeSerializer,CategorySerializer,RecipeIngredientSerializer,RecipeReviewSerializer
-from .models import Recipe,Category,RecipeIngredient,RecipeReview
+from rest_flex_fields import is_expanded
+
+from .serializers import RecipeSerializer,RecipeIngredientSerializer
+from .models import Recipe,RecipeIngredient
 
 
-class RecipeViewSet(ReadOnlyModelViewSet):
-
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
-    search_fields = ['search_vector']
-
-class CategoryViewSet(ReadOnlyModelViewSet):
-
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
 
 class RecipeIngredientViewSet(ReadOnlyModelViewSet):
 
     serializer_class = RecipeIngredientSerializer
     queryset = RecipeIngredient.objects.all()
 
-class RecipeReViewSet(ReadOnlyModelViewSet):
+class RecipeViewSet(ReadOnlyModelViewSet):
 
-    serializer_class = RecipeReviewSerializer
-    queryset = RecipeReview.objects.all()
+    serializer_class = RecipeSerializer
+    permit_list_expands = ['categories']
+    search_fields = ['search_vector']
+    ordering_fields = ['rating_value', 'created_at']
+
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+
+        if is_expanded(self.request, 'categories'):
+            queryset = queryset.prefetch_related('categories')
+
+        return queryset
