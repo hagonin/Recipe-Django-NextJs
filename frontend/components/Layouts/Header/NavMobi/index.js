@@ -78,6 +78,7 @@ function NavMobi() {
 										</NavItem>
 										{nav.children.map((child) => (
 											<NavItem
+												key={child.id}
 												href={child.href}
 												isSubItem
 											>
