@@ -8,7 +8,6 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from .validators import validate_unit_of_measure
-from .utils import number_str_to_float
 
 
 class Category(models.Model):
@@ -62,9 +61,6 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
 
-    def get_total_number_of_likes(self):
-        return self.recipelike_set.count()
-
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
@@ -101,16 +97,6 @@ class RecipeIngredient(models.Model):
     def __str__(self):
         return self.name
         
-
-    def save(self, *args, **kwargs):
-        qty = self.quantity
-        qty_as_float, qty_as_float_success = number_str_to_float(qty)
-        if qty_as_float_success:
-            self.quantity_as_float = qty_as_float
-        else:
-            self.quantity_as_float = None
-        super().save(*args, **kwargs)
-
 
 class Instruction(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

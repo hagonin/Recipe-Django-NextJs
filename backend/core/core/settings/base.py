@@ -157,3 +157,5 @@ SIMPLE_JWT = {
 
 # Password reset token lifetime
 DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 3  # in hours
+
+POSTGRES_LANGUAGE_UNACCENT = 'unaccent'

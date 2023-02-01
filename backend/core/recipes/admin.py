@@ -19,7 +19,6 @@ class InstructionInline(admin.StackedInline):
 class IngredientInline(admin.StackedInline):
     model = RecipeIngredient
     extra = 0
-    readonly_fields = ['quantity_as_float']
 
 class ImageInline(admin.StackedInline):
     model = RecipeImage
