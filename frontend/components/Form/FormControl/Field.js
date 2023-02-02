@@ -50,19 +50,19 @@ const CheckboxField = ({
 				</label>
 			) : (
 				<>
-					{options.map((item) => (
+					{options.map((option) => (
 						<label
-							key={item.key}
+							key={option.key}
 							className="flex items-center gap-4"
 						>
 							<input
-								id={item.value}
+								id={option.value}
 								type="checkbox"
-								value={item.value}
+								value={option.value}
 								{...register(name, rules)}
 								{...props}
 							/>
-							{item.key}
+							{option.key}
 						</label>
 					))}
 				</>
@@ -87,16 +87,16 @@ const RadioField = ({
 				label={label}
 				name={name}
 			/>
-			{options.map((item) => (
-				<label key={item.key}>
+			{options.map((option) => (
+				<label key={option.key}>
 					<input
 						type="radio"
-						id={item.value}
-						value={item.value}
+						id={option.value}
+						value={option.value}
 						{...register(name, rules)}
 						{...props}
 					/>
-					{item.key}
+					{option.key}
 				</label>
 			))}
 			<Error error={errors[name]?.message} />
@@ -107,7 +107,7 @@ const RadioField = ({
 const SelectField = ({
 	name,
 	label,
-	list,
+	options,
 	rules = { required: false },
 	...props
 }) => {
@@ -124,13 +124,13 @@ const SelectField = ({
 				{...register(name, rules)}
 				{...props}
 			>
-				<option>Select options</option>
-				{list.map((item) => (
+				<option value="">Select options</option>
+				{options.map((option) => (
 					<option
-						value={item.value}
-						key={item.key}
+						value={option.value}
+						key={option.key}
 					>
-						{item.key}
+						{option.key}
 					</option>
 				))}
 			</select>

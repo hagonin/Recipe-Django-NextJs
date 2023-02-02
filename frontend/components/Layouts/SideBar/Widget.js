@@ -1,7 +1,7 @@
 import Button from '@components/UI/Button';
 import { BsChatLeftDots, BsInstagram, BsPrinter } from 'react-icons/bs';
 
-function SideBar() {
+function Widget() {
 	return (
 		<h3 className="min-h-[400px] border py-10 px-10">
 			<Button>Follow Instagram</Button>
@@ -19,4 +19,4 @@ function SideBar() {
 	);
 }
 
-export default SideBar;
+export default Widget;

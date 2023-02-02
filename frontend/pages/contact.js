@@ -1,17 +1,13 @@
 import Banner from '@components/Banner';
-import SideBarLayout from '@components/Layouts/SideBarLayout';
+import WidgetLayout from '@components/Layouts/WidgetLayout';
 
 function Contact() {
-	return <p>Contact</p>;
-}
-
-export default Contact;
-
-Contact.getLayout = (page) => {
 	return (
 		<>
 			<Banner />
-			<SideBarLayout>{page}</SideBarLayout>
+			<p>Contact Detail</p>
 		</>
 	);
-};
+}
+
+export default Contact;

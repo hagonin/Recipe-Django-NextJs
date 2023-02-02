@@ -9,6 +9,7 @@ import { FiLogIn, FiLogOut } from 'react-icons/fi';
 
 import NavItem from './NavItem';
 import SocialLink from '@components/UI/SocialLink';
+import Img from '@components/UI/Image';
 
 function NavMobi() {
 	const [showNavMobi, setShowNavMobi] = useState(false);
@@ -36,20 +37,12 @@ function NavMobi() {
 							<MdClose />
 						</button>
 						{/* user area login*/}
-						{/* <div className="">
-							<div className="relative h-20 w-20 border border-border rounded-full ml-5">
-								<Image
-									src="/static/images/user.png"
-									alt="avatar"
-									priority={true}
-									fill
-									styles={{
-										objectFit: 'contain',
-										backgroundColor: 'blue',
-									}}
-									sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
-								/>
-							</div>
+						<div className="">
+							<Img
+								src="/static/images/user.png"
+								alt="avatar"
+								className="h-20 w-20 border-border rounded-full ml-5"
+							/>
 							<span className="text-black font-bold block mt-3 ml-5">
 								User Name
 							</span>
@@ -58,15 +51,15 @@ function NavMobi() {
 							</span>
 							<NavItem href="/"> Manage Recipe</NavItem>
 							<NavItem>Add Recipe</NavItem>
-						</div> */}
+						</div>
 
 						{/* Incognito */}
-						<NavItem href="/">
+						{/* <NavItem href="/">
 							<span>
 								<FiLogIn className="inline-block relative -mt-1 mr-2" />
 								Login
 							</span>
-						</NavItem>
+						</NavItem> */}
 						{/* navigate */}
 						<div className="border-y py-2 mt-2 mb-5">
 							{NavLinks.map((nav) =>
@@ -79,7 +72,7 @@ function NavMobi() {
 										{nav.children.map((child) => (
 											<NavItem
 												key={child.id}
-												href={child.href}
+												href={`${nav.href}${child.href}`}
 												isSubItem
 											>
 												{child.name}
@@ -87,7 +80,10 @@ function NavMobi() {
 										))}
 									</div>
 								) : (
-									<NavItem href={nav.href}>
+									<NavItem
+										href={nav.href}
+										key={nav.id}
+									>
 										{nav.name}
 									</NavItem>
 								)

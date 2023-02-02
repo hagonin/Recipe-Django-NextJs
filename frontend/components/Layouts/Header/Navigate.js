@@ -27,7 +27,7 @@ function Navigate() {
 									{nav.children.map((child) => (
 										<Link
 											key={child.id}
-											href={`/categories/${child.href}`}
+											href={`${nav.href}${child.href}`}
 											className="block py-3 px-5 hover:text-primary border-b border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 										>
 											{child.name}

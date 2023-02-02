@@ -1,9 +1,9 @@
-import SideBarLayout from '@components/Layouts/SideBarLayout';
+import WidgetLayout from '@components/Layouts/WidgetLayout';
 
 function About() {
-	return <p>About</p>;
+	return <p>About our web</p>;
 }
 
 export default About;
 
-About.getLayout = (page) => <SideBarLayout>{page}</SideBarLayout>;
+// About.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;

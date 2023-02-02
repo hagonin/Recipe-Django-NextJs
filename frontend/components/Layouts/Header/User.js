@@ -5,7 +5,7 @@ import Tippy from '@tippyjs/react/headless';
 import { BsBoxArrowRight } from 'react-icons/bs';
 
 function User() {
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState(false);
 	const toggle = () => setVisible(!visible);
 	const hide = () => setVisible(false);
 	return (
@@ -40,14 +40,17 @@ function User() {
 						</div>
 						<div className="text-black mt-3">
 							<Link
-								href="/"
+								href="/user/name"
 								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
 							>
 								Manage Recipe
 							</Link>
-							<button className="text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2">
+							<Link
+								href="/recipes/addnewrecipe"
+								className="block text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2"
+							>
 								Add recipe
-							</button>
+							</Link>
 							<span className="block border-t"></span>
 							<button className="text-left w-full py-2 px-5 flex items-center hover:bg-[rgba(0,0,0,0.05)] mt-2">
 								<BsBoxArrowRight className="mr-2" />
