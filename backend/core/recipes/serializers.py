@@ -1,12 +1,17 @@
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-from .models import Recipe, RecipeReview, Category,RecipeIngredient
+from .models import Recipe, RecipeReview, Category,RecipeIngredient, Instruction
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name']
+        fields = ('name','type')
+
+class RecipeInstructionSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Instruction
+        fields = '__all__'
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -14,16 +19,39 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RecipeReviewSerializer(serializers.ModelSerializer):
+class RecipeReadSerializer(FlexFieldsModelSerializer):
+    search_rank = serializers.FloatField(read_only=True)
+    author = serializers.CharField(source="author.username", read_only=True)
+    total_number_of_bookmarks = serializers.SerializerMethodField()
+    
+    class Meta: 
+        model = Recipe
+        exclude = ['search_vector']
+        expandable_fields = {
+        'categories': (CategorySerializer),
+        }
+
+    def get_total_number_of_bookmarks(self, obj):
+        return obj.get_total_number_of_bookmarks()
+
+class RecipeWriteSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Recipe
+        fields = "__all__"
+
+class ReviewReadSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source="author.username",read_only=True)
+
     class Meta: 
         model = RecipeReview
         fields = '__all__'
-      
-class RecipeSerializer(FlexFieldsModelSerializer):
-    class Meta: 
-        model = Recipe
-        fields = '__all__'
-        expandable_fields = {
-          'categories': (CategorySerializer, {'many': True}),
-          
-        }
+
+
+class ReviewWriteSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = RecipeReview
+        fields = "__all__"
