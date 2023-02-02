@@ -31,16 +31,16 @@ function Login() {
 				<LoginForm onSubmit={onSubmit} />
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
 					{error && <span>{error}</span>}
-					<Img
-						alt="login"
-						src="/static/images/girl-cooking-1.png"
-						className="w-full h-72 mb-10"
-					/>
 					<h1>Welcome back</h1>
 					<p className="text-center">
 						It's nice to see you again. Log in to continue to your
 						account.
 					</p>
+					<Img
+						alt="login"
+						src="/static/images/girl-cooking-1.png"
+						className="w-full h-72 mt-10"
+					/>
 				</div>
 			</div>
 		</div>
