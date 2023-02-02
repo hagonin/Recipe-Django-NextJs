@@ -39,18 +39,17 @@ function SocialLink({
 			icon: <FaLinkedin />,
 		},
 	],
-	size = '13',
-	color = 'white',
-	hover = 'opacity-80',
-	spacing = '12',
+	color,
 }) {
 	return (
-		<div className="flex">
+		<div className="flex flex-wrap gap-4">
 			{socialList.map((item) => (
 				<a
 					key={item.id}
 					href={item.href}
-					className={`text-[${size}px] text-${color} px-[${spacing}px] cursor-pointer hover:${hover} block`}
+					className={`px-1 transition-all cursor-pointer hover:opacity-70 ${
+						color ? `text-${color}` : 'text-white'
+					}`}
 				>
 					{item.icon}
 				</a>

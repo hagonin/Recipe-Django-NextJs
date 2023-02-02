@@ -15,12 +15,17 @@ module.exports = {
 		},
 		extend: {
 			colors: {
-				primary: '#95B5AC',
-				primaryDark: '#7ea399',
+				primary: '#96b7ae',
+				primaryLight: '#7ba39617',
+				primaryDark: '#88a79f',
 				second: '#757575',
 				grey: '#EEEEEE',
 				black: '#111111',
 				border: '#e6e6e6',
+				red: '#F33A58',
+			},
+			animation: {
+				'spin-slow': 'spin 2s linear infinite',
 			},
 		},
 	},
