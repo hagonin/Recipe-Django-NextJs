@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-function Form({ children, onSubmit }) {
+function Form({ children, onSubmit, initValues }) {
 	const {
 		handleSubmit,
 		formState: { errors, isSubmitSuccessful, isSubmitting },
 		reset,
 		...rest
-	} = useForm();
+	} = useForm({ defaultValues: initValues || {} });
 
 	useEffect(() => {
 		reset();
@@ -22,7 +22,7 @@ function Form({ children, onSubmit }) {
 		>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className="flex flex-col gap-4 max-md:flex-1"
+				className="flex flex-col gap-4"
 				noValidate={true}
 			>
 				{typeof children === 'function'

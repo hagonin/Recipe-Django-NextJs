@@ -12,3 +12,11 @@ export const passwordRules = {
 		message: 'At least 6 characters',
 	},
 };
+
+export const titleRule = {
+	required: 'Recipe title is required',
+	pattern: {
+		value: /^[A-Za-z0-9\s\-_,\.:()]+$/,
+		message: 'Recipe title must be a valid character',
+	},
+};

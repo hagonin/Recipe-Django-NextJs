@@ -7,15 +7,15 @@
       @apply  text-second leading-7;
    }
     h1 {
-       @apply text-3xl font-medium text-black;
+       @apply text-3xl font-semibold text-black;
     }
 
     h2 {
-       @apply text-2xl font-medium text-black;
+       @apply text-2xl font-semibold text-black;
     } 
 
     h3 {
-       @apply text-sm font-semibold text-black;
+       @apply text-sm font-medium text-black;
     }
 
     h4 {
@@ -38,7 +38,7 @@
     }
 
     .btn {
-      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary flex items-center justify-center transition-all duration-300 rounded
+      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
@@ -51,6 +51,10 @@
 
     .btn.lgSize {
       @apply text-base font-medium h-[46px] px-5;
+    }
+
+    .btn.cancle {
+      @apply hover:bg-primaryLight hover:text-black
     }
 }
 

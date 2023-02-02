@@ -11,7 +11,7 @@ function ManageRecipe() {
 			</Link>
 			<Link
 				className="px-2 py-2 text-black block rounded-md hover:bg-[rgba(0,0,0,0.05)]"
-				href="/recipe/addnewrecipe"
+				href="/recipes/addnewrecipe"
 			>
 				Add recipe
 			</Link>

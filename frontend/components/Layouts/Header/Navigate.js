@@ -23,7 +23,7 @@ function Navigate() {
 							</span>
 							<FaAngleDown className="inline-block ml-2" />
 							{isHover && (
-								<div className="min-w-[200px] top-full  right-0 bg-white  absolute left-5 shadow-md border-t-2 border-primary">
+								<div className="min-w-[200px] top-full  right-0 bg-white  absolute z-10 left-5 shadow-md border-t-2 border-primary">
 									{nav.children.map((child) => (
 										<Link
 											key={child.id}

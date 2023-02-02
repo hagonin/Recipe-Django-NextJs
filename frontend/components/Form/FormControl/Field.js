@@ -1,9 +1,15 @@
 import { useFormContext } from 'react-hook-form';
 
-const InputField = ({ label, name, rules = { required: false }, ...props }) => {
+const InputField = ({
+	label,
+	name,
+	rules = { required: false },
+	type,
+	...props
+}) => {
 	const { register, errors } = useFormContext();
 	return (
-		<div>
+		<div className="w-full">
 			<Label
 				label={label}
 				name={name}
@@ -11,11 +17,14 @@ const InputField = ({ label, name, rules = { required: false }, ...props }) => {
 			<input
 				id={name}
 				{...register(name, rules)}
-				className={`w-full border rounded px-5 py-2 outline-none ${
+				className={`w-full ${
+					type !== 'file' && 'border rounded'
+				} px-5 h-12 outline-none ${
 					errors[name]
 						? 'border-red'
 						: 'border-border focus:border-primary'
 				}`}
+				type={type}
 				{...props}
 			/>
 			<Error error={errors[name]?.message} />
@@ -114,7 +123,7 @@ const SelectField = ({
 	const { register, errors } = useFormContext();
 
 	return (
-		<div>
+		<div className="w-full ">
 			<Label
 				label={label}
 				name={name}
@@ -123,8 +132,12 @@ const SelectField = ({
 				id={name}
 				{...register(name, rules)}
 				{...props}
+				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
+					errors[name]
+						? 'border-red'
+						: 'border-border focus:border-primary'
+				}`}
 			>
-				<option value="">Select options</option>
 				{options.map((option) => (
 					<option
 						value={option.value}
@@ -143,7 +156,7 @@ const TextAreaField = ({ label, name, rules, ...props }) => {
 	const { register, errors } = useFormContext();
 
 	return (
-		<div>
+		<div className="flex flex-col">
 			<Label
 				label={label}
 				name={name}
@@ -164,7 +177,7 @@ const TextAreaField = ({ label, name, rules, ...props }) => {
 };
 const Error = ({ error }) => {
 	return error ? (
-		<span className="block text-sm mt-2 text-red mb-2 ml-3">{error}</span>
+		<span className="block text-sm mt-2 text-red ml-3">{error}</span>
 	) : null;
 };
 

@@ -7,6 +7,7 @@ export default function Button({
 		tag: false,
 		primary: false,
 		lgSize: false,
+		cancle: false,
 	},
 	className = '',
 	icon = {

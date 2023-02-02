@@ -27,7 +27,7 @@ function NavMobi() {
 				</button>
 			)}
 			{showNavMobi && (
-				<div className="fixed inset-0">
+				<div className="fixed inset-0 z-10">
 					<div className="absolute w-full h-full bg-[rgba(0,0,0,0.06)]"></div>
 					<nav className="absolute h-full  w-2/3 py-12 pl-5 bg-white overflow-y-auto overflow-x-hidden">
 						<button

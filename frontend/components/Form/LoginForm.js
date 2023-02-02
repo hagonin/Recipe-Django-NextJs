@@ -4,7 +4,7 @@ import Img from '@components/UI/Image';
 
 import {
 	Form,
-	Submit,
+	BtnForm,
 	CheckboxField,
 	InputField,
 	emailRules,
@@ -51,7 +51,7 @@ function LoginForm({ onSubmit }) {
 						Forgot Password?
 					</Link>
 				</div>
-				<Submit type="login" />
+				<BtnForm label="login" />
 			</Form>
 
 			<p className="text-center mt-5">

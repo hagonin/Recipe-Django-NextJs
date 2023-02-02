@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useFormContext } from 'react-hook-form';
 import {
 	Form,
-	Submit,
+	BtnForm,
 	CheckboxField,
 	InputField,
 	emailRules,
@@ -64,7 +64,7 @@ function SignUpForm({ onSubmit }) {
 					/>
 				</div>
 
-				<Submit type="signup" />
+				<BtnForm label="signup" />
 
 				<p className="text-center mt-4">
 					Have an account?
