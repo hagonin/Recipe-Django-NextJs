@@ -7,15 +7,21 @@ from .models import Source, Category, Recipe, RecipeIngredient, Instruction, Rec
 User = get_user_model()
 
 
-class SourceAdmin(admin.ModelAdmin):
+class SourceInline(admin.StackedInline):
+    model = Source
     list_display = ('name', 'url',)
 
-
-class RecipeInlineAdmin(admin.TabularInline):
-    model = Recipe
+class InstructionInline(admin.StackedInline):
+    model = Instruction
     extra = 0
 
-class ImageInlineAdmin(admin.StackedInline):
+
+class IngredientInline(admin.StackedInline):
+    model = RecipeIngredient
+    extra = 0
+    readonly_fields = ['quantity_as_float']
+
+class ImageInline(admin.StackedInline):
     model = RecipeImage
     extra = 0
 
@@ -25,22 +31,17 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin): 
-    inlines = [ImageInlineAdmin]   
+    inlines = [SourceInline,IngredientInline,InstructionInline,ImageInline,]   
     search_fields = ('title',)
     list_display= ['title','author']
     list_filter = ('categories',)
     prepopulated_fields = {'slug':('title',)}
     readonly_fields = ['created_at', 'updated_at']
     raw_id_fields = ['author']
-
-@admin.register(RecipeIngredient)
-class IngredientAdmin(admin.ModelAdmin):
-    extra = 0
-    readonly_fields = ['quantity_as_float']
+    exclude = ('search_vector',)
 
 
-admin.site.register(Source, SourceAdmin)
-admin.site.register(Instruction)
+
 admin.site.register(RecipeReview)
 
 admin.site.unregister(Group)

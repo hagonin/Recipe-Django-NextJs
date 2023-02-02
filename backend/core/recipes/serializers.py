@@ -6,7 +6,7 @@ from .models import Recipe, RecipeReview, Category,RecipeIngredient
 class CategorySerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Category
-        fields = ['pk', 'name']
+        fields = ['id', 'name']
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -17,11 +17,13 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 class RecipeReviewSerializer(serializers.ModelSerializer):
     class Meta: 
         model = RecipeReview
+        fields = '__all__'
       
 class RecipeSerializer(FlexFieldsModelSerializer):
     class Meta: 
         model = Recipe
+        fields = '__all__'
         expandable_fields = {
-          'category': (CategorySerializer, {'many': True})
+          'categories': (CategorySerializer, {'many': True}),
+          
         }
-        exclude = ['search_vector']
