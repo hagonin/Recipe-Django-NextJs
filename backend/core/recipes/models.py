@@ -1,6 +1,4 @@
-import pint
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models import Index
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
@@ -46,6 +44,7 @@ class Recipe(models.Model):
     search_vector = SearchVectorField(null=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+    source = models.CharField(max_length=200, verbose_name='Source|url', null=True)
 
 
     class Meta:
@@ -64,33 +63,11 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
-class Source(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150, verbose_name='Source|url')
-    url = models.URLField(max_length=500, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _('Source')
-        verbose_name_plural = _('Sources')
-        ordering = ["name"]
-
-class RecipeLike(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    created = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return self.user.username
-
 
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipes', related_query_name='recipe')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients', related_query_name='recipe')
     name = models.CharField(max_length=220)   
     quantity = models.CharField(max_length=50, blank=True, null=True)
-    quantity_as_float = models.FloatField(blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])       
     notes = models.TextField(blank=True, null=True)
 
@@ -99,9 +76,8 @@ class RecipeIngredient(models.Model):
         
 
 class Instruction(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    step_number = models.IntegerField(blank=True, null=True)
-    method = models.TextField(blank=True, verbose_name='Recipe|method')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='instruction')
+    direction = models.TextField(blank=True, verbose_name='Recipe|direction')
 
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -127,7 +103,7 @@ class RecipeReview(models.Model):
     recipe = models.ForeignKey(Recipe, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reviews',on_delete=models.SET_NULL, null=True)
     content = models.TextField(blank=True, null=True)
-    stars = models.IntegerField()
+    stars = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
 
     class Meta:
