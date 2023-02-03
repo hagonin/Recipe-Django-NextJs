@@ -1,5 +1,6 @@
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/Slider';
+import api from '@services/axios';
 
 export default function Home() {
 	return (
