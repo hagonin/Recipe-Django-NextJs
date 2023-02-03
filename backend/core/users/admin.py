@@ -38,7 +38,7 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "username",
                     "email",
-                    "password1",
+                    "password",
                     "password2",
                     "is_staff",
                     "is_active",

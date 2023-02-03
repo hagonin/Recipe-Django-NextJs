@@ -1,21 +1,28 @@
-from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-
+from rest_framework import viewsets
 from rest_framework import status
+from rest_framework import permissions
 from rest_framework.response import Response
+
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from recipes.models import Recipe
 from . import serializers
-from .models import Profile
+from .models import Profile, CustomUser
 from recipes.serializers import RecipeReadSerializer
+from .serializers import UserSerializer
 
-User = get_user_model()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = CustomUser.objects.all().order_by('-date_joined')
+	serializer_class = UserSerializer
+	permission_classes = [permissions.IsAuthenticated]
 
 class RegisterView(CreateAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = serializers.UserRegistrationSerializer
 
@@ -47,13 +54,13 @@ class UserBookmarkView(ListCreateAPIView):
     profile = Profile.objects.all()
 
     def get_queryset(self):
-        user = User.objects.get(id=self.kwargs['pk'])
+        user = CustomUser.objects.get(id=self.kwargs['pk'])
         user_profile = get_object_or_404(self.profile, user=user)
         
         return user_profile.bookmarks.all()
 
     def post(self, request, pk):
-        user = User.objects.get(id=pk)
+        user = CustomUser.objects.get(id=pk)
         user_profile = get_object_or_404(self.profile, user=user)
         recipe = Recipe.objects.get(id=request.data['id'])
         if user_profile :
@@ -62,7 +69,7 @@ class UserBookmarkView(ListCreateAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        user = User.objects.get(id=pk)
+        user = CustomUser.objects.get(id=pk)
         user_profile = get_object_or_404(self.profile, user=user)
         recipe = Recipe.objects.get(id=request.data['id'])
         if user_profile :
@@ -72,7 +79,7 @@ class UserBookmarkView(ListCreateAPIView):
 
 
 class ChangePasswordView(UpdateAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.ChangePasswordSerializer
 
