@@ -11,7 +11,6 @@ router.register(r"categories", CategoryViewSet)
 router.register(r"ingredient", RecipeIngredientViewSet)
 router.register(r"^(?P<recipe_id>\d+)/review", RecipeReviewViewset)
 router.register(r"", RecipeListViewSet)
-router.register(r"users", views.UserViewSet)
 
 
 urlpatterns = [

@@ -26,7 +26,8 @@ class Profile(models.Model):
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
+
     
 
 
