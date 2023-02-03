@@ -23,9 +23,9 @@ class UserRegisterView(GenericAPIView):
     serializer_class = UserRegistrationSerializer
 
     def post(self, request, *args, **kwargs):
-        serilializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serlializer.save()
+        user = serializer.save()
         token = RefreshToken.for_user(user)
         data = serializer.data
         data['token'] = {
