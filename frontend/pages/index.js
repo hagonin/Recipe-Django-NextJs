@@ -1,5 +1,6 @@
-import SideBarLayout from '@layouts/SideBarLayout';
+import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/Slider';
+import api from '@services/axios';
 
 export default function Home() {
 	return (
@@ -10,7 +11,6 @@ export default function Home() {
 			<h2>Chocolate Heaven h2</h2>
 			<h3>ABOUT ME h3</h3>
 			<h4>Lucid Themes h4</h4>
-						
 		</>
 	);
 }
@@ -19,7 +19,7 @@ Home.getLayout = function (page) {
 	return (
 		<>
 			<Slider />
-			<SideBarLayout>{page}</SideBarLayout>
+			<WidgetLayout>{page}</WidgetLayout>
 		</>
 	);
 };

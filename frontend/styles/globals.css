@@ -7,15 +7,15 @@
       @apply  text-second leading-7;
    }
     h1 {
-       @apply text-3xl font-medium text-black;
+       @apply text-3xl font-semibold text-black;
     }
 
     h2 {
-       @apply text-2xl font-medium text-black;
+       @apply text-2xl font-semibold text-black;
     } 
 
     h3 {
-       @apply text-sm font-semibold text-black;
+       @apply text-sm font-medium text-black;
     }
 
     h4 {
@@ -36,5 +36,27 @@
     .container {
         @apply xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
+
+    .btn {
+      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary flex items-center justify-center transition-all duration-300 rounded outline-none
+    }
+
+    .btn.primary {
+      @apply text-white border-transparent bg-primary hover:bg-primaryDark
+    }
+
+    .btn.tag {
+      @apply text-black font-light text-[0.7rem] h-[24px] px-3 bg-grey hover:bg-primary hover:border-primary hover:text-white;
+    }
+
+    .btn.lgSize {
+      @apply text-base font-medium h-[46px] px-5;
+    }
+
+    .btn.cancle {
+      @apply hover:bg-primaryLight hover:text-black
+    }
 }
+
+
 

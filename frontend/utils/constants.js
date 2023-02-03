@@ -7,22 +7,27 @@ export const NavLinks = [
 	{
 		id: 2,
 		name: 'Recipe Category',
-		href: '/categories',
+		href: '/recipes',
 		children: [
+			{
+				id: 0,
+				name: 'All Recipes',
+				href: '/',
+			},
 			{
 				id: 1,
 				name: 'Breakfast',
-				href: 'breakfast',
+				href: '/category/breakfast',
 			},
 			{
 				id: 2,
 				name: 'Lunch',
-				href: 'lunch',
+				href: '/category/lunch',
 			},
 			{
 				id: 3,
 				name: 'Dinner',
-				href: 'dinner',
+				href: '/category/dinner',
 			},
 		],
 	},

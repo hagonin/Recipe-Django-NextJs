@@ -1,3 +1,4 @@
+import AuthProvider from '@context/auth-context';
 import RootLayout from '@layouts/RootLayout';
 import '@styles/globals.css';
 import { nunito } from '@utils/fonts';
@@ -24,7 +25,11 @@ function MyApp({ Component, pageProps }) {
 				/>
 			</Head>
 			<main className={nunito.className}>
-				<RootLayout>{render(<Component {...pageProps} />)}</RootLayout>
+				<AuthProvider>
+					<RootLayout>
+						{render(<Component {...pageProps} />)}
+					</RootLayout>
+				</AuthProvider>
 			</main>
 		</>
 	);
