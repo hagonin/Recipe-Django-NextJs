@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from recipes.models import Recipe
 from . import serializers
 from .models import Profile
-from recipes.serializers import RecipeSerializer
+from recipes.serializers import RecipeReadSerializer
 
 User = get_user_model()
 
@@ -42,7 +42,7 @@ class UserProfileView(RetrieveUpdateAPIView):
 
 
 class UserBookmarkView(ListCreateAPIView):
-    serializer_class = RecipeSerializer
+    serializer_class = RecipeReadSerializer
     permission_classes = (IsAuthenticated,)
     profile = Profile.objects.all()
 
