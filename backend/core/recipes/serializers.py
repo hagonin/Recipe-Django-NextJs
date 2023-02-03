@@ -6,7 +6,7 @@ from .models import Recipe, RecipeReview, Category,RecipeIngredient, Instruction
 class CategorySerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Category
-        fields = ('name','type')
+        fields = ('id','name',)
 
 class RecipeInstructionSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -28,7 +28,7 @@ class RecipeReadSerializer(FlexFieldsModelSerializer):
         model = Recipe
         exclude = ['search_vector']
         expandable_fields = {
-        'categories': (CategorySerializer),
+        'category': (CategorySerializer),
         }
 
     def get_total_number_of_bookmarks(self, obj):

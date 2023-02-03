@@ -23,7 +23,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/recipe', include('recipes.urls', namespace='recipe')),    
+    path('api/recipe/', include('recipes.urls', namespace='recipe')),    
     path('api/user/', include('users.urls', namespace='users')),
     
     path('api/user/reset_password/',
