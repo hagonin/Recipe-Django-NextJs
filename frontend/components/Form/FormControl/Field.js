@@ -3,8 +3,8 @@ import { useFormContext } from 'react-hook-form';
 const InputField = ({
 	label,
 	name,
-	rules = { required: false },
 	type,
+	rules = { required: false },
 	...props
 }) => {
 	const { register, errors } = useFormContext();
@@ -37,7 +37,6 @@ const CheckboxField = ({
 	label,
 	isSingle = { label: false },
 	options,
-	rules = { required: false },
 	...props
 }) => {
 	const { register, errors } = useFormContext();
@@ -52,7 +51,7 @@ const CheckboxField = ({
 					<input
 						id={name}
 						type="checkbox"
-						{...register(name, rules)}
+						{...register(name)}
 						{...props}
 					/>
 					{isSingle.label}
@@ -68,7 +67,7 @@ const CheckboxField = ({
 								id={option.value}
 								type="checkbox"
 								value={option.value}
-								{...register(name, rules)}
+								{...register(name)}
 								{...props}
 							/>
 							{option.key}
@@ -81,13 +80,7 @@ const CheckboxField = ({
 	);
 };
 
-const RadioField = ({
-	name,
-	label,
-	options,
-	rules = { required: false },
-	...props
-}) => {
+const RadioField = ({ name, label, options, ...props }) => {
 	const { register, errors } = useFormContext();
 
 	return (
@@ -102,7 +95,7 @@ const RadioField = ({
 						type="radio"
 						id={option.value}
 						value={option.value}
-						{...register(name, rules)}
+						{...register(name)}
 						{...props}
 					/>
 					{option.key}
@@ -113,13 +106,7 @@ const RadioField = ({
 	);
 };
 
-const SelectField = ({
-	name,
-	label,
-	options,
-	rules = { required: false },
-	...props
-}) => {
+const SelectField = ({ name, label, options, ...props }) => {
 	const { register, errors } = useFormContext();
 
 	return (
@@ -130,7 +117,7 @@ const SelectField = ({
 			/>
 			<select
 				id={name}
-				{...register(name, rules)}
+				{...register(name)}
 				{...props}
 				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
 					errors[name]
@@ -152,7 +139,7 @@ const SelectField = ({
 	);
 };
 
-const TextAreaField = ({ label, name, rules, ...props }) => {
+const TextAreaField = ({ label, name, ...props }) => {
 	const { register, errors } = useFormContext();
 
 	return (
@@ -163,7 +150,7 @@ const TextAreaField = ({ label, name, rules, ...props }) => {
 			/>
 			<textarea
 				id={name}
-				{...register(name, rules)}
+				{...register(name)}
 				{...props}
 				className={`w-full border rounded px-5 py-2 outline-none ${
 					errors[name]

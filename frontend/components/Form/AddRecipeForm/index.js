@@ -6,7 +6,6 @@ import {
 	SelectField,
 	BtnForm,
 	TextAreaField,
-	titleRule,
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import { MdAdd, MdAddAPhoto, MdLockClock } from 'react-icons/md';
@@ -27,7 +26,6 @@ function AddRecipeForm({ onSubmit }) {
 						name="recipe-title"
 						placeholder="Recipe title"
 						type="text"
-						// rules={titleRule}
 					/>
 					<SelectField
 						name="category"
@@ -38,9 +36,6 @@ function AddRecipeForm({ onSubmit }) {
 							{ key: 'lunch', value: 2 },
 							{ key: 'fastFood', value: 3 },
 						]}
-						// rules={{
-						// 	required: 'Category is required',
-						// }}
 					/>
 				</div>
 				<TextAreaField

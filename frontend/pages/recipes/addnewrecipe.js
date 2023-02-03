@@ -1,6 +1,10 @@
 import AddRecipeForm from '@components/Form/AddRecipeForm';
 import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
 import Img from '@components/UI/Image';
+import { useAuthContext } from '@context/auth-context';
+import withAuth from '@utils/AuthRoute';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 function AddRecipe() {
 	const onSubmit = (data) => {
@@ -21,6 +25,6 @@ function AddRecipe() {
 	);
 }
 
-export default AddRecipe;
+export default withAuth(AddRecipe);
 
 // AddRecipe.getLayout = (page) => <ManageRecipeLayout>{page}</ManageRecipeLayout>;

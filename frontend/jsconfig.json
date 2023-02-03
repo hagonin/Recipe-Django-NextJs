@@ -8,7 +8,9 @@
 			"@page/*": ["pages/*"],
 			"@public/*": ["public/*"],
 			"@styles/*": ["styles/*"],
-			"@utils/*": ["utils/*"]
+			"@utils/*": ["utils/*"],
+			"@services/*": ["services/*"],
+			"@context/*": ["context/*"]
 		}
 	}
 }
