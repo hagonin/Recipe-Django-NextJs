@@ -3,24 +3,23 @@ import { useState } from 'react';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
+import { useAuthContext } from '@context/auth-context';
 
-const fetchFake = (timer) => {
-	return new Promise((res, rej) => {
-		setTimeout(() => {
-			rej('There are some errors');
-		}, timer);
-	});
-};
 function Login() {
 	const router = useRouter();
-	const [error, setError] = useState(false);
+	const [errors, setErrors] = useState(false);
+	const { login } = useAuthContext();
+
 	const onSubmit = (data) => {
-		return fetchFake(3000)
-			.then(() => {
-				console.log(data);
-				router.push('/user/a');
+		const { email, password } = data;
+		return login(email, password)
+			.then((res) => {
+				console.log('res', res);
 			})
-			.catch((err) => setError(err));
+			.catch((error) => {
+				console.log('error', error);
+				setErrors(error.response.data);
+			});
 	};
 
 	return (
@@ -28,7 +27,7 @@ function Login() {
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1 gap-8">
 				<LoginForm onSubmit={onSubmit} />
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
-					{error && <span className="text-red">{error}</span>}
+					{errors && <div className="text-red"></div>}
 					<h1>Welcome back</h1>
 					<p className="text-center">
 						It's nice to see you again. Log in to continue to your
