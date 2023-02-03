@@ -2,13 +2,7 @@ import Link from 'next/link';
 
 import Img from '@components/UI/Image';
 
-import {
-	Form,
-	BtnForm,
-	CheckboxField,
-	InputField,
-	emailRules,
-} from './FormControl';
+import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 
 function LoginForm({ onSubmit }) {
 	return (
@@ -27,16 +21,12 @@ function LoginForm({ onSubmit }) {
 					name="email"
 					type="email"
 					placeholder="Enter your email"
-					rules={emailRules}
 				/>
 
 				<InputField
 					name="password"
 					type="password"
 					placeholder="Enter your password"
-					rules={{
-						required: 'Password is required',
-					}}
 				/>
 
 				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">

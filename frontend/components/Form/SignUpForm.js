@@ -1,13 +1,6 @@
 import Link from 'next/link';
 import { useFormContext } from 'react-hook-form';
-import {
-	Form,
-	BtnForm,
-	CheckboxField,
-	InputField,
-	emailRules,
-	passwordRules,
-} from './FormControl';
+import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 
 import Img from '@components/UI/Image';
 
@@ -43,16 +36,18 @@ function SignUpForm({ onSubmit }) {
 					name="email"
 					type="email"
 					placeholder="Enter your email"
-					rules={emailRules}
 				/>
 
 				<InputField
 					name="password"
 					type="password"
 					placeholder="Enter your password"
-					rules={passwordRules}
 				/>
-				<ConfirmPassWord />
+				<InputField
+					name="confirm-password"
+					type="password"
+					placeholder="Confirm Password"
+				/>
 
 				<div className="my-2">
 					<CheckboxField
@@ -60,7 +55,6 @@ function SignUpForm({ onSubmit }) {
 						isSingle={{
 							label: 'By clicking "Create Account", I consent to the Privacy Policy.',
 						}}
-						rules={{ required: 'Consent is required' }}
 					/>
 				</div>
 
@@ -79,21 +73,5 @@ function SignUpForm({ onSubmit }) {
 		</div>
 	);
 }
-
-const ConfirmPassWord = () => {
-	const { watch } = useFormContext();
-	return (
-		<InputField
-			name="confirm-password"
-			type="password"
-			placeholder="Confirm Password"
-			rules={{
-				required: 'Confirm password is required',
-				validate: (val) =>
-					watch('password') === val || 'Password does not match',
-			}}
-		/>
-	);
-};
 
 export default SignUpForm;

@@ -6,25 +6,24 @@ import { GrStatusGood } from 'react-icons/gr';
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
 
+const fetchFake = (timer) => {
+	return new Promise((res, rej) => {
+		setTimeout(() => {
+			res('success');
+		}, timer);
+	});
+};
 function SignUp() {
 	const router = useRouter();
 	const [error, setError] = useState(false);
 
 	const onSubmit = (data) => {
-		const fetchFake = new Promise((resolve, reject) =>
-			setTimeout(() => {
-				resolve({ status: 'Success', data: data });
-				// reject('Registration failed. Please try again.');
-			}, 2000)
-		);
-		return fetchFake
-			.then((data) => {
+		return fetchFake(3000)
+			.then(() => {
+				router.push('/login');
 				console.log(data);
-				router.push('user/username.js');
 			})
-			.catch((error) => {
-				setError(error);
-			});
+			.catch((err) => setError(err));
 	};
 
 	return (

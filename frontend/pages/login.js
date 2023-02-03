@@ -4,33 +4,31 @@ import { useState } from 'react';
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 
+const fetchFake = (timer) => {
+	return new Promise((res, rej) => {
+		setTimeout(() => {
+			rej('There are some errors');
+		}, timer);
+	});
+};
 function Login() {
 	const router = useRouter();
 	const [error, setError] = useState(false);
 	const onSubmit = (data) => {
-		const fetchFake = new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve({
-					status: 'login successfully',
-					data: data,
-				});
-				// reject('Login is failed. Please try again.');
-			}, 2000);
-		});
-
-		return fetchFake
-			.then((data) => {
+		return fetchFake(3000)
+			.then(() => {
 				console.log(data);
-				router.push('/user/username.js');
+				router.push('/user/a');
 			})
-			.catch((error) => setError(error));
+			.catch((err) => setError(err));
 	};
+
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1 gap-8">
 				<LoginForm onSubmit={onSubmit} />
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
-					{error && <span>{error}</span>}
+					{error && <span className="text-red">{error}</span>}
 					<h1>Welcome back</h1>
 					<p className="text-center">
 						It's nice to see you again. Log in to continue to your
