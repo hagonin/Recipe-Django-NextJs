@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Tippy from '@tippyjs/react/headless';
 import { BsBoxArrowRight } from 'react-icons/bs';
 
-function User() {
+function User({ username, email, avatar = '/static/images/user.png' }) {
 	const [visible, setVisible] = useState(false);
 	const toggle = () => setVisible(!visible);
 	const hide = () => setVisible(false);
@@ -19,7 +19,7 @@ function User() {
 						<h3 className="uppercase mb-4 px-5">Account</h3>
 						<div className="flex items-center px-5">
 							<Image
-								src="/static/images/user.png"
+								src={avatar}
 								alt="avatar"
 								width={58}
 								height={58}
@@ -31,16 +31,16 @@ function User() {
 							/>
 							<div className="ml-3 flex flex-col">
 								<span className="text-black font-bold">
-									User Name
+									{username}
 								</span>
 								<span className="text-sm text-second">
-									username@gmail.com
+									{email}
 								</span>
 							</div>
 						</div>
 						<div className="text-black mt-3">
 							<Link
-								href="/user/name"
+								href={`/user/${username}`}
 								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
 							>
 								Manage Recipe

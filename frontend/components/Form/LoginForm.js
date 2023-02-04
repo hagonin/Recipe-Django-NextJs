@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
+import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 import Img from '@components/UI/Image';
 
-import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 
-function LoginForm({ onSubmit }) {
+function LoginForm({ onSubmit, errors}) {
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
@@ -16,17 +16,24 @@ function LoginForm({ onSubmit }) {
 				/>
 			</div>
 
+			{errors?.['non_field_errors'] ? (
+				<span className="block text-center px-5 py-2 mb-7 bg-redLight text-red rounded-md ">
+					{errors?.['non_field_errors']}
+				</span>
+			) : null}
 			<Form onSubmit={onSubmit}>
 				<InputField
 					name="email"
 					type="email"
 					placeholder="Enter your email"
+					error={errors?.['email']}
 				/>
 
 				<InputField
 					name="password"
 					type="password"
 					placeholder="Enter your password"
+					error={errors?.['password']}
 				/>
 
 				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">

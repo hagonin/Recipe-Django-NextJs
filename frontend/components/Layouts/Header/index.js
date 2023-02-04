@@ -1,12 +1,15 @@
-import SocialLink from '@components/UI/SocialLink';
+import { useAuthContext } from '@context/auth-context';
+
 import Navigate from './Navigate';
 import NavMobi from './NavMobi';
+import SocialLink from '@components/UI/SocialLink';
 import Logo from '@components/Layouts/Header/Logo';
 import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
 
 function Header() {
+	const { isAuthenticated, user } = useAuthContext();
 	const handleSearch = (data) => {
 		const fetchFake = new Promise((resolve, reject) => {
 			setTimeout(() => {
@@ -15,6 +18,7 @@ function Header() {
 		});
 		return fetchFake.then((res) => console.log(res));
 	};
+
 	return (
 		<header>
 			<div className="bg-primary sm:h-12 h-14 text-white">
@@ -24,14 +28,20 @@ function Header() {
 						<SocialLink />
 					</div>
 					<div className="border-l border-[rgba(255,255,255,0.5)] pl-5 ml-5 max-lg:hidden">
-						<User />
-						{/* <Button
-							type="link"
-							href="/login"
-							className="rounded-full hover:border-white"
-						>
-							Login
-						</Button> */}
+						{isAuthenticated ? (
+							<User
+								username={user?.username}
+								email={user?.email}
+							/>
+						) : (
+							<Button
+								type="link"
+								href="/login"
+								className="rounded-full hover:border-white"
+							>
+								Login
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>

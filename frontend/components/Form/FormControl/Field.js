@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const InputField = ({
@@ -5,9 +6,16 @@ const InputField = ({
 	name,
 	type,
 	rules = { required: false },
+	error,
 	...props
 }) => {
-	const { register, errors } = useFormContext();
+	const { register } = useFormContext();
+	const [errorMessage, setErrorMessage] = useState(false);
+
+	useEffect(() => {
+		setErrorMessage(error);
+	}, [error]);
+
 	return (
 		<div className="w-full">
 			<Label
@@ -16,18 +24,23 @@ const InputField = ({
 			/>
 			<input
 				id={name}
-				{...register(name, rules)}
+				type={type}
+				{...register(name, {
+					...rules,
+					onChange: () => {
+						setErrorMessage(false);
+					},
+				})}
+				{...props}
 				className={`w-full ${
 					type !== 'file' && 'border rounded'
 				} px-5 h-12 outline-none ${
-					errors[name]
+					errorMessage
 						? 'border-red'
 						: 'border-border focus:border-primary'
 				}`}
-				type={type}
-				{...props}
 			/>
-			<Error error={errors[name]?.message} />
+			<Error error={errorMessage} />
 		</div>
 	);
 };
