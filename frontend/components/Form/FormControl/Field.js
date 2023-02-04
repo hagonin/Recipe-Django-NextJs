@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useAuthContext } from '@context/auth-context';
 import { useFormContext } from 'react-hook-form';
 
 const InputField = ({
@@ -6,15 +6,10 @@ const InputField = ({
 	name,
 	type,
 	rules = { required: false },
-	error,
 	...props
 }) => {
 	const { register } = useFormContext();
-	const [errorMessage, setErrorMessage] = useState(false);
-
-	useEffect(() => {
-		setErrorMessage(error);
-	}, [error]);
+	const { setErrors, errors } = useAuthContext();
 
 	return (
 		<div className="w-full">
@@ -28,19 +23,19 @@ const InputField = ({
 				{...register(name, {
 					...rules,
 					onChange: () => {
-						setErrorMessage(false);
+						setErrors(false);
 					},
 				})}
 				{...props}
 				className={`w-full ${
 					type !== 'file' && 'border rounded'
 				} px-5 h-12 outline-none ${
-					errorMessage
+					errors?.[name]
 						? 'border-red'
 						: 'border-border focus:border-primary'
 				}`}
 			/>
-			<Error error={errorMessage} />
+			<Error error={errors?.[name]} />
 		</div>
 	);
 };

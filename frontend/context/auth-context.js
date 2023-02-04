@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import api from '@services/axios';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import api from '@services/axios';
 
 const AuthContext = createContext();
 
@@ -10,12 +11,22 @@ const AuthProvider = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const router = useRouter();
 
-	const login = ({ email, password, remember }) => {
+	useEffect(() => {
+		setIsAuthenticated(!!user);
+	}, [user]);
+
+	const login = async ({ email, password, remember }) => {
 		return api
-			.post('/user/login/', {
-				email,
-				password,
-			})
+			.post(
+				'/user/login/',
+				{
+					email,
+					password,
+				},
+				{
+					credentials: 'include',
+				}
+			)
 			.then((res) => {
 				const {
 					username,
@@ -31,19 +42,23 @@ const AuthProvider = ({ children }) => {
 			});
 	};
 
-	useEffect(() => {
-		setIsAuthenticated(!!user);
-	}, [user]);
-
 	const setCookie = (accessToken) => {
-		console.log(accessToken);
+		axios
+			.post('/api/cookies', {
+				token: accessToken,
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	const logout = () => {};
 	const signup = () => {};
 
 	return (
-		<AuthContext.Provider value={{ errors, user, isAuthenticated, login }}>
+		<AuthContext.Provider
+			value={{ errors, setErrors, user, isAuthenticated, login }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

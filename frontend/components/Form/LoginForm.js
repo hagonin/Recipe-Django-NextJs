@@ -2,9 +2,11 @@ import Link from 'next/link';
 
 import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 import Img from '@components/UI/Image';
+import { useAuthContext } from '@context/auth-context';
 
+function LoginForm({ onSubmit }) {
+	const { errors } = useAuthContext();
 
-function LoginForm({ onSubmit, errors}) {
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
@@ -26,14 +28,12 @@ function LoginForm({ onSubmit, errors}) {
 					name="email"
 					type="email"
 					placeholder="Enter your email"
-					error={errors?.['email']}
 				/>
 
 				<InputField
 					name="password"
 					type="password"
 					placeholder="Enter your password"
-					error={errors?.['password']}
 				/>
 
 				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">
