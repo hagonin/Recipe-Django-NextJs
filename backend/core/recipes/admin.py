@@ -21,14 +21,14 @@ class ImageInline(admin.StackedInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type',)
+    list_display = ('name',)
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin): 
     inlines = [IngredientInline,InstructionInline,ImageInline,]   
     search_fields = ('title',)
     list_display= ['title','author']
-    list_filter = ('categories',)
+    list_filter = ('category',)
     prepopulated_fields = {'slug':('title',)}
     readonly_fields = ['created_at', 'updated_at']
     raw_id_fields = ['author']

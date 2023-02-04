@@ -13,7 +13,6 @@ class Category(models.Model):
         max_length=120,
         unique=True,
     )
-    type = models.CharField(max_length=50)
 
     class Meta:
         ordering = ('name',)
@@ -30,13 +29,13 @@ def get_default_recipe_category():
 
 class Recipe(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="recipes", on_delete=models.CASCADE)
-    categories = models.ForeignKey(Category,related_name="recipes",on_delete=models.SET(get_default_recipe_category))
+    category = models.ForeignKey(Category,related_name="recipes",on_delete=models.SET(get_default_recipe_category))
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
     serving = models.IntegerField(blank=True, null=True)
-    rating_value = models.IntegerField(null=True, blank=True)
+    rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=50)
     prep_time = models.CharField(max_length=100, blank=True)  
@@ -65,7 +64,7 @@ class Recipe(models.Model):
 
 
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients', related_query_name='recipe')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredient', related_query_name='recipe')
     name = models.CharField(max_length=220)   
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])       
@@ -84,7 +83,7 @@ class RecipeImage(models.Model):
     image = models.ImageField( 
         verbose_name= "image",
         help_text= "Upload a product image",
-        upload_to="images/",
+        upload_to="images",
         default="images/default.png"
     ) 
     caption = models.CharField(
@@ -100,8 +99,8 @@ class RecipeImage(models.Model):
 
 
 class RecipeReview(models.Model):
-    recipe = models.ForeignKey(Recipe, related_name='reviews', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reviews',on_delete=models.SET_NULL, null=True)
+    recipe = models.ForeignKey(Recipe, related_name='review', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='review',on_delete=models.SET_NULL, null=True)
     content = models.TextField(blank=True, null=True)
     stars = models.FloatField()
     date_added = models.DateField(auto_now_add=True)

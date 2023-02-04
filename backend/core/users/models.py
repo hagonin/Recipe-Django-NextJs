@@ -22,11 +22,12 @@ class CustomUser(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
-    avatar = models.ImageField(upload_to="images/", blank=True)
+    avatar = models.ImageField(upload_to="media", blank=True)
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.user.email
+
     
 
 
