@@ -7,8 +7,8 @@ function User() {
 		<div className="container my-14">
 			<div className="p-5 border rounded-md">
 				<h1>Profile</h1>
-				<h2>User Name: {user.username}</h2>
-				<p>Email: {user.email}</p>
+				<h2>User Name: {user?.username}</h2>
+				<p>Email: {user?.email}</p>
 			</div>
 			<h2>Manage recipe of user</h2>
 			<h3>All Recipe of user</h3>

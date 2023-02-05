@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import api from '@services/axios';
 
 const AuthContext = createContext();
 
@@ -9,51 +8,63 @@ const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
 		setIsAuthenticated(!!user);
 	}, [user]);
 
+	useEffect(() => {
+		loadUser();
+	}, []);
+
 	const login = async ({ email, password, remember }) => {
-		return api
-			.post(
-				'/user/login/',
-				{
-					email,
-					password,
-				},
-				{
-					credentials: 'include',
-				}
-			)
-			.then((res) => {
-				const {
-					username,
-					email,
-					token: { access },
-				} = res.data;
-				setUser({ username, email });
-				remember && setCookie(access);
-				router.push(`/user/${username}`);
-			})
-			.catch((error) => {
-				setErrors(error.response.data);
+		try {
+			const response = await axios.post('/api/login', {
+				email,
+				password,
+				remember,
 			});
+			const { success, user } = response.data;
+			success && setUser(response.data.user);
+			if (success) {
+				setUser(user);
+				router.push(`/user/${user.username}`);
+			}
+		} catch (error) {
+			setErrors(error.response.data.error);
+		}
 	};
 
-	const setCookie = (accessToken) => {
+	const loadUser = () => {
 		axios
-			.post('/api/cookies', {
-				token: accessToken,
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+			.get('/api/user')
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	};
 
 	const logout = () => {};
-	const signup = () => {};
+	const signup = async ({
+		username,
+		firstname,
+		lastname,
+		password,
+		email,
+	}) => {
+		try {
+			const res = await api.post('/user/register/', {
+				username,
+				lastname,
+				firstname,
+				password,
+				email,
+			});
+			console.log(res);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<AuthContext.Provider
