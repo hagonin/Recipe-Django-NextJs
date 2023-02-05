@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import api from '@services/axios';
 
 const AuthContext = createContext();
 
@@ -8,7 +9,6 @@ const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -41,10 +41,23 @@ const AuthProvider = ({ children }) => {
 		axios
 			.get('/api/user')
 			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
-	const logout = () => {};
+	const logout = async () => {
+		try {
+			const res = await axios.post('/api/logout/');
+			if (res.data.success) {
+				setUser(null);
+				router.push('/login');
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const signup = async ({
 		username,
 		firstname,
@@ -53,22 +66,31 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			const res = await api.post('/user/register/', {
+			await api.post('/user/register/', {
 				username,
 				lastname,
 				firstname,
 				password,
 				email,
 			});
-			console.log(res);
+
+			router.push('/login');
 		} catch (error) {
-			console.log(error);
+			setErrors(error.response.data);
 		}
 	};
 
 	return (
 		<AuthContext.Provider
-			value={{ errors, setErrors, user, isAuthenticated, login }}
+			value={{
+				errors,
+				setErrors,
+				user,
+				isAuthenticated,
+				login,
+				signup,
+				logout,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

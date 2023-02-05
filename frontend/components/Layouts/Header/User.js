@@ -3,8 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Tippy from '@tippyjs/react/headless';
 import { BsBoxArrowRight } from 'react-icons/bs';
+import { useAuthContext } from '@context/auth-context';
 
 function User({ username, email, avatar = '/static/images/user.png' }) {
+	const { logout } = useAuthContext();
 	const [visible, setVisible] = useState(false);
 	const toggle = () => setVisible(!visible);
 	const hide = () => setVisible(false);
@@ -52,7 +54,10 @@ function User({ username, email, avatar = '/static/images/user.png' }) {
 								Add recipe
 							</Link>
 							<span className="block border-t"></span>
-							<button className="text-left w-full py-2 px-5 flex items-center hover:bg-[rgba(0,0,0,0.05)] mt-2">
+							<button
+								className="text-left w-full py-2 px-5 flex items-center hover:bg-[rgba(0,0,0,0.05)] mt-2"
+								onClick={logout}
+							>
 								<BsBoxArrowRight className="mr-2" />
 								Log out
 							</button>

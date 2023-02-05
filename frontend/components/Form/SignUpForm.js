@@ -21,13 +21,19 @@ function SignUpForm({ onSubmit }) {
 
 			<Form onSubmit={onSubmit}>
 				<InputField
-					name="first"
+					name="username"
+					type="text"
+					placeholder="Enter your name"
+				/>
+
+				<InputField
+					name="firstname"
 					type="text"
 					placeholder="Enter your first name"
 				/>
 
 				<InputField
-					name="last"
+					name="lastname"
 					type="text"
 					placeholder="Enter your last name"
 				/>
@@ -43,20 +49,15 @@ function SignUpForm({ onSubmit }) {
 					type="password"
 					placeholder="Enter your password"
 				/>
-				<InputField
-					name="confirm-password"
-					type="password"
-					placeholder="Confirm Password"
-				/>
 
-				<div className="my-2">
+				{/* <div className="my-2">
 					<CheckboxField
 						name="consent"
 						isSingle={{
 							label: 'By clicking "Create Account", I consent to the Privacy Policy.',
 						}}
 					/>
-				</div>
+				</div> */}
 
 				<BtnForm label="signup" />
 

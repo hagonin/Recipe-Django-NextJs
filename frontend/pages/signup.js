@@ -1,36 +1,21 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { GrStatusGood } from 'react-icons/gr';
 
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
+import { useAuthContext } from '@context/auth-context';
 
-const fetchFake = (timer) => {
-	return new Promise((res, rej) => {
-		setTimeout(() => {
-			res('success');
-		}, timer);
-	});
-};
 function SignUp() {
 	const router = useRouter();
-	const [error, setError] = useState(false);
+	const { signup } = useAuthContext();
 
-	const onSubmit = (data) => {
-		return fetchFake(3000)
-			.then(() => {
-				router.push('/login');
-				console.log(data);
-			})
-			.catch((err) => setError(err));
-	};
+	const onSubmit = (data) => signup({ ...data });
 
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
 				<div className="flex flex-col items-center justify-center">
-					{error && <span>{error}</span>}
 					<Img
 						alt="login"
 						src="/static/images/girl-cooking-2.png"

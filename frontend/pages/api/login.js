@@ -10,13 +10,13 @@ const handler = async (req, res) => {
 				email,
 			});
 
-			const token = response.data.token.access;
-			if (token && remember) {
+			const tokenAccess = response.data.token.access;
+			if (tokenAccess && remember) {
 				//save token
-				const A_DAY = 60 * 60 * 24;
+				const A_DAY = 60 * 60 * 3;
 				res.setHeader(
 					'Set-Cookie',
-					cookie.serialize('token', token, {
+					cookie.serialize('tokenAccess', tokenAccess, {
 						httpOnly: true,
 						secure: process.env.NODE_ENV !== 'development',
 						maxAge: A_DAY,
