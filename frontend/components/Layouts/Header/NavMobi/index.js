@@ -14,11 +14,12 @@ import SocialLink from '@components/UI/SocialLink';
 import Img from '@components/UI/Image';
 
 function NavMobi() {
-	const { isAuthenticated, user } = useAuthContext();
+	const { isAuthenticated, user, logout } = useAuthContext();
 	const [showNavMobi, setShowNavMobi] = useState(false);
 	const toggleNavMobi = () => {
 		setShowNavMobi(!showNavMobi);
 	};
+
 	return (
 		<div className="lg:hidden">
 			{!showNavMobi && (
@@ -47,12 +48,12 @@ function NavMobi() {
 									className="h-20 w-20 border-border rounded-full ml-5"
 								/>
 								<span className="text-black font-bold block mt-3 ml-5">
-									{user.username}
+									{user?.username}
 								</span>
 								<span className="text-sm text-second block mb-10 ml-5">
-									{user.email}
+									{user?.email}
 								</span>
-								<NavItem href={`/user/${user.username}`}>
+								<NavItem href={`/user/${user?.username}`}>
 									{' '}
 									Manage Recipe
 								</NavItem>
@@ -96,14 +97,14 @@ function NavMobi() {
 							)}
 						</div>
 						{isAuthenticated && (
-							<NavItem>
+							<NavItem onClick={logout}>
 								<span>
 									<FiLogOut className="inline-block relative -mt-1 mr-2" />
 									Log out
 								</span>
 							</NavItem>
 						)}
-						<div className="md:hidden block">
+						<div className="md:hidden block mt-6">
 							<SocialLink color="black" />
 						</div>
 					</nav>

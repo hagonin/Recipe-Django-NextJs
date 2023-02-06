@@ -4,7 +4,7 @@ const handler = async (req, res) => {
 	if (req.method === 'POST') {
 		res.setHeader(
 			'Set-Cookie',
-			cookie.serialize('token', '', {
+			cookie.serialize('tokenAccess', '', {
 				httpOnly: true,
 				secure: process.env.NODE_ENV !== 'development',
 				maxAge: new Date(0),

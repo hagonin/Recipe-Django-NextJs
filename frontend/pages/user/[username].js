@@ -1,3 +1,4 @@
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Button from '@components/UI/Button';
 import { useAuthContext } from '@context/auth-context';
 
@@ -23,3 +24,5 @@ function User() {
 }
 
 export default User;
+
+User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

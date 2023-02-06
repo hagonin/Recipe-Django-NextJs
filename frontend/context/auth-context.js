@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
 	}, [user]);
 
 	useEffect(() => {
-		loadUser();
+		tokenAuthentication();
 	}, []);
 
 	const login = async ({ email, password, remember }) => {
@@ -37,13 +37,16 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const loadUser = () => {
-		axios
-			.get('/api/user')
-			.then((res) => console.log(res))
-			.catch((err) => {
-				console.log(err);
-			});
+	// not received enough user information
+	const tokenAuthentication = async () => {
+		try {
+			const response = await axios.get('/api/user');
+			console.log(res);
+			setIsAuthenticated(true);
+		} catch (error) {
+			console.log('load user error:', err);
+			setIsAuthenticated(false);
+		}
 	};
 
 	const logout = async () => {
@@ -54,7 +57,7 @@ const AuthProvider = ({ children }) => {
 				router.push('/login');
 			}
 		} catch (err) {
-			console.log(err);
+			console.log('logout err', err);
 		}
 	};
 

@@ -1,5 +1,6 @@
 import AddRecipeForm from '@components/Form/AddRecipeForm';
 import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 
 function AddRecipe() {
@@ -23,4 +24,5 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-// AddRecipe.getLayout = (page) => <ManageRecipeLayout>{page}</ManageRecipeLayout>;
+AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+

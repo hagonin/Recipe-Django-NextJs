@@ -1,5 +1,4 @@
 import api from '@services/axios';
-import axios from 'axios';
 import cookie from 'cookie';
 
 const handler = async (req, res) => {
@@ -8,15 +7,14 @@ const handler = async (req, res) => {
 		const token = cookies.tokenAccess;
 
 		if (token) {
-			// res.status(200).json({
-			// 	token: token,
-			// });
 			try {
-				const response = api.get('/user/profile/', {
+				const response = await api.get('/user/profile/', {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
 				});
+
+				console.log(response.data);
 
 				res.status(200).json({
 					success: true,
