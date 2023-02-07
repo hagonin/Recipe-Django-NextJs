@@ -1,14 +1,17 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.validators import UniqueValidator
 
 from .models import CustomUser, Profile
 
 class UserSerializer(serializers.ModelSerializer):	
+    """
+    Serializer class to seralize CustomUser model.
+    """
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email')
+        fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -44,7 +47,7 @@ class ProfileSerializer(UserSerializer):
 
     class Meta:
         model = Profile
-        fields = ('bookmarks','bio','avatar')
+        fields = ('user_id','bookmarks','bio','avatar')
       
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -62,7 +65,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         validate_password(value)
         return value 
 
-    def update(self,instance, validted_data):
+    def update(self,instance, validated_data):
         instance.set_password(validated_data['new_password'])
         instance.save()
         return instance 
