@@ -9,6 +9,9 @@ from .serializers import (CategorySerializer,RecipeIngredientSerializer,
     RecipeReadSerializer,RecipeWriteSerializer, ReviewReadSerializer,ReviewWriteSerializer,RecipeInstructionSerializer)
 from .models import Recipe,RecipeIngredient,RecipeReview,Category, Instruction
 
+from .permissions import IsAuthorOrReadOnly
+
+
 class CategoryViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve categories

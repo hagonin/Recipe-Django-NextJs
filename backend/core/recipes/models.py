@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
@@ -9,6 +10,9 @@ from .validators import validate_unit_of_measure
 
 
 class Category(models.Model):
+    """
+    Recipe categories
+    """
     name = models.CharField(
         max_length=120,
         unique=True,
@@ -24,16 +28,22 @@ class Category(models.Model):
 
 
 def get_default_recipe_category():
+    """
+    Returns a default recipe type.
+    """
     return Category.objects.get_or_create(name='Others')[0]
 
 
 class Recipe(models.Model):
+    """
+    Recipe model
+    """
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="recipes", on_delete=models.CASCADE)
-    category = models.ForeignKey(Category,related_name="recipes",on_delete=models.SET(get_default_recipe_category))
+    category = models.ForeignKey(Category,related_name="recipe_list",on_delete=models.SET(get_default_recipe_category))
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
-    image = models.ImageField(upload_to='images', null=True, blank=True)
+    image = CloudinaryField('Image',overwrite=True, null=True,)
     serving = models.IntegerField(blank=True, null=True)
     rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)
@@ -80,12 +90,7 @@ class Instruction(models.Model):
 
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField( 
-        verbose_name= "image",
-        help_text= "Upload a product image",
-        upload_to="images",
-        default="images/default.png"
-    ) 
+    image = CloudinaryField('Image/recipe',overwrite=True, null=True,)
     caption = models.CharField(
         max_length=200, 
         verbose_name= 'Photo|caption',

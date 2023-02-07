@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -20,13 +22,13 @@ class CustomUser(AbstractUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
-    avatar = models.ImageField(upload_to="media", blank=True)
+    avatar = CloudinaryField('Image/avatar',overwrite=True,format="jpg")
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return self.user.email
+        return self.user.username
 
     
 
