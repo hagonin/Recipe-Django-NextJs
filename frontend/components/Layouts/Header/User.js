@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { images } from '@utils/constants';
+
 import Tippy from '@tippyjs/react/headless';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { useAuthContext } from '@context/auth-context';
 
-function User({ username, email, avatar = '/static/images/user.png' }) {
+function User({ username, email, avatar = images.defaultAvatar }) {
 	const { logout } = useAuthContext();
 	const [visible, setVisible] = useState(false);
 	const toggle = () => setVisible(!visible);

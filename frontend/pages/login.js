@@ -2,7 +2,7 @@ import { useAuthContext } from '@context/auth-context';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
-import PrivateRoutes from '@components/Layouts/PrivateRoutes';
+import {images} from '@utils/constants'
 
 function Login() {
 	const { login } = useAuthContext();
@@ -21,7 +21,7 @@ function Login() {
 					</p>
 					<Img
 						alt="login"
-						src="/static/images/girl-cooking-1.png"
+						src={images.login}
 						className="w-full h-72 mt-10"
 					/>
 				</div>

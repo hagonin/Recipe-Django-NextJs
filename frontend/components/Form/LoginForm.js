@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { images } from '@utils/constants';
+
 import { Form, BtnForm, CheckboxField, InputField } from './FormControl';
 import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
@@ -13,7 +15,7 @@ function LoginForm({ onSubmit }) {
 				<h1 className="text-center">Login</h1>
 				<Img
 					alt="login_icon"
-					src="/static/images/login.png"
+					src={images.icon1}
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>

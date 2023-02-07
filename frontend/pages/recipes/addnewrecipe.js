@@ -1,3 +1,5 @@
+import { images } from '@utils/constants';
+
 import AddRecipeForm from '@components/Form/AddRecipeForm';
 import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
@@ -11,7 +13,7 @@ function AddRecipe() {
 		<div className="container py-14 lg:w-3/4">
 			<div className="flex items-end justify-center mb-8">
 				<Img
-					src="/static/images/addrecipe.png"
+					src={images.addRecipeImg}
 					alt="add_recipe"
 					className="h-24 w-24"
 				/>
@@ -25,4 +27,3 @@ function AddRecipe() {
 export default AddRecipe;
 
 AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
-

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { GrStatusGood } from 'react-icons/gr';
+import { images } from '@utils/constants';
 
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
@@ -18,7 +19,7 @@ function SignUp() {
 				<div className="flex flex-col items-center justify-center">
 					<Img
 						alt="login"
-						src="/static/images/girl-cooking-2.png"
+						src={images.signup}
 						className="w-full h-[300px] mb-10"
 					/>
 					<h1>Create An Account</h1>

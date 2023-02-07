@@ -1,3 +1,14 @@
+export const images = {
+	logo: '/static/images/logo.png',
+	logoIcon: '/static/images/logo_icon.png',
+	login: '/static/images/girl-cooking-1.png',
+	signup: '/static/images/girl-cooking-2.png',
+	defaultAvatar: '/static/images/user.png',
+	icon1: '/static/images/icon1.png',
+	icon2: '/static/images/icon1.png',
+	addRecipeImg: '/static/images/addrecipe.png',
+};
+
 export const NavLinks = [
 	{
 		id: 1,
