@@ -13,13 +13,13 @@
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.2.3",
     "cookie": "^0.5.0",
-    "final-form": "^4.20.9",
     "keen-slider": "^6.8.5",
     "next": "13.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.1",
-    "react-icons": "^4.7.1"
+    "react-icons": "^4.7.1",
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
