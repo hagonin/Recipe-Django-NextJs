@@ -14,8 +14,6 @@ const handler = async (req, res) => {
 					},
 				});
 
-				console.log(response.data);
-
 				res.status(200).json({
 					success: true,
 					data: response.data,

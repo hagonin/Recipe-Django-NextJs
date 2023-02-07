@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthentication = async () => {
 		try {
 			const response = await axios.get('/api/user');
-			console.log('response of authentication', response);
+			setUser(response.data.data);
 			setIsAuthenticated(true);
 		} catch (error) {
 			console.log('load user error:', error);
