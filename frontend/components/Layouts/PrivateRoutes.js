@@ -15,7 +15,7 @@ function PrivateRoutes({ children }) {
 	if (!isAuthenticated) {
 		return (
 			<div className="container py-14">
-				<Loader type="skeleton" />
+				<Loader type="profile" />
 			</div>
 		);
 	}

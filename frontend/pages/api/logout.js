@@ -1,6 +1,6 @@
 import cookie from 'cookie';
 
-const handler = async (req, res) => {
+const handler = (req, res) => {
 	if (req.method === 'POST') {
 		res.setHeader(
 			'Set-Cookie',

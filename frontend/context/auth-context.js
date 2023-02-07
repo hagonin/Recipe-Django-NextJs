@@ -9,15 +9,16 @@ const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const router = useRouter();
-
-	useEffect(() => {
-		setIsAuthenticated(!!user);
-	}, [user]);
 
 	useEffect(() => {
 		tokenAuthentication();
 	}, []);
+
+	useEffect(() => {
+		setIsAuthenticated(!!user);
+	}, [user]);
 
 	const login = async ({ email, password, remember }) => {
 		try {
@@ -27,9 +28,8 @@ const AuthProvider = ({ children }) => {
 				remember,
 			});
 			const { success, user } = response.data;
-			success && setUser(response.data.user);
 			if (success) {
-				setUser(user);
+				success && setUser(user);
 				router.push(`/user/${user.username}`);
 			}
 		} catch (error) {
@@ -41,24 +41,29 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthentication = async () => {
 		try {
 			const response = await axios.get('/api/user');
-			console.log(response);
+			console.log('response of authentication', response);
 			setIsAuthenticated(true);
 		} catch (error) {
 			console.log('load user error:', error);
 			setIsAuthenticated(false);
+		} finally {
+			setLoading(false);
 		}
 	};
 
-	const logout = async () => {
-		try {
-			const res = await axios.post('/api/logout/');
-			if (res.data.success) {
-				setUser(null);
-				router.push('/login');
-			}
-		} catch (err) {
-			console.log('logout err', err);
-		}
+	const logout = () => {
+		axios
+			.post('/api/logout/')
+			.then((res) => {
+				if (res.data.success) {
+					setUser(null);
+					setIsAuthenticated(false);
+					router.push('/login');
+				}
+			})
+			.catch((err) => {
+				console.log('logout err', err);
+			});
 	};
 
 	const signup = async ({
@@ -93,6 +98,7 @@ const AuthProvider = ({ children }) => {
 				login,
 				signup,
 				logout,
+				loading,
 			}}
 		>
 			{children}

@@ -27,7 +27,7 @@ function Loader({ type }) {
 			);
 		case 'searching':
 			return <RiLoader2Line className=" h-5 w-5 animate-spin-slow" />;
-		case 'skeleton':
+		case 'profile':
 			return (
 				<>
 					<div className="h-2.5 bg-gray-200 rounded-full  w-48 mb-4"></div>
@@ -41,6 +41,10 @@ function Loader({ type }) {
 					<div className="h-2 bg-gray-200 rounded-full  max-w-[360px]"></div>
 					<span className="sr-only">Loading...</span>
 				</>
+			);
+		case 'btn-user':
+			return (
+				<div className="rounded-full bg-slate-200 h-10 w-10 animate-pulse"></div>
 			);
 		default:
 			return <span>Loader</span>;

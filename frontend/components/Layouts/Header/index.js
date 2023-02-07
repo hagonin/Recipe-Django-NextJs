@@ -7,9 +7,10 @@ import Logo from '@components/Layouts/Header/Logo';
 import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
 
 function Header() {
-	const { isAuthenticated, user } = useAuthContext();
+	const { isAuthenticated, user, loading } = useAuthContext();
 	const handleSearch = (data) => {
 		const fetchFake = new Promise((resolve, reject) => {
 			setTimeout(() => {
@@ -18,6 +19,7 @@ function Header() {
 		});
 		return fetchFake.then((res) => console.log(res));
 	};
+
 
 	return (
 		<header>
@@ -28,7 +30,9 @@ function Header() {
 						<SocialLink />
 					</div>
 					<div className="border-l border-[rgba(255,255,255,0.5)] pl-5 ml-5 max-lg:hidden">
-						{isAuthenticated ? (
+						{loading ? (
+							<Loader type="btn-user" />
+						) : isAuthenticated ? (
 							<User
 								username={user?.username}
 								email={user?.email}
@@ -42,6 +46,7 @@ function Header() {
 								Login
 							</Button>
 						)}
+
 					</div>
 				</div>
 			</div>
