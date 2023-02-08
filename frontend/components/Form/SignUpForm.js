@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { Form, CheckboxField, InputField } from './FormControl';
-
-import Img from '@components/UI/Image';
-import Button from '@components/UI/Button';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+
+import { InputField } from './FormControl';
+import Img from '@components/UI/Image';
+import Button from '@components/UI/Button';
 import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 

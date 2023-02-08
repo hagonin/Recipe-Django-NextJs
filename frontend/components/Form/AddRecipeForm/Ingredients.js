@@ -1,60 +1,84 @@
-import Modal from '@components/UI/Modal';
+import { useFieldArray } from 'react-hook-form';
+
+import { MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
-import { memo, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { MdAdd } from 'react-icons/md';
-import { Form, InputField, SelectField } from '../FormControl';
+import { InputField, SelectField } from '../FormControl';
 
-function Ingredients() {
-	const { setValue, getValues, values } = useFormContext();
-	const [showForm, setShowForm] = useState(false);
-	const onSubmit = (data) => {
-		console.log(data);
-		console.log(getValues('a'));
-		setValue('a', 'b');
-	};
+function Ingredients({ control, register }) {
+	const { fields, append, remove } = useFieldArray({
+		control,
+		name: 'recipe.ingredient',
+	});
 	return (
-		<div className="mt-5">
-			<h2 className="border-b border-primary pb-1 mb-4">Ingredients</h2>
-			<Button
-				icon={{ left: <MdAdd /> }}
-				onClick={() => setShowForm(true)}
-			>
-				Add Ingredient
-			</Button>
-
-			{showForm && (
-				<Modal>
-					<Form onSubmit={onSubmit}>
+		<>
+			<ul className="mt-3 flex flex-col gap-4 mb-4">
+				{fields.map((item, index) => (
+					<li
+						key={item.id}
+						className="flex items-center justify-between gap-4"
+					>
 						<InputField
-							name="ingredient"
-							placeholder="Ingredient name"
 							type="text"
+							placeholder="Ingredient name"
+							name={`recipe.ingredient.${index}.name`}
+							register={register}
 						/>
-
 						<InputField
-							name="quantity"
-							placeholder="Ingredient quantity"
 							type="number"
-							rules={{ required: true }}
+							placeholder="Quantity"
+							name={`recipe.ingredient.${index}.quantity`}
+							register={register}
 						/>
-
 						<SelectField
-							name="unit"
+							name={`recipe.ingredient.${index}.unit`}
 							options={[
-								{ key: 'gram', value: 'gr' },
-								{ key: 'tbsp', value: 'tbsp' },
-								{ key: 'ml', value: 'ml' },
-								{ key: 'cup', value: 'ml' },
+								{
+									key: 'Unit',
+									value: '',
+								},
+								{
+									key: 'tbsp',
+									value: 'tablespoon',
+								},
+								{
+									key: 'cup',
+									value: 'cup',
+								},
+								{
+									key: 'gr',
+									value: 'gram',
+								},
+								{
+									key: 'ml',
+									value: 'mililit',
+								},
 							]}
-							rules={{ required: true }}
+							register={register}
 						/>
-						<Button type="submit">Add</Button>
-					</Form>
-				</Modal>
-			)}
-		</div>
+						<button
+							type="button"
+							onClick={() => remove(index)}
+							className="text-2xl text-red"
+						>
+							<MdDelete />
+						</button>
+					</li>
+				))}
+			</ul>
+			<Button
+				type="button"
+				onClick={() => {
+					append({
+						name: '',
+						quantity: '',
+						unit: '',
+					});
+				}}
+			>
+				Add new ingredient
+			</Button>
+		</>
 	);
 }
 
-export default memo(Ingredients);
+export default Ingredients;

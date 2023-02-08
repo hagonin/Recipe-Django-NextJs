@@ -1,15 +1,6 @@
 import { useAuthContext } from '@context/auth-context';
-import { useFormContext } from 'react-hook-form';
 
-const InputField = ({
-	label,
-	name,
-	type,
-	register,
-	rules = { required: false },
-	error,
-	...props
-}) => {
+const InputField = ({ label, name, type, register, error, ...props }) => {
 	const { setErrors } = useAuthContext();
 	return (
 		<div className="w-full">
@@ -21,7 +12,6 @@ const InputField = ({
 				id={name}
 				type={type}
 				{...register(name, {
-					...rules,
 					onChange: () => {
 						setErrors(null);
 					},
@@ -44,7 +34,6 @@ const CheckboxField = ({
 	isSingle = { label: false },
 	options,
 	register,
-	rules = { required: false },
 	error,
 	...props
 }) => {
@@ -59,7 +48,7 @@ const CheckboxField = ({
 					<input
 						id={name}
 						type="checkbox"
-						{...register(name, { ...rules })}
+						{...register(name)}
 						{...props}
 					/>
 					{isSingle.label}
@@ -88,9 +77,7 @@ const CheckboxField = ({
 	);
 };
 
-const RadioField = ({ name, label, options, ...props }) => {
-	const { register, errors } = useFormContext();
-
+const RadioField = ({ name, label, options, register, error, ...props }) => {
 	return (
 		<div>
 			<Label
@@ -109,14 +96,12 @@ const RadioField = ({ name, label, options, ...props }) => {
 					{option.key}
 				</label>
 			))}
-			<Error error={errors[name]?.message} />
+			<Error error={error?.message} />
 		</div>
 	);
 };
 
-const SelectField = ({ name, label, options, ...props }) => {
-	const { register, errors } = useFormContext();
-
+const SelectField = ({ name, label, options, register, error, ...props }) => {
 	return (
 		<div className="w-full ">
 			<Label
@@ -128,9 +113,7 @@ const SelectField = ({ name, label, options, ...props }) => {
 				{...register(name)}
 				{...props}
 				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
-					errors[name]
-						? 'border-red'
-						: 'border-border focus:border-primary'
+					error ? 'border-red' : 'border-border focus:border-primary'
 				}`}
 			>
 				{options.map((option) => (
@@ -142,14 +125,12 @@ const SelectField = ({ name, label, options, ...props }) => {
 					</option>
 				))}
 			</select>
-			<Error error={errors[name]?.message} />
+			<Error error={error?.message} />
 		</div>
 	);
 };
 
-const TextAreaField = ({ label, name, ...props }) => {
-	const { register, errors } = useFormContext();
-
+const TextAreaField = ({ label, name, register, error, ...props }) => {
 	return (
 		<div className="flex flex-col">
 			<Label
@@ -161,12 +142,10 @@ const TextAreaField = ({ label, name, ...props }) => {
 				{...register(name)}
 				{...props}
 				className={`w-full border rounded px-5 py-2 outline-none ${
-					errors[name]
-						? 'border-red'
-						: 'border-border focus:border-primary'
+					error ? 'border-red' : 'border-border focus:border-primary'
 				}`}
 			/>
-			<Error error={errors[name]?.message} />
+			<Error error={error?.message} />
 		</div>
 	);
 };
