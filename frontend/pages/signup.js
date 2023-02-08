@@ -14,7 +14,7 @@ function SignUp() {
 	const onSubmit = (data) => signup({ ...data });
 
 	return (
-		<div className="bg-primaryLight">
+		<div className="bg-primaryLight select-none">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
 				<div className="flex flex-col items-center justify-center">
 					<Img

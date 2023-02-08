@@ -5,12 +5,12 @@ const InputField = ({
 	label,
 	name,
 	type,
+	register,
 	rules = { required: false },
+	error,
 	...props
 }) => {
-	const { register } = useFormContext();
-	const { setErrors, errors } = useAuthContext();
-
+	const { setErrors } = useAuthContext();
 	return (
 		<div className="w-full">
 			<Label
@@ -23,31 +23,31 @@ const InputField = ({
 				{...register(name, {
 					...rules,
 					onChange: () => {
-						setErrors(false);
+						setErrors(null);
 					},
 				})}
 				{...props}
 				className={`w-full ${
 					type !== 'file' && 'border rounded'
 				} px-5 h-12 outline-none ${
-					errors?.[name]
-						? 'border-red'
-						: 'border-border focus:border-primary'
+					error ? 'border-red' : 'border-border focus:border-primary'
 				}`}
 			/>
-			<Error error={errors?.[name]} />
+			<Error error={error?.message} />
 		</div>
 	);
 };
 
 const CheckboxField = ({
-	name,
 	label,
+	name,
 	isSingle = { label: false },
 	options,
+	register,
+	rules = { required: false },
+	error,
 	...props
 }) => {
-	const { register, errors } = useFormContext();
 	return (
 		<div>
 			<Label
@@ -59,7 +59,7 @@ const CheckboxField = ({
 					<input
 						id={name}
 						type="checkbox"
-						{...register(name)}
+						{...register(name, { ...rules })}
 						{...props}
 					/>
 					{isSingle.label}
@@ -83,7 +83,7 @@ const CheckboxField = ({
 					))}
 				</>
 			)}
-			<Error error={errors[name]?.message} />
+			<Error error={error?.message} />
 		</div>
 	);
 };

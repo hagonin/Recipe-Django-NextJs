@@ -2,7 +2,7 @@ import { useAuthContext } from '@context/auth-context';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
-import {images} from '@utils/constants'
+import { images } from '@utils/constants';
 
 function Login() {
 	const { login } = useAuthContext();

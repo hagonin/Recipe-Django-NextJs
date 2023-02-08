@@ -53,9 +53,15 @@
       @apply text-base font-medium h-[46px] px-5;
     }
 
+    .btn.wFull {
+      @apply w-full;
+    }
+
     .btn.cancle {
       @apply hover:bg-primaryLight hover:text-black
     }
+
+
 }
 
 

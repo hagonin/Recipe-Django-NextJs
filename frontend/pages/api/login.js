@@ -3,7 +3,7 @@ import cookie from 'cookie';
 
 const handler = async (req, res) => {
 	if (req.method === 'POST') {
-		const { email, password, remember, id } = req.body;
+		const { email, password, remember } = req.body;
 		try {
 			const response = await api.post('/user/login/', {
 				password,

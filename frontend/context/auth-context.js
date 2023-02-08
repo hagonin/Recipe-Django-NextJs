@@ -33,7 +33,9 @@ const AuthProvider = ({ children }) => {
 				router.push(`/user/${user.username}`);
 			}
 		} catch (error) {
-			setErrors(error.response.data.error);
+			setErrors({
+				login: error.response.data.error,
+			});
 		}
 	};
 
@@ -84,7 +86,7 @@ const AuthProvider = ({ children }) => {
 
 			router.push('/login');
 		} catch (error) {
-			setErrors(error.response.data);
+			setErrors({ register: error.response.data });
 		}
 	};
 

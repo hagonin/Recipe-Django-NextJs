@@ -1,6 +1,7 @@
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Button from '@components/UI/Button';
 import { useAuthContext } from '@context/auth-context';
+import Link from 'next/link';
 
 function User() {
 	const { user } = useAuthContext();
@@ -24,6 +25,7 @@ function User() {
 			>
 				Add recipe
 			</Button>
+			<Link href="/login">Login</Link>
 		</div>
 	);
 }
