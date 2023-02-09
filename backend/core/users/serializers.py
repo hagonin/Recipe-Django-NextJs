@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
+from rest_framework.validators import UniqueValidator
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 
 from .models import CustomUser, Profile
@@ -7,7 +9,8 @@ from .models import CustomUser, Profile
 class UserSerializer(serializers.ModelSerializer):	
     """
     Serializer class to seralize CustomUser model.
-    """
+    """    
+    date_joined = serializers.ReadOnlyField()
     class Meta:
         model = CustomUser
         fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password')
@@ -18,14 +21,26 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     """
     Serialize registration requests and create a new user.
     """
+    email = serializers.EmailField(required=True,validators= [UniqueValidator(queryset=CustomUser.objects.all())])
+    password = serializers.CharField(min_length=8,write_only=True)
+    confirm_password = serializers.CharField(min_length=8,write_only=True)
+   
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('id', 'username', 'password','confirm_password','email', 'first_name', 'last_name')
 
     def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
-
+        """Create a new user with encrypted password and return it"""
+        user = CustomUser.objects.create(
+        email=validated_data['email'],
+        username=validated_data['username'],
+        password=make_password(validated_data['password']))
+        return user
+    
+    def validate(self, attrs):
+        if attrs.get('password') != attrs.get('confirm_password'):
+            raise serializers.ValidationError("Those passwords don't match.")
+        return attrs
 
 class UserLoginSerializer(serializers.Serializer):
     """
@@ -35,19 +50,24 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
+        """Validate and authenticate the user"""
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError('Access denied: wrong username or password.')
+        raise serializers.ValidationError('Access denied: wrong email or password.')
 
 class ProfileSerializer(UserSerializer):
     """
     Serializer the user profile model 
     """
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.CharField(source='user.email')
+    first_name = serializers.CharField(source='user.first_name')
+    last_name = serializers.CharField(source='user.last_name')
 
     class Meta:
         model = Profile
-        fields = ('user_id','bookmarks','bio','avatar')
+        fields = ('user_id','email','username','first_name','last_name','bookmarks','bio','avatar')
       
 
 class ChangePasswordSerializer(serializers.Serializer):

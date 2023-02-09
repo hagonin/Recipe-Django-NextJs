@@ -6,8 +6,8 @@ from rest_framework.filters import OrderingFilter
 
 from .filters import SearchVectorFilter
 from .serializers import (CategorySerializer,RecipeIngredientSerializer,
-    RecipeReadSerializer,RecipeWriteSerializer, ReviewReadSerializer,ReviewWriteSerializer,RecipeInstructionSerializer)
-from .models import Recipe,RecipeIngredient,RecipeReview,Category, Instruction
+    RecipeReadSerializer,RecipeWriteSerializer, ReviewReadSerializer,ReviewWriteSerializer)
+from .models import Recipe,RecipeIngredient,RecipeReview,Category
 
 from .permissions import IsAuthorOrReadOnly
 
@@ -20,13 +20,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     filterset_fields = ['name']
     search_fields = ['name']
-
-class InstructionViewSet(viewsets.ModelViewSet):
-    """
-    List and Retrieve instructions
-    """
-    queryset = Instruction.objects.all()
-    serializer_class = RecipeInstructionSerializer
 
 
 class RecipeIngredientViewSet(viewsets.ModelViewSet):
