@@ -1,22 +1,19 @@
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-from .models import Recipe, RecipeReview, Category,RecipeIngredient, Instruction
+from .models import Recipe, RecipeReview, Category,RecipeIngredient
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Category
-        fields = ('name','type')
+        fields = ('id','name',)
 
-class RecipeInstructionSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = Instruction
-        fields = '__all__'
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = RecipeIngredient
         fields = '__all__'
+        read_only_fields = ('id',)
 
 
 class RecipeReadSerializer(FlexFieldsModelSerializer):
@@ -28,7 +25,7 @@ class RecipeReadSerializer(FlexFieldsModelSerializer):
         model = Recipe
         exclude = ['search_vector']
         expandable_fields = {
-        'categories': (CategorySerializer),
+        'category': (CategorySerializer),
         }
 
     def get_total_number_of_bookmarks(self, obj):

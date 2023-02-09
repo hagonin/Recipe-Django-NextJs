@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
@@ -9,11 +10,13 @@ from .validators import validate_unit_of_measure
 
 
 class Category(models.Model):
+    """
+    Recipe categories
+    """
     name = models.CharField(
         max_length=120,
         unique=True,
     )
-    type = models.CharField(max_length=50)
 
     class Meta:
         ordering = ('name',)
@@ -25,27 +28,47 @@ class Category(models.Model):
 
 
 def get_default_recipe_category():
+    """
+    Returns a default recipe type.
+    """
     return Category.objects.get_or_create(name='Others')[0]
+
+class RecipeIngredient(models.Model):
+    """
+    Returns ingredients for a recipe
+    """
+    name = models.CharField(max_length=220)   
+    quantity = models.CharField(max_length=50, blank=True, null=True)
+    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])       
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="recipes", on_delete=models.CASCADE)
-    categories = models.ForeignKey(Category,related_name="recipes",on_delete=models.SET(get_default_recipe_category))
+    """
+    Recipe object
+    """
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category,related_name="recipe_list")
+    ingredients = models.ManyToManyField(RecipeIngredient, related_name="ingredient")
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    direction = models.TextField(blank=True, verbose_name='Recipe|direction')
+    image = CloudinaryField('Image',overwrite=True, null=True,)
     serving = models.IntegerField(blank=True, null=True)
-    rating_value = models.IntegerField(null=True, blank=True)
+    rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=255)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
     search_vector = SearchVectorField(null=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     source = models.CharField(max_length=200, verbose_name='Source|url', null=True)
-
 
     class Meta:
         ordering = ['-created_at']
@@ -63,30 +86,15 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
-
-class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients', related_query_name='recipe')
-    name = models.CharField(max_length=220)   
-    quantity = models.CharField(max_length=50, blank=True, null=True)
-    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])       
-    notes = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
         
 
-class Instruction(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='instruction')
-    direction = models.TextField(blank=True, verbose_name='Recipe|direction')
 
 class RecipeImage(models.Model):
+    """
+    Returns images for a recipe
+    """
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField( 
-        verbose_name= "image",
-        help_text= "Upload a product image",
-        upload_to="images/",
-        default="images/default.png"
-    ) 
+    image = CloudinaryField('Image/recipe',overwrite=True, null=True,)
     caption = models.CharField(
         max_length=200, 
         verbose_name= 'Photo|caption',
@@ -100,8 +108,11 @@ class RecipeImage(models.Model):
 
 
 class RecipeReview(models.Model):
-    recipe = models.ForeignKey(Recipe, related_name='reviews', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reviews',on_delete=models.SET_NULL, null=True)
+    """
+    Returns comments for related recipe
+    """
+    recipe = models.ForeignKey(Recipe, related_name='review', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='review',on_delete=models.SET_NULL, null=True)
     content = models.TextField(blank=True, null=True)
     stars = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
