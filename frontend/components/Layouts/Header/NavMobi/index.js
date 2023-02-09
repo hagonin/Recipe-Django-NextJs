@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useAuthContext } from '@context/auth-context';
+
 import { NavLinks } from '@utils/constants';
 
 import { FaAngleRight } from 'react-icons/fa';
@@ -12,10 +14,12 @@ import SocialLink from '@components/UI/SocialLink';
 import Img from '@components/UI/Image';
 
 function NavMobi() {
+	const { isAuthenticated, user, logout } = useAuthContext();
 	const [showNavMobi, setShowNavMobi] = useState(false);
 	const toggleNavMobi = () => {
 		setShowNavMobi(!showNavMobi);
 	};
+
 	return (
 		<div className="lg:hidden">
 			{!showNavMobi && (
@@ -36,31 +40,34 @@ function NavMobi() {
 						>
 							<MdClose />
 						</button>
-						{/* user area login*/}
-						<div className="">
-							<Img
-								src="/static/images/user.png"
-								alt="avatar"
-								className="h-20 w-20 border-border rounded-full ml-5"
-							/>
-							<span className="text-black font-bold block mt-3 ml-5">
-								User Name
-							</span>
-							<span className="text-sm text-second block mb-10 ml-5">
-								username@gmail.com
-							</span>
-							<NavItem href="/"> Manage Recipe</NavItem>
-							<NavItem>Add Recipe</NavItem>
-						</div>
+						{isAuthenticated ? (
+							<div>
+								<Img
+									src="/static/images/user.png"
+									alt="avatar"
+									className="h-20 w-20 border-border rounded-full ml-5"
+								/>
+								<span className="text-black font-bold block mt-3 ml-5">
+									{user?.username}
+								</span>
+								<span className="text-sm text-second block mb-10 ml-5">
+									{user?.email}
+								</span>
+								<NavItem href={`/user/${user?.username}`}>
+									{' '}
+									Manage Recipe
+								</NavItem>
+								<NavItem>Add Recipe</NavItem>
+							</div>
+						) : (
+							<NavItem href="/login">
+								<span>
+									<FiLogIn className="inline-block relative -mt-1 mr-2" />
+									Login
+								</span>
+							</NavItem>
+						)}
 
-						{/* Incognito */}
-						{/* <NavItem href="/">
-							<span>
-								<FiLogIn className="inline-block relative -mt-1 mr-2" />
-								Login
-							</span>
-						</NavItem> */}
-						{/* navigate */}
 						<div className="border-y py-2 mt-2 mb-5">
 							{NavLinks.map((nav) =>
 								nav.children ? (
@@ -89,14 +96,15 @@ function NavMobi() {
 								)
 							)}
 						</div>
-						{/* login */}
-						{/* <NavItem>
-							<span>
-								<FiLogOut className="inline-block relative -mt-1 mr-2" />
-								Log out
-							</span>
-						</NavItem> */}
-						<div className="md:hidden block">
+						{isAuthenticated && (
+							<NavItem onClick={logout}>
+								<span>
+									<FiLogOut className="inline-block relative -mt-1 mr-2" />
+									Log out
+								</span>
+							</NavItem>
+						)}
+						<div className="md:hidden block mt-6">
 							<SocialLink color="black" />
 						</div>
 					</nav>

@@ -1,34 +1,49 @@
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import {
-	CheckboxField,
-	Form,
 	InputField,
-	RadioField,
 	SelectField,
-	BtnForm,
 	TextAreaField,
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
-import { MdAdd, MdAddAPhoto, MdLockClock } from 'react-icons/md';
+import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
+import SearchVector from './SearchVector';
 
 function AddRecipeForm({ onSubmit }) {
+	const {
+		register,
+		control,
+		handleSubmit,
+		formState: { errors: formErr },
+		reset,
+	} = useForm();
+	const [recipeImgs, setRecipeImgs] = useState(null);
+
+	useEffect(() => {
+		reset();
+	}, []);
+
 	return (
-		<Form
-			onSubmit={onSubmit}
-			initValues={{ a: '' }}
+		<form
+			onSubmit={handleSubmit((data) =>
+				onSubmit({ ...data.recipe, images: recipeImgs })
+			)}
+			noValidate={true}
 		>
 			<div className="flex flex-col gap-4">
-				<h2 className="border-b border-primary pb-1 mb-4">
-					Recipe Detail
-				</h2>
+				<Title title="Recipe Detail" />
 				<div className="flex md:flex-row flex-col gap-4">
 					<InputField
-						name="recipe-title"
+						name="recipe.title"
 						placeholder="Recipe title"
 						type="text"
+						register={register}
+						error={formErr?.recipe?.title}
 					/>
 					<SelectField
-						name="category"
+						name="recipe.category"
 						options={[
 							{ key: 'Select category', value: '' },
 							{ key: 'dinner', value: 0 },
@@ -36,66 +51,88 @@ function AddRecipeForm({ onSubmit }) {
 							{ key: 'lunch', value: 2 },
 							{ key: 'fastFood', value: 3 },
 						]}
+						register={register}
+						error={formErr?.recipe?.category}
 					/>
 				</div>
 				<TextAreaField
-					name="recipe-summary"
+					name="recipe.summary"
 					placeholder="Summary"
 					rows="5"
+					register={register}
+					error={formErr?.recipe?.summary}
 				/>
 				<div className="flex gap-4">
 					<InputField
+						name="recipe.prep_time"
 						label="Pre-time (minutes)"
-						name="pre-time"
 						type="number"
+						register={register}
+						error={formErr?.recipe?.prep_time}
 					/>
 					<InputField
+						name="recipe.cook_time"
 						label="Cook-time (minutes)"
-						name="cook-time"
 						type="number"
+						register={register}
+						error={formErr?.recipe?.cook_time}
 					/>
 					<InputField
+						name="recipe.serving"
 						label="Serve (people)"
-						name="serve"
 						type="number"
+						register={register}
+						error={formErr?.recipe?.serving}
 					/>
 				</div>
 				<TextAreaField
-					name="recipe-desc"
+					name="recipe.description"
 					placeholder="Description"
 					rows="5"
+					register={register}
+					error={formErr?.recipe?.description}
 				/>
-				{/* <InputField
-					name="recipe-image"
-					type="file"
-				/> */}
-				<Button icon={{ left: <MdAddAPhoto /> }}>Add Photo</Button>
+				<RecipeImages setRecipeImgs={setRecipeImgs} />
 			</div>
-
-			<Ingredients />
 
 			<div className="mt-5">
-				<h2 className="border-b border-primary pb-1 mb-4">
-					Directions
-				</h2>
-				<Button icon={{ left: <MdAdd /> }}>Add Step</Button>
-			</div>
-			<TextAreaField
-				label="Notes"
-				name="recipe-note"
-				placeholder="Notes"
-				rows="2"
-			/>
-
-			<div className="flex gap-4 mt-10">
-				<BtnForm label="Add" />
-				<BtnForm
-					label="Reset"
-					type="reset"
+				<Title title="Ingredients" />
+				<Ingredients
+					control={control}
+					register={register}
 				/>
 			</div>
-		</Form>
+
+			<div className="mt-5">
+				<Title title="Search Vector" />
+				<SearchVector
+					control={control}
+					register={register}
+				/>
+			</div>
+
+			<InputField
+				name="recipe.source"
+				label="Source of recipe"
+				type="text"
+				register={register}
+				error={formErr?.recipe?.source}
+			/>
+
+			<div className="flex gap-4 mt-10 justify-center">
+				<Button
+					className="primary lgSize w-full"
+					type="submit"
+				>
+					Add Recipe
+				</Button>
+				<Button className="cancle lgSize w-full">cancle</Button>
+			</div>
+		</form>
 	);
 }
 
+const Title = ({ title }) => (
+	<h2 className="border-b border-primary pb-1 mb-2">{title}</h2>
+);
 export default AddRecipeForm;

@@ -1,20 +1,14 @@
 import Link from 'next/link';
 
 export default function Button({
-	href,
 	children,
-	styles = {
-		tag: false,
-		primary: false,
-		lgSize: false,
-		cancle: false,
-	},
 	className = '',
 	icon = {
 		left: false,
 		right: false,
 	},
 	type = 'button',
+	href,
 	linkoutside,
 	...props
 }) {
@@ -28,13 +22,9 @@ export default function Button({
 		_props.type = type;
 	}
 
-	let style = Object.keys(styles)
-		.filter((key) => styles[key])
-		.join(' ');
-
 	return (
 		<Component
-			className={`btn ${style} ${className}`}
+			className={`btn ${className}`}
 			{..._props}
 		>
 			{icon.left && (

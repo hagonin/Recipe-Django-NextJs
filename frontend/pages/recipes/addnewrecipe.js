@@ -1,10 +1,9 @@
+import { images } from '@utils/constants';
+
 import AddRecipeForm from '@components/Form/AddRecipeForm';
 import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
-import { useAuthContext } from '@context/auth-context';
-import withAuth from '@utils/AuthRoute';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 function AddRecipe() {
 	const onSubmit = (data) => {
@@ -14,7 +13,7 @@ function AddRecipe() {
 		<div className="container py-14 lg:w-3/4">
 			<div className="flex items-end justify-center mb-8">
 				<Img
-					src="/static/images/addrecipe.png"
+					src={images.addRecipeImg}
 					alt="add_recipe"
 					className="h-24 w-24"
 				/>
@@ -25,6 +24,6 @@ function AddRecipe() {
 	);
 }
 
-export default withAuth(AddRecipe);
+export default AddRecipe;
 
-// AddRecipe.getLayout = (page) => <ManageRecipeLayout>{page}</ManageRecipeLayout>;
+AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

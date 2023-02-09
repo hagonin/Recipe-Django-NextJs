@@ -7,11 +7,6 @@ from django.contrib.auth.password_validation import validate_password
 from .models import CustomUser, Profile
 
 class UserSerializer(serializers.ModelSerializer):	
-    """
-    Serializer class to seralize CustomUser model.
-    """    
-    date_joined = serializers.ReadOnlyField()
-    
     class Meta:
         model = CustomUser
         fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password')
@@ -61,10 +56,6 @@ class ProfileSerializer(UserSerializer):
     """
     Serializer the user profile model 
     """
-    username = serializers.CharField(source='user.username', read_only=True)
-    email = serializers.EmailField(source='user.email', read_only=True)
-    first_name = serializers.CharField(source='user.first_name', read_only=True)
-    last_name = serializers.CharField(source='user.last_name', read_only=True)
 
     class Meta:
         model = Profile

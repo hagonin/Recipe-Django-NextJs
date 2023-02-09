@@ -1,8 +1,9 @@
 import AuthProvider from '@context/auth-context';
 import RootLayout from '@layouts/RootLayout';
-import '@styles/globals.css';
 import { nunito } from '@utils/fonts';
+import { images } from '@utils/constants';
 import Head from 'next/head';
+import '@styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }) {
 
 				<link
 					rel="icon"
-					href="/static/images/logo_icon.png"
+					href={images.logoIcon}
 				/>
 			</Head>
 			<main className={nunito.className}>
