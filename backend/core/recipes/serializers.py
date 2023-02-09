@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-from .models import Recipe, RecipeReview, Category,RecipeIngredient, Instruction
+from .models import Recipe, RecipeReview, Category,RecipeIngredient
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
@@ -8,15 +8,12 @@ class CategorySerializer(FlexFieldsModelSerializer):
         model = Category
         fields = ('id','name',)
 
-class RecipeInstructionSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = Instruction
-        fields = '__all__'
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = RecipeIngredient
         fields = '__all__'
+        read_only_fields = ('id',)
 
 
 class RecipeReadSerializer(FlexFieldsModelSerializer):

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import cloudinary
 import os
+import cloudinary.uploader
+import cloudinary.api
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
@@ -25,6 +27,7 @@ cloudinary.config(
     api_key=config('CLOUD_API_KEY'),
     api_secret=config('CLOUD_API_SECRET')
 )
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'corsheaders',
     'drf_spectacular',
+    'cloudinary',
     #local apps
     'recipes',
     'users'
