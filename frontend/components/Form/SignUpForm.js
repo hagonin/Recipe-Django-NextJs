@@ -36,6 +36,11 @@ function SignUpForm({ onSubmit }) {
 				type: 'custom',
 				message: errors.register.password,
 			});
+		errors?.register?.confirm_password &&
+			setError('register.confirm_password', {
+				type: 'custom',
+				message: errors.register.confirm_password,
+			});
 	}, [errors]);
 
 	useEffect(() => {
@@ -57,6 +62,11 @@ function SignUpForm({ onSubmit }) {
 				Welcome. We are glad you are here.
 			</p>
 
+			{errors?.register?.['non_field_errors'] ? (
+				<span className="block text-center px-5 py-2 mb-7 bg-redLight text-red rounded-md ">
+					{errors?.register?.['non_field_errors']}
+				</span>
+			) : null}
 			<form
 				onSubmit={handleSubmit((data) => onSubmit(data.register))}
 				className="flex flex-col gap-4"
@@ -100,6 +110,14 @@ function SignUpForm({ onSubmit }) {
 					placeholder="Enter your password"
 					register={register}
 					error={formError?.register?.password}
+				/>
+
+				<InputField
+					name="register.confirm_password"
+					type="password"
+					placeholder="Confirm password"
+					register={register}
+					error={formError?.register?.confirm_password}
 				/>
 
 				<Button

@@ -73,6 +73,7 @@ const AuthProvider = ({ children }) => {
 		firstname,
 		lastname,
 		password,
+		confirm_password,
 		email,
 	}) => {
 		try {
@@ -81,6 +82,7 @@ const AuthProvider = ({ children }) => {
 				lastname,
 				firstname,
 				password,
+				confirm_password,
 				email,
 			});
 
