@@ -119,16 +119,14 @@ function AddRecipeForm({ onSubmit }) {
 				error={formErr?.recipe?.source}
 			/>
 
-			<div className="flex gap-4 mt-10">
+			<div className="flex gap-4 mt-10 justify-center">
 				<Button
-					styles={{ lgSize: true, primary: true, wFull: true }}
+					className="primary lgSize w-full"
 					type="submit"
 				>
 					Add Recipe
 				</Button>
-				<Button styles={{ lgSize: true, cancle: true, wFull: true }}>
-					cancle
-				</Button>
+				<Button className="cancle lgSize w-full">cancle</Button>
 			</div>
 		</form>
 	);

@@ -58,7 +58,7 @@
     }
 
     .btn.cancle {
-      @apply hover:bg-primaryLight hover:text-black
+      @apply text-red border-red hover:bg-redLight hover:border-red
     }
 
 

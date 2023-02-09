@@ -121,8 +121,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<Button
-					styles={{ primary: true, lgSize: true }}
-					className="w-full mt-5"
+					className="primary lgSize w-full mt-5"
 					type="submit"
 				>
 					{isSubmitting && <Loader type="submitting" />}

@@ -91,8 +91,7 @@ function LoginForm({ onSubmit }) {
 					</Link>
 				</div>
 				<Button
-					styles={{ primary: true, lgSize: true }}
-					className="w-full"
+					className="primary lgSize w-full"
 					type="submit"
 				>
 					{isSubmitting && <Loader type="submitting" />}

@@ -8,13 +8,13 @@ function Widget() {
 			<Button className="w-full">Follow Instagram</Button>
 			<Button
 				icon={{ left: <BsInstagram /> }}
-				styles={{ lgSize: true }}
+				className="lgSize"
 			>
 				Follow Instagram
 			</Button>
 
-			<Button styles={{ primary: true }}>Follow Instagram</Button>
-			<Button styles={{ tag: true }}>Follow Instagram</Button>
+			<Button className="primary">Follow Instagram</Button>
+			<Button className="tag">Follow Instagram</Button>
 		</h3>
 	);
 }
