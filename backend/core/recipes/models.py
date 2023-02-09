@@ -52,7 +52,7 @@ class Recipe(models.Model):
     Recipe object
     """
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category,related_name="recipe_list",on_delete=models.SET(get_default_recipe_category))
+    category = models.ManyToManyField(Category,related_name="recipe_list")
     ingredients = models.ManyToManyField(RecipeIngredient, related_name="ingredient")
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')

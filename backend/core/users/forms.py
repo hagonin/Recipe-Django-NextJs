@@ -6,10 +6,11 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'username',
-                  'email', 'password1', 'password2']
+                'email', 'password1', 'password2']
 
     def clean_password2(self):
         # Check that the two password entries match

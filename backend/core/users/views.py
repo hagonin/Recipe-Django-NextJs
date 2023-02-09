@@ -2,23 +2,22 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, ListCreateAPIView, UpdateAPIView
+from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from recipes.models import Recipe
 from .models import Profile, CustomUser
 from recipes.serializers import RecipeReadSerializer
-from .serializers import (UserSerializer,UserRegistrationSerializer,
-    UserLoginSerializer,ProfileSerializer,ChangePasswordSerializer)
+from . import serializers
 
 
-class UserRegisterView(GenericAPIView):
+class UserRegisterView(generics.GenericAPIView):
     """
     Enpoint to create a new user
     """
     permission_classes = (AllowAny,)
-    serializer_class = UserRegistrationSerializer
+    serializer_class = serializers.UserRegistrationSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -32,18 +31,18 @@ class UserRegisterView(GenericAPIView):
         }
         return Response(data, status=status.HTTP_201_CREATED)
 
-class UserLoginView(GenericAPIView):
+class UserLoginView(generics.GenericAPIView):
     """
     Authenticate existing users using their email & password 
     """
     permission_classes = (AllowAny,)
-    serializer_class = UserLoginSerializer
+    serializer_class = serializers.UserLoginSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        serializer = UserSerializer(user)
+        serializer = serializers.UserSerializer(user)
         token = RefreshToken.for_user(user)
         data = serializer.data
         data['token'] = {
@@ -53,7 +52,7 @@ class UserLoginView(GenericAPIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-class UserLogoutView(UpdateAPIView):
+class UserLogoutView(generics.UpdateAPIView):
     """
     Enpoint to logout users
     """
@@ -69,47 +68,29 @@ class UserLogoutView(UpdateAPIView):
         except Exception as e : 
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class UserUpdateView(RetrieveUpdateAPIView):
+class UserUpdateView(generics.RetrieveUpdateDestroyAPIView):
     """
     Get, update user information
     """
     permission_classes = (IsAuthenticated,)
-    serializer_class = UserSerializer
-    queryset = Profile.objects.all()
+    serializer_class = serializers.UserSerializer
 
     def get_object(self):
-        return self.request.user.profile
-
-    def get(self, request, *args, **kwargs):
-        # serializer to handle turning our `User` object into something that 
-        # can be JSONified and sent to the client. 
-        serializer = self.serializer_class(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-
-    def put(self, request, *args, **kwargs):
-        serializer_data = request.data.get('user', {})
-        serializer = UserSerializer(
-            request.user, data=serializer_data, partial=True
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return self.request.user
 
 
-class UserProfileView(RetrieveUpdateAPIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     """
     Get, update user profile
     """
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = ProfileSerializer
+    serializer_class = serializers.ProfileSerializer
 
     def get_object(self):
         return self.request.user.profile
 
-
-class UserBookmarkView(ListCreateAPIView):
+class UserBookmarkView(generics.ListCreateAPIView):
     """
     Get, Create, Delete favorite recipe
     """
@@ -142,12 +123,12 @@ class UserBookmarkView(ListCreateAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class ChangePasswordView(UpdateAPIView):
+class ChangePasswordView(generics.UpdateAPIView):
     """
     Change password view for authenticated user
     """
     permission_classes = (IsAuthenticated,)
-    serializer_class = ChangePasswordSerializer
+    serializer_class = serializers.ChangePasswordSerializer
 
     def get_object(self):
         return self.request.user

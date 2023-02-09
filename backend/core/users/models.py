@@ -25,12 +25,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
     
-    def save(self, *args, **kwargs):
-        super(CustomUser, self).save(*args, **kwargs)
-        return self
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='profile')
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
     avatar = CloudinaryField('Image/avatar',overwrite=True,format="jpg")
     bio = models.CharField(max_length=200, blank=True)
