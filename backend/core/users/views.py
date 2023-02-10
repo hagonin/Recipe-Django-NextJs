@@ -8,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from recipes.models import Recipe
 from .models import Profile, CustomUser
-from recipes.serializers import RecipeReadSerializer
+from recipes.serializers import RecipeSerializer
 from . import serializers
 
 
@@ -94,7 +94,7 @@ class UserBookmarkView(generics.ListCreateAPIView):
     """
     Get, Create, Delete favorite recipe
     """
-    serializer_class = RecipeReadSerializer
+    serializer_class = RecipeSerializer
     permission_classes = (IsAuthenticated,)
     profile = Profile.objects.all()
 

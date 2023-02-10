@@ -1,54 +1,72 @@
 from rest_framework import serializers
 from rest_flex_fields import FlexFieldsModelSerializer
-from .models import Recipe, RecipeReview, Category,RecipeIngredient
+from .models import Recipe, RecipeReview, Category,RecipeIngredient,Ingredient,RecipeImage
 
 
 class CategorySerializer(FlexFieldsModelSerializer):
     class Meta:
         model = Category
         fields = ('id','name',)
+    
+        expandable_fields = {
+            'recipes': ('recipes.RecipeSerializer', {'many': True})
+        }
 
-
-class RecipeIngredientSerializer(serializers.ModelSerializer):
+class IngredientSerializer(FlexFieldsModelSerializer):
     class Meta: 
-        model = RecipeIngredient
-        fields = '__all__'
-        read_only_fields = ('id',)
+        model = Ingredient
+        fields = ('title', 'description')
 
-
-class RecipeReadSerializer(FlexFieldsModelSerializer):
+    
+class RecipeSerializer(FlexFieldsModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
     author = serializers.CharField(source="author.username", read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
     
+    
     class Meta: 
         model = Recipe
         exclude = ['search_vector']
+
         expandable_fields = {
-        'category': (CategorySerializer),
+            'category': ('recipes.CategorySerializer', {'many':True}),
+            'recipe_detail': ('recipes.RecipeIngredientSerializer',{'many':True}),
+            'reviews': ('recipes.ReviewSerializer', {'many':True}),
+            'image': ('recipes.ImageSerializer', {'many':True}),
         }
 
     def get_total_number_of_bookmarks(self, obj):
         return obj.get_total_number_of_bookmarks()
 
-class RecipeWriteSerializer(serializers.ModelSerializer):
-    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+class RecipeIngredientSerializer(FlexFieldsModelSerializer):
+    class Meta: 
+        model = RecipeIngredient
+        fields = ('pk','quantity', 'unit', 'notes')
 
-    class Meta:
-        model = Recipe
-        fields = "__all__"
+        expandable_fields = {
+            'recipe': ('recipes.CategorySerializer'),
+            'ingredients': ('recipes.IngredientSerializer')
+        }    
+    
 
-class ReviewReadSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source="author.username",read_only=True)
+class ReviewSerializer(FlexFieldsModelSerializer):
 
     class Meta: 
         model = RecipeReview
-        fields = '__all__'
+        fields = ('content','stars', 'date_added')
 
+        expandable_fields = {
+            'recipe':'recipes.CategorySerializer',
+            'user': 'users.UserSerializer'
+        }
 
-class ReviewWriteSerializer(serializers.ModelSerializer):
-    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
+class ImageSerializer(FlexFieldsModelSerializer):
     class Meta:
-        model = RecipeReview
-        fields = "__all__"
+        model = RecipeImage
+        fields = ('pk','caption', 'image')
+
+        expandable_fields = {
+            'recipes': ('recipes.RecipeSerializer', {'many': True})
+        }
+
+

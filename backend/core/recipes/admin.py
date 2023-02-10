@@ -2,14 +2,10 @@ from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import Category, Recipe, RecipeIngredient, RecipeImage,RecipeReview
+from .models import Category, Recipe, Ingredient, RecipeIngredient, RecipeImage,RecipeReview
 
 User = get_user_model()
 
-
-class ImageInline(admin.StackedInline):
-    model = RecipeImage
-    extra = 0
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,7 +13,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin): 
-    inlines = (ImageInline,)  
     search_fields = ('title',)
     list_display= ['title','author']
     list_filter = ('category',)
@@ -27,9 +22,10 @@ class RecipeAdmin(admin.ModelAdmin):
     exclude = ('search_vector',)
 
 
-
+admin.site.register(Ingredient)
 admin.site.register(RecipeIngredient)
 admin.site.register(RecipeReview)
+admin.site.register(RecipeImage)
 
 admin.site.unregister(Group)
 admin.site.site_header = "Recipe App Admin"
