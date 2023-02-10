@@ -5,7 +5,6 @@ import api from '@services/axios';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-	 
 	return (
 		<>
 			<h1>Chocolate Chip Cookies h1</h1>

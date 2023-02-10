@@ -18,12 +18,13 @@ module.exports = {
 				primary: '#96b7ae',
 				primaryLight: '#7ba39617',
 				primaryDark: '#88a79f',
+				primaryTransparent: 'rgb(150, 183, 174, 0.8)',
 				second: '#757575',
 				grey: '#EEEEEE',
 				black: '#111111',
 				border: '#e6e6e6',
 				red: '#F33A58',
-				redLight: 'rgba(243, 58, 89, 0.15)'
+				redLight: 'rgba(243, 58, 89, 0.15)',
 			},
 			animation: {
 				'spin-slow': 'spin 2s linear infinite',

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-function Img({ alt, src, className, ...props }) {
+function Img({ alt, src, className, cover, ...props }) {
 	return (
 		<div className={`relative ${className}`}>
 			<Image
@@ -8,9 +8,9 @@ function Img({ alt, src, className, ...props }) {
 				alt={alt}
 				priority={true}
 				fill
-				style={{ objectFit: 'contain' }}
+				style={{ objectFit: cover ? 'cover' : 'contain' }}
 				sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
+              (max-width: 1024px) 50vw,
               33vw"
 				{...props}
 			/>
