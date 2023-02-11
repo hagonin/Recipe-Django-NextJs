@@ -8,6 +8,7 @@ export const images = {
 	icon2: '/static/images/icon1.png',
 	addRecipeImg: '/static/images/addrecipe.png',
 	recipe1: '/static/images/recipe1.jpg',
+	recipe2: '/static/images/recipe2.jpg',
 };
 
 export const NavLinks = [

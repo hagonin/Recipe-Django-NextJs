@@ -122,7 +122,7 @@ function Slider({
 							cover
 						/>
 						<div className="absolute bottom-0 left-0 w-full z-20 bg-primaryTransparent text-center py-3 px-5">
-							<span className="text-[1.35rem] text-white">
+							<span className="text-xl text-white">
 								{item.name}
 							</span>
 							<p className="leading-6 text-white mt-1 ">
