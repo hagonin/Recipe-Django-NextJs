@@ -84,7 +84,10 @@ export default function Home() {
 		<>
 			<Slider>
 				{recipesRandom.map((recipe) => (
-					<Slide {...recipe} />
+					<Slide
+						{...recipe}
+						key={recipe.id}
+					/>
 				))}
 			</Slider>
 			<SubScribe />

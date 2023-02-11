@@ -5,8 +5,6 @@ import 'keen-slider/keen-slider.min.css';
 
 import ArrowBtn from './ArrowBtn';
 import Pagination from './Pagination';
-import Slide from './Slide';
-import RecipeCard from '@components/Recipe/RecipeCard';
 
 function Slider({ children }) {
 	const [loaded, setLoaded] = useState(false);
@@ -40,20 +38,16 @@ function Slider({ children }) {
 		instanceRef,
 	]);
 
-	const handleKeyPress = useCallback(
-		(e) => {
-			loaded && e.key === 'ArrowRight' && instanceRef.current?.next();
-			loaded && e.key === 'ArrowLeft' && instanceRef.current?.prev();
-		},
-		[loaded, handleNext, handlePrev]
-	);
-
 	useEffect(() => {
+		const handleKeyPress = (e) => {
+			loaded && e.key === 'ArrowRight' && handleNext();
+			loaded && e.key === 'ArrowLeft' && handlePrev();
+		};
 		window.addEventListener('keydown', handleKeyPress);
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
 		};
-	}, []);
+	}, [loaded]);
 
 	return (
 		<section className="container mt-14 relative">

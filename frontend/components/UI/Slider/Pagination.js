@@ -4,7 +4,7 @@ function Pagination({ dots, currentSlide, handleGoTo }) {
 		el.push(
 			<button
 				key={dot}
-				className={`h-3 w-3 rounded-full mx-1 ${
+				className={`h-[0.65rem] w-[0.65rem] rounded-full mx-1 ${
 					dot === currentSlide ? 'bg-primary' : 'bg-grey'
 				}`}
 				onClick={() => handleGoTo(dot)}
