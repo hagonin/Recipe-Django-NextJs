@@ -1,15 +1,24 @@
 import WidgetLayout from '@components/Layouts/WidgetLayout';
+import RecipeCard from '@components/Recipe/RecipeCard';
+import Image from 'next/image';
 import Link from 'next/link';
 
-function Category() {
+function Category({cover, name, desc, recipes}) {
 	return (
 		<>
-			<p>Categories about ...</p>
-			<div className="flex flex-col">
-				<Link href="/recipes/1">Item Recipe 1</Link>
-				<Link href="/recipes/2">Item Recipe 2</Link>
-				<Link href="/recipes/3">Item Recipe 3</Link>
+			<div className="relative border-b border-border pb-5">
+				<Image
+					src={cover}
+					alt={name}
+					fill
+					className="!relative"
+				/>
+				<h1 className="mt-6">{name}</h1>
+				<p className="mt-3">{desc}</p>
 			</div>
+			{recipes.map((recipe) => (
+				<RecipeCard {...recipe} />
+			))}
 		</>
 	);
 }
