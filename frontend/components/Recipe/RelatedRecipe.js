@@ -1,8 +1,5 @@
 import Slider from '@components/UI/Slider';
-import Slide from '@components/UI/Slider/Slide';
-import RecipeCard from '../RecipeCard';
-import { images } from '@utils/constants';
-import Link from 'next/link';
+import RecipeCard from './RecipeCard';
 
 function RelatedRecipe({ recipes }) {
 	return (
@@ -16,7 +13,7 @@ function RelatedRecipe({ recipes }) {
 						<RecipeCard
 							key={recipe.id}
 							{...recipe}
-							isSlide
+							className="keen-slider__slide grid gap-4"
 						/>
 					);
 				})}

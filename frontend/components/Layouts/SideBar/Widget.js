@@ -1,11 +1,11 @@
+import Link from 'next/link';
+import { BsInstagram } from 'react-icons/bs';
+
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
-import SubScribe from '@components/Subscribe';
 import Button from '@components/UI/Button';
+import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
-import Image from 'next/image';
-import Link from 'next/link';
-import { BsChatLeftDots, BsInstagram, BsPrinter } from 'react-icons/bs';
 
 function Widget() {
 	const userInfo = {
@@ -83,11 +83,9 @@ function Widget() {
 				title="About me"
 				center
 			>
-				<Image
+				<Img
 					src={userInfo.avatar}
 					alt="avatar"
-					fill
-					className="!relative "
 				/>
 				<span className="text-lg text-black text-center mt-4 block">
 					{userInfo.name}
@@ -103,14 +101,11 @@ function Widget() {
 					{picsRandom.map((pic) => (
 						<Link
 							key={pic.id}
-							className="relative"
 							href={`/recipes/${[pic.id]}`}
 						>
-							<Image
+							<Img
 								src={pic.cover}
 								alt="pic"
-								fill
-								className="!relative"
 							/>
 						</Link>
 					))}
@@ -126,11 +121,9 @@ function Widget() {
 				Lastest Post here!
 			</CommonSection>
 			<CommonSection title="Banner">
-				<Image
-					fill
+				<Img
 					src={bannerImg}
 					alt="banner"
-					className="!relative"
 				/>
 			</CommonSection>
 			<CommonSection title="newsletter">

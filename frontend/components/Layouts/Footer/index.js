@@ -1,6 +1,6 @@
 import SocialLink from '@components/UI/SocialLink';
 import CopyRight from './CopyRight';
-import LatestRecipes from './LatestRecipes';
+import LatestRecipes from '../../Recipe/LatestRecipes';
 import SocialLinkBar from './SocialLinkBar';
 import WebInfo from './WebInfo';
 
