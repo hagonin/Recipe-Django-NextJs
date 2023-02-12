@@ -116,7 +116,7 @@ function Widget() {
 					))}
 				</div>
 				<Button
-					className="lgSize absolute top-1/2 left-1/2 -translate-x-1/2 min-w-[270px]"
+					className="lg absolute top-1/2 left-1/2 -translate-x-1/2 min-w-[270px]"
 					icon={{ left: <BsInstagram /> }}
 				>
 					Follow on Instagram
@@ -168,9 +168,9 @@ function Widget() {
 const CommonSection = ({ title, children }) => (
 	<div className="border border-border rounded px-5 pt-5 pb-7 relative">
 		<div className="text-center">
-			<h3 className="inline-block leading-6 uppercase border-b border-second mb-6 ">
+			<h4 className="inline-block leading-6 uppercase border-b border-second mb-6 ">
 				{title}
-			</h3>
+			</h4>
 		</div>
 		{children}
 	</div>

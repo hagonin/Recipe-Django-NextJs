@@ -27,7 +27,7 @@ function SubscribeForm({ secondary }) {
 				type="email"
 			/>
 			<Button
-				className={`${secondary ? '' : 'primary'}  lgSize `}
+				className={`${secondary ? '' : 'primary'} lg`}
 				type="submit"
 			>
 				{isSubmitting ? <Loader type="submitting" /> : null}

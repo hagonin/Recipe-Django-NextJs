@@ -121,12 +121,12 @@ function AddRecipeForm({ onSubmit }) {
 
 			<div className="flex gap-4 mt-10 justify-center">
 				<Button
-					className="primary lgSize w-full"
+					className="primary login w-full"
 					type="submit"
 				>
 					Add Recipe
 				</Button>
-				<Button className="cancle lgSize w-full">cancle</Button>
+				<Button className="cancle login w-full">cancle</Button>
 			</div>
 		</form>
 	);

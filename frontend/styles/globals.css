@@ -15,11 +15,11 @@
     } 
 
     h3 {
-       @apply text-sm font-medium text-black;
+       @apply text-xl font-medium text-black;
     }
 
     h4 {
-       @apply text-xl font-medium text-black;
+       @apply text-sm font-medium text-black;
     }
 
     a, [href] {
@@ -38,7 +38,7 @@
     }
 
     .btn {
-      @apply text-[0.8rem] font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
@@ -49,9 +49,14 @@
       @apply text-black font-light text-[0.7rem] h-[24px] px-3 bg-grey hover:bg-primary hover:border-primary hover:text-white;
     }
 
-    .btn.lgSize {
-      @apply font-medium h-[46px] px-5;
+    .btn.lg {
+      @apply text-[0.82rem] font-medium h-12 px-6;
     }
+
+     .btn.login {
+      @apply text-base font-medium h-12 px-5;
+    }
+
 
     .btn.wFull {
       @apply w-full;

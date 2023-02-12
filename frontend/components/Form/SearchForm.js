@@ -42,7 +42,7 @@ function SearchForm({ onSubmit, secondary }) {
 					/>
 					<Button
 						type="submit"
-						className="lgSize"
+						className="lg"
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Search

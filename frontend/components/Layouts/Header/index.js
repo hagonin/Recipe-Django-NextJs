@@ -20,7 +20,6 @@ function Header() {
 		return fetchFake.then((res) => console.log(res));
 	};
 
-
 	return (
 		<header>
 			<div className="bg-primary sm:h-12 h-14 text-white">
@@ -41,12 +40,11 @@ function Header() {
 							<Button
 								type="link"
 								href="/login"
-								className="text-sm rounded-full hover:border-white"
+								className="rounded-full hover:border-white"
 							>
 								Login
 							</Button>
 						)}
-
 					</div>
 				</div>
 			</div>
