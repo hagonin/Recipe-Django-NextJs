@@ -55,7 +55,7 @@ function SocialLink({
 				>
 					{item.icon}
 					{hasLabel && (
-						<span className=" uppercase text-sm ml-2 md:block hidden">
+						<span className=" uppercase text-sm ml-2 md:block hidden relative top-[1px]">
 							{item.name}
 						</span>
 					)}

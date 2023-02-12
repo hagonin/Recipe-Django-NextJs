@@ -22,16 +22,21 @@ function LatestRecipes() {
 		},
 	];
 	return (
-		<div className="md:col-span-8 grid lg:grid-cols-2 grid-cols-1 gap-x-6">
-			{recipes.map((recipe) => (
-				<RecipeCard
-					key={recipe.id}
-					{...recipe}
-					smallCard
-					border
-					className="grid grid-cols-2 gap-4"
-				/>
-			))}
+		<div className="md:col-span-8">
+			<h4 className="inline-block leading-6 uppercase border-b border-second mb-6 ">
+				Latest Recipes
+			</h4>
+			<div className="grid lg:grid-cols-2 grid-cols-1 gap-x-6">
+				{recipes.map((recipe) => (
+					<RecipeCard
+						key={recipe.id}
+						{...recipe}
+						smallCard
+						border
+						className="grid grid-cols-2 gap-4"
+					/>
+				))}
+			</div>
 		</div>
 	);
 }

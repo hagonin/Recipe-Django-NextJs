@@ -3,13 +3,14 @@ import CopyRight from './CopyRight';
 import LatestRecipes from '../../Recipe/LatestRecipes';
 import SocialLinkBar from './SocialLinkBar';
 import WebInfo from './WebInfo';
+import CollectionPics from '../SideBar/Section/CollectionPics';
 
 function Footer() {
 	return (
 		<footer>
-			<div>Instagram</div>
-			<div className="bg-primaryLight">
-				<div className="container grid md:grid-cols-12 gap-6 py-10">
+			<CollectionPics isFooter />
+			<div className="bg-third">
+				<div className="container grid md:grid-cols-12 gap-10 py-10">
 					<WebInfo />
 					<LatestRecipes />
 				</div>

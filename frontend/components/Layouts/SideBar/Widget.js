@@ -6,6 +6,9 @@ import SubscribeForm from '@components/Form/SubscribeForm';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
+import CollectionPics from './Section/CollectionPics';
+import CommonSection from './Section/CommonSection';
+import UserSection from './Section/UserSection';
 
 function Widget() {
 	const userInfo = {
@@ -13,32 +16,7 @@ function Widget() {
 		avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2020/03/allure_post_12.jpg',
 		bio: ' Sed pellentesque nibh enim, quis euismod enim lacinia nec.Phasellus quam diam, semper in erat eu. Consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec.',
 	};
-	const picsRandom = [
-		{
-			id: 1,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/17.jpg',
-		},
-		{
-			id: 2,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/20.jpg',
-		},
-		{
-			id: 3,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/23.jpg',
-		},
-		{
-			id: 4,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/17.jpg',
-		},
-		{
-			id: 5,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/20.jpg',
-		},
-		{
-			id: 6,
-			cover: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/23.jpg',
-		},
-	];
+	
 
 	const bannerImg =
 		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
@@ -77,46 +55,12 @@ function Widget() {
 			name: 'cupcake',
 		},
 	];
+
+	
 	return (
 		<section className="flex flex-col gap-y-10">
-			<CommonSection
-				title="About me"
-				center
-			>
-				<Img
-					src={userInfo.avatar}
-					alt="avatar"
-				/>
-				<span className="text-lg text-black text-center mt-4 block">
-					{userInfo.name}
-				</span>
-				<p className="text-center mt-1 mb-5 ">{userInfo.bio}</p>
-				<SocialLink
-					color="second"
-					center
-				/>
-			</CommonSection>
-			<CommonSection title="Collection pictures">
-				<div className="grid grid-cols-3 gap-2">
-					{picsRandom.map((pic) => (
-						<Link
-							key={pic.id}
-							href={`/recipes/${[pic.id]}`}
-						>
-							<Img
-								src={pic.cover}
-								alt="pic"
-							/>
-						</Link>
-					))}
-				</div>
-				<Button
-					className="lg absolute top-1/2 left-1/2 -translate-x-1/2 min-w-[270px]"
-					icon={{ left: <BsInstagram /> }}
-				>
-					Follow on Instagram
-				</Button>
-			</CommonSection>
+			<UserSection {...userInfo} />
+			<CollectionPics/>
 			<CommonSection title="LATEST POSTS">
 				Lastest Post here!
 			</CommonSection>
@@ -158,14 +102,4 @@ function Widget() {
 	);
 }
 
-const CommonSection = ({ title, children }) => (
-	<div className="border border-border rounded px-5 pt-5 pb-7 relative">
-		<div className="text-center">
-			<h4 className="inline-block leading-6 uppercase border-b border-second mb-6 ">
-				{title}
-			</h4>
-		</div>
-		{children}
-	</div>
-);
 export default Widget;
