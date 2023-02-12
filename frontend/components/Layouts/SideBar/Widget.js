@@ -89,7 +89,7 @@ function Widget() {
 					fill
 					className="!relative "
 				/>
-				<span className="text-lg text-black mt-4 block">
+				<span className="text-lg text-black text-center mt-4 block">
 					{userInfo.name}
 				</span>
 				<p className="text-center mt-1 mb-5 ">{userInfo.bio}</p>
