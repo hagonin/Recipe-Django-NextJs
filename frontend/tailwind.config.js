@@ -22,6 +22,7 @@ module.exports = {
 				second: '#757575',
 				grey: '#EEEEEE',
 				black: '#111111',
+				blackLigt: '#575757',
 				border: '#e6e6e6',
 				red: '#F33A58',
 				redLight: 'rgba(243, 58, 89, 0.15)',
