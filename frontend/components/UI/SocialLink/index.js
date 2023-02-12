@@ -22,7 +22,7 @@ function SocialLink({
 		},
 		{
 			id: 3,
-			name: 'PinterestP',
+			name: 'PINTEREST',
 			href: 'https://vi-vn.facebook.com/',
 			icon: <FaPinterestP />,
 		},
@@ -41,6 +41,7 @@ function SocialLink({
 	],
 	color,
 	center,
+	hasLabel,
 }) {
 	return (
 		<div className={`flex flex-wrap gap-4 ${center && 'justify-center'}`}>
@@ -48,11 +49,16 @@ function SocialLink({
 				<a
 					key={item.id}
 					href={item.href}
-					className={`px-1 transition-all cursor-pointer hover:opacity-70 ${
+					className={`flex items-center px-1 transition-all cursor-pointer hover:opacity-70 ${
 						color ? `text-${color}` : 'text-white'
-					}`}
+					} cursor-pointer`}
 				>
 					{item.icon}
+					{hasLabel && (
+						<span className=" uppercase text-sm ml-2 md:block hidden">
+							{item.name}
+						</span>
+					)}
 				</a>
 			))}
 		</div>
