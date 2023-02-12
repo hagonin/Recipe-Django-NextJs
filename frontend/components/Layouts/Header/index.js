@@ -41,7 +41,7 @@ function Header() {
 							<Button
 								type="link"
 								href="/login"
-								className="rounded-full hover:border-white"
+								className="text-sm rounded-full hover:border-white"
 							>
 								Login
 							</Button>

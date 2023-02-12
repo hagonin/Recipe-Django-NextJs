@@ -1,7 +1,15 @@
 import { useAuthContext } from '@context/auth-context';
 
-const InputField = ({ label, name, type, register, error, ...props }) => {
-	const { setErrors } = useAuthContext();
+const InputField = ({
+	label,
+	name,
+	type,
+	register,
+	error,
+	rules = {},
+	...props
+}) => {
+	const { setErrors, errors } = useAuthContext();
 	return (
 		<div className="w-full">
 			<Label
@@ -13,8 +21,9 @@ const InputField = ({ label, name, type, register, error, ...props }) => {
 				type={type}
 				{...register(name, {
 					onChange: () => {
-						setErrors(null);
+						errors && setErrors(null);
 					},
+					...rules,
 				})}
 				{...props}
 				className={`w-full ${

@@ -38,7 +38,7 @@
     }
 
     .btn {
-      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-[0.8rem] font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
@@ -50,7 +50,7 @@
     }
 
     .btn.lgSize {
-      @apply text-base font-medium h-[46px] px-5;
+      @apply font-medium h-[46px] px-5;
     }
 
     .btn.wFull {

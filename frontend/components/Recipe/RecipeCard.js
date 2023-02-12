@@ -1,6 +1,4 @@
 import Button from '@components/UI/Button';
-import Img from '@components/UI/Image';
-import { images } from '@utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,8 +6,8 @@ function RecipeCard({ name, image, date, id, summary, isSlide }) {
 	return (
 		<div
 			className={`${summary} &&
-				'grid lg:grid-cols-12 grid-cols-1 gap-8 mt-8 pb-8 border-b border-border' ${
-					isSlide && 'keen-slider__slide border-none'
+				'grid lg:grid-cols-12 grid-cols-1 gap-8 mt-8 pb-8' ${
+					isSlide && 'keen-slider__slide'
 				}`}
 		>
 			<Link

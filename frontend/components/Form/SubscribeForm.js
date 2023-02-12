@@ -3,7 +3,7 @@ import Loader from '@components/UI/Loader';
 import { useForm } from 'react-hook-form';
 import { InputField } from './FormControl';
 
-function SubscribeForm() {
+function SubscribeForm({ secondary }) {
 	const {
 		register,
 		handleSubmit,
@@ -14,7 +14,9 @@ function SubscribeForm() {
 	};
 	return (
 		<form
-			className="flex md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3"
+			className={`flex ${
+				secondary ? 'flex-col' : ''
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 `}
 			noValidate={true}
 			onSubmit={handleSubmit(onSubmit)}
 		>
@@ -25,7 +27,7 @@ function SubscribeForm() {
 				type="email"
 			/>
 			<Button
-				className="primary lgSize !text-[0.9rem]"
+				className={`${secondary ? '' : 'primary'}  lgSize `}
 				type="submit"
 			>
 				{isSubmitting ? <Loader type="submitting" /> : null}

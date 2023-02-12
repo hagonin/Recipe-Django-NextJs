@@ -40,9 +40,10 @@ function SocialLink({
 		},
 	],
 	color,
+	center,
 }) {
 	return (
-		<div className="flex flex-wrap gap-4">
+		<div className={`flex flex-wrap gap-4 ${center && 'justify-center'}`}>
 			{socialList.map((item) => (
 				<a
 					key={item.id}
