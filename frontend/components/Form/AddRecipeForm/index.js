@@ -1,24 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 import {
 	InputField,
 	SelectField,
 	TextAreaField,
+	RichTextField,
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
 import SearchVector from './SearchVector';
-import dynamic from 'next/dynamic';
-
-const ReactQuill = dynamic(
-	() => {
-		return import('react-quill');
-	},
-	{ ssr: false }
-);
-import 'react-quill/dist/quill.snow.css';
 
 function AddRecipeForm({ onSubmit }) {
 	const {
@@ -27,22 +19,27 @@ function AddRecipeForm({ onSubmit }) {
 		handleSubmit,
 		formState: { errors: formErr },
 		reset,
-	} = useForm();
-	const [recipeImgs, setRecipeImgs] = useState(null);
-	const [description, setDescription] = useState('');
+		setValue,
+	} = useForm({
+		defaultValues: { 'recipe.images': null },
+	});
+
+	const handleChangeImg = (e) => {
+		const blob = URL.createObjectURL(e.target.files[0]);
+		setValue('recipe.images', blob);
+	};
+
+	const handleDelImage = () => {
+		setValue('recipe.images', null);
+	};
+
 	useEffect(() => {
 		reset();
 	}, []);
 
 	return (
 		<form
-			onSubmit={handleSubmit((data) =>
-				onSubmit({
-					...data.recipe,
-					images: recipeImgs,
-					description,
-				})
-			)}
+			onSubmit={handleSubmit((data) => onSubmit({ ...data.recipe }))}
 			noValidate={true}
 		>
 			<div className="flex flex-col gap-4">
@@ -98,20 +95,28 @@ function AddRecipeForm({ onSubmit }) {
 						error={formErr?.recipe?.serving}
 					/>
 				</div>
-				{/* <TextAreaField
-					name="recipe.description"
-					placeholder="Description"
-					rows="5"
-					register={register}
-					error={formErr?.recipe?.description}
-				/> */}
 
-				<ReactQuill
-					theme="snow"
-					value={description}
-					onChange={setDescription}
+				<Controller
+					name="recipe.description"
+					control={control}
+					render={({ field }) => (
+						<RichTextField
+							field={field}
+							label="Description"
+						/>
+					)}
 				/>
-				<RecipeImages setRecipeImgs={setRecipeImgs} />
+				<Controller
+					name="recipe.images"
+					control={control}
+					render={({ field: { value } }) => (
+						<RecipeImages
+							image={value}
+							handleChangeImg={handleChangeImg}
+							handleDelImage={handleDelImage}
+						/>
+					)}
+				/>
 			</div>
 
 			<div className="mt-5">
@@ -122,7 +127,7 @@ function AddRecipeForm({ onSubmit }) {
 				/>
 			</div>
 
-			<div className="mt-5">
+			<div className="mt-5 mb-7">
 				<Title title="Search Vector" />
 				<SearchVector
 					control={control}
@@ -145,7 +150,13 @@ function AddRecipeForm({ onSubmit }) {
 				>
 					Add Recipe
 				</Button>
-				<Button className="cancle login w-full">cancle</Button>
+				<Button
+					className="cancle login w-full"
+					type="reset"
+					onClick={reset}
+				>
+					RESET
+				</Button>
 			</div>
 		</form>
 	);
