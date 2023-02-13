@@ -1,8 +1,8 @@
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
-import SubScribe from '@components/Subscribe';
 import Slide from '@components/UI/Slider/Slide';
+import SubscribeForm from '@components/Form/SubscribeForm';
 
 export default function Home() {
 	const recipes = [
@@ -79,7 +79,16 @@ export default function Home() {
 					/>
 				))}
 			</Slider>
-			<SubScribe />
+			<section className="container bg-grey py-4 px-5 flex md:items-center justify-between max-md:flex-col mt-4">
+				<div>
+					Don't miss a single recipe!
+					<br />
+					<span className="text-sm">
+						Subscribe to receive new recipes straight to your inbox!
+					</span>
+				</div>
+				<SubscribeForm />
+			</section>
 			<WidgetLayout>
 				<GroupCategory
 					list={recipes}

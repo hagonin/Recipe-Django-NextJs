@@ -26,4 +26,4 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+// AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

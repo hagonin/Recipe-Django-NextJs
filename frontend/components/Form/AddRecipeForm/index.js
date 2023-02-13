@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -10,6 +10,15 @@ import Button from '@components/UI/Button';
 import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
 import SearchVector from './SearchVector';
+import dynamic from 'next/dynamic';
+
+const ReactQuill = dynamic(
+	() => {
+		return import('react-quill');
+	},
+	{ ssr: false }
+);
+import 'react-quill/dist/quill.snow.css';
 
 function AddRecipeForm({ onSubmit }) {
 	const {
@@ -20,7 +29,7 @@ function AddRecipeForm({ onSubmit }) {
 		reset,
 	} = useForm();
 	const [recipeImgs, setRecipeImgs] = useState(null);
-
+	const [description, setDescription] = useState('');
 	useEffect(() => {
 		reset();
 	}, []);
@@ -28,7 +37,11 @@ function AddRecipeForm({ onSubmit }) {
 	return (
 		<form
 			onSubmit={handleSubmit((data) =>
-				onSubmit({ ...data.recipe, images: recipeImgs })
+				onSubmit({
+					...data.recipe,
+					images: recipeImgs,
+					description,
+				})
 			)}
 			noValidate={true}
 		>
@@ -85,12 +98,18 @@ function AddRecipeForm({ onSubmit }) {
 						error={formErr?.recipe?.serving}
 					/>
 				</div>
-				<TextAreaField
+				{/* <TextAreaField
 					name="recipe.description"
 					placeholder="Description"
 					rows="5"
 					register={register}
 					error={formErr?.recipe?.description}
+				/> */}
+
+				<ReactQuill
+					theme="snow"
+					value={description}
+					onChange={setDescription}
 				/>
 				<RecipeImages setRecipeImgs={setRecipeImgs} />
 			</div>
