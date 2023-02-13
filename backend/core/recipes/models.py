@@ -43,12 +43,12 @@ class Recipe(models.Model):
     Recipe object
     """
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category,related_name="recipe_list")
-    # ingredients = models.ManyToManyField(Ingredient,through="RecipeIngredient")
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="recipe_list")
+    ingredients = models.ManyToManyField(Ingredient,through="RecipeIngredient")
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
-    image = models.ManyToManyField('recipes.RecipeImage', related_name='recipes')
+    # image = models.ManyToManyField('recipes.RecipeImage', related_name='recipes')
     serving = models.IntegerField(blank=True, null=True)
     rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)

@@ -15,7 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class RecipeAdmin(admin.ModelAdmin): 
     search_fields = ('title',)
     list_display= ['title','author']
-    list_filter = ('category',)
+    # list_filter = ('category',)
     prepopulated_fields = {'slug':('title',)}
     readonly_fields = ['created_at', 'updated_at']
     raw_id_fields = ['author']
