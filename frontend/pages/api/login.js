@@ -11,15 +11,15 @@ const handler = async (req, res) => {
 			});
 
 			const tokenAccess = response.data.token.access;
-			if (tokenAccess && remember) {
+			if (remember) {
 				//save token
-				const A_DAY = 60 * 60 * 3;
+				const A_HOUR = 60 * 60;
 				res.setHeader(
 					'Set-Cookie',
 					cookie.serialize('tokenAccess', tokenAccess, {
 						httpOnly: true,
 						secure: process.env.NODE_ENV !== 'development',
-						maxAge: A_DAY,
+						maxAge: A_HOUR,
 						sameSite: 'strict',
 						path: '/',
 					})
@@ -29,9 +29,7 @@ const handler = async (req, res) => {
 			return res.status(200).json({
 				success: true,
 				user: {
-					username: response.data.username,
-					email: response.data.email,
-					id: response.data.id,
+					tokenAccess: tokenAccess,
 				},
 			});
 		} catch (error) {

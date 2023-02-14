@@ -10,11 +10,6 @@ import Loader from '@components/UI/Loader';
 
 function Widget() {
 	const { isAuthenticated, loading, user } = useAuthContext();
-	const userInfoFake = {
-		name: 'User Name',
-		avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2020/03/allure_post_12.jpg',
-		bio: ' Sed pellentesque nibh enim, quis euismod enim lacinia nec.Phasellus quam diam, semper in erat eu. Consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec.',
-	};
 
 	const bannerImg =
 		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
@@ -61,15 +56,12 @@ function Widget() {
 					<Loader />
 				</CommonSection>
 			) : isAuthenticated ? (
-				<UserSection {...userInfoFake} />
-			) : (
-				<Button
-					type="link"
-					href="/login"
-				>
-					Login
-				</Button>
-			)}
+				<UserSection
+					name={user.username}
+					bio={user.bio}
+					avatar={user.avatar}
+				/>
+			) : null}
 			<CollectionPics />
 			<CommonSection title="LATEST POSTS">
 				Lastest Post here!

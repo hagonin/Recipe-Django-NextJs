@@ -2,8 +2,9 @@ import api from '@services/axios';
 import cookie from 'cookie';
 
 const handler = async (req, res) => {
-	if (req.method === 'GET') {
-		const cookies = cookie.parse(req.headers.cookie || '');
+	if (req.method === 'POST') {
+		const cookies =
+			req.body || cookie.parse(req.headers.cookie || '');
 		const token = cookies.tokenAccess;
 
 		if (token) {

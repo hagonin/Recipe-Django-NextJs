@@ -9,8 +9,9 @@ import { useAuthContext } from '@context/auth-context';
 
 function SignUp() {
 	const router = useRouter();
-	const { signup } = useAuthContext();
+	const { signup, errors } = useAuthContext();
 
+	console.log('error in signup ', errors);
 	const onSubmit = (data) => signup({ ...data });
 
 	return (

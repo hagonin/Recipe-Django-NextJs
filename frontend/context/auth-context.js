@@ -1,24 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import api from '@services/axios';
 
 const AuthContext = createContext();
-
-const tokenFake = new Promise((resolve) => {
-	setTimeout(() => {
-		resolve('success');
-	}, 4000);
-});
 
 const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
-		tokenAuthentication();
+		// getProfileUser();
 	}, []);
 
 	const login = async ({ email, password, remember }) => {
@@ -28,35 +21,50 @@ const AuthProvider = ({ children }) => {
 				password,
 				remember,
 			});
-			const { success, user } = response.data;
-			if (success) {
-				success && setUser(user);
-				router.push(`/user/${user.username}`);
+			const {
+				success,
+				user: { tokenAccess },
+			} = response.data;
+			if (success && tokenAccess) {
+				const profile = await axios.post('/api/profile/', {
+					tokenAccess,
+				});
+				const {
+					data: { success, data: userProfile },
+				} = profile;
+				if (success) {
+					setUser(userProfile);
+					router.push(`/user/${userProfile.username}`);
+				}
 			}
 		} catch (error) {
-			setErrors({
-				login: error.response.data.error,
-			});
+			console.log('error at login', error);
+			const status = error.response.status;
+			if (status === 500) {
+				setErrors({ server: 'server is not response' });
+			} else {
+				setErrors({
+					login: error.response.data.error,
+				});
+			}
 		}
 	};
 
-	// not received enough user information
-	const tokenAuthentication = async () => {
-		// try {
-		// 	const response = await axios.get('/api/user');
-		// 	setUser(response.data.data);
-		// 	setIsAuthenticated(true);
-		// } catch (error) {
-		// 	console.log('load user error:', error);
-		// 	setIsAuthenticated(false);
-		// } finally {
-		// 	setLoading(false);
-		// }
-		await tokenFake;
-		setLoading(false);
-		setUser({
-			username: 'Mike',
-		});
+	const getProfileUser = async () => {
+		try {
+			setLoading(true);
+			const profile = await axios.post('/api/profile/');
+			const {
+				data: { success, data: userProfile },
+			} = profile;
+			if (success) {
+				setUser(userProfile);
+			}
+		} catch (error) {
+			console.log('load user error:', error.response.data.error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const logout = () => {
@@ -65,7 +73,6 @@ const AuthProvider = ({ children }) => {
 			.then((res) => {
 				if (res.data.success) {
 					setUser(null);
-					setIsAuthenticated(false);
 					router.push('/login');
 				}
 			})
@@ -83,7 +90,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			await api.post('/user/register/', {
+			const res = await axios.post('/api/signup/', {
 				username,
 				lastname,
 				firstname,
@@ -92,9 +99,18 @@ const AuthProvider = ({ children }) => {
 				email,
 			});
 
-			router.push('/login');
+			if (res.data.success) {
+				router.push('/login');
+			}
 		} catch (error) {
-			setErrors({ register: error.response.data });
+			const status = error.response.status;
+			if (status === 500) {
+				setErrors({ server: 'server is not response' });
+			} else {
+				setErrors({
+					register: error.response.data.error,
+				});
+			}
 		}
 	};
 
