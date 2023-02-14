@@ -27,28 +27,15 @@ class Category(models.Model):
         return self.name
 
 
-class Ingredient(models.Model):
-    """
-    Returns ingredients for a recipe
-    """
-    title = models.CharField(max_length=220, blank=True)
-    description = models.TextField(blank=True, null=True)   
-
-    def __str__(self):
-        return self.title
-
-
 class Recipe(models.Model):
     """
     Recipe object
     """
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="recipe_list")
-    ingredients = models.ManyToManyField(Ingredient,through="RecipeIngredient")
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
-    # image = models.ManyToManyField('recipes.RecipeImage', related_name='recipes')
     serving = models.IntegerField(blank=True, null=True)
     rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)
@@ -77,32 +64,44 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
-        
-class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='recipes', related_query_name='recipe')
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,related_name='recipes', related_query_name='recipe')
+class Ingredient(models.Model):
+    """
+    Returns ingredients for a recipe
+    """
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients')
+    title = models.CharField(max_length=220, blank=True)
+    description = models.TextField(blank=True, null=True)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
-    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure]) 
+    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
 
+    class Meta:
+        unique_together = ('recipe', 'title')  # to prevent having duplicate ingredients in one recipe
+        
     def __str__(self):
-        return f"{self.recipe.title} - {self.ingredient.title}"
+        return self.title
+
 
 class RecipeImage(models.Model):
     """
     Returns images for a recipe
     """
-    image = CloudinaryField('Image/recipe',overwrite=True, null=True,)
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='images')
+    image = CloudinaryField('image',overwrite=True, null=True,)
     caption = models.CharField(
         max_length=200, 
         verbose_name= 'Photo|caption',
         null=True,
         blank=True
     )
-    default = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.caption
 
-    class Meta:
-        verbose_name = 'Recipe Image'
-
+    @property
+    def image_url(self):
+        return (
+            f"http://res.cloudinary.com/dfjtkh7ie/{self.image}"
+        )
 
 class RecipeReview(models.Model):
     """

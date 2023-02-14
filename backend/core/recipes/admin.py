@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import Category, Recipe, Ingredient, RecipeIngredient, RecipeImage,RecipeReview
+from .models import Category, Recipe, Ingredient, RecipeImage,RecipeReview
 
 User = get_user_model()
 
@@ -15,7 +15,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class RecipeAdmin(admin.ModelAdmin): 
     search_fields = ('title',)
     list_display= ['title','author']
-    # list_filter = ('category',)
+    list_filter = ('category',)
     prepopulated_fields = {'slug':('title',)}
     readonly_fields = ['created_at', 'updated_at']
     raw_id_fields = ['author']
@@ -23,7 +23,6 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Ingredient)
-admin.site.register(RecipeIngredient)
 admin.site.register(RecipeReview)
 admin.site.register(RecipeImage)
 

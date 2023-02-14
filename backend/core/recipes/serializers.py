@@ -1,40 +1,38 @@
 from rest_framework import serializers
-from .models import Recipe, RecipeReview, Category,RecipeIngredient,Ingredient,RecipeImage
+from .models import Recipe, RecipeReview, Category,Ingredient,RecipeImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id','name',)
+        fields = ('id','name')
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
-        fields = ('title', 'description')
+        fields = ('title','description','quantity', 'unit', 'recipe')
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.ReadOnlyField()
+    
     class Meta:
         model = RecipeImage
-        fields = ('pk','caption', 'image')
+        fields = ('image_url','image','caption')
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop("image")
+
+        return representation
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
     author = serializers.CharField(source="author.username", read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
-    ingredient = serializers.StringRelatedField(
-        many=True, read_only=True
-        # queryset=RecipeIngredient.objects.all()
-    )
-    # category = serializers.StringRelatedField(
-    #     many=True,read_only=True
-    #     # queryset=Category.objects.all()
-    # )
-    # image = serializers.PrimaryKeyRelatedField(
-    #     many=True,
-    #     queryset=RecipeImage.objects.all()
-    # )
+    category = CategorySerializer()
+    ingredients = IngredientSerializer(many=True)
+    images = serializers.ListSerializer(child=ImageSerializer(), required=False)
     
     class Meta: 
         model = Recipe
@@ -43,11 +41,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_total_number_of_bookmarks(self, obj):
         return obj.get_total_number_of_bookmarks()
-
-class RecipeIngredientSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = RecipeIngredient
-        fields = ('pk','quantity', 'unit', 'notes')
+    
     
 
 class ReviewSerializer(serializers.ModelSerializer):

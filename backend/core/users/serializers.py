@@ -62,10 +62,17 @@ class ProfileSerializer(UserSerializer):
     email = serializers.EmailField(source='user.email', read_only=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
     last_name = serializers.CharField(source='user.last_name', read_only=True)
+    image_url = serializers.ReadOnlyField()
     
     class Meta:
         model = Profile
-        fields = ('user_id','email','username','first_name','last_name','bookmarks','bio','avatar')
+        fields = ('user_id','email','username','first_name','last_name','bookmarks','bio','image_url')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop("image")
+
+        return representation
       
 
 class ChangePasswordSerializer(serializers.Serializer):

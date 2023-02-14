@@ -16,8 +16,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Category.objects.all()
     serializer_class = serializers.CategorySerializer
-    # filterset_fields = ['name']
-    # search_fields = ['name']
+    filterset_fields = ['name']
+    search_fields = ['name']
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
@@ -38,25 +38,25 @@ class RecipeListViewSet(viewsets.ModelViewSet):
     ordering_fields = ['rating_value', 'created_at']
 
 
-# class RecipeReviewViewset(viewsets.ModelViewSet):
-#     """
-#     CRUD reviews a recipe
-#     """
-#     queryset = RecipeReview.objects.all()
-#     permission_classes = [AllowAny]
+class RecipeReviewViewset(viewsets.ModelViewSet):
+    """
+    CRUD reviews a recipe
+    """
+    queryset = RecipeReview.objects.all()
+    permission_classes = [AllowAny]
 
-#     def get_serializer_class(self):
-#         if self.action in ("create", "update", "partial_update", "destroy"):
-#             return serializers.ReviewWriteSerializer
+    def get_serializer_class(self):
+        if self.action in ("create", "update", "partial_update", "destroy"):
+            return serializers.ReviewWriteSerializer
 
-#         return serializers.ReviewReadSerializer
+        return serializers.ReviewReadSerializer
 
-#     def get_permissions(self):
-#         if self.action in ("create",):
-#             self.permission_classes = (IsAuthenticated,)
-#         elif self.action in ("update", "partial_update", "destroy"):
-#             self.permission_classes = (IsAuthorOrReadOnly,)
-#         else:
-#             self.permission_classes = (AllowAny,)
+    def get_permissions(self):
+        if self.action in ("create",):
+            self.permission_classes = (IsAuthenticated,)
+        elif self.action in ("update", "partial_update", "destroy"):
+            self.permission_classes = (IsAuthorOrReadOnly,)
+        else:
+            self.permission_classes = (AllowAny,)
 
-#         return super().get_permissions()
+        return super().get_permissions()
