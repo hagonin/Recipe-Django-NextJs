@@ -25,6 +25,7 @@ function SubscribeForm({ secondary }) {
 				placeholder="Your email address"
 				register={register}
 				type="email"
+				rules={{ required: true }}
 			/>
 			<Button
 				className={`${secondary ? '' : 'primary'} lg`}
