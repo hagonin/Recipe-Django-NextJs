@@ -1,4 +1,4 @@
-import ManageRecipe from './SideBar/ManageRecipe';
+import ManageRecipe from './SideBar/AccountManage';
 
 function ManageRecipeLayout({ children }) {
 	return (

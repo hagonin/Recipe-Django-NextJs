@@ -3,6 +3,7 @@ import { useAuthContext } from '@context/auth-context';
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 import { images } from '@utils/constants';
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 
 function Login() {
 	const { login } = useAuthContext();

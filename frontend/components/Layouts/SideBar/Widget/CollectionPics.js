@@ -7,6 +7,7 @@ import Img from '@components/UI/Image';
 import CommonSection from './CommonSection';
 
 function CollectionPics({ isFooter }) {
+	//useSWR
 	const picsRandom = [
 		{
 			id: 1,

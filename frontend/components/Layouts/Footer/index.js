@@ -3,7 +3,7 @@ import CopyRight from './CopyRight';
 import LatestRecipes from '../../Recipe/LatestRecipes';
 import SocialLinkBar from './SocialLinkBar';
 import WebInfo from './WebInfo';
-import CollectionPics from '../SideBar/Section/CollectionPics';
+import CollectionPics from '../SideBar/Widget/CollectionPics';
 
 function Footer() {
 	return (

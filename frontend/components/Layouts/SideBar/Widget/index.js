@@ -1,22 +1,20 @@
-import Link from 'next/link';
-import { BsInstagram } from 'react-icons/bs';
-
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import SocialLink from '@components/UI/SocialLink';
-import CollectionPics from './Section/CollectionPics';
-import CommonSection from './Section/CommonSection';
-import UserSection from './Section/UserSection';
+import CollectionPics from './CollectionPics';
+import CommonSection from './CommonSection';
+import UserSection from './UserSection';
+import { useAuthContext } from '@context/auth-context';
+import Loader from '@components/UI/Loader';
 
 function Widget() {
-	const userInfo = {
+	const { isAuthenticated, loading, user } = useAuthContext();
+	const userInfoFake = {
 		name: 'User Name',
 		avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2020/03/allure_post_12.jpg',
 		bio: ' Sed pellentesque nibh enim, quis euismod enim lacinia nec.Phasellus quam diam, semper in erat eu. Consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec.',
 	};
-	
 
 	const bannerImg =
 		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
@@ -56,11 +54,23 @@ function Widget() {
 		},
 	];
 
-	
 	return (
 		<section className="flex flex-col gap-y-10">
-			<UserSection {...userInfo} />
-			<CollectionPics/>
+			{loading ? (
+				<CommonSection>
+					<Loader />
+				</CommonSection>
+			) : isAuthenticated ? (
+				<UserSection {...userInfoFake} />
+			) : (
+				<Button
+					type="link"
+					href="/login"
+				>
+					Login
+				</Button>
+			)}
+			<CollectionPics />
 			<CommonSection title="LATEST POSTS">
 				Lastest Post here!
 			</CommonSection>

@@ -47,7 +47,12 @@ function Loader({ type }) {
 				<div className="rounded-full bg-slate-200 h-10 w-10 animate-pulse"></div>
 			);
 		default:
-			return <span>Loader</span>;
+			return (
+				<div className="animate-pulse ">
+					<div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4 mx-auto"></div>
+					<div className="h-2.5 bg-gray-200 rounded-full w-48 mx-auto"></div>
+				</div>
+			);
 	}
 }
 

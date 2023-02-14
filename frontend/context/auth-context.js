@@ -5,20 +5,21 @@ import api from '@services/axios';
 
 const AuthContext = createContext();
 
+const tokenFake = new Promise((resolve) => {
+	setTimeout(() => {
+		resolve('success');
+	}, 4000);
+});
+
 const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
 
 	useEffect(() => {
 		tokenAuthentication();
 	}, []);
-
-	useEffect(() => {
-		setIsAuthenticated(!!user);
-	}, [user]);
 
 	const login = async ({ email, password, remember }) => {
 		try {
@@ -41,16 +42,21 @@ const AuthProvider = ({ children }) => {
 
 	// not received enough user information
 	const tokenAuthentication = async () => {
-		try {
-			const response = await axios.get('/api/user');
-			setUser(response.data.data);
-			setIsAuthenticated(true);
-		} catch (error) {
-			console.log('load user error:', error);
-			setIsAuthenticated(false);
-		} finally {
-			setLoading(false);
-		}
+		// try {
+		// 	const response = await axios.get('/api/user');
+		// 	setUser(response.data.data);
+		// 	setIsAuthenticated(true);
+		// } catch (error) {
+		// 	console.log('load user error:', error);
+		// 	setIsAuthenticated(false);
+		// } finally {
+		// 	setLoading(false);
+		// }
+		await tokenFake;
+		setLoading(false);
+		setUser({
+			username: 'Mike',
+		});
 	};
 
 	const logout = () => {
@@ -98,7 +104,7 @@ const AuthProvider = ({ children }) => {
 				errors,
 				setErrors,
 				user,
-				isAuthenticated,
+				isAuthenticated: !!user,
 				login,
 				signup,
 				logout,
