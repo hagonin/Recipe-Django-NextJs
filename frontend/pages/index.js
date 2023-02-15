@@ -3,6 +3,7 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeForm from '@components/Form/SubscribeForm';
+import { useAuthContext } from '@context/auth-context';
 
 export default function Home() {
 	const recipes = [

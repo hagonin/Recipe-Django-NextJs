@@ -10,31 +10,42 @@ const handler = async (req, res) => {
 				email,
 			});
 
-			const tokenAccess = response.data.token.access;
-			if (remember) {
-				//save token
-				const A_HOUR = 60 * 60;
-				res.setHeader(
-					'Set-Cookie',
-					cookie.serialize('tokenAccess', tokenAccess, {
-						httpOnly: true,
-						secure: process.env.NODE_ENV !== 'development',
-						maxAge: A_HOUR,
-						sameSite: 'strict',
-						path: '/',
-					})
-				);
-			}
+			const { access, refresh } = response.data.token;
 
-			return res.status(200).json({
-				success: true,
-				user: {
-					tokenAccess: tokenAccess,
+			const profile = await api.get('/user/profile/', {
+				headers: {
+					Authorization: `Bearer ${access}`,
 				},
 			});
+
+			if (remember) {
+				//save token
+				const A_DAY = 60 * 60 * 24;
+				const A_MONTH = 60 * 60 * 24 * 30;
+				res.setHeader('Set-Cookie', [
+					cookie.serialize('tokenAccess', access, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV !== 'development',
+						maxAge: A_DAY,
+						sameSite: 'strict',
+						path: '/',
+					}),
+					cookie.serialize('tokenRefresh', refresh, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV !== 'development',
+						maxAge: A_MONTH,
+						sameSite: 'strict',
+						path: '/',
+					}),
+				]);
+			}
+
+			res.status(profile?.status).json({
+				...profile?.data,
+			});
 		} catch (error) {
-			return res.status(error.response.status).json({
-				error: error.response.data,
+			res.status(error?.response?.status).json({
+				...error.response.data,
 			});
 		}
 	} else {

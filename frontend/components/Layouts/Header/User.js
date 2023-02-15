@@ -47,7 +47,13 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 								href={`/user/${username}`}
 								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
 							>
-								Manage Recipe
+								Profile
+							</Link>
+							<Link
+								href={`/user/updateprofile`}
+								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
+							>
+								Update Profile
 							</Link>
 							<Link
 								href="/recipes/addnewrecipe"

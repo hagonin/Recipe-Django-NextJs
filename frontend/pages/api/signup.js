@@ -4,16 +4,16 @@ async function handler(req, res) {
 	if (req.method === 'POST') {
 		const dataForm = req.body;
 		try {
-			await api.post('/user/register/', {
+			const response = await api.post('/user/register/', {
 				...dataForm,
 			});
 
-			res.status(200).json({
+			res.status(response?.status).json({
 				success: true,
 			});
 		} catch (error) {
 			return res.status(error.response.status).json({
-				error: error.response.data,
+				...error.response.data,
 			});
 		}
 	} else {
