@@ -102,9 +102,9 @@ class RecipeImage(models.Model):
         blank=True
     )
     default = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name = 'Recipe Image'
+    
+    def __str__(self):
+        return self.caption
 
 
 class RecipeReview(models.Model):

@@ -1,5 +1,6 @@
 from rest_framework import viewsets
-from rest_flex_fields import is_expanded
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
@@ -21,12 +22,36 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filterset_fields = ['name']
     search_fields = ['name']
 
+class IngredientViewSet(viewsets.ModelViewSet):
+    """
+    List and Retrieve ingredients
+    """
+    queryset = Ingredient.objects.all()
+    serializer_class = serializers.IngredientSerializer
 
-class RecipeIngredientViewSet(viewsets.ModelViewSet):
+class ImageViewSet(viewsets.ModelViewSet):
+    """
+    List and Retrieve image's recipe
+    """
+    queryset = RecipeImage.objects.all()
+    serializer_class = serializers.ImageSerializer
 
-    queryset = RecipeIngredient.objects.all()
-    serializer_class = RecipeIngredientSerializer
+    @action(detail=False, methods=["POST"])
+    def multiple_upload(self, request, *args, **kwargs):
+        """Upload multiple images and create objects"""
+        serializer = serializers.MultipleImageSerializer(data=request.data or None)
+        serializer.is_valid(raise_exception=True)
+        images = serializer.validated_data.get("images")
 
+        images_list = []
+        for image in images:
+            images_list.append(
+                RecipeImage(file=image)
+            )
+        if images_list:
+            RecipeImage.objects.bulk_create(images_list)
+
+        return Response("Success")
 
 class RecipeListViewSet(viewsets.ModelViewSet):
     """

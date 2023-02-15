@@ -8,6 +8,18 @@ class CategorySerializer(FlexFieldsModelSerializer):
         model = Category
         fields = ('id','name',)
 
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Ingredient
+        fields = ('title','description','quantity', 'unit', 'recipe')
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = RecipeImage
+        fields = ('image_url','image','caption', 'default', 'recipe')
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -16,7 +28,12 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class RecipeReadSerializer(FlexFieldsModelSerializer):
+class MultipleImageSerializer(serializers.ModelSerializer):
+    images = serializers.ListField(
+        child = serializers.ImageField()
+    )
+
+class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
     author = serializers.CharField(source="author.username", read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
