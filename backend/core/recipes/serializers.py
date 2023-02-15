@@ -21,12 +21,11 @@ class ImageSerializer(serializers.ModelSerializer):
         model = RecipeImage
         fields = ('image_url','image','caption', 'default', 'recipe')
 
-class RecipeIngredientSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = RecipeIngredient
-        fields = '__all__'
-        read_only_fields = ('id',)
 
+class MultipleImageSerializer(serializers.ModelSerializer):
+    images = serializers.ListField(
+        child = serializers.ImageField()
+    )
 
 class MultipleImageSerializer(serializers.ModelSerializer):
     images = serializers.ListField(
