@@ -18,13 +18,18 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = RecipeImage
-        fields = ('image_url','image','caption')
+        fields = ('image_url','image','caption', 'default', 'recipe')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation.pop("image")
 
         return representation
+
+class MultipleImageSerializer(serializers.ModelSerializer):
+    images = serializers.ListField(
+        child = serializers.ImageField()
+    )
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)

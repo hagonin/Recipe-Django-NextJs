@@ -93,6 +93,7 @@ class RecipeImage(models.Model):
         null=True,
         blank=True
     )
+    default = models.BooleanField(default=False)
     
     def __str__(self):
         return self.caption
