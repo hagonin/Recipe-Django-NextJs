@@ -32,7 +32,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     total_number_of_bookmarks = serializers.SerializerMethodField()
     category = CategorySerializer()
     ingredients = IngredientSerializer(many=True)
-    images = serializers.ListSerializer(child=ImageSerializer(), required=False)
+    images = ImageSerializer(many=True)
     
     class Meta: 
         model = Recipe

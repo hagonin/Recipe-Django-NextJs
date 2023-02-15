@@ -54,26 +54,23 @@ class UserLoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError('Access denied: wrong email or password.')
 
-class ProfileSerializer(UserSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer the user profile model 
     """
-    username = serializers.CharField(source='user.username', read_only=True)
-    email = serializers.EmailField(source='user.email', read_only=True)
-    first_name = serializers.CharField(source='user.first_name', read_only=True)
-    last_name = serializers.CharField(source='user.last_name', read_only=True)
-    image_url = serializers.ReadOnlyField()
+    user = UserSerializer()
+    image_url = serializers.CharField()
     
     class Meta:
         model = Profile
-        fields = ('user_id','email','username','first_name','last_name','bookmarks','bio','image_url')
+        fields = ('user','bookmarks','bio','image_url','avatar')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation.pop("image")
+        representation.pop("avatar")
 
         return representation
-      
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True, required=True)
