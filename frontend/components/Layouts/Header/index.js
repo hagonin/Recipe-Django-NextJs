@@ -35,6 +35,7 @@ function Header() {
 							<User
 								username={user?.username}
 								email={user?.email}
+								avatar={user?.avatar}
 							/>
 						) : (
 							<Button

@@ -29,11 +29,17 @@ class CustomUser(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='profile')
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
-    avatar = CloudinaryField('Image/avatar',overwrite=True,format="jpg")
+    avatar = CloudinaryField('image',overwrite=True)
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.user.username
+    
+    @property
+    def image_url(self):
+        return (
+            f"http://res.cloudinary.com/dfjtkh7ie/{self.avatar}"
+        )
 
     @receiver(post_save, sender=CustomUser)
     def create_profile(sender, instance, created, **kwargs):

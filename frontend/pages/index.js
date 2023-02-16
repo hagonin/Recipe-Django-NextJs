@@ -3,8 +3,10 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeForm from '@components/Form/SubscribeForm';
+import { useAuthContext } from '@context/auth-context';
 
 export default function Home() {
+	const { user } = useAuthContext();
 	const recipes = [
 		{
 			id: 1,
@@ -69,6 +71,7 @@ export default function Home() {
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 		},
 	];
+
 	return (
 		<>
 			<Slider>

@@ -12,6 +12,7 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 	const [visible, setVisible] = useState(false);
 	const toggle = () => setVisible(!visible);
 	const hide = () => setVisible(false);
+
 	return (
 		<div className="relative flex items-center">
 			<Tippy

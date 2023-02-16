@@ -3,23 +3,16 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import { useAuthContext } from '@context/auth-context';
 
 function UpdateProfile() {
-	const { user } = useAuthContext();
-	const fakeInfo = {
-		username: 'Marry',
-		first_name: 'Marry',
-		last_name: 'Luxu',
-		bio: 'Hello.',
-		avatar: null,
-	};
+	const { user, updateProfile } = useAuthContext();
 	const onSubmit = (data) => {
-		console.log(data);
+		return updateProfile({ ...data });
 	};
 	return (
 		<div className="container py-14">
 			<h1 className="text-center mb-16">Update Profile</h1>
 
 			<UpdateProfileForm
-				{...fakeInfo}
+				{...user}
 				onSubmit={onSubmit}
 			/>
 		</div>

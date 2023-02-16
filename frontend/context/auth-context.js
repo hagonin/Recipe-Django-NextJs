@@ -29,7 +29,8 @@ const AuthProvider = ({ children }) => {
 			const { refresh, access } = response.data.token;
 			remember && setCookie(access, refresh);
 			const profile = await getProfileUser(access);
-			setUser(profile.data);
+			const { user, ...rest } = profile.data;
+			setUser({ ...user, ...rest });
 			router.push(`/user/${profile.data.username}`);
 		} catch (error) {
 			if (error.response.status === 400) {
@@ -55,7 +56,11 @@ const AuthProvider = ({ children }) => {
 		const access = getAccessToken();
 		try {
 			const profile = await getProfileUser(access);
-			setUser(profile.data);
+			const {
+				user: { image_url: avatar, ...userRest },
+				...rest
+			} = profile.data;
+			setUser({ avatar, ...userRest, ...rest });
 		} catch (error) {
 			console.log('ERROR AT LOAD USER PROFILE', error);
 		} finally {
@@ -66,16 +71,16 @@ const AuthProvider = ({ children }) => {
 	const logout = async () => {
 		//appi lgout errror
 		try {
-			const res = await api.post('/user/logout/', {
+			const res = await api.patch('/user/logout/', {
 				refresh: getRefreshToken(),
 			});
 			console.log('res at logout', res);
 		} catch (error) {
 			console.log('ERROR AT LOGOUT', error);
 		}
-		// clearCookie();
-		// setUser(null);
-		// router.push('/login');
+		clearCookie();
+		setUser(null);
+		router.push('/login');
 	};
 
 	const signup = async ({
@@ -106,6 +111,30 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const updateProfile = async ({
+		username,
+		first_name,
+		last_name,
+		bio,
+		avatar,
+	}) => {
+		try {
+			const res = await api.patch(
+				'/user/profile/',
+				{
+					bio,
+					avatar,
+				},
+				{
+					headers: { Authorization: `Bearer ${getAccessToken()}` },
+				}
+			);
+			console.log('RES IN UPDATE PROFILE');
+		} catch (error) {
+			console.log('ERR IN UPDATE PROFILE', error);
+		}
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -117,6 +146,7 @@ const AuthProvider = ({ children }) => {
 				signup,
 				logout,
 				loading,
+				updateProfile,
 			}}
 		>
 			{children}
