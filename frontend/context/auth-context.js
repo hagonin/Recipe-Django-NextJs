@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import api from '@services/axios';
+import { clearCookie, getAccessToken, setCookie } from '@utils/cookies';
 
 const AuthContext = createContext();
 
@@ -12,59 +12,57 @@ const AuthProvider = ({ children }) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		getProfileUser();
+		tokenAuthen();
 	}, []);
 
 	const login = async ({ email, password, remember }) => {
 		try {
-			const response = await axios.post('/api/login/', {
+			const response = await api.post('/user/login/', {
 				email,
 				password,
-				remember,
 			});
-			console.log('RES IN LOGIN', response);
-			setUser(response.data);
-			router.push(`/user/${response.data.username}`);
+			const { refresh, access } = response.data.token;
+			remember && setCookie(access, refresh);
+			const profile = await getProfileUser(access);
+			setUser(profile.data);
+			router.push(`/user/${profile.data.username}`);
 		} catch (error) {
 			if (error.response.status === 400) {
 				setErrors({
 					login: { ...error.response.data },
 				});
 			} else {
-				console.log('ERROR IN LOGIN', error.response.statusText);
+				console.log('ERROR IN LOGIN', error);
 			}
 		}
 	};
 
-	const getProfileUser = async () => {
+	const getProfileUser = (accessToken) => {
+		return api.get('/user/profile/', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+	};
+
+	const tokenAuthen = async () => {
 		setLoading(true);
+		const access = getAccessToken();
 		try {
-			const profile = await axios.get('/api/profile/');
+			const profile = await getProfileUser(access);
 			setUser(profile.data);
-			console.log('RES AT LOAD USER PROFILE', profile);
 		} catch (error) {
-			console.log(
-				'ERROR AT LOAD USER PROFILE',
-				error.response.statusText
-			);
+			console.log('ERROR AT LOAD USER PROFILE', error);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	const logout = () => {
-		console.log('logout...');
-		// axios
-		// 	.post('/api/logout/')
-		// 	.then((res) => {
-		// 		if (res.data.success) {
-		// 			setUser(null);
-		// 			router.push('/login');
-		// 		}
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log('logout err', err);
-		// 	});
+		//appi lgout errror
+		clearCookie();
+		setUser(null);
+		router.push('/login');
 	};
 
 	const signup = async ({
@@ -76,7 +74,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			await axios.post('/api/signup/', {
+			await api.post('/user/register/', {
 				username,
 				lastname,
 				firstname,
@@ -84,7 +82,6 @@ const AuthProvider = ({ children }) => {
 				confirm_password,
 				email,
 			});
-
 			router.push('/login');
 		} catch (error) {
 			const status = error.response.status;

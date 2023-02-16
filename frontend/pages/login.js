@@ -6,9 +6,8 @@ import { images } from '@utils/constants';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 
 function Login() {
-	const { login, errors } = useAuthContext();
+	const { login } = useAuthContext();
 	const onSubmit = (data) => login({ ...data });
-	console.log('errors at login', errors);
 
 	return (
 		<div className="bg-primaryLight">

@@ -1,5 +1,4 @@
 import Banner from '@components/Banner';
-import WidgetLayout from '@components/Layouts/WidgetLayout';
 
 function Contact() {
 	return (
