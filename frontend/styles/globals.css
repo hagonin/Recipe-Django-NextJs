@@ -66,6 +66,10 @@
       @apply text-red border-red hover:bg-redLight hover:border-red
     }
 
+    .btn.reset {
+      @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
+    }
+
 
 }
 
