@@ -1,7 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import { clearCookie, getAccessToken, setCookie } from '@utils/cookies';
+import {
+	clearCookie,
+	getAccessToken,
+	getRefreshToken,
+	setCookie,
+} from '@utils/cookies';
 
 const AuthContext = createContext();
 
@@ -58,11 +63,19 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const logout = () => {
+	const logout = async () => {
 		//appi lgout errror
-		clearCookie();
-		setUser(null);
-		router.push('/login');
+		try {
+			const res = await api.post('/user/logout/', {
+				refresh: getRefreshToken(),
+			});
+			console.log('res at logout', res);
+		} catch (error) {
+			console.log('ERROR AT LOGOUT', error);
+		}
+		// clearCookie();
+		// setUser(null);
+		// router.push('/login');
 	};
 
 	const signup = async ({

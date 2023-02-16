@@ -27,38 +27,15 @@ class Category(models.Model):
         return self.name
 
 
-def get_default_recipe_category():
-    """
-    Returns a default recipe type.
-    """
-    return Category.objects.get_or_create(name='Others')[0]
-
-class RecipeIngredient(models.Model):
-    """
-    Returns ingredients for a recipe
-    """
-    name = models.CharField(max_length=220)   
-    quantity = models.CharField(max_length=50, blank=True, null=True)
-    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])       
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    notes = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Recipe(models.Model):
     """
     Recipe object
     """
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category,related_name="recipe_list")
-    ingredients = models.ManyToManyField(RecipeIngredient, related_name="ingredient")
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="recipe_list")
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
-    summary = models.CharField(max_length=500, blank=True, verbose_name='Recipe|summary')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
-    direction = models.TextField(blank=True, verbose_name='Recipe|direction')
-    image = CloudinaryField('Image',overwrite=True, null=True,)
+    instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
     serving = models.IntegerField(blank=True, null=True)
     rating_value = models.FloatField(null=True, blank=True)
     rating_count = models.IntegerField(null=True, blank=True)
@@ -69,7 +46,8 @@ class Recipe(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     source = models.CharField(max_length=200, verbose_name='Source|url', null=True)
-
+    notes = models.TextField(blank=True, null=True)
+    
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Recipe'
@@ -86,15 +64,29 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
 
+class Ingredient(models.Model):
+    """
+    Returns ingredients for a recipe
+    """
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients')
+    title = models.CharField(max_length=220, blank=True)
+    description = models.TextField(blank=True, null=True)  
+    quantity = models.CharField(max_length=50, blank=True, null=True)
+    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
+
+    class Meta:
+        unique_together = ('recipe', 'title')  # to prevent having duplicate ingredients in one recipe
         
+    def __str__(self):
+        return self.title
 
 
 class RecipeImage(models.Model):
     """
     Returns images for a recipe
     """
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = CloudinaryField('Image/recipe',overwrite=True, null=True,)
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='images')
+    image = CloudinaryField('image',overwrite=True, null=True,)
     caption = models.CharField(
         max_length=200, 
         verbose_name= 'Photo|caption',
@@ -106,13 +98,18 @@ class RecipeImage(models.Model):
     def __str__(self):
         return self.caption
 
+    @property
+    def image_url(self):
+        return (
+            f"http://res.cloudinary.com/dfjtkh7ie/{self.image}"
+        )
 
 class RecipeReview(models.Model):
     """
     Returns comments for related recipe
     """
-    recipe = models.ForeignKey(Recipe, related_name='review', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='review',on_delete=models.SET_NULL, null=True)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
     content = models.TextField(blank=True, null=True)
     stars = models.FloatField()
     date_added = models.DateField(auto_now_add=True)
