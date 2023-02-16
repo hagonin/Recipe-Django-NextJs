@@ -18,7 +18,7 @@ function Avatar({ control, name, handleChangeAvatar }) {
 					<>
 						<div className="h-52 w-52 border border-border rounded-full mx-auto overflow-hidden">
 							<Img
-								src={value || images.defaultAvatar}
+								src={value.preview || images.defaultAvatar}
 								alt="avatar_default"
 								className="w-full h-full"
 							/>

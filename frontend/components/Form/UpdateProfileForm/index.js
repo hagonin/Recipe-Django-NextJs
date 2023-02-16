@@ -1,4 +1,5 @@
 import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputField, TextAreaField } from '../FormControl';
@@ -18,40 +19,55 @@ function UpdateProfileForm({
 		setValue,
 		control,
 		reset,
-		formState: { defaultValues },
+		formState: { defaultValues, isSubmitting },
 	} = useForm({
 		defaultValues: {
 			'profile.username': username,
 			'profile.last_name': last_name,
 			'profile.first_name': first_name,
 			'profile.bio': bio,
-			'profile.avatar': avatar,
+			'profile.avatar': { preview: avatar, file: avatar },
 		},
 	});
 
-	const [avatarPreview, setAvatarPreview] = useState(null);
+	const [image, setImage] = useState(null);
 
 	const handleChangeAvatar = (e) => {
-		const blob = URL.createObjectURL(e.target.files[0]);
-		setAvatarPreview(blob);
+		const file = e.target.files[0];
+		console.log(file);
+		const blob = file && URL.createObjectURL(file);
+		setImage({ preview: blob, file: file?.name });
 	};
 
+	// const encodeImage = (file) => {
+	// 	const reader = new FileReader();
+	// 	reader.readAsDataURL(file);
+	// 	reader.onloadend = () => {
+	// 		console.log(reader.result);
+	// 	};
+	// };
 	const handleReset = () => {
 		reset({ ...defaultValues });
 	};
 
 	useEffect(() => {
-		avatarPreview && setValue('profile.avatar', avatarPreview);
+		image && setValue('profile.avatar', image);
 		return () => {
-			URL.revokeObjectURL(avatarPreview);
+			URL.revokeObjectURL(image?.preview);
 		};
-	}, [avatarPreview]);
+	}, [image]);
+
+	const handleBeforeSubmit = ({ profile }) => {
+		const { avatar, ...rest } = profile;
+		// console.log(avatar.file);
+		return onSubmit({ avatar: avatar.file, ...rest });
+	};
 
 	return (
 		<form
 			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
 			noValidate={true}
-			onSubmit={handleSubmit(({ profile }) => onSubmit({ ...profile }))}
+			onSubmit={handleSubmit(handleBeforeSubmit)}
 		>
 			<div className="md:col-span-4 flex flex-col items-center ">
 				<Avatar
@@ -92,6 +108,7 @@ function UpdateProfileForm({
 						type="submit"
 						className="lg primary w-full"
 					>
+						{isSubmitting && <Loader type="submitting" />}
 						Save
 					</Button>
 					<Button

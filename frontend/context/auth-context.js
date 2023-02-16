@@ -29,11 +29,10 @@ const AuthProvider = ({ children }) => {
 			const { refresh, access } = response.data.token;
 			remember && setCookie(access, refresh);
 			const profile = await getProfileUser(access);
-			const { user, ...rest } = profile.data;
-			setUser({ ...user, ...rest });
-			router.push(`/user/${profile.data.username}`);
+			handleSetUserFromResponse(profile);
+			router.push('/user/profile/');
 		} catch (error) {
-			if (error.response.status === 400) {
+			if (error.response?.status === 400) {
 				setErrors({
 					login: { ...error.response.data },
 				});
@@ -43,24 +42,11 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const getProfileUser = (accessToken) => {
-		return api.get('/user/profile/', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
-	};
-
 	const tokenAuthen = async () => {
 		setLoading(true);
-		const access = getAccessToken();
 		try {
-			const profile = await getProfileUser(access);
-			const {
-				user: { image_url: avatar, ...userRest },
-				...rest
-			} = profile.data;
-			setUser({ avatar, ...userRest, ...rest });
+			const profile = await getProfileUser(getAccessToken());
+			handleSetUserFromResponse(profile);
 		} catch (error) {
 			console.log('ERROR AT LOAD USER PROFILE', error);
 		} finally {
@@ -69,7 +55,6 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const logout = async () => {
-		//appi lgout errror
 		try {
 			const res = await api.patch('/user/logout/', {
 				refresh: getRefreshToken(),
@@ -129,10 +114,25 @@ const AuthProvider = ({ children }) => {
 					headers: { Authorization: `Bearer ${getAccessToken()}` },
 				}
 			);
-			console.log('RES IN UPDATE PROFILE');
+			console.log('RES IN UPDATE PROFILE', res);
+			handleSetUserFromResponse(res);
+			router.push('/user/profile/');
 		} catch (error) {
 			console.log('ERR IN UPDATE PROFILE', error);
 		}
+	};
+
+	const getProfileUser = (accessToken) => {
+		return api.get('/user/profile/', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+	};
+
+	const handleSetUserFromResponse = (res) => {
+		const { user, image_url: avatar, ...rest } = res.data;
+		setUser({ avatar, ...user, ...rest });
 	};
 
 	return (

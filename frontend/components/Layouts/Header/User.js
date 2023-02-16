@@ -6,6 +6,7 @@ import { images } from '@utils/constants';
 import Tippy from '@tippyjs/react/headless';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { useAuthContext } from '@context/auth-context';
+import Img from '@components/UI/Image';
 
 function User({ username, email, avatar = images.defaultAvatar }) {
 	const { logout } = useAuthContext();
@@ -23,16 +24,10 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 					>
 						<h3 className="uppercase mb-4 px-5">Account</h3>
 						<div className="flex items-center px-5">
-							<Image
+							<Img
 								src={avatar}
 								alt="avatar"
-								width={58}
-								height={58}
-								priority={true}
-								styles={{
-									objectFit: 'contain',
-									backgroundColor: 'blue',
-								}}
+								className="h-58 w-58 rounded-full"
 							/>
 							<div className="ml-3 flex flex-col">
 								<span className="text-black font-bold">
@@ -45,7 +40,7 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 						</div>
 						<div className="text-black mt-3">
 							<Link
-								href={`/user/${username}`}
+								href={`/user/profile/`}
 								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
 							>
 								Profile
@@ -78,19 +73,12 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 				interactive={true}
 			>
 				<button
-					className=" rounded-full bg-grey border outline-none border-border transition-all  hover:shadow-[0px_0px_0px_4px_rgba(255,255,255,0.15)]"
+					className="h-10 w-10 rounded-full bg-grey border outline-none border-border transition-all  hover:shadow-[0px_0px_0px_4px_rgba(255,255,255,0.15)]"
 					onClick={toggle}
 				>
-					<Image
-						src="/static/images/user.png"
+					<Img
+						src={avatar}
 						alt="avatar"
-						width={30}
-						height={30}
-						priority={true}
-						styles={{
-							objectFit: 'contain',
-							backgroundColor: 'blue',
-						}}
 					/>
 				</button>
 			</Tippy>

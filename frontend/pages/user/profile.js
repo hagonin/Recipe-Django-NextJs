@@ -25,6 +25,12 @@ function User() {
 			>
 				Add recipe
 			</Button>
+			<Button
+				type="link"
+				href="/user/updateprofile"
+			>
+				Update Profile
+			</Button>
 			<Link href="/login">Login</Link>
 		</div>
 	);
