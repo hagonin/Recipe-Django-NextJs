@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-function ManageRecipe() {
+function AccountManage() {
 	return (
 		<div className="border rounded-md p-6">
 			<Link
@@ -19,4 +19,4 @@ function ManageRecipe() {
 	);
 }
 
-export default ManageRecipe;
+export default AccountManage;

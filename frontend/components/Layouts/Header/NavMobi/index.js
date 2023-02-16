@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useAuthContext } from '@context/auth-context';
 
-import { NavLinks } from '@utils/constants';
+import { images, NavLinks } from '@utils/constants';
 
 import { FaAngleRight } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
@@ -43,7 +43,7 @@ function NavMobi() {
 						{isAuthenticated ? (
 							<div>
 								<Img
-									src="/static/images/user.png"
+									src={user?.avatar || images.defaultAvatar}
 									alt="avatar"
 									className="h-20 w-20 border-border rounded-full ml-5"
 								/>
@@ -53,11 +53,15 @@ function NavMobi() {
 								<span className="text-sm text-second block mb-10 ml-5">
 									{user?.email}
 								</span>
-								<NavItem href={`/user/${user?.username}`}>
-									{' '}
-									Manage Recipe
+								<NavItem href={`/user/profile/`}>
+									Profile
 								</NavItem>
-								<NavItem>Add Recipe</NavItem>
+								<NavItem href={`/user/updateprofile/`}>
+									Update Profile
+								</NavItem>
+								<NavItem href="/recipes/addnewrecipe">
+									Add Recipe
+								</NavItem>
 							</div>
 						) : (
 							<NavItem href="/login">

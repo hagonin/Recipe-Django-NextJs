@@ -14,21 +14,21 @@ function Navigate() {
 					nav.children ? (
 						<div
 							key={nav.id}
-							className={`text-sm text-black uppercase font-medium py-4 px-5  cursor-pointer relative group `}
+							className={`text-sm text-blackLight uppercase font-bold py-4 px-5  cursor-pointer relative group `}
 							onMouseEnter={() => setIsHover(true)}
 							onMouseLeave={() => setIsHover(false)}
 						>
-							<span className="group-hover:text-primary hover:font-medium">
+							<span className="group-hover:text-primary">
 								{nav.name}
 							</span>
-							<FaAngleDown className="inline-block ml-2" />
+							<FaAngleDown className="inline-block ml-2 group-hover:text-primary" />
 							{isHover && (
 								<div className="min-w-[200px] top-full  right-0 bg-white  absolute z-10 left-5 shadow-md border-t-2 border-primary">
 									{nav.children.map((child) => (
 										<Link
 											key={child.id}
 											href={`${nav.href}${child.href}`}
-											className="block py-3 px-5 hover:text-primary border-b border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+											className="block font-semibold py-3 px-5 hover:text-primary border-b border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 										>
 											{child.name}
 										</Link>
@@ -40,7 +40,7 @@ function Navigate() {
 						<Link
 							key={nav.id}
 							href={nav.href}
-							className="text-sm text-black uppercase font-medium px-5 py-5 hover:text-primary hover:font-medium"
+							className="text-sm text-blackLight uppercase font-bold px-5 py-5 hover:text-primary"
 						>
 							{nav.name}
 						</Link>

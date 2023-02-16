@@ -1,28 +1,103 @@
+import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
-import Slider from '@components/Slider';
+import Slider from '@components/UI/Slider';
+import Slide from '@components/UI/Slider/Slide';
+import SubscribeForm from '@components/Form/SubscribeForm';
 import { useAuthContext } from '@context/auth-context';
-import api from '@services/axios';
-import { useRouter } from 'next/router';
 
 export default function Home() {
-	 
+	const { user } = useAuthContext();
+	const recipes = [
+		{
+			id: 1,
+			name: 'Banana and Blueberry Cereal',
+			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
+			date: 'January 12, 2021',
+		},
+		{
+			id: 2,
+			name: 'Banana and Blueberry Cereal',
+			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
+			date: 'January 12, 2021',
+		},
+		{
+			id: 3,
+			name: 'Banana and Blueberry Cereal',
+			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
+			date: 'January 12, 2021',
+		},
+	];
+	const recipesRandom = [
+		{
+			id: 1,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+		},
+		{
+			id: 2,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+		},
+		{
+			id: 3,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+		},
+		{
+			id: 4,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+		},
+		{
+			id: 5,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+		},
+		{
+			id: 6,
+			name: 'Seafood paella',
+			image: null,
+			description:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+		},
+	];
+
 	return (
 		<>
-			<h1>Chocolate Chip Cookies h1</h1>
-			<h1>Contact</h1>
-			<h2>Crispy Croissants and Butter h2</h2>
-			<h2>Chocolate Heaven h2</h2>
-			<h3>ABOUT ME h3</h3>
-			<h4>Lucid Themes h4</h4>
+			<Slider>
+				{recipesRandom.map((recipe) => (
+					<Slide
+						{...recipe}
+						key={recipe.id}
+					/>
+				))}
+			</Slider>
+			<section className="container bg-grey py-4 px-5 flex md:items-center justify-between max-md:flex-col mt-4">
+				<div>
+					Don't miss a single recipe!
+					<br />
+					<span className="text-sm">
+						Subscribe to receive new recipes straight to your inbox!
+					</span>
+				</div>
+				<SubscribeForm />
+			</section>
+			<WidgetLayout>
+				<GroupCategory
+					list={recipes}
+					name="breakfast"
+				/>
+			</WidgetLayout>
 		</>
 	);
 }
-
-Home.getLayout = function (page) {
-	return (
-		<>
-			<Slider />
-			<WidgetLayout>{page}</WidgetLayout>
-		</>
-	);
-};

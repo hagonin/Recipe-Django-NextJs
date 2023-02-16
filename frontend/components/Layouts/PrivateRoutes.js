@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 
 function PrivateRoutes({ children }) {
 	const router = useRouter();
-	const { isAuthenticated, user } = useAuthContext();
+	const { isAuthenticated, loading } = useAuthContext();
 	const isBrowser = typeof window !== 'undefined';
 
 	// router.push only works on browser
-	if (isBrowser && !isAuthenticated) {
+	if (isBrowser && !isAuthenticated && !loading) {
 		router.push('/login');
 	}
 

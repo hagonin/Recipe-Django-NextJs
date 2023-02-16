@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 function User() {
 	const { user } = useAuthContext();
-	console.log(user);
+	console.log('user at user page', user);
 	return (
 		<div className="container my-14">
 			<div className="p-5 border rounded-md">
@@ -25,6 +25,12 @@ function User() {
 			>
 				Add recipe
 			</Button>
+			<Button
+				type="link"
+				href="/user/updateprofile"
+			>
+				Update Profile
+			</Button>
 			<Link href="/login">Login</Link>
 		</div>
 	);
@@ -32,4 +38,4 @@ function User() {
 
 export default User;
 
-User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+// User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

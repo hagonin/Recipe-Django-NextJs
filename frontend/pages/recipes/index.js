@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 function Recipe() {
 	return (
-		<div className="container my-14" >
+		<div className="container my-14">
 			<h1>Grid Recipe</h1>
 			<div className="flex flex-col">
 				<Link href="/recipes/1">Item Recipe 1</Link>

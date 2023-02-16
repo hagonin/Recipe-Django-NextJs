@@ -1,71 +1,71 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import api from '@services/axios';
+import {
+	clearCookie,
+	getAccessToken,
+	getRefreshToken,
+	setCookie,
+} from '@utils/cookies';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
 
 	useEffect(() => {
-		tokenAuthentication();
+		tokenAuthen();
 	}, []);
-
-	useEffect(() => {
-		setIsAuthenticated(!!user);
-	}, [user]);
 
 	const login = async ({ email, password, remember }) => {
 		try {
-			const response = await axios.post('/api/login', {
+			const response = await api.post('/user/login/', {
 				email,
 				password,
-				remember,
 			});
-			const { success, user } = response.data;
-			if (success) {
-				success && setUser(user);
-				router.push(`/user/${user.username}`);
-			}
+			const { refresh, access } = response.data.token;
+			remember && setCookie(access, refresh);
+			const profile = await getProfileUser(access);
+			handleSetUserFromResponse(profile);
+			router.push('/user/profile/');
 		} catch (error) {
-			setErrors({
-				login: error.response.data.error,
-			});
+			if (error.response?.status === 400) {
+				setErrors({
+					login: { ...error.response.data },
+				});
+			} else {
+				console.log('ERROR IN LOGIN', error);
+			}
 		}
 	};
 
-	// not received enough user information
-	const tokenAuthentication = async () => {
+	const tokenAuthen = async () => {
+		setLoading(true);
 		try {
-			const response = await axios.get('/api/user');
-			setUser(response.data.data);
-			setIsAuthenticated(true);
+			const profile = await getProfileUser(getAccessToken());
+			handleSetUserFromResponse(profile);
 		} catch (error) {
-			console.log('load user error:', error);
-			setIsAuthenticated(false);
+			console.log('ERROR AT LOAD USER PROFILE', error);
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const logout = () => {
-		axios
-			.post('/api/logout/')
-			.then((res) => {
-				if (res.data.success) {
-					setUser(null);
-					setIsAuthenticated(false);
-					router.push('/login');
-				}
-			})
-			.catch((err) => {
-				console.log('logout err', err);
+	const logout = async () => {
+		try {
+			const res = await api.patch('/user/logout/', {
+				refresh: getRefreshToken(),
 			});
+			console.log('res at logout', res);
+		} catch (error) {
+			console.log('ERROR AT LOGOUT', error);
+		}
+		clearCookie();
+		setUser(null);
+		router.push('/login');
 	};
 
 	const signup = async ({
@@ -85,11 +85,54 @@ const AuthProvider = ({ children }) => {
 				confirm_password,
 				email,
 			});
-
 			router.push('/login');
 		} catch (error) {
-			setErrors({ register: error.response.data });
+			const status = error.response.status;
+			if (status === 400) {
+				setErrors({ register: { ...error.response.data } });
+			} else {
+				console.log('ERROR IN SIGNUP', error.response.statusText);
+			}
 		}
+	};
+
+	const updateProfile = async ({
+		username,
+		first_name,
+		last_name,
+		bio,
+		avatar,
+	}) => {
+		try {
+			const res = await api.patch(
+				'/user/profile/',
+				{
+					bio,
+					avatar,
+				},
+				{
+					headers: { Authorization: `Bearer ${getAccessToken()}` },
+				}
+			);
+			console.log('RES IN UPDATE PROFILE', res);
+			handleSetUserFromResponse(res);
+			router.push('/user/profile/');
+		} catch (error) {
+			console.log('ERR IN UPDATE PROFILE', error);
+		}
+	};
+
+	const getProfileUser = (accessToken) => {
+		return api.get('/user/profile/', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+	};
+
+	const handleSetUserFromResponse = (res) => {
+		const { user, image_url: avatar, ...rest } = res.data;
+		setUser({ avatar, ...user, ...rest });
 	};
 
 	return (
@@ -98,11 +141,12 @@ const AuthProvider = ({ children }) => {
 				errors,
 				setErrors,
 				user,
-				isAuthenticated,
+				isAuthenticated: !!user,
 				login,
 				signup,
 				logout,
 				loading,
+				updateProfile,
 			}}
 		>
 			{children}

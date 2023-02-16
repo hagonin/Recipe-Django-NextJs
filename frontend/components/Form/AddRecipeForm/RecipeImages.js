@@ -1,59 +1,44 @@
+import { memo, useEffect, useRef } from 'react';
+import { BsFillCameraFill } from 'react-icons/bs';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import { memo, useEffect, useRef, useState } from 'react';
-import { BsFillCameraFill } from 'react-icons/bs';
 import { MdDelete } from 'react-icons/md';
 
-function RecipeImages({ setRecipeImgs }) {
-	const [images, setImages] = useState([]);
+function RecipeImages({ image, handleChangeImg, handleDelImage }) {
 	const fileRef = useRef();
-	const handleChange = (e) => {
-		const blob = URL.createObjectURL(e.target.files[0]);
-		setImages((pre) => [...pre, blob]);
-	};
-
-	const handleDelete = (index) => {
-		setImages((pre) => {
-			return [...pre].filter((item, i) => i !== index);
-		});
-	};
-
 	const handleClick = () => {
 		fileRef.current.click();
 	};
 
 	useEffect(() => {
-		setRecipeImgs(images);
-	}, [images]);
+		return () => {
+			URL.revokeObjectURL(image);
+		};
+	}, [image]);
 
 	return (
 		<>
-			<div className="grid grid-cols-1 md:grid-cols-3 lg:gap-6 md:gap-4 gap-2 mt-10 border border-border p-4">
-				{images.map((img, index) => (
-					<div
-						className="relative basis-full group"
-						key={index}
-					>
-						<Img
-							alt={`recipe ${index}`}
-							src={img}
-							className="h-56 w-full"
-						/>
+			{image && (
+				<div className="text-center mt-3">
+					<Img
+						alt="recipe"
+						src={image}
+						className="h-56"
+					/>
 
-						<button
-							className="mt-1 w-full hover:text-red invisible group-hover:visible "
-							onClick={() => handleDelete(index)}
-						>
-							Delete
-						</button>
-					</div>
-				))}
-			</div>
+					<button
+						className="text-2xl mt-2 hover:text-red"
+						onClick={handleDelImage}
+					>
+						<MdDelete />
+					</button>
+				</div>
+			)}
 			<input
 				id="recipe.image"
 				name="recipe.image"
 				type="file"
-				onChange={handleChange}
+				onChange={handleChangeImg}
 				className="hidden"
 				ref={fileRef}
 			/>
@@ -61,7 +46,7 @@ function RecipeImages({ setRecipeImgs }) {
 				onClick={handleClick}
 				icon={{ left: <BsFillCameraFill /> }}
 			>
-				Add image
+				{image ? 'Change Image' : 'Add Image'}
 			</Button>
 		</>
 	);

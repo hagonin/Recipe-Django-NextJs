@@ -20,7 +20,6 @@ function Header() {
 		return fetchFake.then((res) => console.log(res));
 	};
 
-
 	return (
 		<header>
 			<div className="bg-primary sm:h-12 h-14 text-white">
@@ -36,6 +35,7 @@ function Header() {
 							<User
 								username={user?.username}
 								email={user?.email}
+								avatar={user?.avatar}
 							/>
 						) : (
 							<Button
@@ -46,7 +46,6 @@ function Header() {
 								Login
 							</Button>
 						)}
-
 					</div>
 				</div>
 			</div>

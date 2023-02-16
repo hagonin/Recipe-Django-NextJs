@@ -1,7 +1,25 @@
 import { useAuthContext } from '@context/auth-context';
+import dynamic from 'next/dynamic';
+import { forwardRef } from 'react';
 
-const InputField = ({ label, name, type, register, error, ...props }) => {
-	const { setErrors } = useAuthContext();
+import 'react-quill/dist/quill.snow.css';
+const ReactQuill = dynamic(
+	() => {
+		return import('react-quill');
+	},
+	{ ssr: false }
+);
+
+const InputField = ({
+	label,
+	name,
+	type,
+	register,
+	error,
+	rules = {},
+	...props
+}) => {
+	const { setErrors, errors } = useAuthContext();
 	return (
 		<div className="w-full">
 			<Label
@@ -13,8 +31,9 @@ const InputField = ({ label, name, type, register, error, ...props }) => {
 				type={type}
 				{...register(name, {
 					onChange: () => {
-						setErrors(null);
+						errors && setErrors(null);
 					},
+					...rules,
 				})}
 				{...props}
 				className={`w-full ${
@@ -149,6 +168,18 @@ const TextAreaField = ({ label, name, register, error, ...props }) => {
 		</div>
 	);
 };
+
+const RichTextField = forwardRef(({ field }, ref) => (
+	<div className="flex flex-col">
+		<Label label="Description" />
+		<ReactQuill
+			theme="snow"
+			{...field}
+			ref={ref}
+		/>
+	</div>
+));
+
 const Error = ({ error }) => {
 	return error ? (
 		<span className="block text-sm mt-2 text-red ml-3">{error}</span>
@@ -165,4 +196,11 @@ const Label = ({ label, name }) =>
 		</label>
 	);
 
-export { InputField, CheckboxField, RadioField, SelectField, TextAreaField };
+export {
+	InputField,
+	CheckboxField,
+	RadioField,
+	SelectField,
+	TextAreaField,
+	RichTextField,
+};

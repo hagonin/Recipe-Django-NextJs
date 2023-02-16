@@ -13,13 +13,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin): 
-    search_fields = ('title',)
-    list_display= ['title','author']
+    search_fields = ('title','ingredients')
+    list_display= ('title','author')
     list_filter = ('category',)
     prepopulated_fields = {'slug':('title',)}
-    readonly_fields = ['created_at', 'updated_at']
-    raw_id_fields = ['author']
-    exclude = ('search_vector',)
+    readonly_fields = ('created_at', 'updated_at')
+    raw_id_fields = ('author',)
 
 
 admin.site.register(Ingredient)

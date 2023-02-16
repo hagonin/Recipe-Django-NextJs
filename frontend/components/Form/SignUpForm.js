@@ -121,7 +121,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<Button
-					className="primary lgSize w-full mt-5"
+					className="primary login w-full mt-5"
 					type="submit"
 				>
 					{isSubmitting && <Loader type="submitting" />}
