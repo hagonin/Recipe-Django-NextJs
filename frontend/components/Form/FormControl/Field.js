@@ -17,11 +17,12 @@ const InputField = ({
 	register,
 	error,
 	rules = {},
+	hide,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
 	return (
-		<div className="w-full">
+		<div className={`w-full ${hide ? 'hidden' : 'block'}`}>
 			<Label
 				label={label}
 				name={name}
@@ -170,12 +171,13 @@ const TextAreaField = ({ label, name, register, error, ...props }) => {
 };
 
 const RichTextField = forwardRef(({ field }, ref) => (
-	<div className="flex flex-col">
+	<div className="flex flex-col h-[400px]">
 		<Label label="Description" />
 		<ReactQuill
 			theme="snow"
 			{...field}
 			ref={ref}
+			className="h-[80%]"
 		/>
 	</div>
 ));

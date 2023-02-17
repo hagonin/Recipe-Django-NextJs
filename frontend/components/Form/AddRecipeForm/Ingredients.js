@@ -7,7 +7,7 @@ import { InputField, SelectField } from '../FormControl';
 function Ingredients({ control, register }) {
 	const { fields, append, remove } = useFieldArray({
 		control,
-		name: 'recipe.ingredient',
+		name: 'recipe.ingredients',
 	});
 	return (
 		<>
@@ -15,45 +15,32 @@ function Ingredients({ control, register }) {
 				{fields.map((item, index) => (
 					<li
 						key={item.id}
-						className="flex items-center justify-between gap-4"
+						className="grid md:grid-cols-2 grid-cols-1  gap-4"
 					>
 						<InputField
 							type="text"
-							placeholder="Ingredient name"
-							name={`recipe.ingredient.${index}.name`}
+							placeholder="Name"
+							name={`recipe.ingredients.${index}.name`}
+							register={register}
+						/>
+						<InputField
+							type="text"
+							placeholder="Description"
+							name={`recipe.ingredients.${index}.description`}
 							register={register}
 						/>
 						<InputField
 							type="number"
 							placeholder="Quantity"
-							name={`recipe.ingredient.${index}.quantity`}
+							name={`recipe.ingredients.${index}.quantity`}
 							register={register}
 						/>
-						<SelectField
-							name={`recipe.ingredient.${index}.unit`}
-							options={[
-								{
-									key: 'Unit',
-									value: '',
-								},
-								{
-									key: 'tbsp',
-									value: 'tablespoon',
-								},
-								{
-									key: 'cup',
-									value: 'cup',
-								},
-								{
-									key: 'gr',
-									value: 'gram',
-								},
-								{
-									key: 'ml',
-									value: 'mililit',
-								},
-							]}
+						<InputField
+							type="text"
+							placeholder="Unit"
+							name={`recipe.ingredients.${index}.unit`}
 							register={register}
+							maxLength={3}
 						/>
 						<button
 							type="button"

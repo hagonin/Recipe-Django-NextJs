@@ -1,7 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import { clearCookie, getRefreshToken, setCookie } from '@utils/cookies';
+import {
+	clearCookie,
+	getAccessToken,
+	getRefreshToken,
+	setCookie,
+} from '@utils/cookies';
 
 const AuthContext = createContext();
 
@@ -22,12 +27,15 @@ const AuthProvider = ({ children }) => {
 				password,
 			});
 			const { refresh, access } = response.data.token;
+			console.log(access);
 			remember && setCookie(access, refresh);
-			const profile = await api.get('/user/profile/', {
-				Authorization: `Bearer ${access}`,
+			const user = await api.get('/user/', {
+				headers: {
+					Authorization: `Bearer ${access}`,
+				},
 			});
-			handleSetUserFromResponse(profile);
-			router.push('/user/profile/');
+			handleSetUserFromResponse(user);
+			router.push('/');
 		} catch (error) {
 			if (error.response?.status === 400) {
 				setErrors({
@@ -42,7 +50,11 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async () => {
 		setLoading(true);
 		try {
-			const profile = await api.get('/user/profile/');
+			const profile = await api.get('/user/profile/', {
+				headers: {
+					Authorization: `Bearer ${getAccessToken()}`,
+				},
+			});
 			handleSetUserFromResponse(profile);
 		} catch (error) {
 			console.log('ERROR AT LOAD USER PROFILE', error);
@@ -94,11 +106,24 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const updateProfile = async (data) => {
+		console.log(data);
 		const { personal, profile } = data;
+		console.log('PROFILE', profile);
 		try {
-			await api.patch('/user/', { ...personal });
-			const profileRes = await api.patch('/user/profile/', {
-				...profile,
+			await api.patch(
+				'/user/',
+				{ ...personal },
+				{
+					headers: {
+						Authorization: `Bearer ${getAccessToken()}`,
+					},
+				}
+			);
+			console.log('PROFILE IN UPDATEPROFILE', profile);
+			const profileRes = await api.patch('/user/profile/', profile, {
+				headers: {
+					Authorization: `Bearer ${getAccessToken()}`,
+				},
 			});
 			handleSetUserFromResponse(profileRes);
 			router.push('/user/profile/');

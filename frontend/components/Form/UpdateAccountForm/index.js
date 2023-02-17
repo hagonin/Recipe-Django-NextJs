@@ -36,7 +36,7 @@ function UpdateProfileForm({
 		const file = e.target.files[0];
 		console.log(file);
 		const blob = file && URL.createObjectURL(file);
-		setImage({ preview: blob, file: file?.name });
+		setImage({ preview: blob, file: file, name: file.name });
 	};
 
 	const handleReset = () => {
@@ -52,12 +52,13 @@ function UpdateProfileForm({
 
 	const handleBeforeSubmit = ({ account }) => {
 		const { avatar, bio, ...rest } = account;
-		const profile = {
-			avatar: avatar.file,
-			bio,
-		};
+		const formDataProfile = new FormData();
+		formDataProfile.append('avatar', avatar.file);
+		formDataProfile.append('bio', bio);
+
 		const personal = { ...rest };
-		return onSubmit({ personal, profile });
+		console.log('FORMDATAPROFILE', formDataProfile.get('avatar'));
+		return onSubmit({ personal, profile: formDataProfile });
 	};
 
 	return (

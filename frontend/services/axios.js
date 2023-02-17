@@ -1,4 +1,4 @@
-import { getAccessToken, getRefreshToken, setCookie } from '@utils/cookies';
+import { getRefreshToken, setCookie } from '@utils/cookies';
 import axios from 'axios';
 
 const api = axios.create({
@@ -6,7 +6,6 @@ const api = axios.create({
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json; charset=utf-8',
-		Authorization: `Bearer ${getAccessToken()}`,
 	},
 	timeout: 10000,
 });
