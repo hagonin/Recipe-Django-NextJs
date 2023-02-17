@@ -1,12 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import {
-	clearCookie,
-	getAccessToken,
-	getRefreshToken,
-	setCookie,
-} from '@utils/cookies';
+import { clearCookie, getRefreshToken, setCookie } from '@utils/cookies';
 
 const AuthContext = createContext();
 
@@ -28,7 +23,9 @@ const AuthProvider = ({ children }) => {
 			});
 			const { refresh, access } = response.data.token;
 			remember && setCookie(access, refresh);
-			const profile = await getProfileUser(access);
+			const profile = await api.get('/user/profile/', {
+				Authorization: `Bearer ${access}`,
+			});
 			handleSetUserFromResponse(profile);
 			router.push('/user/profile/');
 		} catch (error) {
@@ -45,7 +42,7 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async () => {
 		setLoading(true);
 		try {
-			const profile = await getProfileUser(getAccessToken());
+			const profile = await api.get('/user/profile/');
 			handleSetUserFromResponse(profile);
 		} catch (error) {
 			console.log('ERROR AT LOAD USER PROFILE', error);
@@ -96,38 +93,18 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const updateProfile = async ({
-		username,
-		first_name,
-		last_name,
-		bio,
-		avatar,
-	}) => {
+	const updateProfile = async (data) => {
+		const { personal, profile } = data;
 		try {
-			const res = await api.patch(
-				'/user/profile/',
-				{
-					bio,
-					avatar,
-				},
-				{
-					headers: { Authorization: `Bearer ${getAccessToken()}` },
-				}
-			);
-			console.log('RES IN UPDATE PROFILE', res);
-			handleSetUserFromResponse(res);
+			await api.patch('/user/', { ...personal });
+			const profileRes = await api.patch('/user/profile/', {
+				...profile,
+			});
+			handleSetUserFromResponse(profileRes);
 			router.push('/user/profile/');
 		} catch (error) {
 			console.log('ERR IN UPDATE PROFILE', error);
 		}
-	};
-
-	const getProfileUser = (accessToken) => {
-		return api.get('/user/profile/', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
 	};
 
 	const handleSetUserFromResponse = (res) => {

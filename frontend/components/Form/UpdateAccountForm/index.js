@@ -22,11 +22,11 @@ function UpdateProfileForm({
 		formState: { defaultValues, isSubmitting },
 	} = useForm({
 		defaultValues: {
-			'profile.username': username,
-			'profile.last_name': last_name,
-			'profile.first_name': first_name,
-			'profile.bio': bio,
-			'profile.avatar': { preview: avatar, file: avatar },
+			'account.username': username,
+			'account.last_name': last_name,
+			'account.first_name': first_name,
+			'account.bio': bio,
+			'account.avatar': { preview: avatar, file: avatar },
 		},
 	});
 
@@ -39,28 +39,25 @@ function UpdateProfileForm({
 		setImage({ preview: blob, file: file?.name });
 	};
 
-	// const encodeImage = (file) => {
-	// 	const reader = new FileReader();
-	// 	reader.readAsDataURL(file);
-	// 	reader.onloadend = () => {
-	// 		console.log(reader.result);
-	// 	};
-	// };
 	const handleReset = () => {
 		reset({ ...defaultValues });
 	};
 
 	useEffect(() => {
-		image && setValue('profile.avatar', image);
+		image && setValue('account.avatar', image);
 		return () => {
 			URL.revokeObjectURL(image?.preview);
 		};
 	}, [image]);
 
-	const handleBeforeSubmit = ({ profile }) => {
-		const { avatar, ...rest } = profile;
-		// console.log(avatar.file);
-		return onSubmit({ avatar: avatar.file, ...rest });
+	const handleBeforeSubmit = ({ account }) => {
+		const { avatar, bio, ...rest } = account;
+		const profile = {
+			avatar: avatar.file,
+			bio,
+		};
+		const personal = { ...rest };
+		return onSubmit({ personal, profile });
 	};
 
 	return (
@@ -72,33 +69,33 @@ function UpdateProfileForm({
 			<div className="md:col-span-4 flex flex-col items-center ">
 				<Avatar
 					control={control}
-					name="profile.avatar"
+					name="account.avatar"
 					handleChangeAvatar={handleChangeAvatar}
 				/>
 			</div>
 			<div className="flex flex-col gap-4 md:col-span-8">
 				<InputField
 					label="First Name"
-					name="profile.first_name"
+					name="account.first_name"
 					type="text"
 					register={register}
 				/>
 				<InputField
 					label="Last Name"
-					name="profile.last_name"
+					name="account.last_name"
 					type="text"
 					register={register}
 				/>
 				<InputField
 					label="User Name"
-					name="profile.username"
+					name="account.username"
 					type="text"
 					register={register}
 				/>
 
 				<TextAreaField
 					label="Bio"
-					name="profile.bio"
+					name="account.bio"
 					type="text"
 					register={register}
 					rows={6}

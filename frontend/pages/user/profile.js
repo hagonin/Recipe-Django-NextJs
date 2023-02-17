@@ -38,4 +38,4 @@ function User() {
 
 export default User;
 
-// User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
