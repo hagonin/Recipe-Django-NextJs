@@ -6,7 +6,7 @@ import Link from 'next/link';
 function About(props) {
 	const { isAuthenticated } = useAuthContext();
 	return (
-		<div className="container py-14">
+		<div>
 			<h1>About</h1>
 			<h2 className="mt-7">Who we are ?</h2>
 			<p className="mt-3">
@@ -25,13 +25,11 @@ function About(props) {
 				inspires us to do everything possible to keep our community
 				connected. Sixty-million home cooks deserve no less.
 			</p>
-
 			<Img
 				src="https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/about_page_1.jpg"
 				alt="about"
 				className="my-5"
 			/>
-
 			<h2 className="mt-7">Above all, we are:</h2>
 			<ul className="mt-3">
 				<li>
@@ -59,7 +57,6 @@ function About(props) {
 					friends, family, cooking, and having a good laugh.
 				</li>
 			</ul>
-
 			<h2 className="mt-7">Work with us</h2>
 			<p className="mt-3">
 				Join our team of enthusiastic editors, designers, programmers,
