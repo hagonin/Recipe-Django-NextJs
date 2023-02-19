@@ -3,6 +3,8 @@ import Loader from '@components/UI/Loader';
 import ToastMessage from '@components/UI/ToastMessage';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaUserAlt } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 import { InputField, TextAreaField } from './FormControl';
 
 function ContactForm({ onSubmit }) {
@@ -29,6 +31,7 @@ function ContactForm({ onSubmit }) {
 					type="text"
 					register={register}
 					placeholder="Name"
+					icon={<FaUserAlt />}
 				/>
 				<InputField
 					name="contact.email"
@@ -43,6 +46,7 @@ function ContactForm({ onSubmit }) {
 						},
 					}}
 					error={errors.contact?.email}
+					icon={<MdEmail />}
 				/>
 			</div>
 			<TextAreaField

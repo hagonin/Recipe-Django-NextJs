@@ -18,6 +18,7 @@ const InputField = ({
 	error,
 	rules = {},
 	hide,
+	icon,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
@@ -27,22 +28,32 @@ const InputField = ({
 				label={label}
 				name={name}
 			/>
-			<input
-				id={name}
-				type={type}
-				{...register(name, {
-					onChange: () => {
-						errors && setErrors(null);
-					},
-					...rules,
-				})}
-				{...props}
-				className={`w-full ${
+			<div
+				className={`w-full flex ${
 					type !== 'file' && 'border rounded'
-				} px-5 h-12 outline-none ${
-					error ? 'border-red' : 'border-border focus:border-primary'
+				} h-12 outline-none ${
+					error ? 'border-red' : 'border-border focus:border-primary '
 				}`}
-			/>
+			>
+				<input
+					id={name}
+					type={type}
+					{...register(name, {
+						onChange: () => {
+							errors && setErrors(null);
+						},
+						...rules,
+					})}
+					{...props}
+					className="border-none outline-none flex-1 px-4 bg-transparent "
+				/>
+				{icon && (
+					<span className="text-primary flex items-center justify-center pr-3">
+						{icon}
+					</span>
+				)}
+			</div>
+
 			<Error error={error?.message} />
 		</div>
 	);
