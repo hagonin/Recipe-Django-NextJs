@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
 	const [isNewer, setIsNewer] = useState(false);
 
 	useEffect(() => {
-		tokenAuthen();
+		tokenAuthen(getAccessToken());
 	}, []);
 
 	const login = async ({ email, password, remember }) => {
@@ -39,6 +39,7 @@ const AuthProvider = ({ children }) => {
 			if (isNewer) {
 				router.push('/user/updateprofile/');
 			} else {
+				await tokenAuthen(access);
 				router.push('/');
 			}
 		} catch (error) {
@@ -52,12 +53,12 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const tokenAuthen = async () => {
+	const tokenAuthen = async (token) => {
 		setLoading(true);
 		try {
 			const profile = await api.get('/user/profile/', {
 				headers: {
-					Authorization: `Bearer ${getAccessToken()}`,
+					Authorization: `Bearer ${token}`,
 				},
 			});
 			handleSetUserFromResponse(profile);
@@ -70,10 +71,17 @@ const AuthProvider = ({ children }) => {
 
 	const logout = async () => {
 		try {
-			const res = await api.patch('/user/logout/', {
-				refresh: getRefreshToken(),
-			});
-			console.log('res at logout', res);
+			const res = await api.patch(
+				'/user/logout/',
+				{
+					refresh: getRefreshToken(),
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${getAccessToken()}`,
+					},
+				}
+			);
 		} catch (error) {
 			console.log('ERROR AT LOGOUT', error);
 		}
