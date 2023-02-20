@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const [isNewer, setIsNewer] = useState(false);
 
 	useEffect(() => {
 		tokenAuthen();
@@ -35,7 +36,11 @@ const AuthProvider = ({ children }) => {
 				},
 			});
 			handleSetUserFromResponse(user);
-			router.push('/');
+			if (isNewer) {
+				router.push('/user/updateprofile/');
+			} else {
+				router.push('/');
+			}
 		} catch (error) {
 			if (error.response?.status === 400) {
 				setErrors({
@@ -95,6 +100,7 @@ const AuthProvider = ({ children }) => {
 				email,
 			});
 			router.push('/login');
+			setIsNewer(true);
 		} catch (error) {
 			const status = error.response.status;
 			if (status === 400) {
