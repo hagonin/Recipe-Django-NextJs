@@ -29,7 +29,7 @@ const InputField = ({
 				name={name}
 			/>
 			<div
-				className={`w-full flex bg-white ${
+				className={`w-full flex bg-white px-3 ${
 					type !== 'file' && 'border rounded'
 				} h-12 outline-none ${
 					error ? 'border-red' : 'border-border focus:border-primary '
@@ -45,10 +45,10 @@ const InputField = ({
 						...rules,
 					})}
 					{...props}
-					className="border-none outline-none flex-1 px-4 bg-transparent  "
+					className="w-full border-none outline-none flex-1 bg-transparent pr-3"
 				/>
 				{icon && (
-					<span className="text-primary flex items-center justify-center pr-3">
+					<span className="text-primary flex items-center justify-center">
 						{icon}
 					</span>
 				)}

@@ -10,6 +10,7 @@ export const images = {
 	recipe1: '/static/images/recipe1.jpg',
 	recipe2: '/static/images/recipe2.jpg',
 	bio: '/static/images/bio.png',
+	
 };
 
 export const NavLinks = [
