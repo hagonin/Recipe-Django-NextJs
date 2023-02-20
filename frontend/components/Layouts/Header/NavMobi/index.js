@@ -45,7 +45,8 @@ function NavMobi() {
 								<Img
 									src={user?.avatar || images.defaultAvatar}
 									alt="avatar"
-									className="h-20 w-20 border-border rounded-full ml-5"
+									className="h-20 w-20 border-border rounded-full ml-5 overflow-hidden"
+									cover
 								/>
 								<span className="text-black font-bold block mt-3 ml-5">
 									{user?.username}

@@ -112,9 +112,7 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const updateProfile = async (data) => {
-		console.log(data);
 		const { personal, profile } = data;
-		console.log('PROFILE', profile);
 		try {
 			await api.patch(
 				'/user/',
@@ -125,10 +123,10 @@ const AuthProvider = ({ children }) => {
 					},
 				}
 			);
-			console.log('PROFILE IN UPDATEPROFILE', profile);
 			const profileRes = await api.patch('/user/profile/', profile, {
 				headers: {
 					Authorization: `Bearer ${getAccessToken()}`,
+					'Content-type': 'multipart/form-data',
 				},
 			});
 			handleSetUserFromResponse(profileRes);

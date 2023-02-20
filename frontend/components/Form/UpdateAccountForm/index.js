@@ -1,9 +1,8 @@
+import { useForm } from 'react-hook-form';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { InputField, TextAreaField } from '../FormControl';
-import Avatar from './Avatar';
+import PreviewImg from './Preview';
 
 function UpdateProfileForm({
 	username,
@@ -17,7 +16,6 @@ function UpdateProfileForm({
 		register,
 		handleSubmit,
 		setValue,
-		control,
 		reset,
 		formState: { defaultValues, isSubmitting },
 	} = useForm({
@@ -26,39 +24,30 @@ function UpdateProfileForm({
 			'account.last_name': last_name,
 			'account.first_name': first_name,
 			'account.bio': bio,
-			'account.avatar': { preview: avatar, file: avatar },
+			'account.avatar': { file: null, name: null },
 		},
 	});
-
-	const [image, setImage] = useState(null);
-
-	const handleChangeAvatar = (e) => {
-		const file = e.target.files[0];
-		console.log(file);
-		const blob = file && URL.createObjectURL(file);
-		setImage({ preview: blob, file: file, name: file.name });
-	};
 
 	const handleReset = () => {
 		reset({ ...defaultValues });
 	};
 
-	useEffect(() => {
-		image && setValue('account.avatar', image);
-		return () => {
-			URL.revokeObjectURL(image?.preview);
-		};
-	}, [image]);
-
 	const handleBeforeSubmit = ({ account }) => {
-		const { avatar, bio, ...rest } = account;
-		const formDataProfile = new FormData();
-		formDataProfile.append('avatar', avatar.file);
-		formDataProfile.append('bio', bio);
+		const { avatar, bio, ...personal } = account;
 
-		const personal = { ...rest };
-		console.log('FORMDATAPROFILE', formDataProfile.get('avatar'));
-		return onSubmit({ personal, profile: formDataProfile });
+		const formProfile = new FormData();
+		avatar.file && formProfile.append('avatar', avatar.file, avatar.name);
+		formProfile.append('bio', bio);
+
+		return onSubmit({ personal, profile: formProfile });
+	};
+
+	const handleOnChangeImg = (e) => {
+		const [file] = e.target.files;
+		setValue('account.avatar', {
+			file: file,
+			name: file.name,
+		});
 	};
 
 	return (
@@ -68,10 +57,14 @@ function UpdateProfileForm({
 			onSubmit={handleSubmit(handleBeforeSubmit)}
 		>
 			<div className="md:col-span-4 flex flex-col items-center ">
-				<Avatar
-					control={control}
-					name="account.avatar"
-					handleChangeAvatar={handleChangeAvatar}
+				<PreviewImg
+					avatar={avatar}
+					handleOnChangeImg={handleOnChangeImg}
+				/>
+				<input
+					type="text"
+					{...register('account.avatar')}
+					className="invisible"
 				/>
 			</div>
 			<div className="flex flex-col gap-4 md:col-span-8">

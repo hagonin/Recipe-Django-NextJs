@@ -27,7 +27,8 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 							<Img
 								src={avatar}
 								alt="avatar"
-								className="h-58 w-58 rounded-full"
+								className="h-20 w-20 rounded-full overflow-hidden"
+								cover
 							/>
 							<div className="ml-3 flex flex-col">
 								<span className="text-black font-bold">
@@ -73,12 +74,14 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 				interactive={true}
 			>
 				<button
-					className="h-10 w-10 rounded-full bg-grey border outline-none border-border transition-all  hover:shadow-[0px_0px_0px_4px_rgba(255,255,255,0.15)]"
+					className=" h-10 w-10 rounded-full border outline-none border-border transition-all  hover:shadow-[0px_0px_0px_4px_rgba(255,255,255,0.15)] overflow-hidden"
 					onClick={toggle}
 				>
 					<Img
 						src={avatar}
 						alt="avatar"
+						cover
+						className="h-full w-full"
 					/>
 				</button>
 			</Tippy>
