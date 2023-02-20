@@ -3,30 +3,9 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeForm from '@components/Form/SubscribeForm';
-import { useAuthContext } from '@context/auth-context';
+import api from '@services/axios';
 
-export default function Home() {
-	const { user } = useAuthContext();
-	const recipes = [
-		{
-			id: 1,
-			name: 'Banana and Blueberry Cereal',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
-			date: 'January 12, 2021',
-		},
-		{
-			id: 2,
-			name: 'Banana and Blueberry Cereal',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
-			date: 'January 12, 2021',
-		},
-		{
-			id: 3,
-			name: 'Banana and Blueberry Cereal',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/22.jpg',
-			date: 'January 12, 2021',
-		},
-	];
+export default function Home({ recipes }) {
 	const recipesRandom = [
 		{
 			id: 1,
@@ -95,9 +74,29 @@ export default function Home() {
 			<WidgetLayout>
 				<GroupCategory
 					list={recipes}
-					name="breakfast"
+					name="seafood"
 				/>
 			</WidgetLayout>
 		</>
 	);
 }
+
+export const getStaticProps = async () => {
+	const res = await api.get('/recipe/recipe/');
+
+	const recipes = res.data.map((item) => {
+		const imageDefault = item.images.filter((img) => img.default)[0]
+			.image_url;
+		return {
+			id: item.id,
+			name: item.title,
+			image: imageDefault,
+			date: item.created_at,
+		};
+	});
+	return {
+		props: {
+			recipes,
+		},
+	};
+};

@@ -23,13 +23,13 @@ const InputField = ({
 }) => {
 	const { setErrors, errors } = useAuthContext();
 	return (
-		<div className={`w-full ${hide ? 'hidden' : 'block'}`}>
+		<div className={`w-full ${hide ? 'hidden' : 'block'} `}>
 			<Label
 				label={label}
 				name={name}
 			/>
 			<div
-				className={`w-full flex ${
+				className={`w-full flex bg-white ${
 					type !== 'file' && 'border rounded'
 				} h-12 outline-none ${
 					error ? 'border-red' : 'border-border focus:border-primary '
@@ -45,7 +45,7 @@ const InputField = ({
 						...rules,
 					})}
 					{...props}
-					className="border-none outline-none flex-1 px-4 bg-transparent "
+					className="border-none outline-none flex-1 px-4 bg-transparent  "
 				/>
 				{icon && (
 					<span className="text-primary flex items-center justify-center pr-3">
