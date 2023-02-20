@@ -29,19 +29,20 @@ const AuthProvider = ({ children }) => {
 			});
 			const { refresh, access } = response.data.tokens;
 			remember && setCookie(access, refresh);
-			const user = await api.get('/user/', {
+			const profile = await api.get('/user/profile/', {
 				headers: {
 					Authorization: `Bearer ${access}`,
 				},
 			});
-			handleSetUserFromResponse(user);
-			if (isNewer) {
-				router.push('/user/updateprofile/');
-			} else {
-				console.log('Access', access);
-				await tokenAuthen(access);
-				router.push('/');
-			}
+			const { user, ...rest } = profile.data;
+			const avatar = await api.get('/user/profile/avatar/', {
+				headers: {
+					Authorization: `Bearer ${access}`,
+				},
+			});
+			const { image_url } = avatar.data;
+			setUser({ ...user, ...rest, avatar: image_url });
+			router.push('/');
 		} catch (error) {
 			if (error.response?.status === 400) {
 				setErrors({
@@ -56,18 +57,18 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async (token) => {
 		setLoading(true);
 		try {
-			const res1 = await api.get('/user/profile/', {
+			const profile = await api.get('/user/profile/', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			const { user, ...rest } = res1.data;
-			const res2 = await api.get('/user/profile/avatar/', {
+			const { user, ...rest } = profile.data;
+			const avatar = await api.get('/user/profile/avatar/', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			const { image_url } = res2.data;
+			const { image_url } = avatar.data;
 
 			setUser({ ...user, ...rest, avatar: image_url });
 		} catch (error) {
