@@ -8,7 +8,6 @@ import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
 
 function SignUp() {
-	const router = useRouter();
 	const { signup } = useAuthContext();
 
 	const onSubmit = (data) => signup({ ...data });

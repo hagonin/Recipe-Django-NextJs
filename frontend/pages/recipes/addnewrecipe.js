@@ -1,10 +1,8 @@
 import { images } from '@utils/constants';
 
 import AddRecipeForm from '@components/Form/AddRecipeForm';
-import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
-import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 
 function AddRecipe() {
