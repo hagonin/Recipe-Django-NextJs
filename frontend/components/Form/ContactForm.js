@@ -1,7 +1,7 @@
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import ToastMessage from '@components/UI/ToastMessage';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
@@ -16,7 +16,10 @@ function ContactForm({ onSubmit }) {
 	} = useForm();
 
 	useEffect(() => {
-		isSubmitSuccessful && reset();
+		if (isSubmitSuccessful) {
+			reset();
+			alert('Submit success');
+		}
 	}, [isSubmitSuccessful]);
 
 	return (
