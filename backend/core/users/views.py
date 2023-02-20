@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from rest_framework import generics
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -10,6 +11,8 @@ from recipes.models import Recipe
 from .models import Profile, CustomUser
 from recipes.serializers import RecipeSerializer
 from . import serializers
+
+
 
 
 class UserRegisterView(generics.GenericAPIView):

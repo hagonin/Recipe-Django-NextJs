@@ -27,8 +27,7 @@ const AuthProvider = ({ children }) => {
 				email,
 				password,
 			});
-			const { refresh, access } = response.data.token;
-			console.log(access);
+			const { refresh, access } = response.data.tokens;
 			remember && setCookie(access, refresh);
 			const user = await api.get('/user/', {
 				headers: {
@@ -39,6 +38,7 @@ const AuthProvider = ({ children }) => {
 			if (isNewer) {
 				router.push('/user/updateprofile/');
 			} else {
+				console.log('Access', access);
 				await tokenAuthen(access);
 				router.push('/');
 			}
@@ -56,12 +56,20 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async (token) => {
 		setLoading(true);
 		try {
-			const profile = await api.get('/user/profile/', {
+			const res1 = await api.get('/user/profile/', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			handleSetUserFromResponse(profile);
+			const { user, ...rest } = res1.data;
+			const res2 = await api.get('/user/profile/avatar/', {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			const { image_url } = res2.data;
+
+			setUser({ ...user, ...rest, avatar: image_url });
 		} catch (error) {
 			console.log('ERROR AT LOAD USER PROFILE', error);
 		} finally {
@@ -71,7 +79,7 @@ const AuthProvider = ({ children }) => {
 
 	const logout = async () => {
 		try {
-			const res = await api.patch(
+			const res = await api.post(
 				'/user/logout/',
 				{
 					refresh: getRefreshToken(),
@@ -120,9 +128,9 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const updateProfile = async (data) => {
-		const { personal, profile } = data;
+		const { personal, bio, avatar } = data;
 		try {
-			await api.patch(
+			const personalRes = await api.patch(
 				'/user/',
 				{ ...personal },
 				{
@@ -131,13 +139,29 @@ const AuthProvider = ({ children }) => {
 					},
 				}
 			);
-			const profileRes = await api.patch('/user/profile/', profile, {
+			const avatarRes = await api.patch('/user/profile/avatar/', avatar, {
 				headers: {
 					Authorization: `Bearer ${getAccessToken()}`,
 					'Content-type': 'multipart/form-data',
 				},
 			});
-			handleSetUserFromResponse(profileRes);
+			const { image_url } = avatarRes.data;
+
+			const profileRes = await api.patch(
+				'/user/profile/',
+				{
+					bio,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${getAccessToken()}`,
+					},
+				}
+			);
+
+			const { user, ...rest } = profileRes.data;
+			// handleSetUserFromResponse(profileRes);
+			setUser({ avatar: image_url, ...user, ...rest });
 			router.push('/user/profile/');
 		} catch (error) {
 			console.log('ERR IN UPDATE PROFILE', error);

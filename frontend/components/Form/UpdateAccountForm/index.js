@@ -35,11 +35,10 @@ function UpdateProfileForm({
 	const handleBeforeSubmit = ({ account }) => {
 		const { avatar, bio, ...personal } = account;
 
-		const formProfile = new FormData();
-		avatar.file && formProfile.append('avatar', avatar.file, avatar.name);
-		formProfile.append('bio', bio);
+		const formAvatar = new FormData();
+		avatar.file && formAvatar.append('avatar', avatar.file, avatar.name);
 
-		return onSubmit({ personal, profile: formProfile });
+		return onSubmit({ personal, bio: bio, avatar: formAvatar });
 	};
 
 	const handleOnChangeImg = (e) => {
