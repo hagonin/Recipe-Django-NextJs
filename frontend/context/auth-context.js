@@ -1,12 +1,14 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
 import {
 	clearCookie,
-	getAccessToken,
-	getRefreshToken,
+	getAccessTokenFromCookie,
+	getRefreshTokenFromCookie,
 	setCookie,
 } from '@utils/cookies';
+import axios from 'axios';
+import { images } from '@utils/constants';
 
 const AuthContext = createContext();
 
@@ -14,60 +16,22 @@ const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [token, setToken] = useState({
+		access: getAccessTokenFromCookie(),
+		refresh: getRefreshTokenFromCookie(),
+	});
 	const router = useRouter();
-	const [isNewer, setIsNewer] = useState(false);
 
 	useEffect(() => {
-		tokenAuthen(getAccessToken());
+		tokenAuthen();
 	}, []);
 
-	const login = async ({ email, password, remember }) => {
-		try {
-			const response = await api.post('/user/login/', {
-				email,
-				password,
-			});
-			const { refresh, access } = response.data.tokens;
-			remember && setCookie(access, refresh);
-			const profile = await api.get('/user/profile/', {
-				headers: {
-					Authorization: `Bearer ${access}`,
-				},
-			});
-			const { user, ...rest } = profile.data;
-			const avatar = await api.get('/user/profile/avatar/', {
-				headers: {
-					Authorization: `Bearer ${access}`,
-				},
-			});
-			const { image_url } = avatar.data;
-			setUser({ ...user, ...rest, avatar: image_url });
-			router.push('/');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({
-					login: { ...error.response.data },
-				});
-			} else {
-				console.log('ERROR IN LOGIN', error);
-			}
-		}
-	};
-
-	const tokenAuthen = async (token) => {
+	const tokenAuthen = async () => {
 		setLoading(true);
 		try {
-			const profile = await api.get('/user/profile/', {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const profile = await getProfile();
 			const { user, ...rest } = profile.data;
-			const avatar = await api.get('/user/profile/avatar/', {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const avatar = await getAvatar();
 			const { image_url } = avatar.data;
 
 			setUser({ ...user, ...rest, avatar: image_url });
@@ -79,24 +43,59 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const logout = async () => {
+		setLoading(true);
 		try {
-			const res = await api.post(
+			await api.post(
 				'/user/logout/',
 				{
-					refresh: getRefreshToken(),
+					refresh: token.refresh,
 				},
 				{
 					headers: {
-						Authorization: `Bearer ${getAccessToken()}`,
+						Authorization: `Bearer ${token.access}`,
 					},
 				}
 			);
+			setUser(null);
+			clearCookie();
+			setToken({ access: null, refresh: null });
+			router.push('/login');
 		} catch (error) {
 			console.log('ERROR AT LOGOUT', error);
+		} finally {
+			setLoading(false);
 		}
-		clearCookie();
-		setUser(null);
-		router.push('/login');
+	};
+
+	const login = async ({ email, password, remember }) => {
+		setLoading(true);
+		try {
+			const loginRes = await api.post('/user/login/', {
+				email,
+				password,
+			});
+			const { refresh, access } = loginRes.data.tokens;
+			setToken({ access: access, refresh: refresh });
+			remember && setCookie(access, refresh);
+
+			const profile = await getProfile(access);
+			const { user, ...rest } = profile.data;
+			const avatar = await getAvatar(access);
+			const { image_url } = avatar.data;
+
+			setUser({ ...user, ...rest, avatar: image_url });
+			router.push('/');
+		} catch (error) {
+			if (error.response?.status === 400) {
+				setErrors({
+					login: { ...error.response.data },
+				});
+			} else {
+				console.log('ERROR IN LOGIN', error);
+			}
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const signup = async ({
@@ -108,7 +107,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			await api.post('/user/register/', {
+			const signupRes = await api.post('/user/register/', {
 				username,
 				lastname,
 				firstname,
@@ -116,8 +115,16 @@ const AuthProvider = ({ children }) => {
 				confirm_password,
 				email,
 			});
+
+			const { access } = signupRes.data.tokens;
+
+			const avatarForm = await getFormAvatarFromUrl(
+				images.defaultAvatar,
+				'avatar_default'
+			);
+			await setAvatar(avatarForm, access);
+
 			router.push('/login');
-			setIsNewer(true);
 		} catch (error) {
 			const status = error.response.status;
 			if (status === 400) {
@@ -129,25 +136,21 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const updateProfile = async (data) => {
-		const { personal, bio, avatar } = data;
+		const {
+			personal: { username, last_name, first_name },
+			bio,
+			avatar: formAvatar,
+		} = data;
 		try {
-			const personalRes = await api.patch(
+			await api.patch(
 				'/user/',
-				{ ...personal },
+				{ username, last_name, first_name },
 				{
 					headers: {
-						Authorization: `Bearer ${getAccessToken()}`,
+						Authorization: `Bearer ${token.access}`,
 					},
 				}
 			);
-			const avatarRes = await api.patch('/user/profile/avatar/', avatar, {
-				headers: {
-					Authorization: `Bearer ${getAccessToken()}`,
-					'Content-type': 'multipart/form-data',
-				},
-			});
-			const { image_url } = avatarRes.data;
-
 			const profileRes = await api.patch(
 				'/user/profile/',
 				{
@@ -155,23 +158,62 @@ const AuthProvider = ({ children }) => {
 				},
 				{
 					headers: {
-						Authorization: `Bearer ${getAccessToken()}`,
+						Authorization: `Bearer ${token.access}`,
 					},
 				}
 			);
-
 			const { user, ...rest } = profileRes.data;
-			// handleSetUserFromResponse(profileRes);
+
+			const avatarRes = await setAvatar(formAvatar);
+			const { image_url } = avatarRes.data;
+
 			setUser({ avatar: image_url, ...user, ...rest });
 			router.push('/user/profile/');
 		} catch (error) {
-			console.log('ERR IN UPDATE PROFILE', error);
+			const { status, data, statusText } = error.response;
+			if (status === 400) {
+				setErrors({ account: { ...data } });
+			} else {
+				console.log('ERROR IN UPDATE PROFILE', statusText);
+			}
 		}
 	};
 
-	const handleSetUserFromResponse = (res) => {
-		const { user, image_url: avatar, ...rest } = res.data;
-		setUser({ avatar, ...user, ...rest });
+	const setAvatar = (formAvatar, access) => {
+		const tokenAccess = access || token.access;
+		return api.patch('/user/profile/avatar/', formAvatar, {
+			headers: {
+				Authorization: `Bearer ${tokenAccess}`,
+				'Content-type': 'multipart/form-data',
+			},
+		});
+	};
+
+	const getAvatar = (access) => {
+		const tokenAccess = access || token.access;
+		return api.get('/user/profile/avatar/', {
+			headers: {
+				Authorization: `Bearer ${tokenAccess}`,
+			},
+		});
+	};
+
+	const getProfile = (access) => {
+		const tokenAccess = access || token.access;
+		return api.get('/user/profile/', {
+			headers: {
+				Authorization: `Bearer ${tokenAccess}`,
+			},
+		});
+	};
+
+	const getFormAvatarFromUrl = (url, fileName) => {
+		return axios.get(url, { responseType: 'blob' }).then((res) => {
+			const file = new File([res.data], fileName);
+			const formAvatar = new FormData();
+			formAvatar.append('avatar', file, fileName);
+			return formAvatar;
+		});
 	};
 
 	return (

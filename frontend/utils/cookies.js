@@ -13,10 +13,10 @@ export const clearCookie = () => {
 	Cookies.remove(REFRESH);
 };
 
-export const getAccessToken = () => {
+export const getAccessTokenFromCookie = () => {
 	return Cookies.get(ACCESS);
 };
 
-export const getRefreshToken = () => {
+export const getRefreshTokenFromCookie = () => {
 	return Cookies.get(REFRESH);
 };

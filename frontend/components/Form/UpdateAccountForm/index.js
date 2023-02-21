@@ -3,6 +3,8 @@ import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import { InputField, TextAreaField } from '../FormControl';
 import PreviewImg from './Preview';
+import { useAuthContext } from '@context/auth-context';
+import { useEffect } from 'react';
 
 function UpdateProfileForm({
 	username,
@@ -12,12 +14,14 @@ function UpdateProfileForm({
 	avatar,
 	onSubmit,
 }) {
+	const { errors } = useAuthContext();
 	const {
 		register,
 		handleSubmit,
 		setValue,
 		reset,
-		formState: { defaultValues, isSubmitting },
+		setError,
+		formState: { defaultValues, isSubmitting, errors: formError },
 	} = useForm({
 		defaultValues: {
 			'account.username': username,
@@ -49,6 +53,21 @@ function UpdateProfileForm({
 		});
 	};
 
+	useEffect(() => {
+		errors?.account?.username &&
+			setError('account.username', {
+				type: 'custom',
+				message: errors?.account?.username,
+			});
+		errors?.account?.first_name &&
+			setError('account.first_name', {
+				type: 'custom',
+				message: errors?.account?.first_name,
+			});
+	}, [errors]);
+
+	console.log(errors);
+
 	return (
 		<form
 			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
@@ -72,18 +91,21 @@ function UpdateProfileForm({
 					name="account.first_name"
 					type="text"
 					register={register}
+					error={formError?.account?.first_name}
 				/>
 				<InputField
 					label="Last Name"
 					name="account.last_name"
 					type="text"
 					register={register}
+					error={formError?.account?.last_name}
 				/>
 				<InputField
 					label="User Name"
 					name="account.username"
 					type="text"
 					register={register}
+					error={formError?.account?.username}
 				/>
 
 				<TextAreaField
@@ -92,6 +114,7 @@ function UpdateProfileForm({
 					type="text"
 					register={register}
 					rows={6}
+					error={formError?.account?.bio}
 				/>
 				<div className="flex lg:gap-6 md:gap-4 max-md:flex-col mt-7 ">
 					<Button
