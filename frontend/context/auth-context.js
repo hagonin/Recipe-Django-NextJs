@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import api from '@services/axios';
 import {
 	clearCookie,
@@ -7,7 +8,6 @@ import {
 	getRefreshTokenFromCookie,
 	setCookie,
 } from '@utils/cookies';
-import axios from 'axios';
 import { images } from '@utils/constants';
 
 const AuthContext = createContext();
@@ -23,7 +23,36 @@ const AuthProvider = ({ children }) => {
 	const router = useRouter();
 
 	useEffect(() => {
+		const resInterceptor = (res) => res;
+		const errInterceptor = async (error) => {
+			const originalConfig = error.config;
+			if (error.response?.status === 401 && !originalConfig._retry) {
+				originalConfig._retry = true;
+				try {
+					const resp = await api.post('/user/token/refresh/', {
+						refresh: token.refresh || null,
+					});
+					const { refresh, access } = resp.data;
+					setToken({ access: access, refresh: refresh });
+					setCookie(access, refresh);
+					originalConfig.headers = {
+						Authorization: `Bearer ${access}`,
+					};
+					return api(originalConfig);
+				} catch (error) {
+					return Promise.reject(error);
+				}
+			}
+
+			return Promise.reject(error);
+		};
+
+		const interceptor = api.interceptors.response.use(
+			resInterceptor,
+			errInterceptor
+		);
 		tokenAuthen();
+		return api.interceptors.response.eject(interceptor);
 	}, []);
 
 	const tokenAuthen = async () => {
@@ -36,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
 			setUser({ ...user, ...rest, avatar: image_url });
 		} catch (error) {
-			console.log('ERROR AT LOAD USER PROFILE', error);
+			console.log('ERROR AT TOKEN AUTHEN', error);
 		} finally {
 			setLoading(false);
 		}
@@ -190,7 +219,9 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const getAvatar = (access) => {
-		const tokenAccess = access || token.access;
+		const tokenAccess =
+			access || token.access || getAccessTokenFromCookie();
+
 		return api.get('/user/profile/avatar/', {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
