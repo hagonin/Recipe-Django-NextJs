@@ -10,9 +10,13 @@ import {
 import Button from '@components/UI/Button';
 import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
-import SearchVector from './SearchVector';
+import Images from './Images';
+import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-content';
 
 function AddRecipeForm({ onSubmit }) {
+	const { categories } = useRecipeContext();
+
 	const {
 		register,
 		control,
@@ -20,84 +24,75 @@ function AddRecipeForm({ onSubmit }) {
 		formState: { errors: formErr },
 		reset,
 		setValue,
-	} = useForm({
-		defaultValues: { 'recipe.images': null },
-	});
-
-	const handleChangeImg = (e) => {
-		const blob = URL.createObjectURL(e.target.files[0]);
-		setValue('recipe.images', blob);
-	};
-
-	const handleDelImage = () => {
-		setValue('recipe.images', null);
-	};
+	} = useForm();
 
 	useEffect(() => {
 		reset();
 	}, []);
 
+	const handleBeforeSubmit = (data) => {
+		const {
+			recipe: { recipe, ...rest },
+		} = data;
+		const slug = getSlug(recipe.title);
+		return onSubmit({ ...recipe, slug, ...rest });
+	};
+
+	const getSlug = (word) => {
+		const slug = word.split(' ').join('-');
+		return slug;
+	};
+
 	return (
 		<form
-			onSubmit={handleSubmit((data) => onSubmit({ ...data.recipe }))}
+			onSubmit={handleSubmit(handleBeforeSubmit)}
 			noValidate={true}
 		>
 			<div className="flex flex-col gap-4">
 				<Title title="Recipe Detail" />
 				<div className="flex md:flex-row flex-col gap-4">
 					<InputField
-						name="recipe.title"
+						name="recipe.recipe.title"
 						placeholder="Recipe title"
 						type="text"
 						register={register}
-						error={formErr?.recipe?.title}
+						error={formErr?.recipe?.recipe?.title}
 					/>
 					<SelectField
-						name="recipe.category"
-						options={[
-							{ key: 'Select category', value: '' },
-							{ key: 'dinner', value: 0 },
-							{ key: 'breakfast', value: 1 },
-							{ key: 'lunch', value: 2 },
-							{ key: 'fastFood', value: 3 },
-						]}
+						name="recipe.category.name"
+						placeholder="Category"
+						options={categories}
+						type="text"
 						register={register}
-						error={formErr?.recipe?.category}
+						error={formErr?.recipe?.category?.name}
 					/>
 				</div>
-				<TextAreaField
-					name="recipe.summary"
-					placeholder="Summary"
-					rows="5"
-					register={register}
-					error={formErr?.recipe?.summary}
-				/>
 				<div className="flex gap-4">
 					<InputField
-						name="recipe.prep_time"
+						name="recipe.recipe.prep_time"
 						label="Pre-time (minutes)"
 						type="number"
 						register={register}
-						error={formErr?.recipe?.prep_time}
+						error={formErr?.recipe?.recipe?.prep_time}
 					/>
 					<InputField
-						name="recipe.cook_time"
+						name="recipe.recipe.cook_time"
 						label="Cook-time (minutes)"
 						type="number"
 						register={register}
-						error={formErr?.recipe?.cook_time}
+						error={formErr?.recipe?.recipe?.cook_time}
 					/>
 					<InputField
-						name="recipe.serving"
+						name="recipe.recipe.serving"
 						label="Serve (people)"
 						type="number"
 						register={register}
-						error={formErr?.recipe?.serving}
+						error={formErr?.recipe?.recipe?.serving}
 					/>
 				</div>
 
 				<Controller
-					name="recipe.description"
+					name="recipe.recipe.description"
 					control={control}
 					render={({ field }) => (
 						<RichTextField
@@ -106,17 +101,13 @@ function AddRecipeForm({ onSubmit }) {
 						/>
 					)}
 				/>
-				<Controller
-					name="recipe.images"
-					control={control}
-					render={({ field: { value } }) => (
-						<RecipeImages
-							image={value}
-							handleChangeImg={handleChangeImg}
-							handleDelImage={handleDelImage}
-						/>
-					)}
-				/>
+				<div>
+					<Images
+						control={control}
+						register={register}
+						handleChangeImage={setValue}
+					/>
+				</div>
 			</div>
 
 			<div className="mt-5">
@@ -127,20 +118,28 @@ function AddRecipeForm({ onSubmit }) {
 				/>
 			</div>
 
-			<div className="mt-5 mb-7">
-				<Title title="Search Vector" />
-				<SearchVector
-					control={control}
+			<div className="flex gap-4 mt-8 mb-4">
+				<InputField
+					name="recipe.recipe.search_vector"
+					label="Search Vector"
+					type="text"
 					register={register}
+					error={formErr?.recipe?.recipe?.search_vector}
+				/>
+
+				<InputField
+					name="recipe.recipe.source"
+					label="Source of recipe"
+					type="text"
+					register={register}
+					error={formErr?.recipe?.recipe?.source}
 				/>
 			</div>
-
-			<InputField
-				name="recipe.source"
-				label="Source of recipe"
-				type="text"
+			<TextAreaField
+				label="Note"
+				name="recipe.recipe.note"
+				rows="5"
 				register={register}
-				error={formErr?.recipe?.source}
 			/>
 
 			<div className="flex gap-4 mt-10 justify-center">

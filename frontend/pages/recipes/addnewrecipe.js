@@ -1,14 +1,31 @@
 import { images } from '@utils/constants';
 
 import AddRecipeForm from '@components/Form/AddRecipeForm';
-import ManageRecipeLayout from '@components/Layouts/ManageRecipeLayout';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
+import api from '@services/axios';
 
 function AddRecipe() {
-	const onSubmit = (data) => {
-		console.log(data);
+	const onSubmit = async (data) => {
+		console.log('Data before submit', data);
+		try {
+			const res = await api.post(
+				'/recipe/recipe/',
+				{
+					...data,
+				},
+				{
+					headers: {
+						'Content-type': 'multipart/form-data',
+					},
+				}
+			);
+			console.log('RES IN ADD RECIPE', res);
+		} catch (error) {
+			console.log('ERROR IN ADD RECIPE', error.response.data);
+		}
 	};
+
 	return (
 		<div className="container py-14 lg:w-3/4">
 			<div className="flex items-end justify-center mb-8">

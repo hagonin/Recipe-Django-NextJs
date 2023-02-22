@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from rest_framework import generics
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -10,6 +11,8 @@ from recipes.models import Recipe
 from .models import Profile, CustomUser
 from recipes.serializers import RecipeSerializer
 from . import serializers
+
+
 
 
 class UserRegisterView(generics.GenericAPIView):
@@ -25,7 +28,7 @@ class UserRegisterView(generics.GenericAPIView):
         user = serializer.save()
         token = RefreshToken.for_user(user)
         data = serializer.data
-        data['token'] = {
+        data['tokens'] = {
             'refresh': str(token),
             'access': str(token.access_token)
         }
@@ -45,7 +48,7 @@ class UserLoginView(generics.GenericAPIView):
         serializer = serializers.UserSerializer(user)
         token = RefreshToken.for_user(user)
         data = serializer.data
-        data['token'] = {
+        data['tokens'] = {
             'refresh': str(token),
             'access': str(token.access_token)
         }
@@ -58,15 +61,16 @@ class UserLogoutView(generics.UpdateAPIView):
     """
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request,*args, **kwargs):
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e : 
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        if self.request.data.get('all'):
+            token: OutstandingToken
+            for token in OutstandingToken.objects.filter(user=request.user):
+                _, _ = BlacklistedToken.objects.get_or_create(token=token)
+            return Response({"status": "OK, all refresh tokens blacklisted"})
+        refresh_token = self.request.data.get('refresh_token')
+        token = RefreshToken(token=refresh_token)
+        token.blacklist()
+        return Response({"status": "You logged out successfully!"})
 
 class UserUpdateView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -86,6 +90,17 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = serializers.ProfileSerializer
+
+    def get_object(self):
+        return self.request.user.profile
+
+class UserAvatarView(generics.RetrieveUpdateAPIView):
+    """
+    Get, update user profile
+    """
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.ProfileAvatarSerializer
 
     def get_object(self):
         return self.request.user.profile

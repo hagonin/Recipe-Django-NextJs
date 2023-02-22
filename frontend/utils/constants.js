@@ -9,6 +9,10 @@ export const images = {
 	addRecipeImg: '/static/images/addrecipe.png',
 	recipe1: '/static/images/recipe1.jpg',
 	recipe2: '/static/images/recipe2.jpg',
+	bio: '/static/images/bio.png',
+	resetpassword: '/static/images/reset-password.png',
+	resetpassword1: '/static/images/reset-password-1.png',
+	recipe_default: '/static/images/recipe_default.png',
 };
 
 export const NavLinks = [

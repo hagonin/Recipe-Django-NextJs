@@ -17,31 +17,46 @@ const InputField = ({
 	register,
 	error,
 	rules = {},
+	hide,
+	icon,
+	required,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
 	return (
-		<div className="w-full">
+		<div className={`w-full ${hide ? 'hidden' : 'block'} `}>
 			<Label
 				label={label}
 				name={name}
 			/>
-			<input
-				id={name}
-				type={type}
-				{...register(name, {
-					onChange: () => {
-						errors && setErrors(null);
-					},
-					...rules,
-				})}
-				{...props}
-				className={`w-full ${
+			<div
+				className={`w-full flex bg-white px-3 ${
 					type !== 'file' && 'border rounded'
-				} px-5 h-12 outline-none ${
-					error ? 'border-red' : 'border-border focus:border-primary'
-				}`}
-			/>
+				} h-12 outline-none ${required ? 'border-l-[4px]' : ''} ${
+					error
+						? 'border-red'
+						: 'border-border focus-within:border-primary '
+				} `}
+			>
+				<input
+					id={name}
+					type={type}
+					{...register(name, {
+						onChange: () => {
+							errors && setErrors(null);
+						},
+						...rules,
+					})}
+					{...props}
+					className={`w-full border-none outline-none flex-1 bg-transparent pr-3 `}
+				/>
+				{icon && (
+					<span className="text-primary flex items-center justify-center">
+						{icon}
+					</span>
+				)}
+			</div>
+
 			<Error error={error?.message} />
 		</div>
 	);
@@ -120,7 +135,14 @@ const RadioField = ({ name, label, options, register, error, ...props }) => {
 	);
 };
 
-const SelectField = ({ name, label, options, register, error, ...props }) => {
+const SelectField = ({
+	name,
+	label,
+	options = [],
+	register,
+	error,
+	...props
+}) => {
 	return (
 		<div className="w-full ">
 			<Label
@@ -137,10 +159,10 @@ const SelectField = ({ name, label, options, register, error, ...props }) => {
 			>
 				{options.map((option) => (
 					<option
-						value={option.value}
-						key={option.key}
+						value={option.name}
+						key={option.name}
 					>
-						{option.key}
+						{option.name}
 					</option>
 				))}
 			</select>
@@ -170,12 +192,13 @@ const TextAreaField = ({ label, name, register, error, ...props }) => {
 };
 
 const RichTextField = forwardRef(({ field }, ref) => (
-	<div className="flex flex-col">
+	<div className="flex flex-col h-[400px]">
 		<Label label="Description" />
 		<ReactQuill
 			theme="snow"
 			{...field}
 			ref={ref}
+			className="h-[80%]"
 		/>
 	</div>
 ));

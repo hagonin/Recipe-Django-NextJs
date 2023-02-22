@@ -19,7 +19,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     """
     Serialize registration requests and create a new user.
     """
-    email = serializers.EmailField(required=True,validators= [UniqueValidator(queryset=CustomUser.objects.all())])
     password = serializers.CharField(min_length=8,write_only=True)
     confirm_password = serializers.CharField(min_length=8,write_only=True)
    
@@ -59,18 +58,24 @@ class ProfileSerializer(serializers.ModelSerializer):
     Serializer the user profile model 
     """
     user = UserSerializer()
-    image_url = serializers.CharField()
     
     class Meta:
         model = Profile
-        fields = ('user','bookmarks','bio','image_url','avatar')
+        fields = ('user','bookmarks','bio')
 
+
+class ProfileAvatarSerializer(serializers.ModelSerializer):
+    image_url = serializers.CharField()
+    
+    class Meta: 
+        model = Profile
+        fields = ('image_url','avatar')
+        
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation.pop("avatar")
 
         return representation
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True, required=True)

@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
+import { MdEmail } from 'react-icons/md';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -66,6 +68,8 @@ function LoginForm({ onSubmit }) {
 					placeholder="Enter your email"
 					register={register}
 					error={formError?.login?.email}
+					required
+					icon={<MdEmail />}
 				/>
 
 				<InputField
@@ -74,6 +78,8 @@ function LoginForm({ onSubmit }) {
 					placeholder="Enter your password"
 					register={register}
 					error={formError?.login?.password}
+					required
+					icon={<RiLockPasswordFill />}
 				/>
 
 				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">

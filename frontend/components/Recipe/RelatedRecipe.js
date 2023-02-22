@@ -3,8 +3,8 @@ import RecipeCard from './RecipeCard';
 
 function RelatedRecipe({ recipes }) {
 	return (
-		<div>
-			<span className="uppercase border-b border-border relative top-14">
+		<div className="mt-10">
+			<span className="uppercase border-b border-border">
 				You may also like
 			</span>
 			<Slider>

@@ -4,6 +4,7 @@ import { nunito } from '@utils/fonts';
 import { images } from '@utils/constants';
 import Head from 'next/head';
 import '@styles/globals.css';
+import RecipeProvider from '@context/recipe-content';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);
@@ -27,9 +28,11 @@ function MyApp({ Component, pageProps }) {
 			</Head>
 			<main className={nunito.className}>
 				<AuthProvider>
-					<RootLayout>
-						{render(<Component {...pageProps} />)}
-					</RootLayout>
+					<RecipeProvider>
+						<RootLayout>
+							{render(<Component {...pageProps} />)}
+						</RootLayout>
+					</RecipeProvider>
 				</AuthProvider>
 			</main>
 		</>

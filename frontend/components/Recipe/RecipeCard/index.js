@@ -1,5 +1,6 @@
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
+import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
 
@@ -16,6 +17,7 @@ function RecipeCard({
 	border,
 	className,
 }) {
+	const date_format = formatDate(date);
 	return (
 		<div
 			className={`${
@@ -29,6 +31,8 @@ function RecipeCard({
 				<Img
 					src={image}
 					alt={`recipe ${id}`}
+					className="h-64"
+					cover
 				/>
 			</Link>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
@@ -40,7 +44,9 @@ function RecipeCard({
 				>
 					{name}
 				</Link>
-				<span className="text-base inline-block mt-2">{date}</span>
+				<span className="text-base inline-block mt-2">
+					{date_format}
+				</span>
 				<div className="flex gap-x-4 flex-wrap">
 					{prep_time && (
 						<div className="flex items-center gap-2 text-sm mt-5">
