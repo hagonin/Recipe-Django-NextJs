@@ -65,7 +65,10 @@ const AuthProvider = ({ children }) => {
 
 			setUser({ ...user, ...rest, avatar: image_url });
 		} catch (error) {
-			console.log('ERROR AT TOKEN AUTHEN', error);
+			console.log(
+				'ERROR AT TOKEN AUTHEN',
+				error.response?.statusText || error.message
+			);
 		} finally {
 			setLoading(false);
 		}
@@ -90,7 +93,10 @@ const AuthProvider = ({ children }) => {
 			setToken({ access: null, refresh: null });
 			router.push('/login');
 		} catch (error) {
-			console.log('ERROR AT LOGOUT', error);
+			console.log(
+				'ERROR AT LOGOUT',
+				error.response?.statusText || error.message
+			);
 		} finally {
 			setLoading(false);
 		}
@@ -120,7 +126,10 @@ const AuthProvider = ({ children }) => {
 					login: { ...error.response.data },
 				});
 			} else {
-				console.log('ERROR IN LOGIN', error);
+				console.log(
+					'ERROR IN LOGIN',
+					error.response?.statusText || error.message
+				);
 			}
 		} finally {
 			setLoading(false);
@@ -155,11 +164,13 @@ const AuthProvider = ({ children }) => {
 
 			router.push('/login');
 		} catch (error) {
-			const status = error.response.status;
-			if (status === 400) {
-				setErrors({ register: { ...error.response.data } });
+			if (error.response?.status === 400) {
+				setErrors({ register: { ...error.response?.data } });
 			} else {
-				console.log('ERROR IN SIGNUP', error.response.statusText);
+				console.log(
+					'ERROR IN SIGNUP',
+					error.response?.statusText || error.message
+				);
 			}
 		}
 	};
@@ -199,11 +210,13 @@ const AuthProvider = ({ children }) => {
 			setUser({ avatar: image_url, ...user, ...rest });
 			router.push('/user/profile/');
 		} catch (error) {
-			const { status, data, statusText } = error.response;
-			if (status === 400) {
-				setErrors({ account: { ...data } });
+			if (error.response?.status === 400) {
+				setErrors({ account: { ...error.response?.data } });
 			} else {
-				console.log('ERROR IN UPDATE PROFILE', statusText);
+				console.log(
+					'ERROR IN UPDATE PROFILE',
+					error.response?.statusText || error.message
+				);
 			}
 		}
 	};
