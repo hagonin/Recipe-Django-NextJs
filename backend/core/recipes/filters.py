@@ -2,8 +2,7 @@ from functools import reduce
 from django.contrib.postgres.search import SearchRank, SearchQuery
 from django.db.models import F
 from rest_framework.filters import SearchFilter
-from core.settings import POSTGRES_LANGUAGE_UNACCENT
-
+from core.settings.base import POSTGRES_LANGUAGE_UNACCENT
 
 
 class SearchVectorFilter(SearchFilter):

@@ -5,6 +5,11 @@ class CustomUserManager(BaseUserManager):
     Custom user model manager where email is the unique identifier
     for authentication instead of username.
     """
+class CustomUserManager(BaseUserManager):
+    """
+    Custom user model manager where email is the unique identifier
+    for authentication instead of username.
+    """
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("Users must have an email address")

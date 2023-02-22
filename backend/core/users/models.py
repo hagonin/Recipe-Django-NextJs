@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.db import models
 
@@ -13,6 +14,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     email = models.EmailField(verbose_name='email address', unique=True)
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -25,7 +27,13 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
     
-
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
+    
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='profile')
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
@@ -39,7 +47,7 @@ class Profile(models.Model):
     def image_url(self):
         return (
             f"http://res.cloudinary.com/dfjtkh7ie/{self.avatar}"
-        )
+        ) 
 
     @receiver(post_save, sender=CustomUser)
     def create_profile(sender, instance, created, **kwargs):

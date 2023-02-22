@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
@@ -9,7 +9,7 @@ from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,Category,RecipeReview,Ingredient
 
-from .permissions import IsAuthorOrReadOnly
+from .permissions import IsOwner
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -52,16 +52,39 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         return Response("Success")
 
-class RecipeListViewSet(viewsets.ModelViewSet):
+class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    CRUD recipes
+    View recipe
     """
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
-    ordering_fields = ['rating_value', 'created_at']
+    ordering_fields = ['created_at', 'rating']
 
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
+
+    # def get_queryset(self):
+    #     return self.queryset.filter(user=self.request.user)
+    
+    
+
+class RecipeDetailViewSet(viewsets.ModelViewSet):
+    """
+    CRUD recipe
+    """
+    lookup_field = 'slug'
+    queryset = Recipe.objects.all()
+    serializer_class = serializers.RecipeDetailSerializer
+    ordering_fields = ['created_at']    
+    permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
+
+    def get_serializer_context(self):
+        return {'user': self.request.user}    
+    
+    # def get_queryset(self):
+    #     return self.queryset.filter(user=self.request.user)
 
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
@@ -80,7 +103,7 @@ class RecipeReviewViewset(viewsets.ModelViewSet):
         if self.action in ("create",):
             self.permission_classes = (IsAuthenticated,)
         elif self.action in ("update", "partial_update", "destroy"):
-            self.permission_classes = (IsAuthorOrReadOnly,)
+            self.permission_classes = (IsOwner)
         else:
             self.permission_classes = (AllowAny,)
 

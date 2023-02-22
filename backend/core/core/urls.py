@@ -17,25 +17,32 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
-
+schema_view = get_schema_view(
+    openapi.Info(
+        title="RECIPE API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.ourapp.com/policies/terms/",
+        contact=openapi.Contact(email="contact@homecook.local"),
+        license=openapi.License(name="Test License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/recipe/', include('recipes.urls', namespace='recipe')),    
     path('api/user/', include('users.urls', namespace='users')),
     
-    path('api/user/reset_password/',
-        include('django_rest_passwordreset.urls', namespace='password_reset')),
-] 
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-# Schema URLs
-urlpatterns += [
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('', SpectacularSwaggerView.as_view(
-        url_name='schema'), name='swagger-ui'),
-]
+] 
 
 # Media Assets
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
