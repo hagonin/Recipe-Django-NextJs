@@ -32,9 +32,11 @@ const InputField = ({
 			<div
 				className={`w-full flex bg-white px-3 ${
 					type !== 'file' && 'border rounded'
-				} h-12 outline-none ${
-					error ? 'border-red' : 'border-border focus:border-primary '
-				} ${required ? 'border-l-[4px]' : ''}`}
+				} h-12 outline-none ${required ? 'border-l-[4px]' : ''} ${
+					error
+						? 'border-red'
+						: 'border-border focus-within:border-primary '
+				} `}
 			>
 				<input
 					id={name}
