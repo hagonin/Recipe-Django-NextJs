@@ -12,6 +12,7 @@ export const images = {
 	bio: '/static/images/bio.png',
 	resetpassword: '/static/images/reset-password.png',
 	resetpassword1: '/static/images/reset-password-1.png',
+	recipe_default: '/static/images/recipe_default.png',
 };
 
 export const NavLinks = [

@@ -1,16 +1,17 @@
-import Button from '@components/UI/Button';
-import Img from '@components/UI/Image';
-import { images } from '@utils/constants';
+import { memo } from 'react';
 import { useFieldArray } from 'react-hook-form';
-import { AiFillDelete } from 'react-icons/ai';
+
 import { BsImages } from 'react-icons/bs';
-import { InputField } from '../FormControl';
+
+import Button from '@components/UI/Button';
+import Preview from './Preview';
 
 function Images({ control, register, handleChangeImage }) {
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'recipe.images',
 	});
+
 	return (
 		<div>
 			<div className="flex lg:gap-6 md:gap-4 gap-2 overflow-x-auto">
@@ -21,49 +22,38 @@ function Images({ control, register, handleChangeImage }) {
 							key={field.id}
 						>
 							<input
-								type="file"
-								onChange={(e) =>
-									handleChangeImage(
-										e.target.files[0].name,
-										`recipe.images.${index}.image`
-									)
-								}
-							/>
-							<input
 								type="text"
 								{...register(`recipe.images.${index}.image`)}
+								className="invisible"
 							/>
-							<div>
-								<Img
-									src={images.recipe1}
-									alt="recipe"
-									className="h-full w-full"
-								/>
-							</div>
-
+							<Preview
+								name={`recipe.images.${index}.image`}
+								handleChangeImage={handleChangeImage}
+								handleDelete={() => remove(index)}
+							/>
 							<input
 								type="text"
 								placeholder="caption"
 								{...register(`recipe.images.${index}.caption`)}
-								className="border-b border-border outline-none px-3 py-1 mt-3 focus:border-primary"
+								className="border-b border-border outline-none px-3 py-1 focus:border-primary"
 							/>
 							<div className="mt-3 flex justify-between items-center">
-								<label className="text-sm ">
+								{/* <label className="text-sm ">
 									<input
-										type="checkbox"
+										type="radio"
 										{...register(
-											`recipe.images.${index}.default`
+											`recipe.images.default`
 										)}
 										className="mr-2"
 									/>
 									Default
-								</label>
-								<button
+								</label> */}
+								{/* <button
 									onClick={() => remove(index)}
 									className="text-xl hover:text-red"
 								>
 									<AiFillDelete />
-								</button>
+								</button> */}
 							</div>
 						</div>
 					);
@@ -80,4 +70,4 @@ function Images({ control, register, handleChangeImage }) {
 	);
 }
 
-export default Images;
+export default memo(Images);

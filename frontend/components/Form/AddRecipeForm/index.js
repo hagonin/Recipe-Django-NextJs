@@ -12,8 +12,11 @@ import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
 import Images from './Images';
 import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-content';
 
 function AddRecipeForm({ onSubmit }) {
+	const { categories } = useRecipeContext();
+
 	const {
 		register,
 		control,
@@ -40,9 +43,6 @@ function AddRecipeForm({ onSubmit }) {
 		return slug;
 	};
 
-	const handleChangeImage = (file, field) => {
-		setValue(field, file);
-	};
 	return (
 		<form
 			onSubmit={handleSubmit(handleBeforeSubmit)}
@@ -58,9 +58,10 @@ function AddRecipeForm({ onSubmit }) {
 						register={register}
 						error={formErr?.recipe?.recipe?.title}
 					/>
-					<InputField
+					<SelectField
 						name="recipe.category.name"
 						placeholder="Category"
+						options={categories}
 						type="text"
 						register={register}
 						error={formErr?.recipe?.category?.name}
@@ -104,7 +105,7 @@ function AddRecipeForm({ onSubmit }) {
 					<Images
 						control={control}
 						register={register}
-						handleChangeImage={handleChangeImage}
+						handleChangeImage={setValue}
 					/>
 				</div>
 			</div>

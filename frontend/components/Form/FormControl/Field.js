@@ -133,7 +133,14 @@ const RadioField = ({ name, label, options, register, error, ...props }) => {
 	);
 };
 
-const SelectField = ({ name, label, options, register, error, ...props }) => {
+const SelectField = ({
+	name,
+	label,
+	options = [],
+	register,
+	error,
+	...props
+}) => {
 	return (
 		<div className="w-full ">
 			<Label
@@ -150,10 +157,10 @@ const SelectField = ({ name, label, options, register, error, ...props }) => {
 			>
 				{options.map((option) => (
 					<option
-						value={option.value}
-						key={option.key}
+						value={option.name}
+						key={option.name}
 					>
-						{option.key}
+						{option.name}
 					</option>
 				))}
 			</select>
