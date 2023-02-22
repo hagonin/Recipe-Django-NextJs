@@ -19,6 +19,7 @@ const InputField = ({
 	rules = {},
 	hide,
 	icon,
+	required,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
@@ -33,7 +34,7 @@ const InputField = ({
 					type !== 'file' && 'border rounded'
 				} h-12 outline-none ${
 					error ? 'border-red' : 'border-border focus:border-primary '
-				}`}
+				} ${required ? 'border-l-[4px]' : ''}`}
 			>
 				<input
 					id={name}
@@ -45,7 +46,7 @@ const InputField = ({
 						...rules,
 					})}
 					{...props}
-					className="w-full border-none outline-none flex-1 bg-transparent pr-3"
+					className={`w-full border-none outline-none flex-1 bg-transparent pr-3 `}
 				/>
 				{icon && (
 					<span className="text-primary flex items-center justify-center">

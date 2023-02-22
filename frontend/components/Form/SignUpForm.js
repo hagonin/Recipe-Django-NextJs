@@ -7,6 +7,8 @@ import Img from '@components/UI/Image';
 import Button from '@components/UI/Button';
 import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
+import { MdEmail } from 'react-icons/md';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
 function SignUpForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -78,6 +80,7 @@ function SignUpForm({ onSubmit }) {
 					placeholder="Enter your name"
 					register={register}
 					error={formError?.register?.username}
+					required
 				/>
 
 				<InputField
@@ -102,6 +105,8 @@ function SignUpForm({ onSubmit }) {
 					placeholder="Enter your email"
 					register={register}
 					error={formError?.register?.email}
+					required
+					icon={<MdEmail />}
 				/>
 
 				<InputField
@@ -110,6 +115,8 @@ function SignUpForm({ onSubmit }) {
 					placeholder="Enter your password"
 					register={register}
 					error={formError?.register?.password}
+					required
+					icon={<RiLockPasswordFill />}
 				/>
 
 				<InputField
@@ -118,6 +125,8 @@ function SignUpForm({ onSubmit }) {
 					placeholder="Confirm password"
 					register={register}
 					error={formError?.register?.confirm_password}
+					required
+					icon={<RiLockPasswordFill />}
 				/>
 
 				<Button

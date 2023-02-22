@@ -10,7 +10,8 @@ export const images = {
 	recipe1: '/static/images/recipe1.jpg',
 	recipe2: '/static/images/recipe2.jpg',
 	bio: '/static/images/bio.png',
-	
+	resetpassword: '/static/images/reset-password.png',
+	resetpassword1: '/static/images/reset-password-1.png',
 };
 
 export const NavLinks = [

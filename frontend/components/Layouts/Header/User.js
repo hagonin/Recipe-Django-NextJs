@@ -53,6 +53,12 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 								Update Profile
 							</Link>
 							<Link
+								href={`/user/changepassword`}
+								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
+							>
+								Change Password
+							</Link>
+							<Link
 								href="/recipes/addnewrecipe"
 								className="block text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2"
 							>
