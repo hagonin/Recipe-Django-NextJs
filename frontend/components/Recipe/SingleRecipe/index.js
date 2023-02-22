@@ -53,6 +53,7 @@ function SingRecipe({
 					/>
 				))}
 			</div>
+			
 
 			<div className="border border-border rounded-md p-6 mt-10">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">

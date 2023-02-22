@@ -4,7 +4,6 @@ import RelatedRecipe from '@components/Recipe/RelatedRecipe';
 import SingRecipe from '@components/Recipe/SingleRecipe';
 
 function Recipe({ recipe }) {
-	console.log(recipe);
 	const relatedRecipes = [
 		{
 			id: 1,

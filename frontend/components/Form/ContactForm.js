@@ -1,11 +1,13 @@
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import ToastMessage from '@components/UI/ToastMessage';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { InputField, TextAreaField } from './FormControl';
+
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ContactForm({ onSubmit }) {
 	const {
@@ -18,7 +20,7 @@ function ContactForm({ onSubmit }) {
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset();
-			alert('Submit success');
+			toast('Message has been sent successfully');
 		}
 	}, [isSubmitSuccessful]);
 
@@ -65,6 +67,11 @@ function ContactForm({ onSubmit }) {
 				{isSubmitting ? <Loader type="submitting" /> : null} Send
 				Message
 			</Button>
+			<ToastContainer
+				position="top-center"
+				autoClose={3000}
+				transition={Slide}
+			/>
 		</form>
 	);
 }
