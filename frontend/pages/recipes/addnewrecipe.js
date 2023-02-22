@@ -8,22 +8,22 @@ import api from '@services/axios';
 function AddRecipe() {
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
-		// try {
-		// 	const res = await api.post(
-		// 		'/recipe/recipe/',
-		// 		{
-		// 			...data,
-		// 		},
-		// 		{
-		// 			headers: {
-		// 				'Content-type': 'multipart/form-data',
-		// 			},
-		// 		}
-		// 	);
-		// 	console.log('RES IN ADD RECIPE', res);
-		// } catch (error) {
-		// 	console.log('ERROR IN ADD RECIPE', error.response.data);
-		// }
+		try {
+			const res = await api.post(
+				'/recipe/recipe/',
+				{
+					...data,
+				},
+				{
+					headers: {
+						'Content-type': 'multipart/form-data',
+					},
+				}
+			);
+			console.log('RES IN ADD RECIPE', res);
+		} catch (error) {
+			console.log('ERROR IN ADD RECIPE', error.response.data);
+		}
 	};
 
 	return (
@@ -43,4 +43,4 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-// AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
