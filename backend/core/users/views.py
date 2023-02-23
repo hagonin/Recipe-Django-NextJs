@@ -27,6 +27,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponsePermanentRedirect
 from decouple import config
 
+from django.shortcuts import redirect
+
 class CustomRedirect(HttpResponsePermanentRedirect):
 
     allowed_schemes = [config('APP_SCHEME'), 'http', 'https']
@@ -76,7 +78,8 @@ class VerifyEmail(views.APIView):
             if not user.is_verified:
                 user.is_verified = True
                 user.save()
-            return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+            # return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+            return redirect ("http://localhost:3000/login/")
         except jwt.ExpiredSignatureError as identifier:
             return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError as identifier:

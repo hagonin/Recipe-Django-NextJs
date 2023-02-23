@@ -205,7 +205,7 @@ const RichTextField = forwardRef(({ field }, ref) => (
 
 const Error = ({ error }) => {
 	return error ? (
-		<span className="block text-sm mt-2 text-red ml-3">{error}</span>
+		<span className="block text-sm mt-2 text-red ml-3 select-none">{error}</span>
 	) : null;
 };
 

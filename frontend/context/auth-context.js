@@ -9,6 +9,7 @@ import {
 	setCookie,
 } from '@utils/cookies';
 import { images } from '@utils/constants';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -117,8 +118,17 @@ const AuthProvider = ({ children }) => {
 			setUser({ ...user, ...rest, avatar: image_url });
 			router.push('/');
 		} catch ({ status, _error }) {
-			if (status === 400 || status === 401) {
+			if (status === 400) {
 				setErrors({ login: { ..._error } });
+			} else if (status === 401) {
+				console.log(_error);
+				toast.error(_error.detail);
+				_error.detail === 'Email is not verified' &&
+					setErrors({
+						login: {
+							verify_expired: true,
+						},
+					});
 			} else {
 				console.log('error in login', status, _error);
 			}
@@ -145,15 +155,24 @@ const AuthProvider = ({ children }) => {
 				email,
 			});
 			router.push('/login');
+			toast.success('Account successfully created.');
 		} catch ({ status, _error }) {
 			const { errors } = _error;
 			if (status === 400) {
-				setErrors({ register: { ...errors } });
+				if (errors?.error) {
+					setErrors({
+						register: { confirm_password: errors?.error },
+					});
+				} else {
+					setErrors({ register: { ...errors } });
+				}
 			} else {
 				console.log('ERROR IN SIGNUP', status, _error);
 			}
 		}
 	};
+
+	
 
 	const updateProfile = async (data) => {
 		const {

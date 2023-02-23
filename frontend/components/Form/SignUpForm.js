@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 
-import { InputField } from './FormControl';
+import { Form, InputField } from './FormControl';
 import Img from '@components/UI/Image';
 import Button from '@components/UI/Button';
 import { useAuthContext } from '@context/auth-context';
@@ -15,7 +15,7 @@ function SignUpForm({ onSubmit }) {
 	const {
 		handleSubmit,
 		register,
-		formState: { errors: formError, isSubmitting },
+		formState: { errors: formError, isSubmitting, isSubmitSuccessful },
 		setError,
 		reset,
 	} = useForm();
@@ -69,11 +69,8 @@ function SignUpForm({ onSubmit }) {
 					{errors?.register?.['non_field_errors']}
 				</span>
 			) : null}
-			<form
-				onSubmit={handleSubmit((data) => onSubmit(data.register))}
-				className="flex flex-col gap-4"
-				noValidate={true}
-			>
+
+			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
 				<InputField
 					name="register.username"
 					type="text"
@@ -132,6 +129,7 @@ function SignUpForm({ onSubmit }) {
 				<Button
 					className="primary login w-full mt-5"
 					type="submit"
+					disabled={isSubmitting}
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					create account
@@ -163,7 +161,8 @@ function SignUpForm({ onSubmit }) {
 					</Link>
 					.
 				</span>
-			</form>
+			</Form>
+			
 		</div>
 	);
 }

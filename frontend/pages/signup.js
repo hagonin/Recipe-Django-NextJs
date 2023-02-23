@@ -10,8 +10,6 @@ import { useAuthContext } from '@context/auth-context';
 function SignUp() {
 	const { signup } = useAuthContext();
 
-	const onSubmit = (data) => signup({ ...data });
-
 	return (
 		<div className="bg-primaryLight select-none">
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
@@ -44,7 +42,7 @@ function SignUp() {
 						</li>
 					</ul>
 				</div>
-				<SignUpForm onSubmit={onSubmit} />
+				<SignUpForm onSubmit={signup} />
 			</div>
 		</div>
 	);

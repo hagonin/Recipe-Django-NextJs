@@ -12,7 +12,9 @@ import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
-function LoginForm({ onSubmit }) {
+import { AiOutlineReload } from 'react-icons/ai';
+
+function LoginForm({ onSubmit, resendVerifyEmail }) {
 	const { errors, setErrors } = useAuthContext();
 	const {
 		handleSubmit,
@@ -20,6 +22,7 @@ function LoginForm({ onSubmit }) {
 		formState: { errors: formError, isSubmitting },
 		setError,
 		reset,
+		getValues,
 	} = useForm();
 
 	useEffect(() => {
@@ -41,6 +44,13 @@ function LoginForm({ onSubmit }) {
 		reset();
 	}, []);
 
+	const handleResendVerifyEmail = () => {
+		const {
+			login: { email, password },
+		} = getValues();
+		resendVerifyEmail({ email: email, password: password });
+	};
+
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
@@ -52,11 +62,16 @@ function LoginForm({ onSubmit }) {
 				/>
 			</div>
 
-			{errors?.login?.detail ? (
-				<span className="block text-center px-5 py-2 mb-7 bg-redLight text-red rounded-md ">
-					{errors?.login?.detail}
-				</span>
-			) : null}
+			{errors?.login?.verify_expired && (
+				<Button
+					onClick={handleResendVerifyEmail}
+					className="tag !bg-yellow-300 mb-5 rounded-full"
+					icon={{ left: <AiOutlineReload /> }}
+				>
+					Resend verify email
+				</Button>
+			)}
+
 			<form
 				onSubmit={handleSubmit((data) => onSubmit(data.login))}
 				noValidate={true}
@@ -99,6 +114,7 @@ function LoginForm({ onSubmit }) {
 				<Button
 					className="primary login w-full"
 					type="submit"
+					disabled={isSubmitting}
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					Login

@@ -1,5 +1,5 @@
 import ChangePasswordForm from '@components/Form/ChangePasswordForm';
-import ResetPasswordForm from '@components/Form/ResetPasswordForm';
+import ResetPasswordForm from '@components/Form/ResetPasswordForm/RequiredEmail';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
