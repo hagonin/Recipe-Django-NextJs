@@ -52,9 +52,9 @@ function LoginForm({ onSubmit }) {
 				/>
 			</div>
 
-			{errors?.login?.['non_field_errors'] ? (
+			{errors?.login?.detail ? (
 				<span className="block text-center px-5 py-2 mb-7 bg-redLight text-red rounded-md ">
-					{errors?.login?.['non_field_errors']}
+					{errors?.login?.detail}
 				</span>
 			) : null}
 			<form

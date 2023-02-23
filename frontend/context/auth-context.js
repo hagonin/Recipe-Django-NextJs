@@ -25,7 +25,10 @@ const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const resInterceptor = (res) => res;
 		const errInterceptor = async (error) => {
+			console.log('ERROR IN INTERCEPTORS');
 			const originalConfig = error.config;
+			const url = originalConfig.url;
+
 			if (error.response?.status === 401 && !originalConfig._retry) {
 				originalConfig._retry = true;
 				try {
@@ -51,7 +54,7 @@ const AuthProvider = ({ children }) => {
 			resInterceptor,
 			errInterceptor
 		);
-		tokenAuthen();
+		// tokenAuthen();
 		return api.interceptors.response.eject(interceptor);
 	}, []);
 
@@ -92,11 +95,8 @@ const AuthProvider = ({ children }) => {
 			clearCookie();
 			setToken({ access: null, refresh: null });
 			router.push('/login');
-		} catch (error) {
-			console.log(
-				'ERROR AT LOGOUT',
-				error.response?.statusText || error.message
-			);
+		} catch ({ status, _error }) {
+			console.log('ERROR IN LOGOUT', status, _error);
 		} finally {
 			setLoading(false);
 		}
@@ -109,27 +109,20 @@ const AuthProvider = ({ children }) => {
 				email,
 				password,
 			});
-			const { refresh, access } = loginRes.data.tokens;
+			const { refresh, access } = loginRes.tokens;
 			setToken({ access: access, refresh: refresh });
 			remember && setCookie(access, refresh);
 
-			const profile = await getProfile(access);
-			const { user, ...rest } = profile.data;
-			const avatar = await getAvatar(access);
-			const { image_url } = avatar.data;
+			const { user, ...rest } = await getProfile(access);
+			const { image_url } = await getAvatar(access);
 
 			setUser({ ...user, ...rest, avatar: image_url });
 			router.push('/');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({
-					login: { ...error.response.data },
-				});
+		} catch ({ status, _error }) {
+			if (status === 400 || status === 401) {
+				setErrors({ login: { ..._error } });
 			} else {
-				console.log(
-					'ERROR IN LOGIN',
-					error.response?.statusText || error.message
-				);
+				console.log('error in login', status, _error);
 			}
 		} finally {
 			setLoading(false);
@@ -145,7 +138,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			const signupRes = await api.post('/user/register/', {
+			await api.post('/user/register/', {
 				username,
 				lastname,
 				firstname,
@@ -153,24 +146,14 @@ const AuthProvider = ({ children }) => {
 				confirm_password,
 				email,
 			});
-
-			const { access } = signupRes.data.tokens;
-
-			const avatarForm = await getFormAvatarFromUrl(
-				images.defaultAvatar,
-				'avatar_default'
-			);
-			await setAvatar(avatarForm, access);
-
 			router.push('/login');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({ register: { ...error.response?.data } });
+		} catch ({ status, _error }) {
+			console.log(_error);
+			const { errors } = _error;
+			if (status === 400) {
+				setErrors({ register: { ...errors } });
 			} else {
-				console.log(
-					'ERROR IN SIGNUP',
-					error.response?.statusText || error.message
-				);
+				console.log('ERROR IN SIGNUP', status, _error);
 			}
 		}
 	};
@@ -222,7 +205,8 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const setAvatar = (formAvatar, access) => {
-		const tokenAccess = access || token.access;
+		const tokenAccess =
+			access || token.access || getAccessTokenFromCookie();
 		return api.patch('/user/profile/avatar/', formAvatar, {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
@@ -248,15 +232,6 @@ const AuthProvider = ({ children }) => {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
 			},
-		});
-	};
-
-	const getFormAvatarFromUrl = (url, fileName) => {
-		return axios.get(url, { responseType: 'blob' }).then((res) => {
-			const file = new File([res.data], fileName);
-			const formAvatar = new FormData();
-			formAvatar.append('avatar', file, fileName);
-			return formAvatar;
 		});
 	};
 

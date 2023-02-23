@@ -81,19 +81,23 @@ export default function Home({ recipes }) {
 	);
 }
 
-export const getStaticProps = async () => {
-	const res = await api.get('/recipe/recipe/');
+export const getStaticProps = () => {
+	let recipes = [];
+	api.get('/recipe/recipe/')
+		.then((res) => {
+			recipes = res.data.map((item) => {
+				const imageDefault = item.images.filter((img) => img.default)[0]
+					.image_url;
+				return {
+					id: item.id,
+					name: item.title,
+					image: imageDefault,
+					date: item.created_at,
+				};
+			});
+		})
+		.catch((error) => console.log('ERROR AT home', error));
 
-	const recipes = res.data.map((item) => {
-		const imageDefault = item.images.filter((img) => img.default)[0]
-			.image_url;
-		return {
-			id: item.id,
-			name: item.title,
-			image: imageDefault,
-			date: item.created_at,
-		};
-	});
 	return {
 		props: {
 			recipes,
