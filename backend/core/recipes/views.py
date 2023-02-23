@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from drf_yasg.utils import swagger_auto_schema
+from django.utils.decorators import method_decorator
 
 from .filters import SearchVectorFilter
 from . import serializers
@@ -68,23 +70,27 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     # def get_queryset(self):
     #     return self.queryset.filter(user=self.request.user)
     
-    
 
+# @method_decorator(name='list', decorator=swagger_auto_schema(
+#     operation_description="description"
+# ))
 class RecipeDetailViewSet(viewsets.ModelViewSet):
     """
     CRUD recipe
     """
+    
     lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
     ordering_fields = ['created_at']    
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
 
-    def get_serializer_context(self):
-        return {'user': self.request.user}    
+    # def get_serializer_context(self):
+    #     return {'user': self.request.user}    
     
-    # def get_queryset(self):
-    #     return self.queryset.filter(user=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
