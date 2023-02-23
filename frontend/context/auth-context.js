@@ -24,55 +24,51 @@ const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		const resInterceptor = (res) => res;
-		const errInterceptor = async (error) => {
-			console.log('ERROR IN INTERCEPTORS');
-			const originalConfig = error.config;
-			const url = originalConfig.url;
-
-			if (error.response?.status === 401 && !originalConfig._retry) {
-				originalConfig._retry = true;
+		const errInterceptor = async ({ status, _error, _config }) => {
+			if (status === 401 && !_config._retry) {
+				_config._retry = true;
 				try {
-					const resp = await api.post('/user/token/refresh/', {
-						refresh: token.refresh || null,
+					const refreshRes = await api.post('/user/token/refresh/', {
+						refresh: token.refresh,
 					});
-					const { refresh, access } = resp.data;
+					const { refresh, access } = refreshRes.data;
 					setToken({ access: access, refresh: refresh });
 					setCookie(access, refresh);
-					originalConfig.headers = {
+					_config.headers = {
 						Authorization: `Bearer ${access}`,
 					};
-					return api(originalConfig);
+					return api(_config);
 				} catch (error) {
 					return Promise.reject(error);
 				}
 			}
 
-			return Promise.reject(error);
+			return Promise.reject({ status, _error });
 		};
 
 		const interceptor = api.interceptors.response.use(
 			resInterceptor,
 			errInterceptor
 		);
-		// tokenAuthen();
+		tokenAuthen();
 		return api.interceptors.response.eject(interceptor);
 	}, []);
 
 	const tokenAuthen = async () => {
-		setLoading(true);
-		try {
-			const profile = await getProfile();
-			const { user, ...rest } = profile.data;
-			const avatar = await getAvatar();
-			const { image_url } = avatar.data;
+		if (token.access || token.refresh) {
+			try {
+				const profile = await getProfile();
+				const { user, ...rest } = profile.data;
+				const avatar = await getAvatar();
+				const { image_url } = avatar.data;
 
-			setUser({ ...user, ...rest, avatar: image_url });
-		} catch (error) {
-			console.log(
-				'ERROR AT TOKEN AUTHEN',
-				error.response?.statusText || error.message
-			);
-		} finally {
+				setUser({ ...user, ...rest, avatar: image_url });
+			} catch (error) {
+				console.log('ERROR AT TOKEN AUTHENTICATION', error);
+			} finally {
+				setLoading(false);
+			}
+		} else {
 			setLoading(false);
 		}
 	};
@@ -109,13 +105,15 @@ const AuthProvider = ({ children }) => {
 				email,
 				password,
 			});
-			const { refresh, access } = loginRes.tokens;
+			const { refresh, access } = loginRes.data.tokens;
 			setToken({ access: access, refresh: refresh });
 			remember && setCookie(access, refresh);
 
-			const { user, ...rest } = await getProfile(access);
-			const { image_url } = await getAvatar(access);
+			const profile = await getProfile(access);
+			const { user, ...rest } = profile.data;
 
+			const avatar = await getAvatar(access);
+			const { image_url } = avatar.data;
 			setUser({ ...user, ...rest, avatar: image_url });
 			router.push('/');
 		} catch ({ status, _error }) {
@@ -148,7 +146,6 @@ const AuthProvider = ({ children }) => {
 			});
 			router.push('/login');
 		} catch ({ status, _error }) {
-			console.log(_error);
 			const { errors } = _error;
 			if (status === 400) {
 				setErrors({ register: { ...errors } });
@@ -188,18 +185,15 @@ const AuthProvider = ({ children }) => {
 			const { user, ...rest } = profileRes.data;
 
 			const avatarRes = await setAvatar(formAvatar);
-			const { image_url } = avatarRes.data;
+			const { image_url: avatar } = avatarRes.data;
 
-			setUser({ avatar: image_url, ...user, ...rest });
+			setUser({ avatar, ...user, ...rest });
 			router.push('/user/profile/');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({ account: { ...error.response?.data } });
+		} catch ({ status, _error }) {
+			if (status === 400) {
+				setErrors({ account: { ..._error } });
 			} else {
-				console.log(
-					'ERROR IN UPDATE PROFILE',
-					error.response?.statusText || error.message
-				);
+				console.log(status, _error);
 			}
 		}
 	};
@@ -226,11 +220,10 @@ const AuthProvider = ({ children }) => {
 		});
 	};
 
-	const getProfile = (access) => {
-		const tokenAccess = access || token.access;
+	const getProfile = (access = token.access) => {
 		return api.get('/user/profile/', {
 			headers: {
-				Authorization: `Bearer ${tokenAccess}`,
+				Authorization: `Bearer ${access}`,
 			},
 		});
 	};

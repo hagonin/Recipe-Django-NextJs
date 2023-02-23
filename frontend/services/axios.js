@@ -18,10 +18,7 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-	(res) => {
-		const { data } = res;
-		return Promise.resolve(data);
-	},
+	(res) => res,
 	async (error) => {
 		const { status, data: _error } = error?.response;
 		const _config = error.config;
@@ -33,7 +30,7 @@ api.interceptors.response.use(
 					images.defaultAvatar,
 					'avatar_default'
 				);
-				await api.put('/user/profile/avatar/', avatarForm, {
+				await api.patch('/user/profile/avatar/', avatarForm, {
 					headers: {
 						Authorization: _config.headers.Authorization,
 						'Content-type': 'multipart/form-data',
@@ -47,7 +44,7 @@ api.interceptors.response.use(
 				});
 			}
 		} else {
-			return Promise.reject({ status, _error });
+			return Promise.reject({ status, _error, _config });
 		}
 	}
 );

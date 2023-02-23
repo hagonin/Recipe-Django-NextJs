@@ -66,8 +66,6 @@ function UpdateProfileForm({
 			});
 	}, [errors]);
 
-	console.log(errors);
-
 	return (
 		<form
 			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
@@ -106,6 +104,7 @@ function UpdateProfileForm({
 					type="text"
 					register={register}
 					error={formError?.account?.username}
+					required
 				/>
 
 				<TextAreaField
