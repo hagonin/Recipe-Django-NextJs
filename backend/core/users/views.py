@@ -53,7 +53,7 @@ class RegisterView(generics.GenericAPIView):
         absurl = 'http://'+current_site+relativeLink+'?token='+str(token)
 
         email_body = 'Hi ' +user.username + \
-            '\nUse the link below to verify your email \n' + absurl
+            '\n Use the link below to verify your email \n' + absurl
         user_data = {'email_body': email_body, 'to_email': user.email,
                 'email_subject': 'Verify your email'}
         
@@ -82,6 +82,32 @@ class VerifyEmail(views.APIView):
         except jwt.exceptions.DecodeError as identifier:
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 
+class ResendVerifyEmail(views.APIView):
+    serializer_class = serializers.RegistrationSerializer
+
+    def post(self, request):
+        data = request.data
+        email = data['email']
+
+        try:
+            user = CustomUser.objects.get(email=email)
+
+            if user.is_verified:
+                return Response({'msg':'User is already verified'})
+            
+            token = RefreshToken.for_user(user).access_token
+            current_site= get_current_site(request).domain
+            relativeLink = reverse('users:email-verify')
+            
+            absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
+            email_body = 'Hi '+ user.username + ' this is the resent link to verify your email \n' + absurl
+
+            data = {'email_body':email_body,'to_email':user.email,
+                    'email_subject':'Verify your email'}
+            Util.send_email(data)
+            return Response({'msg':'The verification email has been sent'}, status=status.HTTP_201_CREATED)
+        except CustomUser.DoesNotExist:
+            return Response({'msg':'No such user, register first'})
 
 class LoginView(generics.GenericAPIView):
     """

@@ -86,7 +86,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user','categories','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','categories','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
@@ -103,12 +103,10 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
             Category.objects.create(recipe = recipe, **category)
 
         for image in images:
-            image.recipe = recipe
-            image.save()
+            RecipeImage.objects.create(recipe = recipe, **image)
 
         for ingredient in ingredients:
-            ingredient.recipe = recipe
-            ingredient.save()
+            Ingredient.objects.create(recipe = recipe, **ingredient)
 
         return recipe
     
