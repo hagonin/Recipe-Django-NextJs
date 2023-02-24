@@ -8,6 +8,7 @@ import Loader from '@components/UI/Loader';
 
 import { MdEmail } from 'react-icons/md';
 import { InputField, Form } from '../FormControl';
+import { email } from '../FormControl/validate';
 
 function RequiredEmail({ onSubmit }) {
 	const { errors } = useAuthContext();
@@ -47,10 +48,7 @@ function RequiredEmail({ onSubmit }) {
 					error={formErrors?.required_email?.email}
 					rules={{
 						required: true,
-						pattern: {
-							value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-							message: 'Please provide a valid email.',
-						},
+						pattern: email,
 					}}
 					required
 				/>

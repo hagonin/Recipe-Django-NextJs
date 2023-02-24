@@ -7,6 +7,7 @@ import { MdEmail } from 'react-icons/md';
 import { Form, InputField, TextAreaField } from './FormControl';
 
 import { toast } from 'react-toastify';
+import { email } from './FormControl/validate';
 
 function ContactForm({ onSubmit }) {
 	const {
@@ -40,10 +41,7 @@ function ContactForm({ onSubmit }) {
 					register={register}
 					rules={{
 						required: 'Please provide your email',
-						pattern: {
-							value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-							message: 'Email is not valid',
-						},
+						pattern: email,
 					}}
 					error={errors.contact?.email}
 					icon={<MdEmail />}
