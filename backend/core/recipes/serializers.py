@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
-        fields = ('id','title','desc','quantity', 'unit')
+        fields = ('id','title','desc','quantity', 'unit','recipe')
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = RecipeImage
-        fields = ('image_url','image','caption')
+        fields = ('image_url','image','caption','recipe')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -76,7 +76,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class RecipeRewriteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    categories = CategorySerializer(many=True)
+    categories = CategorySerializer(many=True, read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -86,15 +86,15 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user','categories','main_image','image_url','title','rating', 'ingredients',
+        fields = ('user','title', 'categories','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
 
-    def _get_or_create_categories(self, categories, recipe):
+    def _get_or_create_categories(self, categories,recipe):
         for category in categories:
-            cat_obj = Category.objects.get_or_create(**category)
-            recipe.categories.add(cat_obj)
+            cat = Category.objects.get_or_create(name=category)
+            recipe.categories.add(cat)
 
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
@@ -103,7 +103,7 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
 
     def _create_images(self, images, recipe):
         for image in images:
-            img = Recipe.objects.create(**image)
+            img = RecipeImage.objects.create(**image)
             recipe.images.add(img)
 
     def create(self,validated_data):
@@ -114,7 +114,7 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
 
         recipe = Recipe.objects.create(user=user, **validated_data)
         self._get_or_create_categories(categories,recipe)
-        self._create_images(ingredients, recipe)
+        self._create_ingredients(ingredients, recipe)
         self._create_images(images, recipe)
 
         return recipe

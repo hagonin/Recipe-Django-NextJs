@@ -73,16 +73,30 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     CRUD recipe
     """
     
-    lookup_field = 'slug'
+    lookup_field = 'id'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeRewriteSerializer
     ordering_fields = ['created_at']    
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
 
+    def _params_to_ints(self, qs):
+        """Convert a list of strings to integers."""
+        return [int(str_id) for str_id in qs.split(',')]
+
     def get_serializer_context(self):
         return {'user': self.request.user}    
     
+    def get_queryset(self):
+        categories =self.request.query__params.get(categories)
+        queryset = self.queryset
+        if categories:
+            cat_ids = self._params_to_ints(categories)
+            queryset = queryset.filter(categories__id__in=cat_ids)
 
+    # def perform_create(self, serializer):
+    #     """Create a new recipe."""
+    #     serializer.save(user=self.request.user)
+            
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
     CRUD reviews a recipe
