@@ -2,11 +2,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FaAngleDown } from 'react-icons/fa';
 import { NavLinks } from '@utils/constants';
-import User from '@components/Layouts/Header/User';
+import { useRecipeContext } from '@context/recipe-content';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
-
+	const { categories } = useRecipeContext();
 	return (
 		<nav className="bg-white  max-lg:hidden">
 			<div className="container flex justify-center items-center border-y">
@@ -31,6 +31,15 @@ function Navigate() {
 											className="block font-semibold py-3 px-5 hover:text-primary border-b border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 										>
 											{child.name}
+										</Link>
+									))}
+									{categories.map((category) => (
+										<Link
+											key={category.id}
+											href={`/recipes/category/${category.name}`}
+											className="block font-semibold py-3 px-5 hover:text-primary border-b border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+										>
+											{category.name}
 										</Link>
 									))}
 								</div>

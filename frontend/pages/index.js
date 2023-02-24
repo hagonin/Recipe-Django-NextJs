@@ -50,6 +50,7 @@ export default function Home({ recipes }) {
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 		},
 	];
+	console.log(recipes);
 
 	return (
 		<>
@@ -81,18 +82,18 @@ export default function Home({ recipes }) {
 	);
 }
 
-export const getStaticProps = () => {
+export const getStaticProps = async () => {
 	let recipes = [];
-	api.get('/recipe/recipe/')
+	await api
+		.get('/recipe/recipe/')
 		.then((res) => {
-			recipes = res.data.map((item) => {
-				const imageDefault = item.images.filter((img) => img.default)[0]
-					.image_url;
+			recipes = res.data.results.map((item) => {
+				const { slug, image_url, created_at } = item;
 				return {
-					id: item.id,
-					name: item.title,
-					image: imageDefault,
-					date: item.created_at,
+					id: 1,
+					name: slug,
+					image: image_url,
+					date: created_at,
 				};
 			});
 		})

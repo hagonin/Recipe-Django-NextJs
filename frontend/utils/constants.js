@@ -31,21 +31,6 @@ export const NavLinks = [
 				name: 'All Recipes',
 				href: '/',
 			},
-			{
-				id: 1,
-				name: 'Breakfast',
-				href: '/category/breakfast',
-			},
-			{
-				id: 2,
-				name: 'Lunch',
-				href: '/category/lunch',
-			},
-			{
-				id: 3,
-				name: 'Dinner',
-				href: '/category/dinner',
-			},
 		],
 	},
 	{

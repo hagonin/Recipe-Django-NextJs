@@ -14,3 +14,5 @@ function Recipe() {
 }
 
 export default Recipe;
+
+export const getStaticProps = () => {};
