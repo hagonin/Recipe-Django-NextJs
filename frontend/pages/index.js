@@ -1,9 +1,9 @@
+import api from '@services/axios';
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
-import SubscribeForm from '@components/Form/SubscribeForm';
-import api from '@services/axios';
+import SubscribeSection from '@components/SubcribeSection';
 
 export default function Home({ recipes }) {
 	const recipesRandom = [
@@ -62,16 +62,7 @@ export default function Home({ recipes }) {
 					/>
 				))}
 			</Slider>
-			<section className="container bg-grey py-4 px-5 flex md:items-center justify-between max-md:flex-col mt-4">
-				<div>
-					Don't miss a single recipe!
-					<br />
-					<span className="text-sm">
-						Subscribe to receive new recipes straight to your inbox!
-					</span>
-				</div>
-				<SubscribeForm />
-			</section>
+			<SubscribeSection />
 			<WidgetLayout>
 				<GroupCategory
 					list={recipes}

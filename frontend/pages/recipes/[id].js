@@ -3,6 +3,10 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RelatedRecipe from '@components/Recipe/RelatedRecipe';
 import SingRecipe from '@components/Recipe/SingleRecipe';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
+import SubscribeSection from '@components/SubcribeSection';
+import CommentForm from '@components/Form/CommentForm';
+import CommentCard from '@components/Comment/CommentCard';
+import Comments from '@components/Comment';
 
 function Recipe() {
 	const relatedRecipes = [
@@ -71,6 +75,75 @@ function Recipe() {
 			url: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/04/24.jpg',
 		},
 	];
+
+	const chat = [
+		{
+			id: 1,
+			name: 'Thomas',
+			avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+			date: 'January 19, 2021',
+			time: '3:15 pm',
+			message:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+			comments: [
+				{
+					id: 1,
+					name: 'Thomas',
+					avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+					date: 'January 19, 2021',
+					time: '3:15 pm',
+					message:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+				},
+				{
+					id: 2,
+					name: 'Thomas',
+					avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+					date: 'January 19, 2021',
+					time: '3:15 pm',
+					message:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+				},
+			],
+		},
+		{
+			id: 2,
+			name: 'Thomas',
+			avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+			date: 'January 19, 2021',
+			time: '3:15 pm',
+			message:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+			comments: [
+				{
+					id: 1,
+					name: 'Thomas',
+					avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+					date: 'January 19, 2021',
+					time: '3:15 pm',
+					message:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+				},
+				{
+					id: 2,
+					name: 'Thomas',
+					avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+					date: 'January 19, 2021',
+					time: '3:15 pm',
+					message:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+				},
+			],
+		},
+	];
+	const comment = {
+		name: 'Thomas',
+		avatar: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/themes/cuisine/assets/img/cuisine_author.jpg',
+		date: 'January 19, 2021',
+		time: '3:15 pm',
+		message:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
+	};
 	return (
 		<>
 			{/* <SingRecipe
@@ -80,7 +153,13 @@ function Recipe() {
 				title={slug}
 			/> */}
 			<Thumbnail images={images} />
+			<SubscribeSection />
 			<RelatedRecipe recipes={relatedRecipes} />
+			<Comments comment_list={chat} />
+
+			<div className="mt-10 py-8 border-y border-border">
+				<CommentForm onSubmit={(data) => console.log(data)} />
+			</div>
 		</>
 	);
 }

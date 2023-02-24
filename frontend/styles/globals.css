@@ -50,7 +50,7 @@
     }
 
     .btn.lg {
-      @apply text-[0.82rem] font-medium h-12 px-6;
+      @apply text-sm font-medium h-12 px-6;
     }
 
      .btn.login {
