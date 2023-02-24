@@ -29,7 +29,7 @@ function ResetPassword({ onSubmit }) {
 		<Form onSubmit={handleSubmit(({ reset }) => onSubmit(reset))}>
 			<InputField
 				name="reset.password"
-				type="text"
+				type="password"
 				placeholder="Enter new password"
 				icon={<RiLockPasswordFill />}
 				register={register}

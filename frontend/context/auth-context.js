@@ -172,8 +172,6 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	
-
 	const updateProfile = async (data) => {
 		const {
 			personal: { username, last_name, first_name },
@@ -259,6 +257,7 @@ const AuthProvider = ({ children }) => {
 				logout,
 				loading,
 				updateProfile,
+				token,
 			}}
 		>
 			{children}

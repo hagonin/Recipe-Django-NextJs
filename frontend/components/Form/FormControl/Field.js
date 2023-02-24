@@ -30,7 +30,7 @@ const InputField = ({
 				name={name}
 			/>
 			<div
-				className={`w-full flex bg-white px-3 ${
+				className={`w-full flex bg-white px-4 ${
 					type !== 'file' && 'border rounded'
 				} h-12 outline-none ${required ? 'border-l-[4px]' : ''} ${
 					error

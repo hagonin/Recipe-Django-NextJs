@@ -1,28 +1,36 @@
+import { useRouter } from 'next/router';
+import { images } from '@utils/constants';
+import { toast } from 'react-toastify';
+import api from '@services/axios';
+import { useAuthContext } from '@context/auth-context';
+
 import ChangePasswordForm from '@components/Form/ChangePasswordForm';
-import ResetPasswordForm from '@components/Form/ResetPasswordForm/RequiredEmail';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
-import { useAuthContext } from '@context/auth-context';
-import api from '@services/axios';
-import { images } from '@utils/constants';
-import Link from 'next/link';
 
 function Changepassword() {
-	const { setErrors } = useAuthContext();
+	const { setErrors, token } = useAuthContext();
+	const router = useRouter();
 	const onSubmit = async (data) => {
-		console.log(data);
-		// try {
-		// 	const resetRes = await api.post('/user/reset_password/', {
-		// 		...data,
-		// 	});
-		// 	console.log(resetRes);
-		// } catch (error) {
-		// 	if (error?.response?.status === 400) {
-		// 		setErrors({ reset: error?.response?.data });
-		// 	} else {
-		// 		console.log(error.response?.statusText || error.message);
-		// 	}
-		// }
+		try {
+			await api.put(
+				'/user/change_password/',
+				{
+					...data,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token.access}`,
+					},
+				}
+			);
+			toast.success('Password successfully changed');
+			router.push('/user/profile');
+		} catch ({ status, _error }) {
+			if (status === 400) {
+				setErrors({ change_password: { ..._error } });
+			}
+		}
 	};
 	return (
 		<div className="bg-primaryLight">

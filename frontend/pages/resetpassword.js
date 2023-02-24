@@ -32,11 +32,12 @@ function RequestResetPassword(props) {
 				token: props?.token,
 				uidb64: props?.uidb64,
 			})
-			.then((res) =>
+			.then((res) => {
 				toast.success(
-					'Password reset success. Back login to login again.'
-				)
-			)
+					'Password reset success.'
+				);
+				router.push('/login');
+			})
 			.catch(({ status, _error }) => {
 				if (status === 400) {
 					setErrors({ reset: { ..._error } });

@@ -4,49 +4,72 @@ import { useAuthContext } from '@context/auth-context';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import { InputField } from './FormControl';
+import { Form, InputField } from './FormControl';
 
 function ChangePasswordForm({ onSubmit }) {
-	const { errors } = useAuthContext();
+	const { errors, setErrors } = useAuthContext();
 	const {
 		register,
 		handleSubmit,
 		setError,
-		formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+		reset,
+		formState: { errors: formErrors, isSubmitting },
 	} = useForm();
 
 	useEffect(() => {
-		// errors?.change_password?.password &&
-		// 	setError('change_password.password', {
-		// 		type: 'custom',
-		// 		message: errors?.change_password?.password,
-		// 	});
+		errors?.change_password?.old_password &&
+			setError('change_password.old_password', {
+				type: 'custom',
+				message: errors?.change_password?.old_password,
+			});
+
+		errors?.change_password?.new_password &&
+			setError('change_password.new_password', {
+				type: 'custom',
+				message: errors?.change_password?.new_password,
+			});
 	}, [errors]);
 
+	useEffect(() => {
+		return () => {
+			reset();
+			setErrors(null);
+		};
+	}, []);
+
 	return (
-		<form
-			noValidate={true}
+		<Form
 			onSubmit={handleSubmit(({ change_password }) =>
 				onSubmit(change_password)
 			)}
-			className="flex flex-col gap-4"
 		>
 			<InputField
-				name="change_password.password"
+				name="change_password.old_password"
 				type="password"
-				placeholder="Enter password"
+				placeholder="Enter old password"
 				icon={<RiLockPasswordLine />}
 				register={register}
-				error={formErrors?.change_password?.password}
+				error={formErrors?.change_password?.old_password}
+				required
+			/>
+			<InputField
+				name="change_password.new_password"
+				type="password"
+				placeholder="Enter new password"
+				icon={<RiLockPasswordLine />}
+				register={register}
+				error={formErrors?.change_password?.new_password}
+				required
 			/>
 			<Button
 				className="lg w-full primary"
 				type="submit"
+				disabled={isSubmitting}
 			>
 				{isSubmitting && <Loader type="submitting" />}
-				Reset
+				Change Password
 			</Button>
-		</form>
+		</Form>
 	);
 }
 

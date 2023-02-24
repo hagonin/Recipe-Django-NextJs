@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import { InputField, TextAreaField } from '../FormControl';
+import { Form, InputField, TextAreaField } from '../FormControl';
 import PreviewImg from './Preview';
 import { useAuthContext } from '@context/auth-context';
 import { useEffect } from 'react';
@@ -14,7 +14,7 @@ function UpdateProfileForm({
 	avatar,
 	onSubmit,
 }) {
-	const { errors } = useAuthContext();
+	const { errors, setErrors } = useAuthContext();
 	const {
 		register,
 		handleSubmit,
@@ -66,10 +66,15 @@ function UpdateProfileForm({
 			});
 	}, [errors]);
 
+	useEffect(() => {
+		return () => {
+			setErrors(null);
+		};
+	}, []);
+
 	return (
-		<form
+		<Form
 			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
-			noValidate={true}
 			onSubmit={handleSubmit(handleBeforeSubmit)}
 		>
 			<div className="md:col-span-4 flex flex-col items-center ">
@@ -131,7 +136,7 @@ function UpdateProfileForm({
 					</Button>
 				</div>
 			</div>
-		</form>
+		</Form>
 	);
 }
 

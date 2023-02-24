@@ -24,48 +24,47 @@ function ContactForm({ onSubmit }) {
 	}, [isSubmitSuccessful]);
 
 	return (
-		<>
-			<Form onSubmit={handleSubmit(onSubmit)}>
-				<div className="grid md:grid-cols-2 gap-4 grid-cols-1">
-					<InputField
-						name="contact.name"
-						type="text"
-						register={register}
-						placeholder="Name"
-						icon={<FaUserAlt />}
-					/>
-					<InputField
-						name="contact.email"
-						type="email"
-						placeholder="Email"
-						register={register}
-						rules={{
-							required: 'Please provide your email',
-							pattern: {
-								value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-								message: 'Email is not valid',
-							},
-						}}
-						error={errors.contact?.email}
-						icon={<MdEmail />}
-					/>
-				</div>
-				<TextAreaField
-					name="contact.message"
+		<Form onSubmit={handleSubmit(onSubmit)}>
+			<div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+				<InputField
+					name="contact.name"
+					type="text"
 					register={register}
-					rows="6"
-					placeholder="Message"
+					placeholder="Name"
+					icon={<FaUserAlt />}
 				/>
-				<Button
-					type="submit"
-					className="lg primary md:max-w-[200px]"
-					disabled={isSubmitting}
-				>
-					{isSubmitting ? <Loader type="submitting" /> : null} Send
-					Message
-				</Button>
-			</Form>
-		</>
+				<InputField
+					name="contact.email"
+					type="email"
+					placeholder="Email"
+					register={register}
+					rules={{
+						required: 'Please provide your email',
+						pattern: {
+							value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+							message: 'Email is not valid',
+						},
+					}}
+					error={errors.contact?.email}
+					icon={<MdEmail />}
+					required
+				/>
+			</div>
+			<TextAreaField
+				name="contact.message"
+				register={register}
+				rows="6"
+				placeholder="Message"
+			/>
+			<Button
+				type="submit"
+				className="lg primary md:max-w-[200px]"
+				disabled={isSubmitting}
+			>
+				{isSubmitting ? <Loader type="submitting" /> : null} Send
+				Message
+			</Button>
+		</Form>
 	);
 }
 

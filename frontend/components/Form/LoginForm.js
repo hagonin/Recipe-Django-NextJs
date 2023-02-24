@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAuthContext } from '@context/auth-context';
 import { images } from '@utils/constants';
 
-import { CheckboxField, InputField } from './FormControl';
+import { CheckboxField, Form, InputField } from './FormControl';
 import Img from '@components/UI/Image';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -65,18 +65,14 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 			{errors?.login?.verify_expired && (
 				<Button
 					onClick={handleResendVerifyEmail}
-					className="tag !bg-yellow-300 mb-5 rounded-full"
+					className="verify mb-5 w-full"
 					icon={{ left: <AiOutlineReload /> }}
 				>
 					Resend verify email
 				</Button>
 			)}
 
-			<form
-				onSubmit={handleSubmit((data) => onSubmit(data.login))}
-				noValidate={true}
-				className="flex flex-col gap-4"
-			>
+			<Form onSubmit={handleSubmit((data) => onSubmit(data.login))}>
 				<InputField
 					name="login.email"
 					type="email"
@@ -119,7 +115,7 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 					{isSubmitting && <Loader type="submitting" />}
 					Login
 				</Button>
-			</form>
+			</Form>
 
 			<p className="text-center mt-5">
 				Create an account?
