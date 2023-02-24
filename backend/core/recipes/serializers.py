@@ -2,11 +2,6 @@ from rest_framework import serializers
 from .models import Recipe, RecipeReview, Category,Ingredient,RecipeImage
 from users.serializers import UserSerializer
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('id','name')
-
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -37,17 +32,13 @@ class RecipeSerializer(serializers.ModelSerializer):
     image_url = serializers.ReadOnlyField()
     user = serializers.CharField(source="user.username", read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
-    categories = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='name'
-    )
     ingredients = IngredientSerializer(many=True,required=False)
     images = ImageSerializer(many=True,required=False)
+    reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
     
     class Meta: 
         model = Recipe
-        fields = ('id','user','title','categories','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','title','category','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count','search_rank')
@@ -63,6 +54,10 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return representation
     
+    def get_reviews(self, obj):
+        reviews = obj.reviews.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
     
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -76,7 +71,6 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class RecipeRewriteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    categories = CategorySerializer(many=True, read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -86,15 +80,11 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user','title', 'categories','main_image','image_url','rating', 'ingredients',
+        fields = ('user','title', 'category','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
 
-    def _get_or_create_categories(self, categories,recipe):
-        for category in categories:
-            cat = Category.objects.get_or_create(name=category)
-            recipe.categories.add(cat)
 
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
@@ -108,12 +98,10 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
 
     def create(self,validated_data):
         user = self.context.get('user', None)
-        categories = validated_data.pop('categories',[])
         ingredients = validated_data.pop('ingredients',[])
         images = validated_data.pop('images',[])
 
         recipe = Recipe.objects.create(user=user, **validated_data)
-        self._get_or_create_categories(categories,recipe)
         self._create_ingredients(ingredients, recipe)
         self._create_images(images, recipe)
 
@@ -121,13 +109,10 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         """Update recipe"""
-        categories = validated_data.pop('categories', None)
         ingredients = validated_data.pop('ingredients', None)
         images = validated_data.pop('images', None)
 
-        if categories is not None : 
-            instance.cetegories.clear()
-            self._get_or_create_categories(categories, instance)
+        
         if ingredients is not None :
             instance.ingredients.clear()
             self._create_ingredients(ingredients, instance)

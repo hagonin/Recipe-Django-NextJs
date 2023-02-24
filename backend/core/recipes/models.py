@@ -12,19 +12,18 @@ from django.utils.translation import gettext_lazy as _
 from .validators import validate_unit_of_measure
 
 
-class Category(models.Model):
-    """
-    Recipe categories
-    """
-    name = models.CharField(max_length=120,unique=True)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = _('Recipe Category')
-        verbose_name_plural = _('Recipe Categories')
-
-    def __str__(self):
-        return self.name
+class Category(models.TextChoices):
+    APPETIZERS = 'Appetizers'
+    BREAD = 'Bread'
+    BREAKFAST = 'Breakfast'
+    DESSERTS = 'Desserts'
+    VEGAN = 'Vegan'
+    DRINK = 'Drink'
+    MAINDISH = 'Main Dish'
+    SALAD = 'Salad'
+    SOUPS = 'Soups, Stew and Chill '
+    SIDEDISH = 'Side Dish'
+    MARINADES = 'Marinades and Sauces'
 
 
 class Recipe(models.Model):
@@ -32,7 +31,7 @@ class Recipe(models.Model):
     Recipe object
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='recipes')
-    categories = models.ManyToManyField(Category,related_name="recipe_list")
+    category = models.CharField(max_length=50, choices=Category.choices)
     main_image = CloudinaryField('image', overwrite=True, blank=True)     
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')

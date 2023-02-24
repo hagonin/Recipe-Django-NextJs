@@ -14,15 +14,6 @@ from .models import Recipe,RecipeImage,Category,RecipeReview,Ingredient
 from .permissions import IsOwner
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    """
-    List and Retrieve categories
-    """
-    queryset = Category.objects.all()
-    serializer_class = serializers.CategorySerializer
-    filterset_fields = ['name']
-    search_fields = ['name']
-
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
@@ -87,11 +78,11 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
         return {'user': self.request.user}    
     
     def get_queryset(self):
-        categories =self.request.query__params.get(categories)
+        ingredients =self.request.query__params.get(ingredients)
         queryset = self.queryset
-        if categories:
-            cat_ids = self._params_to_ints(categories)
-            queryset = queryset.filter(categories__id__in=cat_ids)
+        if ingredients:
+            ingr_ids = self._params_to_ints(ingredients)
+            queryset = queryset.filter(ingredients=ingr_ids)
 
     # def perform_create(self, serializer):
     #     """Create a new recipe."""
