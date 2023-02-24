@@ -38,7 +38,7 @@ class Recipe(models.Model):
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
     serving = models.IntegerField(blank=True, null=True)
-    slug = models.SlugField(db_index=True,unique=True, max_length=255)
+    slug = models.SlugField(db_index=True,unique=True, max_length=255, null=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
     search_vector = SearchVectorField(null=True)
@@ -130,7 +130,7 @@ class RecipeReview(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('recipe', 'slug')
+        unique_together = ('recipe', 'id')
         ordering = ("-date_added",)
 
     def __str__(self):

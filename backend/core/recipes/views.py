@@ -63,12 +63,6 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
     ordering_fields = ['created_at', 'rating']
-
-    # def perform_create(self, serializer):
-    #     serializer.save(user=self.request.user)
-
-    # def get_queryset(self):
-    #     return self.queryset.filter(user=self.request.user)
     
 
 # @method_decorator(name='list', decorator=swagger_auto_schema(
@@ -81,16 +75,13 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     
     lookup_field = 'slug'
     queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeDetailSerializer
+    serializer_class = serializers.RecipeRewriteSerializer
     ordering_fields = ['created_at']    
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
 
-    # def get_serializer_context(self):
-    #     return {'user': self.request.user}    
+    def get_serializer_context(self):
+        return {'user': self.request.user}    
     
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
 
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """

@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
-        fields = ('title','desc','quantity', 'unit', 'recipe')
+        fields = ('id','title','desc','quantity', 'unit')
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = RecipeImage
-        fields = ('image_url','image','caption', 'recipe')
+        fields = ('image_url','image','caption')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -42,12 +42,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='name'
     )
-    ingredients = IngredientSerializer(many=True)
+    ingredients = IngredientSerializer(many=True,required=False)
     images = ImageSerializer(many=True,required=False)
     
     class Meta: 
         model = Recipe
-        fields = ('slug','user','categories','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','title','categories','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count','search_rank')
@@ -74,7 +74,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             'slug': {'read_only': True}
         }
 
-class RecipeDetailSerializer(serializers.ModelSerializer):
+class RecipeRewriteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     categories = CategorySerializer(many=True)
     ingredients = IngredientSerializer(many=True)
@@ -86,50 +86,54 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('id','user','categories','main_image','image_url','rating', 'ingredients',
+        fields = ('user','categories','main_image','image_url','title','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
 
+    def _get_or_create_categories(self, categories, recipe):
+        for category in categories:
+            cat_obj = Category.objects.get_or_create(**category)
+            recipe.categories.add(cat_obj)
+
+    def _create_ingredients(self, ingredients, recipe):
+        for ingredient in ingredients:
+            ingr = Ingredient.objects.create(**ingredient)
+            recipe.ingredients.add(ingr)
+
+    def _create_images(self, images, recipe):
+        for image in images:
+            img = Recipe.objects.create(**image)
+            recipe.images.add(img)
+
     def create(self,validated_data):
         user = self.context.get('user', None)
-        categories = validated_data.pop('categories')
-        ingredients = validated_data.pop('ingredients')
-        images = validated_data.pop('images')
+        categories = validated_data.pop('categories',[])
+        ingredients = validated_data.pop('ingredients',[])
+        images = validated_data.pop('images',[])
 
         recipe = Recipe.objects.create(user=user, **validated_data)
-
-        for category in categories:
-            Category.objects.create(recipe = recipe, **category)
-
-        for image in images:
-            RecipeImage.objects.create(recipe = recipe, **image)
-
-        for ingredient in ingredients:
-            Ingredient.objects.create(recipe = recipe, **ingredient)
+        self._get_or_create_categories(categories,recipe)
+        self._create_images(ingredients, recipe)
+        self._create_images(images, recipe)
 
         return recipe
     
     def update(self, instance, validated_data):
+        """Update recipe"""
         categories = validated_data.pop('categories', None)
         ingredients = validated_data.pop('ingredients', None)
         images = validated_data.pop('images', None)
 
-        recipe = super().update(instance, validated_data)
+        if categories is not None : 
+            instance.cetegories.clear()
+            self._get_or_create_categories(categories, instance)
+        if ingredients is not None :
+            instance.ingredients.clear()
+            self._create_ingredients(ingredients, instance)
+        if images is not None :
+            instance.images.clear()
+            self._create_images(images, instance)
 
-        if images is not None:
-            for image in images:
-                image.recipe = recipe
-                image.save()
-            recipe.images.set(images)
-
-        if ingredients is not None:
-            for ingredient in ingredients:
-                ingredient.recipe = recipe
-                ingredient.save()
-            recipe.ingredients.set(ingredients)
-
-        if categories is not None:
-            recipe.categories.set(categories)
-
-        return recipe
+        instance.save()
+        return instance
