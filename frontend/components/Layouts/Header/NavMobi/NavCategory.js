@@ -20,7 +20,17 @@ function NavCategory() {
 					<MdOutlineKeyboardArrowDown className="text-2xl inline-block ml-2" />
 				)}
 			</NavItem>
-			<div className={`${openCategory ? 'block' : 'hidden'}`}>
+			<div
+				className={`max-h-[40vh] overflow-y-scroll overflow-x-hidden ${
+					openCategory ? 'block' : 'hidden'
+				}`}
+			>
+				<NavItem
+					href="/recipes"
+					isSubItem
+				>
+					All Recipes
+				</NavItem>
 				{categories.map((category) => (
 					<NavItem
 						key={category.id}

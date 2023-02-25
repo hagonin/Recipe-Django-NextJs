@@ -18,15 +18,15 @@ export const images = {
 };
 
 export const categories = [
-	'Appetizers',
-	'Bread',
-	'Breakfast',
-	'Desserts',
-	'Vegan',
-	'Drink',
-	'Maindish',
-	'Salad',
-	'Soups',
-	'Sidedish',
-	'Marinades',
+	{ id: 1, name: 'Appetizers' },
+	{ id: 2, name: 'Bread' },
+	{ id: 3, name: 'Breakfast' },
+	{ id: 4, name: 'Desserts' },
+	{ id: 5, name: 'Vegan' },
+	{ id: 6, name: 'Drink' },
+	{ id: 7, name: 'Maindish' },
+	{ id: 8, name: 'Salad' },
+	{ id: 9, name: 'Soups' },
+	{ id: 10, name: 'Sidedish' },
+	{ id: 11, name: 'Marinades' },
 ];
