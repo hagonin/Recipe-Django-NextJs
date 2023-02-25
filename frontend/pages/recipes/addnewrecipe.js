@@ -4,26 +4,24 @@ import AddRecipeForm from '@components/Form/AddRecipeForm';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 import api from '@services/axios';
+import { getAccessTokenFromCookie } from '@utils/cookies';
 
 function AddRecipe() {
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
-		try {
-			const res = await api.post(
-				'/recipe/recipe/',
-				{
-					...data,
-				},
+		await api
+			.post(
+				'/recipe/recipe-detail/',
+				{ ...data },
 				{
 					headers: {
-						'Content-type': 'multipart/form-data',
+						'Content-type': 'application/json',
+						Authorization: `Bearer ${getAccessTokenFromCookie()}`,
 					},
 				}
-			);
-			console.log('RES IN ADD RECIPE', res);
-		} catch (error) {
-			console.log('ERROR IN ADD RECIPE', error.response.data);
-		}
+			)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	};
 
 	return (

@@ -14,15 +14,6 @@ from .models import Recipe,RecipeImage,Category,RecipeReview,Ingredient
 from .permissions import IsOwner
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    """
-    List and Retrieve categories
-    """
-    queryset = Category.objects.all()
-    serializer_class = serializers.CategorySerializer
-    filterset_fields = ['name']
-    search_fields = ['name']
-
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
@@ -47,7 +38,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         images_list = []
         for image in images:
             images_list.append(
-                RecipeImage(file=image)
+                RecipeImage(images=image)
             )
         if images_list:
             RecipeImage.objects.bulk_create(images_list)
@@ -63,12 +54,6 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
     ordering_fields = ['created_at', 'rating']
-
-    # def perform_create(self, serializer):
-    #     serializer.save(user=self.request.user)
-
-    # def get_queryset(self):
-    #     return self.queryset.filter(user=self.request.user)
     
 
 # @method_decorator(name='list', decorator=swagger_auto_schema(
@@ -79,19 +64,30 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     CRUD recipe
     """
     
-    lookup_field = 'slug'
+    lookup_field = 'id'
     queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeDetailSerializer
+    serializer_class = serializers.RecipeRewriteSerializer
     ordering_fields = ['created_at']    
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
 
-    # def get_serializer_context(self):
-    #     return {'user': self.request.user}    
+    def _params_to_ints(self, qs):
+        """Convert a list of strings to integers."""
+        return [int(str_id) for str_id in qs.split(',')]
+
+    def get_serializer_context(self):
+        return {'user': self.request.user}    
     
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def get_queryset(self):
+        ingredients =self.request.query__params.get(ingredients)
+        queryset = self.queryset
+        if ingredients:
+            ingr_ids = self._params_to_ints(ingredients)
+            queryset = queryset.filter(ingredients=ingr_ids)
 
-
+    # def perform_create(self, serializer):
+    #     """Create a new recipe."""
+    #     serializer.save(user=self.request.user)
+            
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
     CRUD reviews a recipe

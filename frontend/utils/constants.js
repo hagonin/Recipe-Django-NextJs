@@ -15,32 +15,16 @@ export const images = {
 	recipe_default: '/static/images/recipe_default.png',
 };
 
-export const NavLinks = [
-	{
-		id: 1,
-		name: 'Home',
-		href: '/',
-	},
-	{
-		id: 2,
-		name: 'Recipe Category',
-		href: '/recipes',
-		children: [
-			{
-				id: 0,
-				name: 'All Recipes',
-				href: '/',
-			},
-		],
-	},
-	{
-		id: 3,
-		name: 'About',
-		href: '/about',
-	},
-	{
-		id: 4,
-		name: 'Contact',
-		href: '/contact',
-	},
+export const categories = [
+	'Appetizers',
+	'Bread',
+	'Breakfast',
+	'Desserts',
+	'Vegan',
+	'Drink',
+	'Maindish',
+	'Salad',
+	'Soups',
+	'Sidedish',
+	'Marinades',
 ];

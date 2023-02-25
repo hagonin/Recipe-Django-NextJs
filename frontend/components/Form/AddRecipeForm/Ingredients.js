@@ -26,7 +26,7 @@ function Ingredients({ control, register }) {
 						<InputField
 							type="text"
 							placeholder="Description"
-							name={`recipe.ingredients.${index}.description`}
+							name={`recipe.ingredients.${index}.desc`}
 							register={register}
 						/>
 						<InputField

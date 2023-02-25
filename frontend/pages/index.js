@@ -5,7 +5,7 @@ import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
 
-export default function Home({ recipes }) {
+export default function Home() {
 	const recipesRandom = [
 		{
 			id: 1,

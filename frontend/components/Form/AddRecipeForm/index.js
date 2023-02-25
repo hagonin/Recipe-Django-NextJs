@@ -58,13 +58,12 @@ function AddRecipeForm({ onSubmit }) {
 						register={register}
 						error={formErr?.recipe?.recipe?.title}
 					/>
-					<SelectField
-						name="recipe.category.name"
+					<InputField
+						name="recipe.category"
 						placeholder="Category"
-						options={categories}
 						type="text"
 						register={register}
-						error={formErr?.recipe?.category?.name}
+						error={formErr?.recipe?.category}
 					/>
 				</div>
 				<div className="flex gap-4">
@@ -101,13 +100,13 @@ function AddRecipeForm({ onSubmit }) {
 						/>
 					)}
 				/>
-				<div>
+				{/* <div>
 					<Images
 						control={control}
 						register={register}
 						handleChangeImage={setValue}
 					/>
-				</div>
+				</div> */}
 			</div>
 
 			<div className="mt-5">

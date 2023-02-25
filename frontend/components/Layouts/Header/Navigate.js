@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRecipeContext } from '@context/recipe-content';
 
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { categories } from '@utils/constants';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
-	const { categories } = useRecipeContext();
 	return (
 		<nav className="bg-white  max-lg:hidden">
 			<div className="container flex justify-center items-center border-y">

@@ -1,4 +1,4 @@
-import { useRecipeContext } from '@context/recipe-content';
+import { categories } from '@utils/constants';
 import { memo, useState } from 'react';
 import {
 	MdOutlineKeyboardArrowUp,
@@ -8,8 +8,6 @@ import {
 import NavItem from './NavItem';
 
 function NavCategory() {
-	console.log('nav category re render');
-	const { categories } = useRecipeContext();
 	const [openCategory, setOpenCategory] = useState(false);
 	const toggleCategory = () => setOpenCategory(!openCategory);
 	return (
