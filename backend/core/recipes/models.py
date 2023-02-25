@@ -3,7 +3,7 @@ from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.core import validators
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 from django.db.models import Avg
@@ -37,7 +37,7 @@ class Recipe(models.Model):
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
     serving = models.IntegerField(blank=True, null=True)
-    slug = models.SlugField(db_index=True,unique=True, max_length=255, null=True)
+    slug = models.SlugField(db_index=True,unique=True, max_length=255, blank=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
     search_vector = SearchVectorField(null=True)
@@ -59,6 +59,11 @@ class Recipe(models.Model):
 
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     @property
     def image_url(self):
@@ -81,7 +86,7 @@ class Ingredient(models.Model):
     """
     Returns ingredients for a recipe
     """
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients')
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients',null=True)
     title = models.CharField(max_length=220, blank=True)
     desc = models.TextField(blank=True, null=True)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
@@ -98,7 +103,7 @@ class RecipeImage(models.Model):
     """
     Returns images for a recipe
     """
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='images')
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='images',null=True)
     image = CloudinaryField('image',overwrite=True, null=True,)
     caption = models.CharField(
         max_length=200, 

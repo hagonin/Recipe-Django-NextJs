@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 
 from .filters import SearchVectorFilter
 from . import serializers
-from .models import Recipe,RecipeImage,Category,RecipeReview,Ingredient
+from .models import Recipe,RecipeImage,RecipeReview,Ingredient
 
 from .permissions import IsOwner
 
@@ -54,7 +54,6 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
     ordering_fields = ['created_at', 'rating']
-    
 
 # @method_decorator(name='list', decorator=swagger_auto_schema(
 #     operation_description="description"
@@ -64,7 +63,7 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     CRUD recipe
     """
     
-    lookup_field = 'id'
+    lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeRewriteSerializer
     ordering_fields = ['created_at']    
@@ -78,15 +77,18 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
         return {'user': self.request.user}    
     
     def get_queryset(self):
-        ingredients =self.request.query__params.get(ingredients)
+        ingredients =self.request.query_params.get('ingredients')
+        images =self.request.query_params.get('images')
         queryset = self.queryset
         if ingredients:
             ingr_ids = self._params_to_ints(ingredients)
-            queryset = queryset.filter(ingredients=ingr_ids)
+            queryset = queryset.filter(ingredients__id__in=ingr_ids)
+        if images:
+            img_ids = self._params_to_ints(images)
+            queryset = queryset.filter(images__id__in=img_ids)
 
-    # def perform_create(self, serializer):
-    #     """Create a new recipe."""
-    #     serializer.save(user=self.request.user)
+        return queryset.filter(user=self.request.user).order_by('-id').distinct()
+    
             
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
