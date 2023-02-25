@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Recipe, RecipeReview, Category,Ingredient,RecipeImage
+from .models import Recipe, RecipeReview, Ingredient,RecipeImage
 from users.serializers import UserSerializer
+from cloudinary.models import CloudinaryField
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -22,10 +23,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
         return representation
 
-class MultipleImageSerializer(serializers.ModelSerializer):
-    images = serializers.ListField(
-        child = serializers.ImageField()
-    )
+class MultipleImageSerializer(serializers.Serializer):
+    images = ImageSerializer()
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)

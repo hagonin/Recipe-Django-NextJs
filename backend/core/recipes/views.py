@@ -38,7 +38,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         images_list = []
         for image in images:
             images_list.append(
-                RecipeImage(file=image)
+                RecipeImage(images=image)
             )
         if images_list:
             RecipeImage.objects.bulk_create(images_list)
