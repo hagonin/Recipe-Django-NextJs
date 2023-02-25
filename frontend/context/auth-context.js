@@ -121,8 +121,8 @@ const AuthProvider = ({ children }) => {
 			if (status === 400) {
 				setErrors({ login: { ..._error } });
 			} else if (status === 401) {
-				console.log(_error);
-				toast.error(_error.detail);
+				_error.detail !== 'Email is not verified' &&
+					toast.error(_error.detail);
 				_error.detail === 'Email is not verified' &&
 					setErrors({
 						login: {

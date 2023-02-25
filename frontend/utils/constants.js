@@ -13,6 +13,8 @@ export const images = {
 	resetpassword: '/static/images/reset-password.png',
 	resetpassword1: '/static/images/reset-password-1.png',
 	recipe_default: '/static/images/recipe_default.png',
+	not_verify_email: '/static/images/not_verify_email.png',
+	verify_email: '/static/images/verify_email.png',
 };
 
 export const categories = [

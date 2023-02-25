@@ -17,7 +17,7 @@ function Login() {
 			.then(() => {
 				setErrors(null);
 				toast.success(
-					'We has sent the new verify email. Please check your email.'
+					'We have sent the new verify email. Please check your email.'
 				);
 			})
 			.catch();

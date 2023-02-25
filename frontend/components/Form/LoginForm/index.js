@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAuthContext } from '@context/auth-context';
 import { images } from '@utils/constants';
 
-import { CheckboxField, Form, InputField } from './FormControl';
+import { CheckboxField, Form, InputField } from '../FormControl';
 import Img from '@components/UI/Image';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { AiOutlineReload } from 'react-icons/ai';
+import VerifyEmail from './VerifyEmail';
 
 function LoginForm({ onSubmit, resendVerifyEmail }) {
 	const { errors, setErrors } = useAuthContext();
@@ -61,16 +62,7 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
-
-			{errors?.login?.verify_expired && (
-				<Button
-					onClick={handleResendVerifyEmail}
-					className="verify mb-5 w-full"
-					icon={{ left: <AiOutlineReload /> }}
-				>
-					Resend verify email
-				</Button>
-			)}
+			<VerifyEmail onSubmit={handleResendVerifyEmail} />
 
 			<Form onSubmit={handleSubmit((data) => onSubmit(data.login))}>
 				<InputField

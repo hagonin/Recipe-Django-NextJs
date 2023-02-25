@@ -50,7 +50,6 @@ export default function Home() {
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 		},
 	];
-	console.log(recipes);
 
 	return (
 		<>
@@ -64,35 +63,35 @@ export default function Home() {
 			</Slider>
 			<SubscribeSection />
 			<WidgetLayout>
-				<GroupCategory
+				{/* <GroupCategory
 					list={recipes}
 					name="seafood"
-				/>
+				/> */}
 			</WidgetLayout>
 		</>
 	);
 }
 
-export const getStaticProps = async () => {
-	let recipes = [];
-	await api
-		.get('/recipe/recipe/')
-		.then((res) => {
-			recipes = res.data.results.map((item) => {
-				const { slug, image_url, created_at } = item;
-				return {
-					id: 1,
-					name: slug,
-					image: image_url,
-					date: created_at,
-				};
-			});
-		})
-		.catch((error) => console.log('ERROR AT home', error));
+// export const getStaticProps = async () => {
+// 	let recipes = [];
+// 	await api
+// 		.get('/recipe/recipe/')
+// 		.then((res) => {
+// 			recipes = res.data.results.map((item) => {
+// 				const { slug, image_url, created_at } = item;
+// 				return {
+// 					id: 1,
+// 					name: slug,
+// 					image: image_url,
+// 					date: created_at,
+// 				};
+// 			});
+// 		})
+// 		.catch((error) => console.log('ERROR AT home', error));
 
-	return {
-		props: {
-			recipes,
-		},
-	};
-};
+// 	return {
+// 		props: {
+// 			recipes,
+// 		},
+// 	};
+// };
