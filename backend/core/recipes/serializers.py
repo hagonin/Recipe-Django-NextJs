@@ -37,7 +37,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     
     class Meta: 
         model = Recipe
-        fields = ('id','user','title','category','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','title','slug','category','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count','search_rank')
@@ -118,6 +118,9 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
         if images is not None :
             instance.images.clear()
             self._create_images(images, instance)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
 
         instance.save()
         return instance
