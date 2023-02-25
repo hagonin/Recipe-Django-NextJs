@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import Portal from './Portal';
 
-function Modal({ children }) {
+function Modal({ children, isOpen }) {
 	const [showModal, setShowModal] = useState(true);
 	const handleClose = () => {
 		setShowModal(false);

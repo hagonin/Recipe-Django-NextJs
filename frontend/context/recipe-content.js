@@ -3,7 +3,16 @@ import { createContext, memo, useContext, useEffect, useState } from 'react';
 
 const RecipeContext = createContext();
 function RecipeProvider({ children }) {
-	const [categories, setCategories] = useState([]);
+	const [categories, setCategories] = useState([
+		{
+			id: 1,
+			name: 'Breakfast',
+		},
+		{
+			id: 2,
+			name: 'Dinner',
+		},
+	]);
 	useEffect(() => {
 		api.get('/recipe/categories/')
 			.then((res) => setCategories(res.data.results))

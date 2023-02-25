@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.12",
     "@next/font": "^13.1.2",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tippyjs/react": "^4.2.6",
