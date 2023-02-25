@@ -5,7 +5,7 @@ import Slide from '@components/UI/Slider/Slide';
 import SubscribeForm from '@components/Form/SubscribeForm';
 import api from '@services/axios';
 
-export default function Home({ recipes }) {
+export default function Home() {
 	const recipesRandom = [
 		{
 			id: 1,
@@ -71,32 +71,32 @@ export default function Home({ recipes }) {
 				</div>
 				<SubscribeForm />
 			</section>
-			<WidgetLayout>
+			{/* <WidgetLayout>
 				<GroupCategory
 					list={recipes}
 					name="seafood"
 				/>
-			</WidgetLayout>
+			</WidgetLayout> */}
 		</>
 	);
 }
 
-export const getStaticProps = async () => {
-	const res = await api.get('/recipe/recipe/');
+// export const getStaticProps = async () => {
+// 	const res = await api.get('/recipe/recipe/');
 
-	const recipes = res.data.map((item) => {
-		const imageDefault = item.images.filter((img) => img.default)[0]
-			.image_url;
-		return {
-			id: item.id,
-			name: item.title,
-			image: imageDefault,
-			date: item.created_at,
-		};
-	});
-	return {
-		props: {
-			recipes,
-		},
-	};
-};
+// 	const recipes = res.data.map((item) => {
+// 		const imageDefault = item.images.filter((img) => img.default)[0]
+// 			.image_url;
+// 		return {
+// 			id: item.id,
+// 			name: item.title,
+// 			image: imageDefault,
+// 			date: item.created_at,
+// 		};
+// 	});
+// 	return {
+// 		props: {
+// 			recipes,
+// 		},
+// 	};
+// };
