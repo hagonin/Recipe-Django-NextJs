@@ -2,32 +2,25 @@ import { Fragment, useState } from 'react';
 
 import { useAuthContext } from '@context/auth-context';
 
-import { images, NavLinks } from '@utils/constants';
+import { images } from '@utils/constants';
 
 import { HiMenu } from 'react-icons/hi';
-import {
-	MdClose,
-	MdOutlineKeyboardArrowDown,
-	MdOutlineKeyboardArrowUp,
-} from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import { FiLogIn, FiLogOut } from 'react-icons/fi';
 
 import NavItem from './NavItem';
 import SocialLink from '@components/UI/SocialLink';
 import Img from '@components/UI/Image';
 import { Transition } from '@headlessui/react';
-import { useRecipeContext } from '@context/recipe-content';
+import NavCategory from './NavCategory';
 
 function NavMobi() {
 	const { isAuthenticated, user, logout } = useAuthContext();
-	const { categories } = useRecipeContext();
 	const [showNavMobi, setShowNavMobi] = useState(false);
 	const toggleNavMobi = () => {
 		setShowNavMobi(!showNavMobi);
 	};
 
-	const [openCategory, setOpenCategory] = useState(false);
-	const toggleCategory = () => setOpenCategory(!openCategory);
 	return (
 		<div className="lg:hidden">
 			<button
@@ -101,54 +94,10 @@ function NavMobi() {
 						)}
 
 						<div className="border-y py-2 mt-2 mb-5">
-							{NavLinks.map((nav) =>
-								nav.children ? (
-									<div key={nav.id}>
-										<NavItem onClick={toggleCategory}>
-											{nav.name}
-											{openCategory ? (
-												<MdOutlineKeyboardArrowUp className="text-2xl inline-block ml-2" />
-											) : (
-												<MdOutlineKeyboardArrowDown className="text-2xl inline-block ml-2" />
-											)}
-										</NavItem>
-
-										<div
-											className={`overflow-hidden transition-all duration-300 ${
-												openCategory
-													? 'h-[156px]'
-													: 'h-0'
-											}`}
-										>
-											{nav.children.map((child) => (
-												<NavItem
-													key={child.id}
-													href={`${nav.href}${child.href}`}
-													isSubItem
-												>
-													{child.name}
-												</NavItem>
-											))}
-											{categories.map((category) => (
-												<NavItem
-													key={category.id}
-													href={`/recipes/category/${category.name}`}
-													isSubItem
-												>
-													{category.name}
-												</NavItem>
-											))}
-										</div>
-									</div>
-								) : (
-									<NavItem
-										href={nav.href}
-										key={nav.id}
-									>
-										{nav.name}
-									</NavItem>
-								)
-							)}
+							<NavItem href="/">Home</NavItem>
+							<NavCategory />
+							<NavItem href="/about">About</NavItem>
+							<NavItem href="/contact">Contact</NavItem>
 						</div>
 						{isAuthenticated && (
 							<NavItem onClick={logout}>

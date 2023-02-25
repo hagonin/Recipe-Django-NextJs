@@ -8,7 +8,6 @@ import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import Modal from '@components/UI/Modal';
 
 function Header() {
 	const { isAuthenticated, user, loading } = useAuthContext();
