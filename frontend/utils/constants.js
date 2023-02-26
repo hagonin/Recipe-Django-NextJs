@@ -15,6 +15,8 @@ export const images = {
 	recipe_default: '/static/images/recipe_default.png',
 	not_verify_email: '/static/images/not_verify_email.png',
 	verify_email: '/static/images/verify_email.png',
+	photoDefault: '/static/images/photoDefault.png',
+	spoon: '/static/images/spoon.jpeg',
 };
 
 export const categories = [
@@ -29,4 +31,15 @@ export const categories = [
 	{ id: 9, name: 'Soups' },
 	{ id: 10, name: 'Sidedish' },
 	{ id: 11, name: 'Marinades' },
+];
+
+export const unit = [
+	{ id: 1, name: 'pounds' },
+	{ id: 2, name: 'lbs' },
+	{ id: 3, name: 'oz' },
+	{ id: 4, name: 'g' },
+	{ id: 5, name: 'kg' },
+	{ id: 6, name: 'cup' },
+	{ id: 7, name: 'teaspoon' },
+	{ id: 8, name: 'tablespoon' },
 ];

@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import { forwardRef } from 'react';
 
 import 'react-quill/dist/quill.snow.css';
+import Error from './Error';
+import Label from './Label';
 const ReactQuill = dynamic(
 	() => {
 		return import('react-quill');
@@ -19,7 +21,7 @@ const InputField = ({
 	rules = {},
 	hide,
 	icon,
-	required,
+	info,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
@@ -28,14 +30,15 @@ const InputField = ({
 			<Label
 				label={label}
 				name={name}
+				info={info}
 			/>
 			<div
 				className={`w-full flex bg-white px-4 ${
 					type !== 'file' && 'border rounded'
-				} h-12 outline-none ${required ? 'border-l-[4px]' : ''} ${
+				} h-12 outline-none ${
 					error
 						? 'border-red'
-						: 'border-border focus-within:border-primary '
+						: 'border-border focus-within:border-primary focus-within:border-2'
 				} `}
 			>
 				<input
@@ -69,6 +72,7 @@ const CheckboxField = ({
 	options,
 	register,
 	error,
+	info,
 	...props
 }) => {
 	return (
@@ -116,6 +120,7 @@ const RadioField = ({ name, label, options, register, error, ...props }) => {
 		<div>
 			<Label
 				label={label}
+				required={required}
 				name={name}
 			/>
 			{options.map((option) => (
@@ -141,6 +146,7 @@ const SelectField = ({
 	options = [],
 	register,
 	error,
+	info,
 	...props
 }) => {
 	return (
@@ -154,9 +160,12 @@ const SelectField = ({
 				{...register(name)}
 				{...props}
 				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
-					error ? 'border-red' : 'border-border focus:border-primary'
+					error
+						? 'border-red'
+						: 'border-border focus:border-primary focus:border-2'
 				}`}
 			>
+				<option value="">--- Select Option ---</option>
 				{options.map((option) => (
 					<option
 						value={option.name}
@@ -171,7 +180,7 @@ const SelectField = ({
 	);
 };
 
-const TextAreaField = ({ label, name, register, error, ...props }) => {
+const TextAreaField = ({ label, name, register, error, info, ...props }) => {
 	return (
 		<div className="flex flex-col">
 			<Label
@@ -191,33 +200,23 @@ const TextAreaField = ({ label, name, register, error, ...props }) => {
 	);
 };
 
-const RichTextField = forwardRef(({ field }, ref) => (
-	<div className="flex flex-col h-[400px]">
-		<Label label="Description" />
-		<ReactQuill
-			theme="snow"
-			{...field}
-			ref={ref}
-			className="h-[80%]"
-		/>
-	</div>
-));
-
-const Error = ({ error }) => {
-	return error ? (
-		<span className="block text-sm mt-2 text-red ml-3 select-none">{error}</span>
-	) : null;
-};
-
-const Label = ({ label, name }) =>
-	label && (
-		<label
-			className="block font-semibold mb-2"
-			htmlFor={name}
-		>
-			{label}
-		</label>
-	);
+const RichTextField = forwardRef(
+	({ field, label, required, info, ...props }, ref) => (
+		<div className="flex flex-col h-[250px] !text-base">
+			<Label
+				label={label}
+				info={info}
+			/>
+			<ReactQuill
+				theme="snow"
+				{...field}
+				ref={ref}
+				className="h-[70%]"
+				{...props}
+			/>
+		</div>
+	)
+);
 
 export {
 	InputField,

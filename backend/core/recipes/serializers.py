@@ -70,7 +70,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class RecipeRewriteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    ingredients = IngredientSerializer(many=True)
+    ingredients = IngredientSerializer(many=True,required=False)
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
     total_number_of_bookmarks = serializers.ReadOnlyField()

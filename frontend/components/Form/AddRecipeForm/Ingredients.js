@@ -3,6 +3,7 @@ import { useFieldArray } from 'react-hook-form';
 import { MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import { InputField, SelectField } from '../FormControl';
+import { unit } from '@utils/constants';
 
 function Ingredients({ control, register }) {
 	const { fields, append, remove } = useFieldArray({
@@ -19,28 +20,34 @@ function Ingredients({ control, register }) {
 					>
 						<InputField
 							type="text"
-							placeholder="Name"
-							name={`recipe.ingredients.${index}.name`}
+							placeholder="e.g. virgin olive oil "
+							name={`recipe.ingredients.${index}.title`}
 							register={register}
+							label="Heading (optional)"
 						/>
 						<InputField
 							type="text"
-							placeholder="Description"
+							placeholder=" It’s superior in taste and nutrition."
 							name={`recipe.ingredients.${index}.desc`}
 							register={register}
+							label="Description"
+							required
 						/>
 						<InputField
 							type="number"
-							placeholder="Quantity"
+							placeholder="e.g. 1"
 							name={`recipe.ingredients.${index}.quantity`}
 							register={register}
+							label="Quantity"
+							required
 						/>
-						<InputField
+						<SelectField
 							type="text"
-							placeholder="Unit"
+							options={unit}
 							name={`recipe.ingredients.${index}.unit`}
 							register={register}
-							maxLength={3}
+							label="Unit"
+							required
 						/>
 						<button
 							type="button"
@@ -56,7 +63,8 @@ function Ingredients({ control, register }) {
 				type="button"
 				onClick={() => {
 					append({
-						name: '',
+						recipe: 2,
+						title: '',
 						quantity: '',
 						unit: '',
 					});

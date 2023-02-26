@@ -1,15 +1,16 @@
 import { images } from '@utils/constants';
 import { getRefreshTokenFromCookie, setCookie } from '@utils/cookies';
-import { getFormAvatarFromUrl } from '@utils/getformavatar';
+import { createAvatarForm } from '@utils/getFileFromUrl';
 import axios from 'axios';
 
+const A_MINUTE = 60000;
 const api = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_API_URL,
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json; charset=utf-8',
 	},
-	timeout: 10000,
+	timeout: A_MINUTE,
 });
 
 api.interceptors.request.use(
@@ -26,7 +27,7 @@ api.interceptors.response.use(
 		// set default avatar
 		if (_config.url === '/user/profile/avatar/' && status === 500) {
 			try {
-				const avatarForm = await getFormAvatarFromUrl(
+				const avatarForm = createAvatarForm(
 					images.defaultAvatar,
 					'avatar_default'
 				);
