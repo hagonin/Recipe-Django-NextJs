@@ -1,18 +1,58 @@
-from rest_framework import viewsets
+from rest_framework import viewsets,mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
-from drf_yasg.utils import swagger_auto_schema
-from django.utils.decorators import method_decorator
+from rest_framework.authentication import TokenAuthentication
 
 from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,RecipeReview,Ingredient
 
-from .permissions import IsOwner
+from .permissions import IsOwnerOrReadOnly
 
+
+class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    View recipe
+    """
+    queryset = Recipe.objects.all()
+    serializer_class = serializers.RecipeSerializer
+    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
+    search_fields = ['search_vector']
+    ordering_fields = ['created_at', 'rating']
+
+class RecipeDetailViewSet(viewsets.ModelViewSet):
+    """
+    CRUD recipe
+    """
+    lookup_field = 'slug'
+    queryset = Recipe.objects.all()
+    serializer_class = serializers.RecipeDetailSerializer
+    ordering_fields = ['created_at']    
+    permission_classes = [IsOwnerOrReadOnly]
+    
+    
+    def _params_to_ints(self, qs):
+        """Convert a list of strings to integers."""
+        return [int(str_id) for str_id in qs.split(',')]
+
+    def get_serializer_context(self):
+        return {'user': self.request.user}    
+    
+    def get_queryset(self):
+        ingredients =self.request.query_params.get('ingredients')
+        images =self.request.query_params.get('images')
+        queryset = self.queryset
+        if ingredients:
+            ingr_ids = self._params_to_ints(ingredients)
+            queryset = queryset.filter(ingredients__id__in=ingr_ids)
+        if images:
+            img_ids = self._params_to_ints(images)
+            queryset = queryset.filter(images__id__in=img_ids)
+
+        return queryset.filter(user=self.request.user).order_by('-id').distinct()
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
@@ -44,52 +84,7 @@ class ImageViewSet(viewsets.ModelViewSet):
             RecipeImage.objects.bulk_create(images_list)
 
         return Response("Success")
-
-class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    View recipe
-    """
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeSerializer
-    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
-    search_fields = ['search_vector']
-    ordering_fields = ['created_at', 'rating']
-
-# @method_decorator(name='list', decorator=swagger_auto_schema(
-#     operation_description="description"
-# ))
-class RecipeDetailViewSet(viewsets.ModelViewSet):
-    """
-    CRUD recipe
-    """
     
-    lookup_field = 'slug'
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeRewriteSerializer
-    ordering_fields = ['created_at']    
-    permission_classes = (IsAuthenticatedOrReadOnly,IsOwner)
-
-    def _params_to_ints(self, qs):
-        """Convert a list of strings to integers."""
-        return [int(str_id) for str_id in qs.split(',')]
-
-    def get_serializer_context(self):
-        return {'user': self.request.user}    
-    
-    def get_queryset(self):
-        ingredients =self.request.query_params.get('ingredients')
-        images =self.request.query_params.get('images')
-        queryset = self.queryset
-        if ingredients:
-            ingr_ids = self._params_to_ints(ingredients)
-            queryset = queryset.filter(ingredients__id__in=ingr_ids)
-        if images:
-            img_ids = self._params_to_ints(images)
-            queryset = queryset.filter(images__id__in=img_ids)
-
-        return queryset.filter(user=self.request.user).order_by('-id').distinct()
-    
-            
 class RecipeReviewViewset(viewsets.ModelViewSet):
     """
     CRUD reviews a recipe
@@ -107,7 +102,7 @@ class RecipeReviewViewset(viewsets.ModelViewSet):
         if self.action in ("create",):
             self.permission_classes = (IsAuthenticated,)
         elif self.action in ("update", "partial_update", "destroy"):
-            self.permission_classes = (IsOwner)
+            self.permission_classes = (IsOwnerOrReadOnly)
         else:
             self.permission_classes = (AllowAny,)
 

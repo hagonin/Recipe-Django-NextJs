@@ -15,7 +15,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = RecipeImage
-        fields = ('image_url','image','caption','recipe')
+        fields = ('id','image_url','image','caption','recipe')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -28,21 +28,17 @@ class MultipleImageSerializer(serializers.Serializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
-    image_url = serializers.ReadOnlyField()
-    user = serializers.CharField(source="user.username", read_only=True)
+    image_url = serializers.CharField()
+    user = UserSerializer(read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
     ingredients = IngredientSerializer(many=True,required=False)
-    images = ImageSerializer(many=True,required=False)
     reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
     
     class Meta: 
         model = Recipe
-        fields = ('id','user','title','slug','category','main_image','image_url','rating', 'ingredients',
-                'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
-                'created_at','updated_at','source','notes','total_number_of_bookmarks',
+        fields = ('id','user','title','slug','main_image','image_url','rating','ingredients',
+                'description','updated_at','total_number_of_bookmarks',
                 'reviews', 'reviews_count','search_rank')
-
-
     
     def get_total_number_of_bookmarks(self, obj):
         return obj.get_total_number_of_bookmarks()
@@ -68,9 +64,10 @@ class ReviewSerializer(serializers.ModelSerializer):
             'slug': {'read_only': True}
         }
 
-class RecipeRewriteSerializer(serializers.ModelSerializer):
+class RecipeDetailSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     ingredients = IngredientSerializer(many=True)
+    image_url = serializers.CharField()
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
     total_number_of_bookmarks = serializers.ReadOnlyField()
@@ -85,6 +82,12 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
                 'reviews', 'reviews_count')
 
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop("main_image")
+
+        return representation
+    
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
             ingr = Ingredient.objects.create(**ingredient)
@@ -110,7 +113,6 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
         """Update recipe"""
         ingredients = validated_data.pop('ingredients', None)
         images = validated_data.pop('images', None)
-
         
         if ingredients is not None :
             instance.ingredients.clear()
@@ -118,7 +120,6 @@ class RecipeRewriteSerializer(serializers.ModelSerializer):
         if images is not None :
             instance.images.clear()
             self._create_images(images, instance)
-
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
