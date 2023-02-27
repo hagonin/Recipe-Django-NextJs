@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     # third party apps
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -168,7 +169,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication'
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -178,7 +179,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -213,8 +214,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_FROM = 'sarahpham.ha@gmail.com'
-EMAIL_HOST_USER = 'sarahpham.ha@gmail.com'
-# EMAIL_HOST_USER = 'fegroupbie22@gmail.com'
-# EMAIL_HOST_PASSWORD = 'wgqjkudrjyjaqcsd'
-EMAIL_HOST_PASSWORD='twljqdyoldtdlaqz'
+# EMAIL_FROM = 'sarahpham.ha@gmail.com'
+# EMAIL_HOST_USER = 'sarahpham.ha@gmail.com'
+EMAIL_HOST_USER = 'fegroupbie22@gmail.com'
+EMAIL_HOST_PASSWORD = 'wgqjkudrjyjaqcsd'
+# EMAIL_HOST_PASSWORD='twljqdyoldtdlaqz'
