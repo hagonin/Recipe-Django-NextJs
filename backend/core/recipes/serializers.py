@@ -67,7 +67,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class RecipeDetailSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     ingredients = IngredientSerializer(many=True)
-    image_url = serializers.CharField()
+    # image_url = serializers.CharField()
     ingredients = IngredientSerializer(many=True,required=False)
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -77,17 +77,17 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user','title', 'category','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','title', 'category','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
 
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation.pop("main_image")
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     representation.pop("main_image")
 
-        return representation
+    #     return representation
     
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:

@@ -32,15 +32,16 @@ function AddRecipe() {
 				router.push('/recipes/addnewrecipe/preview');
 			})
 			.catch(({ _error }) => {
-				const errStr = Object.keys(_error)
-					.map((key) => {
-						const str = _error[key]
-							.map((message) => message)
-							.join('<br/>');
-						return `${key}: ${str}`;
-					})
-					.join('<br/>');
-				toast.error(errStr);
+				console.log(_error);
+				// const errStr = Object.keys(_error)
+				// 	.map((key) => {
+				// 		const str = _error[key]
+				// 			.map((message) => message)
+				// 			.join('<br/>');
+				// 		return `${key}: ${str}`;
+				// 	})
+				// 	.join('<br/>');
+				// toast.error(errStr);
 			});
 	};
 
