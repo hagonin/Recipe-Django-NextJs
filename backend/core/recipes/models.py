@@ -120,7 +120,7 @@ class RecipeImage(models.Model):
 
 class RecipeReview(models.Model):
     """
-    Returns comments for related recipe
+    Returns reviews for related recipe
     """
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
@@ -134,7 +134,7 @@ class RecipeReview(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('recipe', 'id')
+        # unique_together = ('recipe', 'slug')
         ordering = ("-date_added",)
 
     def __str__(self):

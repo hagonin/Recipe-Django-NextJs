@@ -1,4 +1,5 @@
-from rest_framework import viewsets,mixins
+from rest_framework import viewsets
+from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly
@@ -90,21 +91,16 @@ class RecipeReviewViewset(viewsets.ModelViewSet):
     """
     CRUD reviews a recipe
     """
+    lookup_field = 'slug'
     queryset = RecipeReview.objects.all()
-    permission_classes = [AllowAny]
+    serializer_class = serializers.ReviewSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    
+    def get_object(self):
+        if self.action == "create":
+            return get_object_or_404(Recipe, slug = self.kwargs['recipe_slug'])
+        if self.action == "destroy":
+            return get_object_or_404(RecipeReview, recipe__slug= self.kwargs['recipe_slug'])
 
-    def get_serializer_class(self):
-        if self.action in ("create", "update", "partial_update", "destroy"):
-            return serializers.ReviewWriteSerializer
-
-        return serializers.ReviewReadSerializer
-
-    def get_permissions(self):
-        if self.action in ("create",):
-            self.permission_classes = (IsAuthenticated,)
-        elif self.action in ("update", "partial_update", "destroy"):
-            self.permission_classes = (IsOwnerOrReadOnly)
-        else:
-            self.permission_classes = (AllowAny,)
-
-        return super().get_permissions()
+    def perform_create(self, serializer):
+        serializer.save(recipe=self.get_object(), user=self.request.user)        

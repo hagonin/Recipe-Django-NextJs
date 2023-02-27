@@ -28,8 +28,8 @@ class MultipleImageSerializer(serializers.Serializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
+    user = serializers.CharField(source='user.username',read_only=True)
     image_url = serializers.CharField()
-    user = UserSerializer(read_only=True)
     total_number_of_bookmarks = serializers.SerializerMethodField()
     ingredients = IngredientSerializer(many=True,required=False)
     reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
@@ -55,17 +55,17 @@ class RecipeSerializer(serializers.ModelSerializer):
         return serializer.data
     
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = serializers.CharField(source='user.username',read_only=True)
 
     class Meta: 
         model = RecipeReview
-        fields = '__all__'
+        fields = ('user','title', 'slug','rating','date_added', 'content')
         extra_kwargs = {
             'slug': {'read_only': True}
         }
 
 class RecipeDetailSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = serializers.CharField(source='user.username',read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -75,7 +75,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('id','user','title', 'category','main_image','image_url','rating', 'ingredients',
+        fields = ('id','user','title','slug','category','main_image','image_url','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
