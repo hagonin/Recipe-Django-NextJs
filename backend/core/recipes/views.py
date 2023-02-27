@@ -1,14 +1,11 @@
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
-from django.http import Http404
 from rest_framework.decorators import action
-from django.core.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
-from .forms import RecipeForm
 from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,RecipeReview,Ingredient
@@ -31,7 +28,7 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     """
     CRUD recipe
     """
-    
+    lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
     ordering_fields = ['created_at']  
