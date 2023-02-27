@@ -37,7 +37,7 @@ class Recipe(models.Model):
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
     serving = models.IntegerField(blank=True, null=True)
-    slug = models.SlugField(db_index=True,unique=True, max_length=255, blank=True)
+    slug = models.SlugField(db_index=True,max_length=255, blank=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
     search_vector = SearchVectorField(null=True)
