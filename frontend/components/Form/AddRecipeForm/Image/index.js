@@ -38,6 +38,7 @@ function Image({ handleChooseImg }) {
 				onChange={handleOnChange}
 				ref={inputFileRef}
 				className="hidden"
+				accept="image/png, image/jpeg"
 			/>
 			<button
 				className="text-3xl bg-white absolute bottom-2 right-2 p-4 rounded-full border-[3px] border-yellow-500"

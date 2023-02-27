@@ -1,6 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import Index
+from django.core.exceptions import ValidationError
 from django.core import validators
 from django.conf import settings
 from django.utils.text import slugify
@@ -63,6 +64,8 @@ class Recipe(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        if Recipe.objects.filter(slug=self.slug).exists():
+            raise ValidationError('A Recipe with this title already exists.')
         super().save(*args, **kwargs)
 
     @property

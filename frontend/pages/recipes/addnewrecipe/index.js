@@ -29,7 +29,7 @@ function AddRecipe() {
 			.then((res) => {
 				setRecipePreview(res.data);
 				toast.success('Add recipe success');
-				router.push('/recipes/addnewrecipe/preview');
+				router.push('/recipes/addnewrecipe/upload_image');
 			})
 			.catch(({ _error }) => {
 				console.log(_error);

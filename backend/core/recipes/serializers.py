@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import Recipe, RecipeReview, Ingredient,RecipeImage
-from users.serializers import UserSerializer
-from cloudinary.models import CloudinaryField
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -101,12 +99,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         self._create_images(images, recipe)
 
         return recipe
-    
-    def validate(self, attrs):
-        if attrs.get('slug').exists():
-            raise serializers.ValidationError("Recipe already exist.")
-        return attrs
-    
+        
     def update(self, instance, validated_data):
         """Update recipe"""
         ingredients = validated_data.pop('ingredients', None)
