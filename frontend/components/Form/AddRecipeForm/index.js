@@ -21,6 +21,7 @@ import { FaRegLightbulb } from 'react-icons/fa';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
 import { useRouter } from 'next/router';
+import { useAuthContext } from '@context/auth-context';
 
 function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
@@ -38,7 +39,6 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 			},
 		},
 	});
-
 
 	useEffect(() => {
 		reset();
@@ -226,7 +226,7 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 			</div>
 			<TextAreaField
 				label="Note (optional)"
-				name="recipe.note"
+				name="recipe.notes"
 				rows="5"
 				register={register}
 			/>

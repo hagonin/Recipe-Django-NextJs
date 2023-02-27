@@ -165,7 +165,6 @@ const SelectField = ({
 						: 'border-border focus:border-primary focus:border-2'
 				}`}
 			>
-				<option value="">--- Select Option ---</option>
 				{options.map((option) => (
 					<option
 						value={option.name}

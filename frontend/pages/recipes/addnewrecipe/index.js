@@ -32,9 +32,15 @@ function AddRecipe() {
 				router.push('/recipes/addnewrecipe/preview');
 			})
 			.catch(({ _error }) => {
-				toast.error('There is error on some field. Please check it.');
-				setErrors({ recipe: {..._error} });
-				console.log(_error);
+				const errStr = Object.keys(_error)
+					.map((key) => {
+						const str = _error[key]
+							.map((message) => message)
+							.join('<br/>');
+						return `${key}: ${str}`;
+					})
+					.join('<br/>');
+				toast.error(errStr);
 			});
 	};
 
