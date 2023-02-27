@@ -1,4 +1,5 @@
 import Img from '@components/UI/Image';
+import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import { BsFillTagsFill } from 'react-icons/bs';
 import { FaRegClock } from 'react-icons/fa';
@@ -40,13 +41,13 @@ function PreviewRecipe({
 						{created_at && (
 							<div className="flex gap-2">
 								<h3>Create at:</h3>
-								<span>{formatDate(created_at)}</span>
+								<span>{created_at}</span>
 							</div>
 						)}
 						{updated_at && (
 							<div className="flex gap-2">
 								<h3>Updated at:</h3>
-								<span>{formatDate(updated_at)}</span>
+								<span>{updated_at}</span>
 							</div>
 						)}
 					</div>
@@ -78,12 +79,12 @@ function PreviewRecipe({
 
 				<div className="my-10">
 					<h3>Description:</h3>
-					<p>{description}</p>
+					<div dangerouslySetInnerHTML={description} />
 				</div>
 				<span className="border-b w-4/5 mx-auto block"></span>
 				<div className="my-10">
 					<h3>Instruction:</h3>
-					<p>{instructions}</p>
+					<div dangerouslySetInnerHTML={instructions} />
 				</div>
 				<span className="border-b w-4/5 mx-auto block"></span>
 				{notes && (

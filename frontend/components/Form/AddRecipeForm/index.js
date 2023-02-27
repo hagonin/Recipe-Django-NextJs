@@ -23,6 +23,7 @@ import Loader from '@components/UI/Loader';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
 
+const RECIPE_EXIST = 65;
 function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
 		register,
@@ -34,7 +35,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [{ recipe: 2 }],
+				ingredients: [{ recipe: RECIPE_EXIST }],
 				main_image: null,
 			},
 		},
