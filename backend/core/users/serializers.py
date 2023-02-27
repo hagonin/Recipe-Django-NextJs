@@ -163,7 +163,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('user','bookmarks','bio')
 
-
 class ProfileAvatarSerializer(serializers.ModelSerializer):
     image_url = serializers.CharField()
     

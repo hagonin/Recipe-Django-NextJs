@@ -1,11 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
+from django.http import Http404
 from rest_framework.decorators import action
+from django.core.exceptions import ValidationError
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny,IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
+from .forms import RecipeForm
 from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,RecipeReview,Ingredient
@@ -28,11 +31,11 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
     """
     CRUD recipe
     """
-    lookup_field = 'slug'
+    
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
-    ordering_fields = ['created_at']    
-    permission_classes = [IsOwnerOrReadOnly]
+    ordering_fields = ['created_at']  
+    # permission_classes = [IsOwnerOrReadOnly]
     
     
     def _params_to_ints(self, qs):
@@ -54,7 +57,17 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(images__id__in=img_ids)
 
         return queryset.filter(user=self.request.user).order_by('-id').distinct()
+        
+    def get_permissions(self):
+        if self.action in ("create",):
+            self.permission_classes = (IsAuthenticated,)
+        elif self.action in ("update", "partial_update", "destroy"):
+            self.permission_classes = (IsOwnerOrReadOnly,)
+        else:
+            self.permission_classes = (AllowAny,)
 
+        return super().get_permissions()
+    
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
