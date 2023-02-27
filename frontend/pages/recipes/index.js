@@ -1,21 +1,25 @@
 import WidgetLayout from '@components/Layouts/WidgetLayout';
+import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
+import api from '@services/axios';
 import Link from 'next/link';
 import {
 	HiOutlineChevronDoubleLeft,
 	HiOutlineChevronDoubleRight,
 } from 'react-icons/hi';
 
-function Recipe() {
+function Recipe({ recipes }) {
 	return (
 		<div className="container my-14">
-			<h1>Grid Recipe</h1>
-			<div className="flex flex-col">
-				<Link href="/recipes/1">Item Recipe 1</Link>
-				<Link href="/recipes/2">Item Recipe 2</Link>
-				<Link href="/recipes/3">Item Recipe 3</Link>
+			<div className="grid grid-cols-3 gap-x-6 gap-y-10">
+				{recipes.map((recipe) => (
+					<RecipeCard
+						{...recipe}
+						smallCard={true}
+					/>
+				))}
 			</div>
-			<div className="flex justify-between">
+			<div className="flex justify-between mt-10">
 				<Button icon={{ left: <HiOutlineChevronDoubleLeft /> }}>
 					Previous Recipe
 				</Button>
@@ -30,4 +34,17 @@ function Recipe() {
 export default Recipe;
 
 Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
-// export const getStaticProps = () => {};
+export const getStaticProps = async () => {
+	const res = await api.get('/recipe/recipe/');
+	const recipes = res?.data?.results?.map(
+		({ title: name, image_url: image, updated_at: date, id }) => ({
+			name,
+			image,
+			date,
+			id,
+		})
+	);
+	return {
+		props: { recipes: recipes || [] },
+	};
+};

@@ -35,7 +35,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [{ recipe: RECIPE_EXIST }],
+				ingredients: [{ recipe: 65 }],
 				main_image: null,
 			},
 		},

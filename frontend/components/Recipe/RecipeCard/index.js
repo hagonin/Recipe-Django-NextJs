@@ -1,5 +1,6 @@
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
+import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
@@ -18,6 +19,7 @@ function RecipeCard({
 	className,
 }) {
 	const date_format = formatDate(date);
+	const summaryMarkup = summary && createMarkup(summary);
 	return (
 		<div
 			className={`${
@@ -39,7 +41,7 @@ function RecipeCard({
 				<Link
 					href={`/recipes/${id}`}
 					className={`inline ${
-						smallCard ? 'text-lg' : lgCard ? 'text-2xl' : 'text-xl'
+						smallCard ? 'text-lg mt-4' : lgCard ? 'text-2xl' : 'text-xl'
 					} text-black line-clamp-2  hover:text-primary transition-all duration-300`}
 				>
 					{name}
@@ -63,9 +65,12 @@ function RecipeCard({
 						</div>
 					)}
 				</div>
-				{summary && (
+				{summaryMarkup && (
 					<>
-						<p className="mt-3 line-clamp-6">{summary}</p>
+						<div
+							dangerouslySetInnerHTML={summaryMarkup}
+							className="mt-3 line-clamp-6"
+						/>
 						<Button
 							type="link"
 							href={`/recipes/${id}`}

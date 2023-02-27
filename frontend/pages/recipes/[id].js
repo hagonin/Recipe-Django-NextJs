@@ -8,7 +8,7 @@ import CommentForm from '@components/Form/CommentForm';
 import CommentCard from '@components/Comment/CommentCard';
 import Comments from '@components/Comment';
 
-function Recipe() {
+function Recipe({ recipe }) {
 	const relatedRecipes = [
 		{
 			id: 1,
@@ -42,7 +42,7 @@ function Recipe() {
 		},
 	];
 
-	// const { image_url, user, slug, ..._recipe } = recipe;
+	const { image_url, user, ..._recipe } = recipe;
 	const images = [
 		{
 			id: 1,
@@ -146,13 +146,12 @@ function Recipe() {
 	};
 	return (
 		<>
-			{/* <SingRecipe
+			<SingRecipe
 				{..._recipe}
 				cover={image_url}
 				author={user}
-				title={slug}
-			/> */}
-			<Thumbnail images={images} />
+			/>
+			{/* <Thumbnail images={images} /> */}
 			<SubscribeSection />
 			<RelatedRecipe recipes={relatedRecipes} />
 			<Comments comment_list={chat} />
@@ -168,26 +167,27 @@ export default Recipe;
 
 Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 
-// export async function getStaticProps({ params }) {
-// 	const res = await api.get(`/recipe/recipe/${params.id}/`);
-// 	const recipe = res.data;
+export async function getStaticProps({ params }) {
+	const res = await api.get(`/recipe/recipe/${params.id}/`);
+	const recipe = res.data;
 
-// 	// get category and fetch related recipe here
+	// get category and fetch related recipe here
 
-// 	return {
-// 		props: {},
-// 	};
-// }
+	return {
+		props: { recipe },
+	};
+}
 
-// export async function getStaticPaths() {
-// 	const res = await api.get('/recipe/recipe/');
-// 	const paths = res.data.map((item) => ({
-// 		params: {
-// 			id: item.id.toString(),
-// 		},
-// 	}));
-// 	return {
-// 		paths,
-// 		fallback: false,
-// 	};
-// }
+export async function getStaticPaths() {
+	const res = await api.get('/recipe/recipe/');
+	const { results } = res.data;
+	const paths = results.map((item) => ({
+		params: {
+			id: item.id.toString(),
+		},
+	}));
+	return {
+		paths,
+		fallback: false,
+	};
+}
