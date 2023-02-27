@@ -27,7 +27,7 @@ api.interceptors.response.use(
 		// set default avatar
 		if (_config.url === '/user/profile/avatar/' && status === 500) {
 			try {
-				const avatarForm = createAvatarForm(
+				const avatarForm = await createAvatarForm(
 					images.defaultAvatar,
 					'avatar_default'
 				);

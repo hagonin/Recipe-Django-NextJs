@@ -19,7 +19,7 @@ function VerifyEmail({ onSubmit }) {
 	return (
 		<ModalPrimary
 			show={show}
-			handleClose={handleCloseModal}
+			handleCloseModal={handleCloseModal}
 		>
 			<Img
 				src={images.not_verify_email}
