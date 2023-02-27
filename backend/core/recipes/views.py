@@ -20,8 +20,9 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
-    search_fields = ['search_vector']
+    search_fields = ['^search_vector']
     ordering_fields = ['created_at', 'rating']
+    filterset_fields = ('category','ingredients__desc', 'title')
 
 class RecipeDetailViewSet(viewsets.ModelViewSet):
     """

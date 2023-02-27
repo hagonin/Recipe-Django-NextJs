@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from recipes.models import Recipe,RecipeImage,Ingredient, RecipeReview
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -12,4 +13,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return obj.user == request.user
+        if type(obj) == Recipe or type(obj) == RecipeReview:
+            return obj.user == request.user
+        elif type(obj) == RecipeImage or type(obj) == Ingredient:
+            return obj.recipe.user == request.user
+        return False
