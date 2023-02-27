@@ -4,7 +4,7 @@ import { nunito } from '@utils/fonts';
 import { images } from '@utils/constants';
 import Head from 'next/head';
 import '@styles/globals.css';
-import RecipeProvider from '@context/recipe-content';
+import RecipeProvider from '@context/recipe-context';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);

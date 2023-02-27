@@ -1,167 +1,275 @@
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { HiInformationCircle } from 'react-icons/hi';
 
 import {
 	InputField,
 	SelectField,
 	TextAreaField,
 	RichTextField,
+	Label,
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
-import RecipeImages from './RecipeImages';
 import Ingredients from './Ingredients';
-import Images from './Images';
+import { categories, images } from '@utils/constants';
+import Image from './Image';
+
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import { FaRegLightbulb } from 'react-icons/fa';
+import { getFileFromUrl } from '@utils/getFileFromUrl';
+import Loader from '@components/UI/Loader';
+import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
-import { useRecipeContext } from '@context/recipe-content';
 
-function AddRecipeForm({ onSubmit }) {
-	const { categories } = useRecipeContext();
-
+function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
 		register,
 		control,
 		handleSubmit,
-		formState: { errors: formErr },
+		formState: { errors: formErr, isSubmitting },
 		reset,
 		setValue,
-	} = useForm();
+	} = useForm({
+		defaultValues: {
+			recipe: {
+				ingredients: [{ recipe: 2 }],
+				main_image: null,
+			},
+		},
+	});
 
 	useEffect(() => {
 		reset();
 	}, []);
 
-	const handleBeforeSubmit = (data) => {
-		const {
-			recipe: { recipe, ...rest },
-		} = data;
-		const slug = getSlug(recipe.title);
-		return onSubmit({ ...recipe, slug, ...rest });
+	const createFormData = async ({ recipe }) => {
+		const { ingredients, ...rest } = recipe;
+		let { main_image } = recipe;
+		const form = new FormData();
+		// add ingredients to form
+		for (var i = 0; i < ingredients.length; i++) {
+			Object.keys(ingredients[i]).forEach((key) => {
+				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
+			});
+		}
+		// add image to form
+		main_image = main_image
+			? main_image
+			: await getFileFromUrl(images.spoon, 'default');
+		form.append('main_image', main_image, main_image.name);
+
+		// add rest to form
+		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
+
+		return onSubmit(form);
 	};
 
-	const getSlug = (word) => {
-		const slug = word.split(' ').join('-');
-		return slug;
+	const handleChooseImg = (file) => {
+		setValue('recipe.main_image', file);
 	};
 
 	return (
 		<form
-			onSubmit={handleSubmit(handleBeforeSubmit)}
+			onSubmit={handleSubmit(createFormData)}
 			noValidate={true}
 		>
 			<div className="flex flex-col gap-4">
 				<Title title="Recipe Detail" />
-				<div className="flex md:flex-row flex-col gap-4">
-					<InputField
-						name="recipe.recipe.title"
-						placeholder="Recipe title"
-						type="text"
-						register={register}
-						error={formErr?.recipe?.recipe?.title}
-					/>
-					<SelectField
-						name="recipe.category.name"
-						placeholder="Category"
-						options={categories}
-						type="text"
-						register={register}
-						error={formErr?.recipe?.category?.name}
-					/>
+				<div className="flex gap-6">
+					<div className="flex flex-col gap-6 flex-1">
+						<InputField
+							name="recipe.title"
+							placeholder="E.g. Homemade Italian Dressing"
+							type="text"
+							register={register}
+							error={formErr?.recipe?.title}
+							label="Title"
+						/>
+						<SelectField
+							name="recipe.category"
+							register={register}
+							error={formErr?.recipe?.category}
+							options={categories}
+							label="What kind of category ?"
+						/>
+					</div>
+					<div>
+						<Label
+							label="Photo"
+							info={{
+								content:
+									'A beautiful picture of the result after cooking from this recipe.',
+								placement: 'right',
+							}}
+						/>
+						<Image handleChooseImg={handleChooseImg} />
+					</div>
 				</div>
 				<div className="flex gap-4">
 					<InputField
-						name="recipe.recipe.prep_time"
+						name="recipe.prep_time"
 						label="Pre-time (minutes)"
 						type="number"
 						register={register}
-						error={formErr?.recipe?.recipe?.prep_time}
+						error={formErr?.recipe?.prep_time}
+						placeholder="e.g. 30 minutes"
 					/>
 					<InputField
-						name="recipe.recipe.cook_time"
+						name="recipe.cook_time"
 						label="Cook-time (minutes)"
 						type="number"
 						register={register}
-						error={formErr?.recipe?.recipe?.cook_time}
+						error={formErr?.recipe?.cook_time}
+						placeholder="e.g. 30 minutes"
 					/>
 					<InputField
-						name="recipe.recipe.serving"
+						name="recipe.serving"
 						label="Serve (people)"
 						type="number"
+						min="1"
 						register={register}
-						error={formErr?.recipe?.recipe?.serving}
+						error={formErr?.recipe?.serving}
+						placeholder="e.g. 8 people"
 					/>
 				</div>
 
 				<Controller
-					name="recipe.recipe.description"
+					name="recipe.description"
 					control={control}
 					render={({ field }) => (
 						<RichTextField
 							field={field}
 							label="Description"
+							placeholder="Homemade salad dressing is pretty low hanging fruit if you’re looking to up your cooking game. It’s quick to make, budget-friendly, and tastier than store-bought. Homemade Italian dressing is a prime example. You shake it up in an ordinary jar using pantry staples. The whole operation will take you under 2 minutes and results in enough dressing to get you through a couple of family-sized salads.  "
+							info={{
+								content:
+									'Share the story behind your recipe and makes it special.',
+								placement: 'right',
+							}}
 						/>
 					)}
 				/>
-				<div>
+				<Controller
+					name="recipe.instructions"
+					control={control}
+					render={({ field }) => (
+						<RichTextField
+							field={field}
+							label="Instructions"
+							placeholder="Step 1: Make the dressing:
+In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine vinegar, water, dried basil, garlic powder, oregano, onion powder, salt, sugar, and red pepper flakes,..."
+							info={{
+								content:
+									'Explain how to make your recipe, including oven temperatures, baking or cooking times, and pan sizes, etc. Use optional headers to organize the different parts of the recipe (i.e. Prep, Bake, Decorate)',
+								placement: 'right',
+							}}
+						/>
+					)}
+				/>
+				{/* <div>
 					<Images
 						control={control}
 						register={register}
 						handleChangeImage={setValue}
 					/>
-				</div>
+				</div> */}
 			</div>
-
 			<div className="mt-5">
-				<Title title="Ingredients" />
+				<Title
+					title="Ingredients"
+					info={{
+						content: (
+							<div>
+								Enter your ingredients. Those ingredient can be
+								a type of ingredient, or any special
+								preparation.
+							</div>
+						),
+						placement: 'right',
+					}}
+				/>
+
 				<Ingredients
 					control={control}
 					register={register}
 				/>
 			</div>
-
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
-					name="recipe.recipe.search_vector"
-					label="Search Vector"
+					name="recipe.search_vector"
+					label="Keyword (optional)"
 					type="text"
 					register={register}
-					error={formErr?.recipe?.recipe?.search_vector}
+					error={formErr?.recipe?.search_vector}
+					placeholder="e.g. salad dressings"
+					info={{
+						content:
+							'Keyword that can be used to search for this recipe',
+						placement: 'right',
+					}}
 				/>
 
 				<InputField
-					name="recipe.recipe.source"
-					label="Source of recipe"
+					name="recipe.source"
+					label="Source of recipe (optional)"
 					type="text"
 					register={register}
-					error={formErr?.recipe?.recipe?.source}
+					error={formErr?.recipe?.source}
+					placeholder="e.g. recipe.example.com"
+					info={{
+						content: 'Where did this recipe come from ?',
+						placement: 'right',
+					}}
 				/>
 			</div>
 			<TextAreaField
-				label="Note"
-				name="recipe.recipe.note"
+				label="Note (optional)"
+				name="recipe.notes"
 				rows="5"
 				register={register}
 			/>
-
-			<div className="flex gap-4 mt-10 justify-center">
+			<p className="mx-auto mt-5">
+				<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
+				You can add more photos after you add the recipe. We all love
+				photos recipes with good finished-product photos generally sort
+				higher than those without.
+			</p>
+			<div className="flex gap-4 mt-5 justify-end items-center">
 				<Button
-					className="primary login w-full"
-					type="submit"
+					className="cancle"
+					type="reset"
+					onClick={handleCancel}
 				>
-					Add Recipe
+					Cancel
 				</Button>
 				<Button
-					className="cancle login w-full"
-					type="reset"
-					onClick={reset}
+					className="login primary px-24"
+					type="submit"
+					disabled={isSubmitting}
 				>
-					RESET
+					{isSubmitting && <Loader type="submitting" />}
+					Submit Recipe
 				</Button>
 			</div>
 		</form>
 	);
 }
 
-const Title = ({ title }) => (
-	<h2 className="border-b border-primary pb-1 mb-2">{title}</h2>
+const Title = ({ title, info }) => (
+	<div className="flex gap-2 items-center border-b border-primary pb-1 mb-2">
+		<h2>{title}</h2>
+		{info && (
+			<Tippy
+				content={info.content}
+				placement={info.placement || 'top'}
+			>
+				<button className="relative -top-1 text-primaryDark">
+					<HiInformationCircle />
+				</button>
+			</Tippy>
+		)}
+	</div>
 );
 export default AddRecipeForm;

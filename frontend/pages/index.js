@@ -1,11 +1,11 @@
+import api from '@services/axios';
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
-import SubscribeForm from '@components/Form/SubscribeForm';
-import api from '@services/axios';
+import SubscribeSection from '@components/SubcribeSection';
 
-export default function Home({ recipes }) {
+export default function Home() {
 	const recipesRandom = [
 		{
 			id: 1,
@@ -61,42 +61,37 @@ export default function Home({ recipes }) {
 					/>
 				))}
 			</Slider>
-			<section className="container bg-grey py-4 px-5 flex md:items-center justify-between max-md:flex-col mt-4">
-				<div>
-					Don't miss a single recipe!
-					<br />
-					<span className="text-sm">
-						Subscribe to receive new recipes straight to your inbox!
-					</span>
-				</div>
-				<SubscribeForm />
-			</section>
+			<SubscribeSection />
 			<WidgetLayout>
-				<GroupCategory
+				{/* <GroupCategory
 					list={recipes}
 					name="seafood"
-				/>
+				/> */}
 			</WidgetLayout>
 		</>
 	);
 }
 
-export const getStaticProps = async () => {
-	const res = await api.get('/recipe/recipe/');
+// export const getStaticProps = async () => {
+// 	let recipes = [];
+// 	await api
+// 		.get('/recipe/recipe/')
+// 		.then((res) => {
+// 			recipes = res.data.results.map((item) => {
+// 				const { slug, image_url, created_at } = item;
+// 				return {
+// 					id: 1,
+// 					name: slug,
+// 					image: image_url,
+// 					date: created_at,
+// 				};
+// 			});
+// 		})
+// 		.catch((error) => console.log('ERROR AT home', error));
 
-	const recipes = res.data.map((item) => {
-		const imageDefault = item.images.filter((img) => img.default)[0]
-			.image_url;
-		return {
-			id: item.id,
-			name: item.title,
-			image: imageDefault,
-			date: item.created_at,
-		};
-	});
-	return {
-		props: {
-			recipes,
-		},
-	};
-};
+// 	return {
+// 		props: {
+// 			recipes,
+// 		},
+// 	};
+// };

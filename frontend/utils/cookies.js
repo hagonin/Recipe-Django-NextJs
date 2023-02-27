@@ -2,11 +2,12 @@ import Cookies from 'js-cookie';
 
 const ACCESS = 'access';
 const REFRESH = 'refresh';
-const A_DAY = 1;
+const HALF_HOUR = 1 / 2;
 const A_MONTH = 30;
 
 export const setCookie = (accessVal, refreshVal) => {
-	accessVal && Cookies.set(ACCESS, accessVal, { expires: A_DAY, path: '/' });
+	accessVal &&
+		Cookies.set(ACCESS, accessVal, { expires: HALF_HOUR, path: '/' });
 	refreshVal &&
 		Cookies.set(REFRESH, refreshVal, { expires: A_MONTH, path: '/' });
 };

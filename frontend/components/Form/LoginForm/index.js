@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAuthContext } from '@context/auth-context';
 import { images } from '@utils/constants';
 
-import { CheckboxField, InputField } from './FormControl';
+import { CheckboxField, Form, InputField } from '../FormControl';
 import Img from '@components/UI/Image';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
@@ -12,7 +12,10 @@ import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
-function LoginForm({ onSubmit }) {
+import { AiOutlineReload } from 'react-icons/ai';
+import VerifyEmail from './VerifyEmail';
+
+function LoginForm({ onSubmit, resendVerifyEmail }) {
 	const { errors, setErrors } = useAuthContext();
 	const {
 		handleSubmit,
@@ -20,6 +23,7 @@ function LoginForm({ onSubmit }) {
 		formState: { errors: formError, isSubmitting },
 		setError,
 		reset,
+		getValues,
 	} = useForm();
 
 	useEffect(() => {
@@ -41,6 +45,13 @@ function LoginForm({ onSubmit }) {
 		reset();
 	}, []);
 
+	const handleResendVerifyEmail = () => {
+		const {
+			login: { email, password },
+		} = getValues();
+		resendVerifyEmail({ email: email, password: password });
+	};
+
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
@@ -51,17 +62,9 @@ function LoginForm({ onSubmit }) {
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
+			<VerifyEmail onSubmit={handleResendVerifyEmail} />
 
-			{errors?.login?.['non_field_errors'] ? (
-				<span className="block text-center px-5 py-2 mb-7 bg-redLight text-red rounded-md ">
-					{errors?.login?.['non_field_errors']}
-				</span>
-			) : null}
-			<form
-				onSubmit={handleSubmit((data) => onSubmit(data.login))}
-				noValidate={true}
-				className="flex flex-col gap-4"
-			>
+			<Form onSubmit={handleSubmit((data) => onSubmit(data.login))}>
 				<InputField
 					name="login.email"
 					type="email"
@@ -99,11 +102,12 @@ function LoginForm({ onSubmit }) {
 				<Button
 					className="primary login w-full"
 					type="submit"
+					disabled={isSubmitting}
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					Login
 				</Button>
-			</form>
+			</Form>
 
 			<p className="text-center mt-5">
 				Create an account?

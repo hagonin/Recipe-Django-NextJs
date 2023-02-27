@@ -9,6 +9,7 @@ import {
 	setCookie,
 } from '@utils/cookies';
 import { images } from '@utils/constants';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -24,27 +25,26 @@ const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		const resInterceptor = (res) => res;
-		const errInterceptor = async (error) => {
-			const originalConfig = error.config;
-			if (error.response?.status === 401 && !originalConfig._retry) {
-				originalConfig._retry = true;
+		const errInterceptor = async ({ status, _error, _config }) => {
+			if (status === 401 && !_config._retry) {
+				_config._retry = true;
 				try {
-					const resp = await api.post('/user/token/refresh/', {
-						refresh: token.refresh || null,
+					const refreshRes = await api.post('/user/token/refresh/', {
+						refresh: token.refresh,
 					});
-					const { refresh, access } = resp.data;
+					const { refresh, access } = refreshRes.data;
 					setToken({ access: access, refresh: refresh });
 					setCookie(access, refresh);
-					originalConfig.headers = {
+					_config.headers = {
 						Authorization: `Bearer ${access}`,
 					};
-					return api(originalConfig);
+					return api(_config);
 				} catch (error) {
 					return Promise.reject(error);
 				}
 			}
 
-			return Promise.reject(error);
+			return Promise.reject({ status, _error });
 		};
 
 		const interceptor = api.interceptors.response.use(
@@ -56,20 +56,20 @@ const AuthProvider = ({ children }) => {
 	}, []);
 
 	const tokenAuthen = async () => {
-		setLoading(true);
-		try {
-			const profile = await getProfile();
-			const { user, ...rest } = profile.data;
-			const avatar = await getAvatar();
-			const { image_url } = avatar.data;
+		if (token.access || token.refresh) {
+			try {
+				const profile = await getProfile();
+				const { user, ...rest } = profile.data;
+				const avatar = await getAvatar();
+				const { image_url } = avatar.data;
 
-			setUser({ ...user, ...rest, avatar: image_url });
-		} catch (error) {
-			console.log(
-				'ERROR AT TOKEN AUTHEN',
-				error.response?.statusText || error.message
-			);
-		} finally {
+				setUser({ ...user, ...rest, avatar: image_url });
+			} catch (error) {
+				console.log('ERROR AT TOKEN AUTHENTICATION', error);
+			} finally {
+				setLoading(false);
+			}
+		} else {
 			setLoading(false);
 		}
 	};
@@ -92,11 +92,8 @@ const AuthProvider = ({ children }) => {
 			clearCookie();
 			setToken({ access: null, refresh: null });
 			router.push('/login');
-		} catch (error) {
-			console.log(
-				'ERROR AT LOGOUT',
-				error.response?.statusText || error.message
-			);
+		} catch ({ status, _error }) {
+			console.log('ERROR IN LOGOUT', status, _error);
 		} finally {
 			setLoading(false);
 		}
@@ -115,21 +112,25 @@ const AuthProvider = ({ children }) => {
 
 			const profile = await getProfile(access);
 			const { user, ...rest } = profile.data;
+
 			const avatar = await getAvatar(access);
 			const { image_url } = avatar.data;
-
 			setUser({ ...user, ...rest, avatar: image_url });
 			router.push('/');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({
-					login: { ...error.response.data },
-				});
+		} catch ({ status, _error }) {
+			if (status === 400) {
+				setErrors({ login: { ..._error } });
+			} else if (status === 401) {
+				_error.detail !== 'Email is not verified' &&
+					toast.error(_error.detail);
+				_error.detail === 'Email is not verified' &&
+					setErrors({
+						login: {
+							verify_expired: true,
+						},
+					});
 			} else {
-				console.log(
-					'ERROR IN LOGIN',
-					error.response?.statusText || error.message
-				);
+				console.log('error in login', status, _error);
 			}
 		} finally {
 			setLoading(false);
@@ -145,7 +146,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			const signupRes = await api.post('/user/register/', {
+			await api.post('/user/register/', {
 				username,
 				lastname,
 				firstname,
@@ -153,24 +154,20 @@ const AuthProvider = ({ children }) => {
 				confirm_password,
 				email,
 			});
-
-			const { access } = signupRes.data.tokens;
-
-			const avatarForm = await getFormAvatarFromUrl(
-				images.defaultAvatar,
-				'avatar_default'
-			);
-			await setAvatar(avatarForm, access);
-
 			router.push('/login');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({ register: { ...error.response?.data } });
+			toast.success('Account successfully created.');
+		} catch ({ status, _error }) {
+			const { errors } = _error;
+			if (status === 400) {
+				if (errors?.error) {
+					setErrors({
+						register: { confirm_password: errors?.error },
+					});
+				} else {
+					setErrors({ register: { ...errors } });
+				}
 			} else {
-				console.log(
-					'ERROR IN SIGNUP',
-					error.response?.statusText || error.message
-				);
+				console.log('ERROR IN SIGNUP', status, _error);
 			}
 		}
 	};
@@ -205,24 +202,22 @@ const AuthProvider = ({ children }) => {
 			const { user, ...rest } = profileRes.data;
 
 			const avatarRes = await setAvatar(formAvatar);
-			const { image_url } = avatarRes.data;
+			const { image_url: avatar } = avatarRes.data;
 
-			setUser({ avatar: image_url, ...user, ...rest });
+			setUser({ avatar, ...user, ...rest });
 			router.push('/user/profile/');
-		} catch (error) {
-			if (error.response?.status === 400) {
-				setErrors({ account: { ...error.response?.data } });
+		} catch ({ status, _error }) {
+			if (status === 400) {
+				setErrors({ account: { ..._error } });
 			} else {
-				console.log(
-					'ERROR IN UPDATE PROFILE',
-					error.response?.statusText || error.message
-				);
+				console.log(status, _error);
 			}
 		}
 	};
 
 	const setAvatar = (formAvatar, access) => {
-		const tokenAccess = access || token.access;
+		const tokenAccess =
+			access || token.access || getAccessTokenFromCookie();
 		return api.patch('/user/profile/avatar/', formAvatar, {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
@@ -242,21 +237,11 @@ const AuthProvider = ({ children }) => {
 		});
 	};
 
-	const getProfile = (access) => {
-		const tokenAccess = access || token.access;
+	const getProfile = (access = token.access) => {
 		return api.get('/user/profile/', {
 			headers: {
-				Authorization: `Bearer ${tokenAccess}`,
+				Authorization: `Bearer ${access}`,
 			},
-		});
-	};
-
-	const getFormAvatarFromUrl = (url, fileName) => {
-		return axios.get(url, { responseType: 'blob' }).then((res) => {
-			const file = new File([res.data], fileName);
-			const formAvatar = new FormData();
-			formAvatar.append('avatar', file, fileName);
-			return formAvatar;
 		});
 	};
 
@@ -272,6 +257,7 @@ const AuthProvider = ({ children }) => {
 				logout,
 				loading,
 				updateProfile,
+				token,
 			}}
 		>
 			{children}

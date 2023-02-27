@@ -50,26 +50,31 @@
     }
 
     .btn.lg {
-      @apply text-[0.82rem] font-medium h-12 px-6;
+      @apply text-sm font-medium h-12 px-6;
     }
 
      .btn.login {
       @apply text-base font-medium h-12 px-5;
     }
 
+    /* .btn.third {
+      @apply bg-
+    } */
+    .btn.verify {
+      @apply text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
+    }
 
     .btn.wFull {
       @apply w-full;
     }
 
     .btn.cancle {
-      @apply text-red border-red hover:bg-redLight hover:border-red
+      @apply  font-bold hover:bg-transparent hover:text-black decoration-2 decoration-primaryDark hover:underline hover:underline-offset-2 border-none;
     }
 
     .btn.reset {
       @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
     }
-
 
 }
 

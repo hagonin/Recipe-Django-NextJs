@@ -1,46 +1,84 @@
-import ResetPasswordForm from '@components/Form/ResetPasswordForm';
-import Img from '@components/UI/Image';
-import { useAuthContext } from '@context/auth-context';
-import api from '@services/axios';
-import { images } from '@utils/constants';
 import Link from 'next/link';
 import { FiChevronsLeft } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { useAuthContext } from '@context/auth-context';
+import { images } from '@utils/constants';
+import api from '@services/axios';
 
-function ResetPassword() {
+import RequiredEmail from '@components/Form/ResetPasswordForm/RequiredEmail';
+import Img from '@components/UI/Image';
+import ResetPassword from '@components/Form/ResetPasswordForm/ResetPassword';
+
+function RequestResetPassword(props) {
+	const router = useRouter();
 	const { setErrors } = useAuthContext();
-	const onSubmit = async (data) => {
-		try {
-			const resetRes = await api.post('/user/reset_password/', {
-				...data,
+	const handleSendRequest = ({ email }) => {
+		return api
+			.post('/user/request-reset-email/', {
+				email,
+				redirect_url: process.env.NEXT_PUBLIC_REQUEST_EMAIL,
+			})
+			.then((res) => {
+				toast.success(res.data.success);
+			})
+			.catch();
+	};
+
+	const handleChangePassword = ({ password }) => {
+		return api
+			.patch('/user/password-reset-complete', {
+				password: password,
+				token: props?.token,
+				uidb64: props?.uidb64,
+			})
+			.then((res) => {
+				toast.success(
+					'Password reset success.'
+				);
+				router.push('/login');
+			})
+			.catch(({ status, _error }) => {
+				if (status === 400) {
+					setErrors({ reset: { ..._error } });
+				} else if (status === 401) {
+					toast.error(
+						'This required link has expired. Please try new request'
+					);
+				}
 			});
-			console.log(resetRes);
-		} catch (error) {
-			if (error?.response?.status === 400) {
-				setErrors({ reset: error?.response?.data });
-			} else {
-				console.log(error.response?.statusText || error.message);
-			}
-		}
 	};
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 ">
 				<div className=" md:max-w-[480px] mx-auto bg-white border-border rounded-md py-10 px-10">
-					<h2 className="text-center mb-10 flex gap-4 justify-center items-center">
+					<h2 className="text-center mb-10 flex gap-3 justify-center items-center">
 						Reset Password
 						<Img
 							src={images.resetpassword1}
 							alt="resetpassword"
-							className="h-9 w-9"
+							className="h-8 w-8 -top-1"
 						/>
 					</h2>
-					<ResetPasswordForm onSubmit={onSubmit} />
-					<span className="mt-5 block text-center flex gap-2 items-center justify-center">
-						<FiChevronsLeft />
-						Back{' '}
+					{props?.token_valid ? (
+						<ResetPassword onSubmit={handleChangePassword} />
+					) : (
+						<RequiredEmail onSubmit={handleSendRequest} />
+					)}
+
+					<span className="mt-5 block text-center flex items-center justify-center">
+						{props?.token_valid && (
+							<button
+								onClick={() => router.push('/resetpassword')}
+								className="flex items-center hover:text-primary"
+							>
+								<FiChevronsLeft />
+								Back make request
+							</button>
+						)}
 						<Link
 							href="/login"
-							className="text-primary underline"
+							className="ml-2 underline font-semibold hover:text-primary "
 						>
 							Login
 						</Link>
@@ -51,4 +89,10 @@ function ResetPassword() {
 	);
 }
 
-export default ResetPassword;
+export default RequestResetPassword;
+
+export async function getServerSideProps({ params, req, res, query }) {
+	return {
+		props: { ...query },
+	};
+}
