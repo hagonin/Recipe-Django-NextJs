@@ -95,12 +95,17 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         user = self.context.get('user', None)
         ingredients = validated_data.pop('ingredients',[])
         images = validated_data.pop('images',[])
-
+        
         recipe = Recipe.objects.create(user=user, **validated_data)
         self._create_ingredients(ingredients, recipe)
         self._create_images(images, recipe)
 
         return recipe
+    
+    def validate(self, attrs):
+        if attrs.get('slug').exists():
+            raise serializers.ValidationError("Recipe already exist.")
+        return attrs
     
     def update(self, instance, validated_data):
         """Update recipe"""
