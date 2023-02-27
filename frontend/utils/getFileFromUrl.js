@@ -6,8 +6,8 @@ export const getFileFromUrl = async (url, name) => {
 	return file;
 };
 
-export const createAvatarForm = (url, fileName) => {
-	const file = getFileFromUrl(url, fileName);
+export const createAvatarForm = async (url, fileName) => {
+	const file = await getFileFromUrl(url, fileName);
 	const formAvatar = new FormData();
 	formAvatar.append('avatar', file, fileName);
 	return formAvatar;
