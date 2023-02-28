@@ -105,8 +105,8 @@ class Ingredient(models.Model):
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
 
-    class Meta:
-        unique_together = ('recipe', 'desc')  # to prevent having duplicate ingredients in one recipe
+    # class Meta:
+    #     unique_together = ('recipe', 'desc')  # to prevent having duplicate ingredients in one recipe
         
     def __str__(self):
         return self.desc
