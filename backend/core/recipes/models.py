@@ -2,6 +2,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.core import validators
+from django.http import Http404
 from django.conf import settings
 from django.utils.text import slugify
 from django.contrib.postgres.search import SearchVectorField
@@ -25,6 +26,14 @@ class Category(models.TextChoices):
     SIDEDISH = 'Side Dish'
     MARINADES = 'Marinades and Sauces'
 
+def create_slug(title):
+    slug = slugify(title)
+    qs = Recipe.objects.filter(slug=slug)
+    exists = qs.exists()
+    if exists:
+        # slug = "%s%s" %(slug, qs.first().id)
+        raise Http404
+    return slug
 
 class Recipe(models.Model):
     """
@@ -37,7 +46,7 @@ class Recipe(models.Model):
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
     serving = models.IntegerField(blank=True, null=True)
-    slug = models.SlugField(db_index=True,unique=True, max_length=255, blank=True)
+    slug = models.SlugField(unique=True, max_length=255, blank=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
     search_vector = SearchVectorField(null=True)
@@ -62,8 +71,8 @@ class Recipe(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+            self.slug = create_slug(self.title)
+        return super().save(*args, **kwargs)
 
     @property
     def image_url(self):

@@ -2,16 +2,16 @@ from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly
+from rest_framework import status, mixins
+from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
-from rest_framework.authentication import TokenAuthentication
 
 from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,RecipeReview,Ingredient
 
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwner
 
 
 class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
@@ -25,21 +25,24 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['created_at', 'rating']
     filterset_fields = ('category','ingredients__desc', 'title')
 
-class RecipeDetailViewSet(viewsets.ModelViewSet):
+class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
+                            mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            viewsets.GenericViewSet):
     """
     CRUD recipe
     """
     lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
-    ordering_fields = ['created_at']    
-    permission_classes = [IsOwnerOrReadOnly]
+    ordering_fields = ['created_at']  
+    permission_classes = [IsOwner]
     
     
     def _params_to_ints(self, qs):
         """Convert a list of strings to integers."""
         return [int(str_id) for str_id in qs.split(',')]
-
+    
     def get_serializer_context(self):
         return {'user': self.request.user}    
     
@@ -54,7 +57,12 @@ class RecipeDetailViewSet(viewsets.ModelViewSet):
             img_ids = self._params_to_ints(images)
             queryset = queryset.filter(images__id__in=img_ids)
 
-        return queryset.filter(user=self.request.user).order_by('-id').distinct()
+        return queryset.filter(user=self.request.user).order_by('-id').distinct()    
+
+class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
+    lookup_field = 'slug'
+    queryset = Recipe.objects.all()
+    serializer_class = serializers.RecipeDetailSerializer
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
@@ -62,6 +70,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     """
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
+    permission_classes = [IsOwner]
 
 class ImageViewSet(viewsets.ModelViewSet):
     """
@@ -69,6 +78,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     """
     queryset = RecipeImage.objects.all()
     serializer_class = serializers.ImageSerializer
+    permission_classes = [IsOwner]
 
     @action(detail=False, methods=["POST"])
     def multiple_upload(self, request, *args, **kwargs):
@@ -87,14 +97,15 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         return Response("Success")
     
-class RecipeReviewViewset(viewsets.ModelViewSet):
+class RecipeReviewViewset(mixins.CreateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
     """
-    CRUD reviews a recipe
+    Add and delete reviews a recipe
     """
-    lookup_field = 'slug'
     queryset = RecipeReview.objects.all()
     serializer_class = serializers.ReviewSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwner]
     
     def get_object(self):
         if self.action == "create":
