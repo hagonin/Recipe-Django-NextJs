@@ -97,11 +97,12 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         return Response("Success")
     
-class RecipeReviewViewset(viewsets.ModelViewSet):
+class RecipeReviewViewset(mixins.CreateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
     """
-    CRUD reviews a recipe
+    Add and delete reviews a recipe
     """
-    lookup_field = 'slug'
     queryset = RecipeReview.objects.all()
     serializer_class = serializers.ReviewSerializer
     permission_classes = [IsAuthenticated, IsOwner]
