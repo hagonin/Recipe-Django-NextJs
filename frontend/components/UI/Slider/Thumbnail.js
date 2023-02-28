@@ -65,7 +65,10 @@ function Thumbnail({ images }) {
 				className="keen-slider"
 			>
 				{images.map((img) => (
-					<div className="keen-slider__slide">
+					<div
+						className="keen-slider__slide"
+						key={img.id}
+					>
 						<Img
 							src={img.url}
 							alt={img.caption}

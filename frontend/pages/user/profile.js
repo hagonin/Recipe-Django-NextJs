@@ -1,13 +1,35 @@
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
+import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import Tabs from '@components/UI/Tabs';
+import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-context';
+import api from '@services/axios';
 import { images } from '@utils/constants';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-function User() {
-	const { user } = useAuthContext();
-	console.log('user at user page', user);
+function Profile() {
+	const router = useRouter();
+	const { user, token } = useAuthContext();
+	const { recipes, loading, getAllRecipes } = useRecipeContext();
+	const handleDelete = async (slug) => {
+		try {
+			await api.delete(`/recipe/recipe-create/${slug}`, {
+				headers: {
+					Authorization: `Bearer ${token.access}`,
+				},
+			});
+			toast.success('Delete success');
+			await getAllRecipes();
+		} catch (err) {
+			toast.error('Delete failed');
+			console.log(err);
+		}
+	};
+	
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">Profile</h1>
@@ -38,11 +60,33 @@ function User() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
-			<Tabs />
+			<Tabs>
+				<TabPanel tab="All Recipes">
+					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
+						{loading
+							? 'Loading...'
+							: recipes?.map((recipe) => (
+									<div key={recipe.id}>
+										<RecipeCard
+											{...recipe}
+											smallCard
+											id={undefined}
+											hasControl
+											handleDelete={handleDelete}
+										/>
+										<span>{recipe.author}</span>
+									</div>
+							  ))}
+					</div>
+				</TabPanel>
+				<TabPanel tab="Bookmarks">
+					<div>Bookmarks</div>
+				</TabPanel>
+			</Tabs>
 		</div>
 	);
 }
 
-export default User;
+export default Profile;
 
-User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+Profile.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

@@ -9,7 +9,7 @@ function Image({ handleChooseImg }) {
 
 	const handleOnChange = (e) => {
 		const [file] = e.target.files;
-		if (file) {
+		if (file?.name) {
 			const url = URL.createObjectURL(file);
 			setPreview(url);
 			handleChooseImg(file);

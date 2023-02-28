@@ -14,6 +14,7 @@ function Recipe({ recipes }) {
 			<div className="grid grid-cols-3 gap-x-6 gap-y-10">
 				{recipes.map((recipe) => (
 					<RecipeCard
+						key={recipe.id}
 						{...recipe}
 						smallCard={true}
 					/>

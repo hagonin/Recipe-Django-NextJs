@@ -4,6 +4,8 @@ import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
+import { GrUpdate } from 'react-icons/gr';
+import { MdDelete } from 'react-icons/md';
 
 function RecipeCard({
 	name,
@@ -17,9 +19,16 @@ function RecipeCard({
 	lgCard,
 	border,
 	className,
+	slug,
+	hasControl,
+	handleDelete,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
+	const goToDelete = () => {
+		console.log('clicked');
+		handleDelete(slug);
+	};
 	return (
 		<div
 			className={`${
@@ -27,7 +36,7 @@ function RecipeCard({
 			} ${className}`}
 		>
 			<Link
-				href={`/recipes/${id}`}
+				href={id ? `/recipes/${id}` : `/user/recipe/${slug}`}
 				className={`${lgCard ? 'lg:col-span-5' : ''}`}
 			>
 				<Img
@@ -39,9 +48,13 @@ function RecipeCard({
 			</Link>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
 				<Link
-					href={`/recipes/${id}`}
+					href={id ? `/recipes/${id}` : `/user/recipe/${slug}`}
 					className={`inline ${
-						smallCard ? 'text-lg mt-4' : lgCard ? 'text-2xl' : 'text-xl'
+						smallCard
+							? 'text-lg mt-4'
+							: lgCard
+							? 'text-2xl'
+							: 'text-xl'
 					} text-black line-clamp-2  hover:text-primary transition-all duration-300`}
 				>
 					{name}
@@ -81,6 +94,23 @@ function RecipeCard({
 					</>
 				)}
 			</div>
+			{hasControl && (
+				<div className="flex gap-2 mt-3">
+					<Button
+						className="tag primary"
+						icon={{ left: <GrUpdate /> }}
+					>
+						Update
+					</Button>
+					<Button
+						className="tag !bg-red !text-white"
+						onClick={goToDelete}
+						icon={{ left: <MdDelete /> }}
+					>
+						Delete
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }

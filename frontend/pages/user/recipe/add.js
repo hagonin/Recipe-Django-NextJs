@@ -11,25 +11,30 @@ import { useState } from 'react';
 import { useRecipeContext } from '@context/recipe-context';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
+import createMarkup from '@utils/createMarkup';
+import formatDate from '@utils/formatdate';
+import handleResDataForPreView from '@utils/handleResForPreview';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
 	const { token, setErrors } = useAuthContext();
-	const { setRecipePreview } = useRecipeContext();
+	const { setCurrentRecipe } = useRecipeContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
 		await api
-			.post('/recipe/recipe-detail/', data, {
+			.post('/recipe/recipe-create/', data, {
 				headers: {
 					'Content-type': 'multipart/form-data',
 					Authorization: `Bearer ${token.access}`,
 				},
 			})
 			.then((res) => {
-				setRecipePreview(res.data);
+				const { slug } = res?.data;
+				const data = handleResDataForPreView(res);
+				setCurrentRecipe(data);
 				toast.success('Add recipe success');
-				router.push('/recipes/addnewrecipe/upload_image');
+				router.push(`/user/recipe/${slug}`);
 			})
 			.catch(({ _error }) => {
 				console.log(_error);
@@ -59,11 +64,10 @@ function AddRecipe() {
 				/>
 				<h1 className="ml-4 mb-4">Add Recipe</h1>
 			</div>
-			<p className="text-center mb-12">
+			<p className="text-center mb-16">
 				Uploading personal recipes is easy! Add yours to your favorites,
 				share with friends, family, or the HomeCook community.
 			</p>
-			<p className="flex gap-2"></p>
 			<AddRecipeForm
 				onSubmit={onSubmit}
 				handleCancel={toggleCancel}
@@ -96,4 +100,4 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-// AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
