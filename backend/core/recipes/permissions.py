@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from recipes.models import Recipe,RecipeImage,Ingredient, RecipeReview
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsOwner(permissions.BasePermission):
     """
     Check if authenticated user is author of the recipe.
     """
@@ -17,4 +17,5 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return obj.user == request.user
         elif type(obj) == RecipeImage or type(obj) == Ingredient:
             return obj.recipe.user == request.user
-        return False
+
+        return False   
