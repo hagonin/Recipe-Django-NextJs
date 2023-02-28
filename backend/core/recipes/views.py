@@ -21,8 +21,8 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
-    search_fields = ['^search_vector']
-    ordering_fields = ['created_at', 'rating']
+    search_fields = ['search_vector']
+    ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__desc', 'title')
 
 class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
@@ -67,7 +67,7 @@ class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['^search_vector']
     ordering_fields = ['created_at', 'rating']
     filterset_fields = ('category','ingredients__desc', 'title')
-    
+
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
@@ -75,6 +75,8 @@ class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
     permission_classes = [IsOwner]
+    filterset_fields = ['desc']
+    search_fields = ['desc']
 
 class ImageViewSet(viewsets.ModelViewSet):
     """

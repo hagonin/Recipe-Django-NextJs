@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
 			if (status === 401 && !_config._retry) {
 				_config._retry = true;
 				try {
-					const refreshRes = await api.post('/user/token/refresh/', {
+					const refreshRes = await api.post('/user/token/refresh', {
 						refresh: token.refresh,
 					});
 					const { refresh, access } = refreshRes.data;
@@ -78,7 +78,7 @@ const AuthProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			await api.post(
-				'/user/logout/',
+				'/user/logout',
 				{
 					refresh: token.refresh,
 				},
@@ -102,7 +102,7 @@ const AuthProvider = ({ children }) => {
 	const login = async ({ email, password, remember }) => {
 		setLoading(true);
 		try {
-			const loginRes = await api.post('/user/login/', {
+			const loginRes = await api.post('/user/login', {
 				email,
 				password,
 			});
@@ -146,7 +146,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			await api.post('/user/register/', {
+			await api.post('/user/register', {
 				username,
 				lastname,
 				firstname,
@@ -218,7 +218,7 @@ const AuthProvider = ({ children }) => {
 	const setAvatar = (formAvatar, access) => {
 		const tokenAccess =
 			access || token.access || getAccessTokenFromCookie();
-		return api.patch('/user/profile/avatar/', formAvatar, {
+		return api.patch('/user/profile/avatar', formAvatar, {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
 				'Content-type': 'multipart/form-data',
@@ -230,7 +230,7 @@ const AuthProvider = ({ children }) => {
 		const tokenAccess =
 			access || token.access || getAccessTokenFromCookie();
 
-		return api.get('/user/profile/avatar/', {
+		return api.get('/user/profile/avatar', {
 			headers: {
 				Authorization: `Bearer ${tokenAccess}`,
 			},

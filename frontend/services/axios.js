@@ -25,13 +25,13 @@ api.interceptors.response.use(
 		const _config = error.config;
 
 		// set default avatar
-		if (_config.url === '/user/profile/avatar/' && status === 500) {
+		if (_config.url === '/user/profile/avatar' && status === 500) {
 			try {
 				const avatarForm = await createAvatarForm(
 					images.defaultAvatar,
 					'avatar_default'
 				);
-				await api.patch('/user/profile/avatar/', avatarForm, {
+				await api.patch('/user/profile/avatar', avatarForm, {
 					headers: {
 						Authorization: _config.headers.Authorization,
 						'Content-type': 'multipart/form-data',

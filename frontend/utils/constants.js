@@ -20,17 +20,17 @@ export const images = {
 };
 
 export const categories = [
-	{ id: 1, name: 'Appetizers' },
-	{ id: 2, name: 'Bread' },
-	{ id: 3, name: 'Breakfast' },
-	{ id: 4, name: 'Desserts' },
-	{ id: 5, name: 'Vegan' },
-	{ id: 6, name: 'Drink' },
-	{ id: 7, name: 'Maindish' },
-	{ id: 8, name: 'Salad' },
-	{ id: 9, name: 'Soups' },
-	{ id: 10, name: 'Sidedish' },
-	{ id: 11, name: 'Marinades' },
+	{ id: 1, name: 'appetizers' },
+	{ id: 2, name: 'bread' },
+	{ id: 3, name: 'breakfast' },
+	{ id: 4, name: 'desserts' },
+	{ id: 5, name: 'vegan' },
+	{ id: 6, name: 'drink' },
+	{ id: 7, name: 'main dish' },
+	{ id: 8, name: 'salad' },
+	{ id: 9, name: 'soups, stew and chill' },
+	{ id: 10, name: 'sidedish' },
+	{ id: 11, name: 'marinades and sauces' },
 ];
 
 export const unit = [
@@ -42,4 +42,5 @@ export const unit = [
 	{ id: 6, name: 'cup' },
 	{ id: 7, name: 'teaspoon' },
 	{ id: 8, name: 'tablespoon' },
+	{ id: 9, name: 'slice(s)' },
 ];

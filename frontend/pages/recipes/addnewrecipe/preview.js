@@ -15,7 +15,7 @@ function RecipePreView() {
 		instructions: 'Step1',
 		updated_at: '2023-02-27',
 		image: images.spoon,
-		category: 'Breakfast',
+		category: 'breakfast',
 		ingredients: [
 			{
 				title: 'onion',
