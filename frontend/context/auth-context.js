@@ -245,6 +245,15 @@ const AuthProvider = ({ children }) => {
 		});
 	};
 
+	const fetcher = async (url) =>
+		await api
+			.get(url, {
+				headers: {
+					Authorization: `Bearer ${token.access}`,
+				},
+			})
+			.then((res) => res?.data?.results || res?.data);
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -258,6 +267,7 @@ const AuthProvider = ({ children }) => {
 				loading,
 				updateProfile,
 				token,
+				fetcher,
 			}}
 		>
 			{children}

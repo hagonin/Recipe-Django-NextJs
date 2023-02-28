@@ -7,7 +7,7 @@ import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecipeContext } from '@context/recipe-context';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
@@ -18,63 +18,52 @@ import UpdateForm from '@components/Form/AddRecipeForm/UpdateForm';
 
 function Update() {
 	const [cancel, setCancel] = useState(false);
-	const { token, setErrors } = useAuthContext();
-	const { recipeCurrent, setCurrentRecipe } = useRecipeContext();
-	const router = useRouter();
+	const { getRecipeSingle } = useRecipeContext();
+	const {
+		query: { slug },
+	} = useRouter();
+	const [initValues, setInitValues] = useState(null);
+	const { token } = useAuthContext();
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
-		// await api
-		// 	.post('/recipe/recipe-create/', data, {
-		// 		headers: {
-		// 			'Content-type': 'multipart/form-data',
-		// 			Authorization: `Bearer ${token.access}`,
-		// 		},
-		// 	})
-		// 	.then((res) => {
-		// 		const { slug } = res?.data;
-		// 		const data = handleResDataForPreView(res);
-		// 		setCurrentRecipe(data);
-		// 		toast.success('Add recipe success');
-		// 		router.push(`/user/recipe/${slug}`);
-		// 	})
-		// 	.catch(({ _error }) => {
-		// 		console.log(_error);
-		// 		// const errStr = Object.keys(_error)
-		// 		// 	.map((key) => {
-		// 		// 		const str = _error[key]
-		// 		// 			.map((message) => message)
-		// 		// 			.join('<br/>');
-		// 		// 		return `${key}: ${str}`;
-		// 		// 	})
-		// 		// 	.join('<br/>');
-		// 		// toast.error(errStr);
-		// 	});
+		await api
+			.patch(`/recipe/recipe-create/${slug}/`, data, {
+				headers: {
+					'Content-type': 'multipart/form-data',
+					Authorization: `Bearer ${token.access}`,
+				},
+			})
+			.then((res) => {
+				toast.success('Add recipe success');
+				console.log(res);
+			})
+			.catch(({ _error }) => {
+				console.log(_error);
+			});
 	};
+	useEffect(() => {
+		getRecipeSingle(slug).then((res) => setInitValues(res));
+	}, []);
 
 	const toggleCancel = () => {
 		setCancel(!cancel);
 	};
 
-	!recipeCurrent && router.push('/user/profile');
 	return (
 		<div className="container py-14 lg:w-3/4">
 			<div className="flex items-end justify-center mb-4">
-				{/* <Img
-					src={images.addRecipeImg}
-					alt="add_recipe"
-					className="h-24 w-24"
-				/> */}
 				<h1 className="ml-4 mb-14">Update Recipe</h1>
 			</div>
-			{/* <p className="text-center mb-12">
-				Uploading personal recipes is easy! Add yours to your favorites,
-				share with friends, family, or the HomeCook community.
-			</p> */}
-			<UpdateForm
-				onSubmit={onSubmit}
-				handleCancel={toggleCancel}
-				initValues={recipeCurrent}
-			/>
+
+			{initValues ? (
+				<UpdateForm
+					onSubmit={onSubmit}
+					handleCancel={toggleCancel}
+					initValues={initValues}
+				/>
+			) : (
+				'Loading...'
+			)}
 			<ModalPrimary
 				handleCloseModal={toggleCancel}
 				show={cancel}

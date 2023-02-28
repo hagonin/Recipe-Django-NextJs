@@ -5,31 +5,41 @@ import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import api from '@services/axios';
 import { images } from '@utils/constants';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
+import useSWR from 'swr';
 
 function Profile() {
+	const { user, fetcher } = useAuthContext();
+	const { deleteRecipe } = useRecipeContext();
+	const {
+		data: recipes,
+		isLoading: loading1,
+		mutate: mutate1,
+	} = useSWR(`/user/${user.username}/recipes/`, fetcher);
+
+	// const {
+	// 	data: bookmarks,
+	// 	isLoading: loading2,
+	// 	mutate: mutate2,
+	// } = useSWR(`/user/profile/${user.id}/bookmarks/`, fetcher);
+	// console.log('bookmarks', bookmarks);
 	const router = useRouter();
-	const { user, token } = useAuthContext();
-	const { recipes, loading, getAllRecipes } = useRecipeContext();
 	const handleDelete = async (slug) => {
 		try {
-			await api.delete(`/recipe/recipe-create/${slug}`, {
-				headers: {
-					Authorization: `Bearer ${token.access}`,
-				},
-			});
+			await deleteRecipe(slug);
+			await mutate1();
 			toast.success('Delete success');
-			await getAllRecipes();
 		} catch (err) {
 			toast.error('Delete failed');
-			console.log(err);
 		}
 	};
-	
+
+	const goToUpdate = (slug) => router.push(`/user/recipe/${slug}/update/`);
+	const goToAddPhoto = (id, slug) =>
+		router.push(`/recipes/${id}/upload_image/${slug}`);
+
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">Profile</h1>
@@ -63,16 +73,24 @@ function Profile() {
 			<Tabs>
 				<TabPanel tab="All Recipes">
 					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
-						{loading
+						{loading1
 							? 'Loading...'
 							: recipes?.map((recipe) => (
 									<div key={recipe.id}>
 										<RecipeCard
-											{...recipe}
+											image={recipe.image_url}
+											name={recipe.title}
+											date={
+												recipe.updated_at ||
+												recipe.created_at
+											}
 											smallCard
-											id={undefined}
+											slug={recipe.slug}
+											id={recipe.id}
 											hasControl
 											handleDelete={handleDelete}
+											goToUpdate={goToUpdate}
+											goToAddPhoto={goToAddPhoto}
 										/>
 										<span>{recipe.author}</span>
 									</div>

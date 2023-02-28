@@ -3,8 +3,8 @@ import { images } from '@utils/constants';
 import { useEffect, useRef, useState } from 'react';
 import { BsCamera } from 'react-icons/bs';
 
-function Image({ handleChooseImg }) {
-	const [preview, setPreview] = useState(null);
+function Image({ handleChooseImg, urlInit }) {
+	const [preview, setPreview] = useState(urlInit);
 	const inputFileRef = useRef();
 
 	const handleOnChange = (e) => {
@@ -17,6 +17,7 @@ function Image({ handleChooseImg }) {
 	};
 
 	useEffect(() => {
+		
 		return () => {
 			preview && URL.revokeObjectURL(preview);
 		};

@@ -4,8 +4,8 @@ import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
-import { GrUpdate } from 'react-icons/gr';
-import { MdDelete } from 'react-icons/md';
+import { GrUpdate, GrView } from 'react-icons/gr';
+import { MdDelete, MdPhoto } from 'react-icons/md';
 
 function RecipeCard({
 	name,
@@ -22,13 +22,11 @@ function RecipeCard({
 	slug,
 	hasControl,
 	handleDelete,
+	goToUpdate,
+	goToAddPhoto,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
-	const goToDelete = () => {
-		console.log('clicked');
-		handleDelete(slug);
-	};
 	return (
 		<div
 			className={`${
@@ -36,7 +34,7 @@ function RecipeCard({
 			} ${className}`}
 		>
 			<Link
-				href={id ? `/recipes/${id}` : `/user/recipe/${slug}`}
+				href={slug ? `/user/recipe/${slug}` : `/recipes/${id}`}
 				className={`${lgCard ? 'lg:col-span-5' : ''}`}
 			>
 				<Img
@@ -48,7 +46,7 @@ function RecipeCard({
 			</Link>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
 				<Link
-					href={id ? `/recipes/${id}` : `/user/recipe/${slug}`}
+					href={slug ? `/user/recipe/${slug}` : `/recipes/${id}`}
 					className={`inline ${
 						smallCard
 							? 'text-lg mt-4'
@@ -98,14 +96,19 @@ function RecipeCard({
 				<div className="flex gap-2 mt-3">
 					<Button
 						className="tag primary"
-						icon={{ left: <GrUpdate /> }}
+						onClick={() => goToUpdate(slug)}
 					>
 						Update
 					</Button>
 					<Button
+						className="tag primary"
+						onClick={() => goToAddPhoto(id, slug)}
+					>
+						Add Photo
+					</Button>
+					<Button
 						className="tag !bg-red !text-white"
-						onClick={goToDelete}
-						icon={{ left: <MdDelete /> }}
+						onClick={() => handleDelete(slug)}
 					>
 						Delete
 					</Button>

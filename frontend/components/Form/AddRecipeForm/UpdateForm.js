@@ -24,7 +24,6 @@ import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
 
 function UpdateForm({ onSubmit, handleCancel, initValues }) {
-	console.log(initValues);
 	const {
 		title,
 		category,
@@ -35,7 +34,9 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 		instructions,
 		notes,
 		search_vector,
-		ingredients: { id, recipe, unit, quantity },
+		ingredients,
+		image_url,
+		source,
 	} = initValues;
 	const {
 		register,
@@ -47,9 +48,7 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [
-					{ id: id, recipe: recipe, unit: unit, quantity: quantity },
-				],
+				ingredients: ingredients,
 				main_image: null,
 				title: title,
 				category: category,
@@ -60,16 +59,16 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 				instructions: instructions,
 				notes: notes,
 				search_vector: search_vector,
+				main_image: null,
+				source: source,
 			},
 		},
 	});
 
-	// name = 'recipe.search_vector';
-	// name = 'recipe.source';
-	// name = 'recipe.notes';
-
 	useEffect(() => {
-		reset();
+		getFileFromUrl(image_url, 'recipe').then((file) =>
+			handleChooseImg(file)
+		);
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
@@ -132,7 +131,10 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 								placement: 'right',
 							}}
 						/>
-						<Image handleChooseImg={handleChooseImg} />
+						<Image
+							handleChooseImg={handleChooseImg}
+							urlInit={image_url}
+						/>
 					</div>
 				</div>
 				<div className="flex gap-4">

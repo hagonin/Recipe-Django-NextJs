@@ -5,51 +5,27 @@ import { useAuthContext } from './auth-context';
 const { createContext, useContext, useState, useEffect } = require('react');
 
 const RecipeContext = createContext();
+
 const RecipeProvider = ({ children }) => {
-	const [recipeCurrent, setCurrentRecipe] = useState(null);
-	const [recipes, setRecipes] = useState(null);
-	const { token } = useAuthContext();
+	const { token, fetcher } = useAuthContext();
 	const [slugCurrent, setSlugCurrent] = useState(null);
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		token.access && getAllRecipes();
-	}, [token]);
-	const getAllRecipes = async () => {
-		setLoading(true);
-		try {
-			const res = await api.get('/recipe/recipe-detail/', {
-				headers: {
-					Authorization: `Beaeer ${token.access}`,
-				},
-			});
-			const { results } = res.data;
-			const recipes = results.map(
-				({
-					id,
-					slug,
-					title: name,
-					user: author,
-					image_url: image,
-					created_at: date,
-				}) => ({ id, slug, name, author, image, date })
-			);
-			setRecipes(recipes);
-		} catch (err) {
-			console.log('err from get app recipes', err);
-		} finally {
-			setLoading(false);
-		}
-	};
+	const deleteRecipe = (slug) =>
+		api.delete(`/recipe/recipe-create/${slug}`, {
+			headers: {
+				Authorization: `Bearer ${token.access}`,
+			},
+		});
+
+	const getRecipeSingle = (slug) => fetcher(`/recipe/recipe-detail/${slug}/`);
 	return (
 		<RecipeContext.Provider
 			value={{
-				recipes,
-				recipeCurrent,
-				setCurrentRecipe,
 				loading,
 				setLoading,
-				getAllRecipes,
+				deleteRecipe,
+				getRecipeSingle,
 			}}
 		>
 			{children}

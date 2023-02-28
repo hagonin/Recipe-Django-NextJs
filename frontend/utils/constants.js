@@ -26,11 +26,11 @@ export const categories = [
 	{ id: 4, name: 'Desserts' },
 	{ id: 5, name: 'Vegan' },
 	{ id: 6, name: 'Drink' },
-	{ id: 7, name: 'Maindish' },
+	{ id: 7, name: 'Main Dish' },
 	{ id: 8, name: 'Salad' },
-	{ id: 9, name: 'Soups' },
-	{ id: 10, name: 'Sidedish' },
-	{ id: 11, name: 'Marinades' },
+	{ id: 9, name: 'Soups, Stew, and Chill ' },
+	{ id: 10, name: 'Side Dish' },
+	{ id: 11, name: 'Marinades and Sauces' },
 ];
 
 export const unit = [
