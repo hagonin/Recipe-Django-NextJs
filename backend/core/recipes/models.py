@@ -2,6 +2,8 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.core import validators
+from rest_framework import status
+from rest_framework.response import Response
 from django.http import Http404
 from django.conf import settings
 from django.utils.text import slugify
@@ -14,17 +16,17 @@ from .validators import validate_unit_of_measure
 
 
 class Category(models.TextChoices):
-    APPETIZERS = 'Appetizers'
-    BREAD = 'Bread'
-    BREAKFAST = 'Breakfast'
-    DESSERTS = 'Desserts'
-    VEGAN = 'Vegan'
-    DRINK = 'Drink'
-    MAINDISH = 'Main Dish'
-    SALAD = 'Salad'
-    SOUPS = 'Soups, Stew and Chill '
-    SIDEDISH = 'Side Dish'
-    MARINADES = 'Marinades and Sauces'
+    APPETIZERS = 'appetizers'
+    BREAD = 'bread'
+    BREAKFAST = 'breakfast'
+    DESSERTS = 'desserts'
+    VEGAN = 'vegan'
+    DRINK = 'drink'
+    MAINDISH = 'main dish'
+    SALAD = 'salad'
+    SOUPS = 'soups, stew and chill '
+    SIDEDISH = 'side dish'
+    MARINADES = 'marinades and sauces'
 
 def create_slug(title):
     slug = slugify(title)
@@ -32,7 +34,8 @@ def create_slug(title):
     exists = qs.exists()
     if exists:
         # slug = "%s%s" %(slug, qs.first().id)
-        raise Http404
+        return Response(_("Recipe already exist."),
+            status=status.HTTP_400_BAD_REQUEST)
     return slug
 
 class Recipe(models.Model):

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from django.utils.translation import gettext_lazy as _
 from rest_framework.response import Response
 import jwt
 from django.conf import settings
@@ -159,14 +160,6 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(id=id)
 
-        #     if not PasswordResetTokenGenerator().check_token(user, token):
-        #         return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_400_BAD_REQUEST)
-
-        #     return Response({'success':True, 'message':'Credentials valid','uidb64': uidb64, 'token':token}, status=status.HTTP_200_OK)
-        # except DjangoUnicodeDecodeError as identifier:
-        #     if not PasswordResetTokenGenerator().check_token(user):
-        #         return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_400_BAD_REQUEST)
-
             if not PasswordResetTokenGenerator().check_token(user, token):
                 if len(redirect_url) > 3:
                     return CustomRedirect(redirect_url+'?token_valid=False')
@@ -281,8 +274,9 @@ class BookmarkView(generics.ListCreateAPIView):
         recipe = Recipe.objects.get(id=request.data['id'])
         if user_profile :
             user_profile.bookmarks.remove(recipe)
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(_("The selected recipe is not in your bookmarks."),
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):

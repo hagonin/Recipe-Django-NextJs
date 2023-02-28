@@ -63,7 +63,11 @@ class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
-
+    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
+    search_fields = ['^search_vector']
+    ordering_fields = ['created_at', 'rating']
+    filterset_fields = ('category','ingredients__desc', 'title')
+    
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients

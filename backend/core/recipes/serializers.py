@@ -26,17 +26,15 @@ class MultipleImageSerializer(serializers.Serializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
-    user = serializers.CharField(source='user.username',read_only=True)
     image_url = serializers.CharField()
+    reviews_count = serializers.ReadOnlyField()
     total_number_of_bookmarks = serializers.SerializerMethodField()
-    ingredients = IngredientSerializer(many=True,required=False)
-    reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
+    rating = serializers.ReadOnlyField()
     
     class Meta: 
         model = Recipe
-        fields = ('id','user','title','slug','category','main_image','image_url','rating','ingredients',
-                'description','updated_at','total_number_of_bookmarks',
-                'reviews', 'reviews_count','search_rank')
+        fields = ('id','title','slug','category','main_image','image_url','rating',
+            'updated_at','total_number_of_bookmarks','reviews_count','search_rank')
     
     def get_total_number_of_bookmarks(self, obj):
         return obj.get_total_number_of_bookmarks()
@@ -46,11 +44,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         representation.pop("main_image")
 
         return representation
-    
-    def get_reviews(self, obj):
-        reviews = obj.reviews.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        return serializer.data
     
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username',read_only=True)
@@ -66,7 +59,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username',read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
-    reviews = ReviewSerializer(many=True, read_only=True)
+    reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
     total_number_of_bookmarks = serializers.ReadOnlyField()
     reviews_count = serializers.ReadOnlyField()
     rating = serializers.ReadOnlyField()
@@ -116,3 +109,8 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+    
+    def get_reviews(self, obj):
+        reviews = obj.reviews.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
