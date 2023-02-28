@@ -5,13 +5,6 @@ from rest_framework.filters import SearchFilter
 from core.settings.base import POSTGRES_LANGUAGE_UNACCENT
 from django_filters import rest_framework as filters
 
-
-# class IsOwnerFilterBackend(filters.BaseFilterBackend):
-#     """
-#     Filter that only allows users to get their own objects
-#     """
-#     def filter_queryset(self, request, queryset, view):
-#         return queryset.filter(owner=request.user)
     
 class SearchVectorFilter(SearchFilter):
     """

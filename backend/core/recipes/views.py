@@ -3,7 +3,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, mixins
-from rest_framework.permissions import AllowAny,IsAuthenticated,IsAuthenticatedOrReadOnly 
+from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated  
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
@@ -63,7 +64,11 @@ class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeDetailSerializer
-
+    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
+    search_fields = ['^search_vector']
+    ordering_fields = ['created_at', 'rating']
+    filterset_fields = ('category','ingredients__desc', 'title')
+    
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
@@ -97,11 +102,12 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         return Response("Success")
     
-class RecipeReviewViewset(viewsets.ModelViewSet):
+class RecipeReviewViewset(mixins.CreateModelMixin,
+                    mixins.DestroyModelMixin,
+                    viewsets.GenericViewSet):
     """
-    CRUD reviews a recipe
+    Add and delete reviews a recipe
     """
-    lookup_field = 'slug'
     queryset = RecipeReview.objects.all()
     serializer_class = serializers.ReviewSerializer
     permission_classes = [IsAuthenticated, IsOwner]

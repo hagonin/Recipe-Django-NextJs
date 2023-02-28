@@ -22,5 +22,5 @@ recipe_revieww_router.register('',RecipeReviewViewset, basename='recipe-reviews'
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("<slug:recipe_slug>/reviews/", include(recipe_revieww_router.urls))
+    path("<slug:recipe_slug>/reviews", include(recipe_revieww_router.urls))
 ]

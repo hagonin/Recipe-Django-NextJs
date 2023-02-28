@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from django.utils.translation import gettext_lazy as _
 from rest_framework.response import Response
 import jwt
 from django.conf import settings
 
 from rest_framework import generics, views
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
@@ -14,7 +14,7 @@ from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.encoding import smart_str,smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from recipes.models import Recipe
@@ -160,14 +160,6 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(id=id)
 
-        #     if not PasswordResetTokenGenerator().check_token(user, token):
-        #         return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_400_BAD_REQUEST)
-
-        #     return Response({'success':True, 'message':'Credentials valid','uidb64': uidb64, 'token':token}, status=status.HTTP_200_OK)
-        # except DjangoUnicodeDecodeError as identifier:
-        #     if not PasswordResetTokenGenerator().check_token(user):
-        #         return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_400_BAD_REQUEST)
-
             if not PasswordResetTokenGenerator().check_token(user, token):
                 if len(redirect_url) > 3:
                     return CustomRedirect(redirect_url+'?token_valid=False')
@@ -282,8 +274,9 @@ class BookmarkView(generics.ListCreateAPIView):
         recipe = Recipe.objects.get(id=request.data['id'])
         if user_profile :
             user_profile.bookmarks.remove(recipe)
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(_("The selected recipe is not in your bookmarks."),
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.UpdateAPIView):

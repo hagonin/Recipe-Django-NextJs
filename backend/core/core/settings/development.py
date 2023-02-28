@@ -2,7 +2,7 @@ from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('True', default=True, cast=bool)
-DEBUG = config('true', default=True, cast=bool)
+
 
 ALLOWED_HOSTS = []
 
