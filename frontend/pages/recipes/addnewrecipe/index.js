@@ -20,7 +20,7 @@ function AddRecipe() {
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
 		await api
-			.post('/recipe/recipe-detail/', data, {
+			.post('/recipe/recipe-create/', data, {
 				headers: {
 					'Content-type': 'multipart/form-data',
 					Authorization: `Bearer ${token.access}`,
