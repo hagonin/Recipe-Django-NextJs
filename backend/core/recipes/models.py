@@ -63,7 +63,7 @@ class Recipe(models.Model):
         ordering = ['-created_at']
         verbose_name = 'Recipe'
         indexes = [
-            GinIndex(fields=['search_vector']),
+            GinIndex(fields=['search_vector']),     #https://pganalyze.com/blog/full-text-search-django-postgres
             Index(fields=['slug'])
         ]
 
@@ -105,9 +105,6 @@ class Ingredient(models.Model):
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
 
-    # class Meta:
-    #     unique_together = ('recipe', 'desc')  # to prevent having duplicate ingredients in one recipe
-        
     def __str__(self):
         return self.desc
 

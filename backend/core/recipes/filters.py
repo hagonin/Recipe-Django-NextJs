@@ -3,9 +3,8 @@ from django.contrib.postgres.search import SearchRank, SearchQuery
 from django.db.models import F
 from rest_framework.filters import SearchFilter
 from core.settings.base import POSTGRES_LANGUAGE_UNACCENT
-from django_filters import rest_framework as filters
 
-    
+
 class SearchVectorFilter(SearchFilter):
     """
     Sub-classing `SearchFilter` to enable full-text search capabilities of postgres when a search vector is defined.

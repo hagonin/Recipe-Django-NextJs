@@ -72,10 +72,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	};
 
 	return (
-		<form
-			onSubmit={handleSubmit(createFormData)}
-			noValidate={true}
-		>
+		<form onSubmit={handleSubmit(createFormData)} noValidate={true}>
 			<div className="flex flex-col gap-4">
 				<Title title="Recipe Detail" />
 				<div className="flex gap-6">
@@ -183,19 +180,15 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					info={{
 						content: (
 							<div>
-								Enter your ingredients. Those ingredient can be
-								a type of ingredient, or any special
-								preparation.
+								Enter your ingredients. Those ingredient can be a type of
+								ingredient, or any special preparation.
 							</div>
 						),
 						placement: 'right',
 					}}
 				/>
 
-				<Ingredients
-					control={control}
-					register={register}
-				/>
+				<Ingredients control={control} register={register} />
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
@@ -206,8 +199,7 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					error={formErr?.recipe?.search_vector}
 					placeholder="e.g. salad dressings"
 					info={{
-						content:
-							'Keyword that can be used to search for this recipe',
+						content: 'Keyword that can be used to search for this recipe',
 						placement: 'right',
 					}}
 				/>
@@ -233,16 +225,12 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 			/>
 			<p className="mx-auto mt-5">
 				<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
-				You can add more photos after you add the recipe. We all love
-				photos recipes with good finished-product photos generally sort
-				higher than those without.
+				You can add more photos after you add the recipe. We all love photos
+				recipes with good finished-product photos generally sort higher than
+				those without.
 			</p>
 			<div className="flex gap-4 mt-5 justify-end items-center">
-				<Button
-					className="cancle"
-					type="reset"
-					onClick={handleCancel}
-				>
+				<Button className="cancle" type="reset" onClick={handleCancel}>
 					Cancel
 				</Button>
 				<Button

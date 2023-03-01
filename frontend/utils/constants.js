@@ -68,16 +68,16 @@ export const categories = [
 		name: 'salad',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
-	// {
-	// 	id: 9,
-	// 	cover: '/static/images/categories/soups_stew_and_chill.jpg',
-	// 	name: 'soups, stew, and chill',
-	// 	desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
-	// },
+	{
+		id: 9,
+		cover: '/static/images/categories/soups_stew_and_chill.jpg',
+		name: 'soups, stew, and chill',
+		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
+	},
 	{
 		id: 10,
 		cover: '/static/images/categories/side_dish.jpg',
-		name: 'side dish',
+		name: 'sidedish',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
@@ -97,6 +97,7 @@ export const unit = [
 	{ id: 6, name: 'cup' },
 	{ id: 7, name: 'teaspoon' },
 	{ id: 8, name: 'tablespoon' },
+	{ id: 9, name: 'slice(s)' },
 ];
 
 // endpoint
