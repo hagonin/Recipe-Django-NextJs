@@ -66,7 +66,7 @@ function RequestResetPassword(props) {
 						<RequiredEmail onSubmit={handleSendRequest} />
 					)}
 
-					<span className="mt-5 block text-center flex items-center justify-center">
+					<span className="mt-5 text-center flex items-center justify-center">
 						{props?.token_valid && (
 							<button
 								onClick={() => router.push('/resetpassword')}

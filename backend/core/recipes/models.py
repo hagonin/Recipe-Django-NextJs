@@ -24,7 +24,7 @@ class Category(models.TextChoices):
     DRINK = 'drink'
     MAINDISH = 'main dish'
     SALAD = 'salad'
-    SOUPS = 'soups, stew and chill '
+    SOUPS = 'soups, stew and chill'
     SIDEDISH = 'side dish'
     MARINADES = 'marinades and sauces'
 

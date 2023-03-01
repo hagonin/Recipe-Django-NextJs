@@ -10,7 +10,7 @@ function Login() {
 	const { login, setErrors } = useAuthContext();
 
 	const resendVerifyEmail = ({ email, password }) => {
-		api.post('/user/resend-email-verify/', {
+		api.post('/user/resend-email-verify', {
 			email,
 			password,
 		})
