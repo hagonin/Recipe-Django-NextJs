@@ -47,9 +47,9 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 
 	const handleResendVerifyEmail = () => {
 		const {
-			login: { email, password },
+			login: { email },
 		} = getValues();
-		resendVerifyEmail({ email: email, password: password });
+		resendVerifyEmail({ email: email });
 	};
 
 	return (

@@ -1,13 +1,50 @@
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
+import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import Tabs from '@components/UI/Tabs';
+import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-context';
 import { images } from '@utils/constants';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import useSWR from 'swr';
 
-function User() {
+function Profile() {
 	const { user } = useAuthContext();
-	console.log('user at user page', user);
+	const { deleteRecipe, fetcher } = useRecipeContext();
+	const {
+		data: recipes,
+		isLoading: loading1,
+		mutate: mutate1,
+	} = useSWR(`/user/${user.username}/recipes`, fetcher);
+	const [deleting, setDeleting] = useState(false);
+
+	// const {
+	// 	data: bookmarks,
+	// 	isLoading: loading2,
+	// 	mutate: mutate2,
+	// } = useSWR(`/user/profile/${user.id}/bookmarks/`, fetcher);
+	// console.log('bookmarks', bookmarks);
+	const router = useRouter();
+	const handleDelete = async (slug) => {
+		try {
+			setDeleting(true);
+			await deleteRecipe(slug);
+			await mutate1();
+			toast.success('Delete success');
+		} catch (err) {
+			toast.error('Delete failed');
+		} finally {
+			setDeleting(false);
+		}
+	};
+
+	const goToUpdate = (slug) => router.push(`/user/recipe/${slug}/update/`);
+	const goToAddPhoto = (id, slug) =>
+		router.push(`/user/recipe/${slug}/upload_image/${id}`);
+
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">Profile</h1>
@@ -38,11 +75,43 @@ function User() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
-			<Tabs />
+			{deleting && 'Deleting...'}
+			<Tabs>
+				<TabPanel tab="All Recipes">
+					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
+						{loading1
+							? 'Loading...'
+							: recipes?.map((recipe) => (
+									<div key={recipe.id}>
+										<RecipeCard
+											image={recipe.image_url}
+											name={recipe.title}
+											date={
+												recipe.updated_at ||
+												recipe.created_at
+											}
+											smallCard
+											slug={recipe.slug}
+											id={recipe.id}
+											hasControl
+											handleDelete={handleDelete}
+											goToUpdate={goToUpdate}
+											goToAddPhoto={goToAddPhoto}
+											isPreview
+										/>
+										<span>{recipe.author}</span>
+									</div>
+							  ))}
+					</div>
+				</TabPanel>
+				<TabPanel tab="Bookmarks">
+					<div>Bookmarks</div>
+				</TabPanel>
+			</Tabs>
 		</div>
 	);
 }
 
-export default User;
+export default Profile;
 
-User.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+Profile.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

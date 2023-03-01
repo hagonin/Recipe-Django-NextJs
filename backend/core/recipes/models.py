@@ -1,6 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import Index
+from django.core.exceptions import ValidationError
 from django.core import validators
 from rest_framework import status
 from rest_framework.response import Response

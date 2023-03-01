@@ -1,8 +1,11 @@
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
+import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
+import { GrUpdate, GrView } from 'react-icons/gr';
+import { MdDelete, MdPhoto } from 'react-icons/md';
 
 function RecipeCard({
 	name,
@@ -16,8 +19,15 @@ function RecipeCard({
 	lgCard,
 	border,
 	className,
+	slug,
+	hasControl,
+	handleDelete,
+	goToUpdate,
+	goToAddPhoto,
+	isPreview,
 }) {
 	const date_format = formatDate(date);
+	const summaryMarkup = summary && createMarkup(summary);
 	return (
 		<div
 			className={`${
@@ -25,21 +35,27 @@ function RecipeCard({
 			} ${className}`}
 		>
 			<Link
-				href={`/recipes/${id}`}
+				href={isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`}
 				className={`${lgCard ? 'lg:col-span-5' : ''}`}
 			>
 				<Img
 					src={image}
-					alt={`recipe ${id}`}
+					alt={`recipe ${name}`}
 					className="h-64"
 					cover
 				/>
 			</Link>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
 				<Link
-					href={`/recipes/${id}`}
+					href={
+						isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`
+					}
 					className={`inline ${
-						smallCard ? 'text-lg' : lgCard ? 'text-2xl' : 'text-xl'
+						smallCard
+							? 'text-lg mt-4'
+							: lgCard
+							? 'text-2xl'
+							: 'text-xl'
 					} text-black line-clamp-2  hover:text-primary transition-all duration-300`}
 				>
 					{name}
@@ -63,12 +79,19 @@ function RecipeCard({
 						</div>
 					)}
 				</div>
-				{summary && (
+				{summaryMarkup && (
 					<>
-						<p className="mt-3 line-clamp-6">{summary}</p>
+						<div
+							dangerouslySetInnerHTML={summaryMarkup}
+							className="mt-3 line-clamp-6"
+						/>
 						<Button
 							type="link"
-							href={`/recipes/${id}`}
+							href={
+								isPreview
+									? `/user/recipe/${slug}`
+									: `/recipes/${slug}`
+							}
 							className="mt-6"
 						>
 							Continue Reading
@@ -76,6 +99,28 @@ function RecipeCard({
 					</>
 				)}
 			</div>
+			{hasControl && (
+				<div className="flex gap-2 mt-3">
+					<Button
+						className="tag primary"
+						onClick={() => goToUpdate(slug)}
+					>
+						Update
+					</Button>
+					<Button
+						className="tag primary"
+						onClick={() => goToAddPhoto(id, slug)}
+					>
+						Add Photo
+					</Button>
+					<Button
+						className="tag !bg-red !text-white"
+						onClick={() => handleDelete(slug)}
+					>
+						Delete
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }

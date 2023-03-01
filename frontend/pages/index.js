@@ -4,8 +4,10 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
+import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { categories } from '@utils/constants';
 
-export default function Home() {
+export default function Home({ categories }) {
 	const recipesRandom = [
 		{
 			id: 1,
@@ -63,35 +65,36 @@ export default function Home() {
 			</Slider>
 			<SubscribeSection />
 			<WidgetLayout>
-				{/* <GroupCategory
-					list={recipes}
-					name="seafood"
-				/> */}
+				{categories.map(
+					(category) =>
+						category.data.length > 0 && (
+							<GroupCategory
+								list={category.data}
+								name={category.name}
+							/>
+						)
+				)}
 			</WidgetLayout>
 		</>
 	);
 }
 
-// export const getStaticProps = async () => {
-// 	let recipes = [];
-// 	await api
-// 		.get('/recipe/recipe/')
-// 		.then((res) => {
-// 			recipes = res.data.results.map((item) => {
-// 				const { slug, image_url, created_at } = item;
-// 				return {
-// 					id: 1,
-// 					name: slug,
-// 					image: image_url,
-// 					date: created_at,
-// 				};
-// 			});
-// 		})
-// 		.catch((error) => console.log('ERROR AT home', error));
-
-// 	return {
-// 		props: {
-// 			recipes,
-// 		},
-// 	};
-// };
+export const getStaticProps = async () => {
+	const requests = categories.map(({ name }) =>
+		api.get(`${ENDPOINT_RECIPE}`, {
+			params: {
+				category: name,
+			},
+		})
+	);
+	const res = await Promise.all(requests).then((res) => res);
+	const results = categories.map(({ name }, index) => ({
+		name: name,
+		data: res[index].data?.results,
+	}));
+	return {
+		props: {
+			categories: results,
+		},
+	};
+};

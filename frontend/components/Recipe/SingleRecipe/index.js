@@ -4,6 +4,8 @@ import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import formatDate from '@utils/formatdate';
 import Check from './Check';
+import createMarkup from '@utils/createMarkup';
+import Thumbnail from '@components/UI/Slider/Thumbnail';
 
 function SingRecipe({
 	updated_at,
@@ -17,9 +19,11 @@ function SingRecipe({
 	description,
 	notes,
 	ingredients,
-	images,
+	images = [],
 }) {
 	const updated_at_format = formatDate(updated_at);
+	const descriptionMarkup = createMarkup(description);
+	const instructionsMarkup = createMarkup(instructions);
 	return (
 		<div>
 			<h1 className="text-center">{title}</h1>
@@ -42,17 +46,11 @@ function SingRecipe({
 					<FaUser /> <span>Serves: {serving} people</span>
 				</div>
 			</div>
-			<p className="mt-5">{description}</p>
-			<div className="flex lg:gap-6 md:gap-4 gap-2 mt-5">
-				{images.map((img, index) => (
-					<Img
-						key={index}
-						src={img.image_url}
-						alt={img.caption}
-						className="h-full"
-					/>
-				))}
-			</div>
+			<div
+				dangerouslySetInnerHTML={descriptionMarkup}
+				className="mt-5 mb-10"
+			/>
+			<Thumbnail images={images} />
 
 			<div className="border border-border rounded-md p-6 mt-10">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
@@ -75,7 +73,10 @@ function SingRecipe({
 								<span>Serves: {serving} people</span>
 							</span>
 						</div>
-						<p className="mt-4">{description}</p>
+						<div
+							dangerouslySetInnerHTML={descriptionMarkup}
+							className="mt-5"
+						/>
 						<Title title="Ingredients" />
 						<div className="flex flex-col gap-3">
 							{ingredients.map((ingredient, index) => (
@@ -101,9 +102,9 @@ function SingRecipe({
 					</div>
 				</div>
 				<Title title="Instructions" />
-				<p dangerouslySetInnerHTML={{ __html: instructions }} />
+				<div dangerouslySetInnerHTML={instructionsMarkup} />
 				<Title title="NOTE" />
-				<p>{notes}</p>
+				<p>{notes || 'Nothing'}</p>
 			</div>
 		</div>
 	);

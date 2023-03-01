@@ -1,36 +1,33 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
-function Tabs() {
-	const [isActive, setIsActive] = useState(0);
+function Tabs({ children }) {
+	const [isActive, setIsActive] = useState(children[0]?.props.tab);
 	return (
 		<div className="mt-10">
 			<div className="flex gap-6">
-				<Btn
-					index={0}
-					isAct={isActive}
-					onClick={() => setIsActive(0)}
-				>
-					All Recipes
-				</Btn>
-				<Btn
-					index={1}
-					isAct={isActive}
-					onClick={() => setIsActive(1)}
-				>
-					Bookmarks
-				</Btn>
+				{children.map((child) => (
+					<Btn
+						key={child?.props?.tab}
+						index={child?.props?.tab}
+						isAct={isActive}
+						onClick={() => setIsActive(child?.props?.tab)}
+					>
+						{child?.props?.tab}
+					</Btn>
+				))}
 			</div>
+
 			<div className="mt-5">
-				<div
-					className={`min-h-[300px] bg-yellow-200 ${
-						isActive === 0 ? 'block' : 'hidden'
-					}`}
-				></div>
-				<div
-					className={`min-h-[300px] bg-gray-200 ${
-						isActive === 1 ? 'block' : 'hidden'
-					}`}
-				></div>
+				{children.map((child) => (
+					<div
+						key={child?.props?.tab}
+						className={`${
+							isActive === child?.props?.tab ? 'block' : 'hidden'
+						}`}
+					>
+						{child?.props?.children}
+					</div>
+				))}
 			</div>
 		</div>
 	);
@@ -51,4 +48,5 @@ const Btn = ({ index, isAct, onClick, children }) => {
 	);
 };
 
+export const TabPanel = ({ children }) => children;
 export default Tabs;

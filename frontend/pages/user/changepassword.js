@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { images } from '@utils/constants';
+import { ENDPOINT_CHANGE_PASSWORD, images } from '@utils/constants';
 import { toast } from 'react-toastify';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
@@ -9,20 +9,16 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 
 function Changepassword() {
-	const { setErrors, token } = useAuthContext();
+	const { setErrors, configAuth } = useAuthContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		try {
 			await api.put(
-				'/user/change_password/',
+				ENDPOINT_CHANGE_PASSWORD,
 				{
 					...data,
 				},
-				{
-					headers: {
-						Authorization: `Bearer ${token.access}`,
-					},
-				}
+				configAuth()
 			);
 			toast.success('Password successfully changed');
 			router.push('/user/profile');

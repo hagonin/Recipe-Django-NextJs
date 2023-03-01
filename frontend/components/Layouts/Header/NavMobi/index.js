@@ -80,7 +80,7 @@ function NavMobi() {
 								<NavItem href={`/user/updateprofile/`}>
 									Update Profile
 								</NavItem>
-								<NavItem href="/recipes/addnewrecipe">
+								<NavItem href="/user/recipe/add">
 									Add Recipe
 								</NavItem>
 							</div>

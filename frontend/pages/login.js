@@ -7,7 +7,7 @@ import api from '@services/axios';
 import { toast } from 'react-toastify';
 
 function Login() {
-	const { login, setErrors } = useAuthContext();
+	const { login, handleResendVerify } = useAuthContext();
 
 	const resendVerifyEmail = ({ email, password }) => {
 		api.post('/user/resend-email-verify', {
@@ -27,7 +27,7 @@ function Login() {
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1 gap-8">
 				<LoginForm
 					onSubmit={login}
-					resendVerifyEmail={resendVerifyEmail}
+					resendVerifyEmail={handleResendVerify}
 				/>
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
 					<h1>Welcome back</h1>

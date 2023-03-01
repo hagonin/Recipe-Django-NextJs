@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import api from '@services/axios';
 import {
 	clearCookie,
@@ -8,8 +7,17 @@ import {
 	getRefreshTokenFromCookie,
 	setCookie,
 } from '@utils/cookies';
-import { images } from '@utils/constants';
 import { toast } from 'react-toastify';
+import {
+	ENDPOINT_LOGIN,
+	ENDPOINT_LOGOUT,
+	ENDPOINT_REFRESH_TOKEN,
+	ENDPOINT_REGISTER,
+	ENDPOINT_RESEND_VERIFY,
+	ENDPOINT_USER,
+	ENDPOINT_USER_AVATAR,
+	ENDPOINT_USER_PROFILE,
+} from '@utils/constants';
 
 const AuthContext = createContext();
 
@@ -29,15 +37,13 @@ const AuthProvider = ({ children }) => {
 			if (status === 401 && !_config._retry) {
 				_config._retry = true;
 				try {
-					const refreshRes = await api.post('/user/token/refresh', {
+					const refreshRes = await api.post(ENDPOINT_REFRESH_TOKEN, {
 						refresh: token.refresh,
 					});
 					const { refresh, access } = refreshRes.data;
 					setToken({ access: access, refresh: refresh });
 					setCookie(access, refresh);
-					_config.headers = {
-						Authorization: `Bearer ${access}`,
-					};
+					_config.headers = configAuth(access).headers;
 					return api(_config);
 				} catch (error) {
 					return Promise.reject(error);
@@ -78,15 +84,11 @@ const AuthProvider = ({ children }) => {
 		setLoading(true);
 		try {
 			await api.post(
-				'/user/logout',
+				ENDPOINT_LOGOUT,
 				{
 					refresh: token.refresh,
 				},
-				{
-					headers: {
-						Authorization: `Bearer ${token.access}`,
-					},
-				}
+				configAuth()
 			);
 			setUser(null);
 			clearCookie();
@@ -102,7 +104,7 @@ const AuthProvider = ({ children }) => {
 	const login = async ({ email, password, remember }) => {
 		setLoading(true);
 		try {
-			const loginRes = await api.post('/user/login', {
+			const loginRes = await api.post(ENDPOINT_LOGIN, {
 				email,
 				password,
 			});
@@ -121,14 +123,15 @@ const AuthProvider = ({ children }) => {
 			if (status === 400) {
 				setErrors({ login: { ..._error } });
 			} else if (status === 401) {
-				_error.detail !== 'Email is not verified' &&
-					toast.error(_error.detail);
-				_error.detail === 'Email is not verified' &&
+				if (_error.detail === 'Email is not verified') {
 					setErrors({
 						login: {
 							verify_expired: true,
 						},
 					});
+				} else {
+					toast.error(_error.detail);
+				}
 			} else {
 				console.log('error in login', status, _error);
 			}
@@ -137,6 +140,18 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const handleResendVerify = ({ email }) =>
+		api
+			.post(ENDPOINT_RESEND_VERIFY, {
+				email,
+			})
+			.then(() => {
+				setErrors(null);
+				toast.success(
+					'We have sent the new verify email. Please check your email.'
+				);
+			})
+			.catch();
 	const signup = async ({
 		username,
 		firstname,
@@ -146,7 +161,7 @@ const AuthProvider = ({ children }) => {
 		email,
 	}) => {
 		try {
-			await api.post('/user/register', {
+			await api.post(ENDPOINT_REGISTER, {
 				username,
 				lastname,
 				firstname,
@@ -180,24 +195,16 @@ const AuthProvider = ({ children }) => {
 		} = data;
 		try {
 			await api.patch(
-				'/user/',
+				ENDPOINT_USER,
 				{ username, last_name, first_name },
-				{
-					headers: {
-						Authorization: `Bearer ${token.access}`,
-					},
-				}
+				configAuth()
 			);
 			const profileRes = await api.patch(
-				'/user/profile/',
+				ENDPOINT_USER_PROFILE,
 				{
 					bio,
 				},
-				{
-					headers: {
-						Authorization: `Bearer ${token.access}`,
-					},
-				}
+				configAuth()
 			);
 			const { user, ...rest } = profileRes.data;
 
@@ -215,36 +222,25 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const setAvatar = (formAvatar, access) => {
-		const tokenAccess =
-			access || token.access || getAccessTokenFromCookie();
-		return api.patch('/user/profile/avatar', formAvatar, {
-			headers: {
-				Authorization: `Bearer ${tokenAccess}`,
-				'Content-type': 'multipart/form-data',
-			},
-		});
-	};
+	const setAvatar = (
+		formAvatar,
+		access = token.access || getAccessTokenFromCookie()
+	) => api.patch(ENDPOINT_USER_AVATAR, formAvatar, configAuth(access));
 
-	const getAvatar = (access) => {
-		const tokenAccess =
-			access || token.access || getAccessTokenFromCookie();
+	const getAvatar = (access = token.access || getAccessTokenFromCookie()) =>
+		api.get(ENDPOINT_USER_AVATAR, configAuth(access));
 
-		return api.get('/user/profile/avatar', {
-			headers: {
-				Authorization: `Bearer ${tokenAccess}`,
-			},
-		});
-	};
+	const getProfile = (access = token.access) =>
+		api.get(ENDPOINT_USER_PROFILE, configAuth(access));
 
-	const getProfile = (access = token.access) => {
-		return api.get('/user/profile/', {
-			headers: {
-				Authorization: `Bearer ${access}`,
-			},
-		});
-	};
+	const configAuth = (access = token.access) => ({
+		headers: {
+			Authorization: `Bearer ${access}`,
+			'Content-type': 'multipart/form-data',
+		},
+	});
 
+	
 	return (
 		<AuthContext.Provider
 			value={{
@@ -258,6 +254,8 @@ const AuthProvider = ({ children }) => {
 				loading,
 				updateProfile,
 				token,
+				handleResendVerify,
+				configAuth,
 			}}
 		>
 			{children}

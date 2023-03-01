@@ -59,7 +59,7 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 								Change Password
 							</Link>
 							<Link
-								href="/recipes/addnewrecipe"
+								href="/user/recipe/add"
 								className="block text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2"
 							>
 								Add recipe

@@ -8,16 +8,13 @@ import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
+import { useRouter } from 'next/router';
 
 function Header() {
 	const { isAuthenticated, user, loading } = useAuthContext();
+	const router = useRouter();
 	const handleSearch = (data) => {
-		const fetchFake = new Promise((resolve, reject) => {
-			setTimeout(() => {
-				resolve(data);
-			}, 3000);
-		});
-		return fetchFake.then((res) => console.log(res));
+		router.push({ pathname: '/search', query: { ...data } });
 	};
 
 	return (
