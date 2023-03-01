@@ -18,13 +18,13 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-x-6 lg:gap-y-10 md:gap-x-4 md:gap-y-8 gap-8">
 				{list.map((item) => (
 					<RecipeCard
+						key={item.slug}
 						slug={item.slug}
 						date={item.updated_at}
 						name={item.title}
 						image={item.image_url}
 						cook_time={item.cook_time}
 						prep_time={item.prep_time}
-						key={item.id}
 						className="grid gap-4"
 					/>
 				))}

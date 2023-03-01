@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineClose, MdSearch } from 'react-icons/md';
 import Loader from '@components/UI/Loader';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import Button from '@components/UI/Button';
 function SearchForm({ onSubmit, secondary }) {
 	const {
 		register,
-		formState: { isSubmitting },
+		formState: { isSubmitting, isSubmitSuccessful },
 		reset,
 		handleSubmit,
 	} = useForm();
@@ -20,8 +20,12 @@ function SearchForm({ onSubmit, secondary }) {
 
 	const handleBeforeSubmit = (data) => {
 		setIsTyping(false);
-		return onSubmit(data);
+		onSubmit(data);
 	};
+
+	useEffect(() => {
+		isSubmitSuccessful && reset();
+	}, [isSubmitSuccessful]);
 
 	return (
 		<form

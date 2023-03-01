@@ -1,4 +1,4 @@
-import { ENDPOINT_CREATE_RECIPE, images } from '@utils/constants';
+import { ENDPOINT_CREATE_RECIPE } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import api from '@services/axios';
