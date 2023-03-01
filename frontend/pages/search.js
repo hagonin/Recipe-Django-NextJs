@@ -23,10 +23,10 @@ function Search() {
 		})
 			.then((res) => setResults(res?.data?.results))
 			.catch()
-			.finally(setLoading(false));
+			.finally(() => {
+				setLoading(false);
+			});
 	}, [search]);
-	// const { data, isLoading, mute } = useSWR();
-	console.log(results);
 	return (
 		<div className="container">
 			<h1 className=" flex gap-2">
@@ -35,8 +35,9 @@ function Search() {
 			</h1>
 
 			<div className="mt-6">
-				{loading ? 'SEARCHING...' : null}
-				{results ? (
+				{loading ? (
+					'Searching...'
+				) : results ? (
 					<div>
 						{results.map(({ title, slug }) => (
 							<Link

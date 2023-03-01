@@ -34,7 +34,6 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 		instructions,
 		notes,
 		search_vector,
-		ingredients,
 		image_url,
 		source,
 	} = initValues;
@@ -48,7 +47,6 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: ingredients,
 				main_image: null,
 				title: title,
 				category: category,
@@ -75,12 +73,7 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 		const { ingredients, ...rest } = recipe;
 		let { main_image } = recipe;
 		const form = new FormData();
-		// add ingredients to form
-		for (var i = 0; i < ingredients.length; i++) {
-			Object.keys(ingredients[i]).forEach((key) => {
-				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
-			});
-		}
+		
 		// add image to form
 		main_image = main_image
 			? main_image
@@ -206,26 +199,7 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					/>
 				</div> */}
 			</div>
-			<div className="mt-5">
-				<Title
-					title="Ingredients"
-					info={{
-						content: (
-							<div>
-								Enter your ingredients. Those ingredient can be
-								a type of ingredient, or any special
-								preparation.
-							</div>
-						),
-						placement: 'right',
-					}}
-				/>
-
-				<Ingredients
-					control={control}
-					register={register}
-				/>
-			</div>
+			
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
 					name="recipe.search_vector"
