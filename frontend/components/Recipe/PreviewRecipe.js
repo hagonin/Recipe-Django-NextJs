@@ -29,7 +29,8 @@ function PreviewRecipe({ data, handleDeletePhoto }) {
 		slug,
 	} = data;
 	const router = useRouter();
-	const goToUpload = () => router.push(`/recipes/${id}/upload_image/${slug}`);
+	const goToUpload = () =>
+		router.push(`/user/recipe/${slug}/upload_image/${id}`);
 	const goToEdit = () => {
 		router.push(`/user/recipe/${slug}/update`);
 	};

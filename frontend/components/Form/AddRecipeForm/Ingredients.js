@@ -63,7 +63,7 @@ function Ingredients({ control, register }) {
 				type="button"
 				onClick={() => {
 					append({
-						recipe: 2,
+						recipe: 65,
 						title: '',
 						quantity: '',
 						unit: '',

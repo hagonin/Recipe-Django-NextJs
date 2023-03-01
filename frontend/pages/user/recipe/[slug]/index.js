@@ -23,7 +23,6 @@ function RecipePreView() {
 		await mutate();
 		toast.success('Delete success');
 	};
-	console.log(recipe);
 
 	return (
 		<div className="container py-14">

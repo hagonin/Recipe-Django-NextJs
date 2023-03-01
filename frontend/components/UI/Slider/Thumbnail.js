@@ -70,9 +70,9 @@ function Thumbnail({ images }) {
 						key={img.id}
 					>
 						<Img
-							src={img.url}
+							src={img.image_url}
 							alt={img.caption}
-							className="md:w-1/2 mx-auto"
+							className="md:w-1/2  h-60 mx-auto"
 						/>
 					</div>
 				))}
@@ -80,13 +80,14 @@ function Thumbnail({ images }) {
 
 			<div
 				ref={thumbnailRef}
-				className="keen-slider thumbnail mt-6"
+				className="keen-slider thumbnail mt-6 justify-center"
 			>
 				{images.map((img) => (
 					<div className="keen-slider__slide rounded border-border">
 						<Img
-							src={img.url}
+							src={img.image_url}
 							alt={img.caption}
+							className="h-24"
 							cover
 						/>
 					</div>

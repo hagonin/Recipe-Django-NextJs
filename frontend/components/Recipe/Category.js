@@ -9,7 +9,7 @@ function Category({ name, cover, desc, recipes }) {
 					src={cover}
 					alt={name}
 				/>
-				<h1 className="mt-6">{name}</h1>
+				<h1 className="mt-6 capitalize">{name}</h1>
 				<p className="mt-3">{desc}</p>
 			</div>
 			<div className="grid">

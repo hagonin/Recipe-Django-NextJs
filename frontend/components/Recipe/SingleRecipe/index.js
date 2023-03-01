@@ -48,11 +48,9 @@ function SingRecipe({
 			</div>
 			<div
 				dangerouslySetInnerHTML={descriptionMarkup}
-				className="mt-5"
+				className="mt-5 mb-10"
 			/>
-			<div className="flex lg:gap-6 md:gap-4 gap-2 mt-5">
-				<Thumbnail images={images} />
-			</div>
+			<Thumbnail images={images} />
 
 			<div className="border border-border rounded-md p-6 mt-10">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
@@ -106,7 +104,7 @@ function SingRecipe({
 				<Title title="Instructions" />
 				<div dangerouslySetInnerHTML={instructionsMarkup} />
 				<Title title="NOTE" />
-				<p>{notes}</p>
+				<p>{notes || 'Nothing'}</p>
 			</div>
 		</div>
 	);

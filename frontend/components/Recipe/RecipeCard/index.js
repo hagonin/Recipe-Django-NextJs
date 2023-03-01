@@ -24,6 +24,7 @@ function RecipeCard({
 	handleDelete,
 	goToUpdate,
 	goToAddPhoto,
+	isPreview,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
@@ -34,19 +35,21 @@ function RecipeCard({
 			} ${className}`}
 		>
 			<Link
-				href={slug ? `/user/recipe/${slug}` : `/recipes/${id}`}
+				href={isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`}
 				className={`${lgCard ? 'lg:col-span-5' : ''}`}
 			>
 				<Img
 					src={image}
-					alt={`recipe ${id}`}
+					alt={`recipe ${name}`}
 					className="h-64"
 					cover
 				/>
 			</Link>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
 				<Link
-					href={slug ? `/user/recipe/${slug}` : `/recipes/${id}`}
+					href={
+						isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`
+					}
 					className={`inline ${
 						smallCard
 							? 'text-lg mt-4'
@@ -84,7 +87,11 @@ function RecipeCard({
 						/>
 						<Button
 							type="link"
-							href={`/recipes/${id}`}
+							href={
+								isPreview
+									? `/user/recipe/${slug}`
+									: `/recipes/${slug}`
+							}
 							className="mt-6"
 						>
 							Continue Reading

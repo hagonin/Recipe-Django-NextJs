@@ -2,6 +2,7 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import api from '@services/axios';
+import { ENDPOINT_RECIPE } from '@utils/constants';
 import Link from 'next/link';
 import {
 	HiOutlineChevronDoubleLeft,
@@ -36,13 +37,14 @@ export default Recipe;
 
 Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 export const getStaticProps = async () => {
-	const res = await api.get('/recipe/recipe/');
+	const res = await api.get(ENDPOINT_RECIPE);
 	const recipes = res?.data?.results?.map(
-		({ title: name, image_url: image, updated_at: date, id }) => ({
+		({ title: name, image_url: image, updated_at: date, id, slug }) => ({
 			name,
 			image,
 			date,
 			id,
+			slug,
 		})
 	);
 	return {

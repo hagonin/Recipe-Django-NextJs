@@ -43,7 +43,7 @@ function Profile() {
 
 	const goToUpdate = (slug) => router.push(`/user/recipe/${slug}/update/`);
 	const goToAddPhoto = (id, slug) =>
-		router.push(`/recipes/${id}/upload_image/${slug}`);
+		router.push(`/user/recipe/${slug}/upload_image/${id}`);
 
 	return (
 		<div className="container my-14">
@@ -97,6 +97,7 @@ function Profile() {
 											handleDelete={handleDelete}
 											goToUpdate={goToUpdate}
 											goToAddPhoto={goToAddPhoto}
+											isPreview
 										/>
 										<span>{recipe.author}</span>
 									</div>
