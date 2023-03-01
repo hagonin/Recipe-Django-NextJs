@@ -16,6 +16,15 @@ function VerifyEmail({ onSubmit }) {
 	const handleCloseModal = () => {
 		setErrors(null);
 	};
+
+	const handleSubmit = () => {
+		onSubmit();
+		// setShow(false);
+	};
+
+	useEffect(() => {
+		!errors && show && setShow(false);
+	}, [errors]);
 	return (
 		<ModalPrimary
 			show={show}
@@ -38,7 +47,7 @@ function VerifyEmail({ onSubmit }) {
 			</span>
 			<Button
 				className="verify"
-				onClick={onSubmit}
+				onClick={handleSubmit}
 			>
 				Resend Verify email
 			</Button>

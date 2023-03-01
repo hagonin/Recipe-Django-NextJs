@@ -1,4 +1,4 @@
-import { images } from '@utils/constants';
+import { ENDPOINT_USER_AVATAR, images } from '@utils/constants';
 import { getRefreshTokenFromCookie, setCookie } from '@utils/cookies';
 import { createAvatarForm } from '@utils/getFileFromUrl';
 import axios from 'axios';
@@ -26,13 +26,13 @@ api.interceptors.response.use(
 		const _config = error.config;
 
 		// set default avatar
-		if (_config.url === '/user/profile/avatar/' && status === 500) {
+		if (_config.url === ENDPOINT_USER_AVATAR && status === 500) {
 			try {
 				const avatarForm = await createAvatarForm(
 					images.defaultAvatar,
 					'avatar_default'
 				);
-				await api.patch('/user/profile/avatar/', avatarForm, {
+				await api.patch(ENDPOINT_USER_AVATAR, avatarForm, {
 					headers: {
 						Authorization: _config.headers.Authorization,
 						'Content-type': 'multipart/form-data',

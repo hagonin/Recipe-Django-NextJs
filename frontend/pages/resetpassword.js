@@ -3,7 +3,7 @@ import { FiChevronsLeft } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
-import { images } from '@utils/constants';
+import { ENDPOINT_PASSWORD_RESET_COMPLETE, ENDPOINT_REQUEST_RESET_EMAIL, images } from '@utils/constants';
 import api from '@services/axios';
 
 import RequiredEmail from '@components/Form/ResetPasswordForm/RequiredEmail';
@@ -13,9 +13,10 @@ import ResetPassword from '@components/Form/ResetPasswordForm/ResetPassword';
 function RequestResetPassword(props) {
 	const router = useRouter();
 	const { setErrors } = useAuthContext();
+	
 	const handleSendRequest = ({ email }) => {
 		return api
-			.post('/user/request-reset-email/', {
+			.post(ENDPOINT_REQUEST_RESET_EMAIL, {
 				email,
 				redirect_url: process.env.NEXT_PUBLIC_REQUEST_EMAIL,
 			})
@@ -27,15 +28,13 @@ function RequestResetPassword(props) {
 
 	const handleChangePassword = ({ password }) => {
 		return api
-			.patch('/user/password-reset-complete', {
+			.patch(ENDPOINT_PASSWORD_RESET_COMPLETE, {
 				password: password,
 				token: props?.token,
 				uidb64: props?.uidb64,
 			})
 			.then((res) => {
-				toast.success(
-					'Password reset success.'
-				);
+				toast.success('Password reset success.');
 				router.push('/login');
 			})
 			.catch(({ status, _error }) => {
@@ -48,6 +47,7 @@ function RequestResetPassword(props) {
 				}
 			});
 	};
+	
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 ">

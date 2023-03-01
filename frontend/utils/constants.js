@@ -43,3 +43,21 @@ export const unit = [
 	{ id: 7, name: 'teaspoon' },
 	{ id: 8, name: 'tablespoon' },
 ];
+
+// endpoint
+export const ENDPOINT_REGISTER = '/user/register';
+export const ENDPOINT_LOGOUT = '/user/logout';
+export const ENDPOINT_LOGIN = '/user/login';
+
+export const ENDPOINT_USER = '/user/';
+export const ENDPOINT_USER_PROFILE = '/user/profile/';
+export const ENDPOINT_USER_AVATAR = '/user/profile/avatar';
+
+export const ENDPOINT_REFRESH_TOKEN = '/user/token/refresh'
+export const ENDPOINT_EMAIL_VERIFY = '/user/email-verify';
+export const ENDPOINT_RESEND_VERIFY = '/user/resend-email-verify';
+
+export const ENDPOINT_REQUEST_RESET_EMAIL = '/user/request-reset-email';
+export const ENDPOINT_PASSWORD_RESET_COMPLETE = '/user/password-reset-complete';
+
+export const ENDPOINT_CHANGE_PASSWORD = '/user/change_password';
