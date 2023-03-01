@@ -1,4 +1,4 @@
-import { images } from '@utils/constants';
+import { ENDPOINT_CREATE_RECIPE, images } from '@utils/constants';
 
 import AddRecipeForm from '@components/Form/AddRecipeForm';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
@@ -17,36 +17,31 @@ import handleResDataForPreView from '@utils/handleResForPreview';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
-	const { token, setErrors } = useAuthContext();
-	const { setCurrentRecipe } = useRecipeContext();
+	const { configAuth } = useAuthContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
-		console.log('Data before submit', data);
 		await api
-			.post('/recipe/recipe-create/', data, {
-				headers: {
-					'Content-type': 'multipart/form-data',
-					Authorization: `Bearer ${token.access}`,
-				},
-			})
+			.post(ENDPOINT_CREATE_RECIPE, data, configAuth())
 			.then((res) => {
 				const { slug } = res?.data;
-				const data = handleResDataForPreView(res);
-				setCurrentRecipe(data);
 				toast.success('Add recipe success');
 				router.push(`/user/recipe/${slug}`);
 			})
-			.catch(({ _error }) => {
-				console.log(_error);
-				// const errStr = Object.keys(_error)
-				// 	.map((key) => {
-				// 		const str = _error[key]
-				// 			.map((message) => message)
-				// 			.join('<br/>');
-				// 		return `${key}: ${str}`;
-				// 	})
-				// 	.join('<br/>');
-				// toast.error(errStr);
+			.catch(({ status, _error }) => {
+				if (status === 500) {
+					toast.error('The name of this recipe already exists.');
+				} else {
+					const errStr = Object.keys(_error)
+						.map((key) => {
+							const str = _error[key]
+								.map((message) => message)
+								.join('<br/>');
+							return `${key}: ${str}`;
+						})
+						.join('<br/>');
+
+					toast.error(errStr);
+				}
 			});
 	};
 

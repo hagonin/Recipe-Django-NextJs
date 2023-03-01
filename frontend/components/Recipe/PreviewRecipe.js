@@ -1,40 +1,37 @@
 import { useRouter } from 'next/router';
-import { BsFillTagsFill } from 'react-icons/bs';
+import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
 import { FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import { MdDeleteForever } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
-import { useRecipeContext } from '@context/recipe-context';
+import createMarkup from '@utils/createMarkup';
 
-function PreviewRecipe(data) {
+function PreviewRecipe({ data, handleDeletePhoto }) {
 	const {
 		id,
 		title,
 		prep_time,
 		cook_time,
 		serving,
-		author,
+		user: author,
 		description,
 		instructions,
 		created_at,
 		updated_at,
-		image,
+		image_url: image,
 		images,
 		category,
 		ingredients,
 		notes,
-		keyword,
 		source,
 		slug,
 	} = data;
-	const {setCurrentRecipe} = useRecipeContext();
 	const router = useRouter();
 	const goToUpload = () => router.push(`/recipes/${id}/upload_image/${slug}`);
 	const goToEdit = () => {
-		setCurrentRecipe({ ...data });
-		router.push(`/user/recipe/update`);
+		router.push(`/user/recipe/${slug}/update`);
 	};
 	return (
 		<>
@@ -109,12 +106,16 @@ function PreviewRecipe(data) {
 
 					<div className="my-10">
 						<h3>Description:</h3>
-						<div dangerouslySetInnerHTML={description} />
+						<div
+							dangerouslySetInnerHTML={createMarkup(description)}
+						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					<div className="my-10">
 						<h3>Instruction:</h3>
-						<div dangerouslySetInnerHTML={instructions} />
+						<div
+							dangerouslySetInnerHTML={createMarkup(instructions)}
+						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					{notes && (
@@ -124,12 +125,6 @@ function PreviewRecipe(data) {
 							</h3>
 							<p>{notes}</p>
 						</div>
-					)}
-					{keyword && (
-						<span className="mt-6 block">
-							<span className="underline ">Keyword</span>:{' '}
-							{keyword}
-						</span>
 					)}
 					{source && (
 						<div>
@@ -164,13 +159,25 @@ function PreviewRecipe(data) {
 				Upload photo
 			</Button>
 			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 my-5">
-				{images?.map((img) => (
-					<Img
-						key={img.id}
-						src={img.url}
-						alt={img.caption}
-					/>
-				))}
+				{images?.map((img) => {
+					return (
+						<div
+							className="relative"
+							key={img.id}
+						>
+							<Img
+								src={img.image_url}
+								alt={img.caption}
+							/>
+							<button
+								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
+								onClick={() => handleDeletePhoto(img.id)}
+							>
+								<BsTrash />
+							</button>
+						</div>
+					);
+				})}
 			</div>
 			<button className="rounded-full underline text-lg hover:text-primary">
 				Load More

@@ -7,17 +7,19 @@ import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
 import { images } from '@utils/constants';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
 function Profile() {
-	const { user, fetcher } = useAuthContext();
-	const { deleteRecipe } = useRecipeContext();
+	const { user } = useAuthContext();
+	const { deleteRecipe, fetcher } = useRecipeContext();
 	const {
 		data: recipes,
 		isLoading: loading1,
 		mutate: mutate1,
-	} = useSWR(`/user/${user.username}/recipes/`, fetcher);
+	} = useSWR(`/user/${user.username}/recipes`, fetcher);
+	const [deleting, setDeleting] = useState(false);
 
 	// const {
 	// 	data: bookmarks,
@@ -28,11 +30,14 @@ function Profile() {
 	const router = useRouter();
 	const handleDelete = async (slug) => {
 		try {
+			setDeleting(true);
 			await deleteRecipe(slug);
 			await mutate1();
 			toast.success('Delete success');
 		} catch (err) {
 			toast.error('Delete failed');
+		} finally {
+			setDeleting(false);
 		}
 	};
 
@@ -70,6 +75,7 @@ function Profile() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
+			{deleting && 'Deleting...'}
 			<Tabs>
 				<TabPanel tab="All Recipes">
 					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">

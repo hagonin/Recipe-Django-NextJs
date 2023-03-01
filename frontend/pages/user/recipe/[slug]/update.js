@@ -1,8 +1,6 @@
-import { images } from '@utils/constants';
+import { ENDPOINT_CREATE_RECIPE, images } from '@utils/constants';
 
-import AddRecipeForm from '@components/Form/AddRecipeForm';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
-import Img from '@components/UI/Image';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
@@ -11,38 +9,30 @@ import { useEffect, useState } from 'react';
 import { useRecipeContext } from '@context/recipe-context';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
-import createMarkup from '@utils/createMarkup';
-import formatDate from '@utils/formatdate';
-import handleResDataForPreView from '@utils/handleResForPreview';
 import UpdateForm from '@components/Form/AddRecipeForm/UpdateForm';
 
 function Update() {
 	const [cancel, setCancel] = useState(false);
-	const { getRecipeSingle } = useRecipeContext();
-	const {
-		query: { slug },
-	} = useRouter();
+	const { getRecipeSingleBySlug } = useRecipeContext();
+	const router = useRouter();
+	const { slug } = router?.query;
 	const [initValues, setInitValues] = useState(null);
-	const { token } = useAuthContext();
+	const { configAuth } = useAuthContext();
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
 		await api
-			.patch(`/recipe/recipe-create/${slug}/`, data, {
-				headers: {
-					'Content-type': 'multipart/form-data',
-					Authorization: `Bearer ${token.access}`,
-				},
-			})
+			.patch(`${ENDPOINT_CREATE_RECIPE}${slug}/`, data, configAuth())
 			.then((res) => {
-				toast.success('Add recipe success');
-				console.log(res);
+				toast.success('Update recipe success');
+				router.push(`/user/recipe/${slug}`);
 			})
 			.catch(({ _error }) => {
+				toast.error('Update failed');
 				console.log(_error);
 			});
 	};
 	useEffect(() => {
-		getRecipeSingle(slug).then((res) => setInitValues(res));
+		getRecipeSingleBySlug(slug).then((res) => setInitValues(res));
 	}, []);
 
 	const toggleCancel = () => {

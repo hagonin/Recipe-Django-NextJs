@@ -20,17 +20,17 @@ export const images = {
 };
 
 export const categories = [
-	{ id: 1, name: 'Appetizers' },
-	{ id: 2, name: 'Bread' },
-	{ id: 3, name: 'Breakfast' },
-	{ id: 4, name: 'Desserts' },
-	{ id: 5, name: 'Vegan' },
-	{ id: 6, name: 'Drink' },
-	{ id: 7, name: 'Main Dish' },
-	{ id: 8, name: 'Salad' },
-	{ id: 9, name: 'Soups, Stew, and Chill ' },
-	{ id: 10, name: 'Side Dish' },
-	{ id: 11, name: 'Marinades and Sauces' },
+	{ id: 1, name: 'appetizers' },
+	{ id: 2, name: 'bread' },
+	{ id: 3, name: 'breakfast' },
+	{ id: 4, name: 'desserts' },
+	{ id: 5, name: 'vegan' },
+	{ id: 6, name: 'drink' },
+	{ id: 7, name: 'main dish' },
+	{ id: 8, name: 'salad' },
+	{ id: 9, name: 'soups, stew, and chill ' },
+	{ id: 10, name: 'side dish' },
+	{ id: 11, name: 'marinades and sauces' },
 ];
 
 export const unit = [
@@ -53,7 +53,7 @@ export const ENDPOINT_USER = '/user/';
 export const ENDPOINT_USER_PROFILE = '/user/profile/';
 export const ENDPOINT_USER_AVATAR = '/user/profile/avatar';
 
-export const ENDPOINT_REFRESH_TOKEN = '/user/token/refresh'
+export const ENDPOINT_REFRESH_TOKEN = '/user/token/refresh';
 export const ENDPOINT_EMAIL_VERIFY = '/user/email-verify';
 export const ENDPOINT_RESEND_VERIFY = '/user/resend-email-verify';
 
@@ -61,3 +61,7 @@ export const ENDPOINT_REQUEST_RESET_EMAIL = '/user/request-reset-email';
 export const ENDPOINT_PASSWORD_RESET_COMPLETE = '/user/password-reset-complete';
 
 export const ENDPOINT_CHANGE_PASSWORD = '/user/change_password';
+
+export const ENDPOINT_CREATE_RECIPE = '/recipe/recipe-create/';
+export const ENDPOINT_RECIPE_DETAIL = '/recipe/recipe-detail/';
+export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';

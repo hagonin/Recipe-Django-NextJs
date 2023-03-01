@@ -1,4 +1,9 @@
 import api from '@services/axios';
+import {
+	ENDPOINT_CREATE_RECIPE,
+	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_IMAGE,
+} from '@utils/constants';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './auth-context';
 
@@ -7,25 +12,28 @@ const { createContext, useContext, useState, useEffect } = require('react');
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
-	const { token, fetcher } = useAuthContext();
-	const [slugCurrent, setSlugCurrent] = useState(null);
+	const { configAuth, user } = useAuthContext();
 	const [loading, setLoading] = useState(true);
 
 	const deleteRecipe = (slug) =>
-		api.delete(`/recipe/recipe-create/${slug}`, {
-			headers: {
-				Authorization: `Bearer ${token.access}`,
-			},
-		});
+		api.delete(`${ENDPOINT_CREATE_RECIPE}${slug}/`, configAuth());
 
-	const getRecipeSingle = (slug) => fetcher(`/recipe/recipe-detail/${slug}/`);
+	const deletePhotoById = (id) =>
+		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
+
+	const fetcher = async (url) =>
+		await api
+			.get(url, configAuth())
+			.then((res) => res?.data?.results || res?.data);
+
 	return (
 		<RecipeContext.Provider
 			value={{
 				loading,
 				setLoading,
 				deleteRecipe,
-				getRecipeSingle,
+				fetcher,
+				deletePhotoById,
 			}}
 		>
 			{children}
