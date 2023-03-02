@@ -234,17 +234,6 @@ class UserRecipesView(generics.ListAPIView):
     def get_queryset(self):
         return Recipe.objects.filter(user__username=self.kwargs['username'])
 
-class UserAvatarView(generics.RetrieveUpdateAPIView):
-    """
-    Get, update user profile
-    """
-    queryset = Profile.objects.all()
-    permission_classes = (IsAuthenticated,)
-    serializer_class = serializers.ProfileAvatarSerializer
-
-    def get_object(self):
-        return self.request.user.profile
-
 class BookmarkView(generics.ListCreateAPIView):
     """
     Get, Create, Delete favorite recipe
@@ -254,7 +243,7 @@ class BookmarkView(generics.ListCreateAPIView):
     profile = Profile.objects.all()
 
     def get_queryset(self):
-        user = CustomUser.objects.get(id=self.kwargs['id'])
+        user = CustomUser.objects.get(id=self.kwargs['pk'])
         user_profile = get_object_or_404(self.profile, user=user)
         
         return user_profile.bookmarks.all()

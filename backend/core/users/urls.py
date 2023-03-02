@@ -22,7 +22,6 @@ urlpatterns = [
 
     path('', views.UpdateView.as_view(),name='user-info'),
     path('profile/', views.ProfileView.as_view(),name='user-profile'),
-    path('profile/avatar', views.UserAvatarView.as_view(),name='user-avatar'),
     path('profile/<int:pk>/bookmarks', views.BookmarkView.as_view(),name='user-bookmark'),
     path('<username>/recipes', views.UserRecipesView.as_view(), name='user-recipes'),
     path('change_password', views.ChangePasswordView.as_view(),name='change-password'),
