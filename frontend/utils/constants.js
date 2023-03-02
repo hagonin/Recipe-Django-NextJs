@@ -130,7 +130,6 @@ export const ENDPOINT_LOGIN = '/user/login';
 
 export const ENDPOINT_USER = '/user/';
 export const ENDPOINT_USER_PROFILE = '/user/profile/';
-export const ENDPOINT_USER_AVATAR = '/user/profile/avatar';
 
 export const ENDPOINT_REFRESH_TOKEN = '/user/token/refresh';
 export const ENDPOINT_EMAIL_VERIFY = '/user/email-verify';

@@ -4,6 +4,7 @@ import { MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import { InputField, SelectField } from '../FormControl';
 import { unit } from '@utils/constants';
+import { RECIPE_EXIST } from '.';
 
 function Ingredients({ control, register }) {
 	const { fields, append, remove } = useFieldArray({
@@ -63,7 +64,7 @@ function Ingredients({ control, register }) {
 				type="button"
 				onClick={() => {
 					append({
-						recipe: 65,
+						recipe: RECIPE_EXIST,
 						title: '',
 						quantity: '',
 						unit: '',

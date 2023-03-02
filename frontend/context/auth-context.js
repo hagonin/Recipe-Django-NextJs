@@ -64,12 +64,13 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async () => {
 		if (token.access || token.refresh) {
 			try {
-				const profile = await getProfile();
-				const { user, ...rest } = profile.data;
-				const avatar = await getAvatar();
-				const { image_url } = avatar.data;
+				const user = await getUser();
+				const {
+					profile: { image_url: avatar, ..._profile },
+					...rest
+				} = user.data;
 
-				setUser({ ...user, ...rest, avatar: image_url });
+				setUser({ avatar, ..._profile, ...rest });
 			} catch (error) {
 				console.log('ERROR AT TOKEN AUTHENTICATION', error);
 			} finally {
@@ -79,6 +80,9 @@ const AuthProvider = ({ children }) => {
 			setLoading(false);
 		}
 	};
+
+	const getUser = (access = token.access) =>
+		api.get(ENDPOINT_USER, configAuth(access));
 
 	const logout = async () => {
 		setLoading(true);
@@ -112,12 +116,13 @@ const AuthProvider = ({ children }) => {
 			setToken({ access: access, refresh: refresh });
 			remember && setCookie(access, refresh);
 
-			const profile = await getProfile(access);
-			const { user, ...rest } = profile.data;
+			const user = await getUser(access);
+			const {
+				profile: { image_url: avatar, ..._profile },
+				...rest
+			} = user.data;
 
-			const avatar = await getAvatar(access);
-			const { image_url } = avatar.data;
-			setUser({ ...user, ...rest, avatar: image_url });
+			setUser({ avatar, ..._profile, ...rest });
 			router.push('/');
 		} catch ({ status, _error }) {
 			if (status === 400) {
@@ -152,6 +157,7 @@ const AuthProvider = ({ children }) => {
 				);
 			})
 			.catch();
+
 	const signup = async ({
 		username,
 		firstname,
@@ -191,7 +197,7 @@ const AuthProvider = ({ children }) => {
 		const {
 			personal: { username, last_name, first_name },
 			bio,
-			avatar: formAvatar,
+			avatar,
 		} = data;
 		try {
 			await api.patch(
@@ -202,7 +208,7 @@ const AuthProvider = ({ children }) => {
 			const profileRes = await api.patch(
 				ENDPOINT_USER_PROFILE,
 				{
-					bio,
+					bio,avatar
 				},
 				configAuth()
 			);
@@ -240,7 +246,6 @@ const AuthProvider = ({ children }) => {
 		},
 	});
 
-	
 	return (
 		<AuthContext.Provider
 			value={{
