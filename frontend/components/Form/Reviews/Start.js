@@ -22,7 +22,7 @@ function Start({ handleChangeStart = () => {}, initValue = 1 }) {
 							onMouseEnter={() => setRating(id)}
 							onMouseLeave={() => setRating(id)}
 							className={`text-4xl mb-2 ${
-								id <= rating ? 'text-red' : 'text-black'
+								id <= rating ? 'text-yellow-500' : 'text-black'
 							}`}
 						>
 							<HiStar />

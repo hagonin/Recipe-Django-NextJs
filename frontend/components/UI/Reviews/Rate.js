@@ -10,7 +10,7 @@ function Rating({ number }) {
 						key={id}
 						type="button"
 						className={`text-xl ${
-							id <= number ? 'text-red' : 'text-black'
+							id <= number ? 'text-yellow-500' : 'text-black'
 						}`}
 					>
 						<HiStar />

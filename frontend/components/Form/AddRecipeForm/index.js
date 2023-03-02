@@ -11,19 +11,18 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categories, images } from '@utils/constants';
+import { categories, EXIST_RECIPE, images, RECIPE_EXIST } from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
+
 import { FaRegLightbulb } from 'react-icons/fa';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
-import { useRouter } from 'next/router';
-import { useAuthContext } from '@context/auth-context';
 
-export const RECIPE_EXIST = 75;
+
 function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
 		register,
@@ -35,7 +34,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [{ recipe: RECIPE_EXIST }],
+				ingredients: [{ recipe: EXIST_RECIPE }],
 				main_image: null,
 			},
 		},

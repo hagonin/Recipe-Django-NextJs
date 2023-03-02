@@ -3,7 +3,7 @@ import { useFieldArray } from 'react-hook-form';
 import { MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import { InputField, SelectField } from '../FormControl';
-import { unit } from '@utils/constants';
+import { EXIST_RECIPE, unit } from '@utils/constants';
 import { RECIPE_EXIST } from '.';
 
 function Ingredients({ control, register }) {
@@ -64,7 +64,7 @@ function Ingredients({ control, register }) {
 				type="button"
 				onClick={() => {
 					append({
-						recipe: RECIPE_EXIST,
+						recipe: EXIST_RECIPE,
 						title: '',
 						quantity: '',
 						unit: '',

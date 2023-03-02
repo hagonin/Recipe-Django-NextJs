@@ -81,9 +81,6 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const getUser = (access = token.access) =>
-		api.get(ENDPOINT_USER, configAuth(access));
-
 	const logout = async () => {
 		setLoading(true);
 		try {
@@ -137,8 +134,6 @@ const AuthProvider = ({ children }) => {
 				} else {
 					toast.error(_error.detail);
 				}
-			} else {
-				console.log('error in login', status, _error);
 			}
 		} finally {
 			setLoading(false);
@@ -193,51 +188,25 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const updateProfile = async (data) => {
-		const {
-			personal: { username, last_name, first_name },
-			bio,
-			avatar,
-		} = data;
+	const updateProfile = async ({ personal, formProfile }) => {
 		try {
-			await api.patch(
-				ENDPOINT_USER,
-				{ username, last_name, first_name },
-				configAuth()
-			);
-			const profileRes = await api.patch(
-				ENDPOINT_USER_PROFILE,
-				{
-					bio,avatar
-				},
-				configAuth()
-			);
-			const { user, ...rest } = profileRes.data;
-
-			const avatarRes = await setAvatar(formAvatar);
-			const { image_url: avatar } = avatarRes.data;
-
-			setUser({ avatar, ...user, ...rest });
+			await api.patch(ENDPOINT_USER_PROFILE, formProfile, configAuth());
+			const res = await api.patch(ENDPOINT_USER, personal, configAuth());
+			const {
+				profile: { image_url: avatar, ..._profile },
+				...rest
+			} = res.data;
+			setUser({ avatar, ..._profile, ...rest });
 			router.push('/user/profile/');
 		} catch ({ status, _error }) {
 			if (status === 400) {
 				setErrors({ account: { ..._error } });
-			} else {
-				console.log(status, _error);
 			}
 		}
 	};
 
-	const setAvatar = (
-		formAvatar,
-		access = token.access || getAccessTokenFromCookie()
-	) => api.patch(ENDPOINT_USER_AVATAR, formAvatar, configAuth(access));
-
-	const getAvatar = (access = token.access || getAccessTokenFromCookie()) =>
-		api.get(ENDPOINT_USER_AVATAR, configAuth(access));
-
-	const getProfile = (access = token.access) =>
-		api.get(ENDPOINT_USER_PROFILE, configAuth(access));
+	const getUser = (access = token.access) =>
+		api.get(ENDPOINT_USER, configAuth(access));
 
 	const configAuth = (access = token.access) => ({
 		headers: {

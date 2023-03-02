@@ -14,9 +14,9 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 
 function Recipe({ recipe }) {
+	const { isAuthenticated, configAuth, user: userAuthen } = useAuthContext();
 	const { image_url, user, slug, reviews, ..._recipe } = recipe;
 	const [listReviews, setListReviews] = useState(reviews);
-	const { isAuthenticated, configAuth } = useAuthContext();
 	const relatedRecipes = [
 		{
 			id: 1,
@@ -102,11 +102,11 @@ function Recipe({ recipe }) {
 		},
 	];
 
-	const submitRating = async (data) => {
+	const handleSubmitReview = async (data) => {
 		try {
 			const res = await api.post(
 				`/recipe/${slug}/reviews`,
-				data,
+				{ ...data, avatar: userAuthen?.avatar },
 				configAuth()
 			);
 			const recipe = res?.data;
@@ -118,6 +118,14 @@ function Recipe({ recipe }) {
 			console.log(err);
 		}
 	};
+
+	const handleDelete = (index) =>
+		// await api.delete()
+		setListReviews((pre) => {
+			const newArr = [...pre];
+			newArr.splice(index, 1);
+			return newArr;
+		});
 	return (
 		<>
 			<SingRecipe
@@ -127,8 +135,10 @@ function Recipe({ recipe }) {
 			/>
 			<Reviews
 				isAuth={isAuthenticated}
-				onSubmit={submitRating}
+				onSubmit={handleSubmitReview}
 				reviews={listReviews}
+				currentName={userAuthen?.username}
+				handleDelete={handleDelete}
 			/>
 
 			<SubscribeSection />

@@ -2,7 +2,13 @@ import ReviewForm from '@components/Form/Reviews';
 
 import ReviewCard from './ReviewCard';
 
-function Reviews({ isAuth, reviews = [], onSubmit }) {
+function Reviews({
+	isAuth,
+	reviews = [],
+	onSubmit,
+	currentName,
+	handleDelete,
+}) {
 	return (
 		<div className=" my-10 py-10 px-7 bg-third rounded-md">
 			<h1>Reviews ({reviews.length})</h1>
@@ -25,7 +31,10 @@ function Reviews({ isAuth, reviews = [], onSubmit }) {
 				{reviews.map((review, index) => (
 					<ReviewCard
 						{...review}
+						id={index}
 						key={index}
+						hasEdit={currentName === review.user}
+						handleDelete={handleDelete}
 					/>
 				))}
 			</div>

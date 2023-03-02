@@ -50,7 +50,7 @@ function SingRecipe({
 				dangerouslySetInnerHTML={descriptionMarkup}
 				className="mt-5 mb-10"
 			/>
-			<Thumbnail images={images} />
+			{images.length > 0 && <Thumbnail images={images} />}
 
 			<div className="border border-border rounded-md p-6 mt-10">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
