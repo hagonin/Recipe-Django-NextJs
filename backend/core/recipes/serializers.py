@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Recipe, RecipeReview, Ingredient,RecipeImage
-# from users.serializers import ProfileAvatarSerializer
+from users.serializers import UserSerializer
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -47,11 +47,12 @@ class RecipeSerializer(serializers.ModelSerializer):
     
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username',read_only=True)
-    # avatar = ProfileAvatarSerializer()
+    avatar = serializers.CharField(source='user.profile.image_url')
 
     class Meta: 
         model = RecipeReview
-        fields = ('user','title', 'slug','rating','date_added', 'content')
+        fields = ('user','title', 'slug','rating','date_added','avatar',
+                'content')
         extra_kwargs = {
             'slug': {'read_only': True}
         }

@@ -9,13 +9,30 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import CustomUser, Profile
+    
+class ProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer the user profile model 
+    """
+    image_url = serializers.CharField()
+
+    class Meta:
+        model = Profile
+        fields = ('bookmarks','bio','image_url','avatar')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation.pop("avatar")
+
+        return representation
 
 class UserSerializer(serializers.ModelSerializer):	
     date_joined = serializers.ReadOnlyField()
+    profile = ProfileSerializer()
 
     class Meta:
         model = CustomUser
-        fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password')
+        fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password', 'profile')
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -147,29 +164,6 @@ class LogoutSerializer(serializers.Serializer):
 
         except TokenError:
             self.fail('bad_token')
-
-class ProfileSerializer(serializers.ModelSerializer):
-    """
-    Serializer the user profile model 
-    """
-    user = UserSerializer()
-    
-    class Meta:
-        model = Profile
-        fields = ('user','bookmarks','bio')
-
-class ProfileAvatarSerializer(serializers.ModelSerializer):
-    image_url = serializers.CharField()
-    
-    class Meta: 
-        model = Profile
-        fields = ('image_url','avatar')
-        
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation.pop("avatar")
-
-        return representation
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True, required=True)
