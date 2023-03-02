@@ -100,6 +100,29 @@ export const unit = [
 	{ id: 9, name: 'slice(s)' },
 ];
 
+export const ratingScale = [
+	{
+		id: 1,
+		content: "Couldn't eat it.",
+	},
+	{
+		id: 2,
+		content: 'Did not like it.',
+	},
+	{
+		id: 3,
+		content: 'It was Ok.',
+	},
+	{
+		id: 4,
+		content: 'Liked it.',
+	},
+	{
+		id: 5,
+		content: 'Loved it.',
+	},
+];
+
 // endpoint
 export const ENDPOINT_REGISTER = '/user/register';
 export const ENDPOINT_LOGOUT = '/user/logout';
@@ -124,3 +147,4 @@ export const ENDPOINT_RECIPE_DETAIL = '/recipe/recipe-detail/';
 export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
+

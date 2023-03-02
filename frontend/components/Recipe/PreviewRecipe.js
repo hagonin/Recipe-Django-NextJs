@@ -1,14 +1,15 @@
-import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
 import { FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
-import Button from '@components/UI/Button';
-import Img from '@components/UI/Image';
 import { MdDelete, MdDeleteForever, MdEdit } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
 import createMarkup from '@utils/createMarkup';
 import { GrAdd } from 'react-icons/gr';
-import { memo, useState } from 'react';
+
+import Button from '@components/UI/Button';
+import Img from '@components/UI/Image';
 
 function PreviewRecipe({
 	data,
@@ -16,6 +17,8 @@ function PreviewRecipe({
 	editIngredient,
 	addNewIngredient,
 	deleteIngredient,
+	goToUpload,
+	goToEdit,
 }) {
 	const {
 		id,
@@ -36,12 +39,7 @@ function PreviewRecipe({
 		source,
 		slug,
 	} = data;
-	const router = useRouter();
-	const goToUpload = () =>
-		router.push(`/user/recipe/${slug}/upload_image/${id}`);
-	const goToEdit = () => {
-		router.push(`/user/recipe/${slug}/update`);
-	};
+	
 
 	return (
 		<>

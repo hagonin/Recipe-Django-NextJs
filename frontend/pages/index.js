@@ -69,6 +69,7 @@ export default function Home({ categories }) {
 					(category) =>
 						category.data.length > 0 && (
 							<GroupCategory
+								key={category.id}
 								list={category.data}
 								name={category.name}
 							/>

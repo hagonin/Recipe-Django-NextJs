@@ -26,6 +26,7 @@ function RecipePreView() {
 		data: recipe,
 		isLoading,
 		mutate,
+		isValidating,
 	} = useSWR(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, fetcher);
 
 	const [showModal, setShowModal] = useState(false);
@@ -65,8 +66,16 @@ function RecipePreView() {
 		toast.success('delete success');
 	};
 
+	const goToUpload = () =>
+		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`);
+
+	const goToEdit = () => {
+		router.push(`/user/recipe/${recipe?.slug}/update`);
+	};
+	
 	return (
 		<div className="container py-14">
+			{isValidating && 'Validating...'}
 			{isLoading ? (
 				'LOADING...'
 			) : recipe ? (
@@ -76,6 +85,8 @@ function RecipePreView() {
 					editIngredient={handleEditIngredient}
 					addNewIngredient={addNewIngredient}
 					deleteIngredient={deleteIngredient}
+					goToUpload={goToUpload}
+					goToEdit={goToEdit}
 				/>
 			) : (
 				<h2>No preview</h2>

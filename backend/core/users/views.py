@@ -254,7 +254,7 @@ class BookmarkView(generics.ListCreateAPIView):
     profile = Profile.objects.all()
 
     def get_queryset(self):
-        user = CustomUser.objects.get(id=self.kwargs['id'])
+        user = CustomUser.objects.get(id=self.kwargs['pk'])
         user_profile = get_object_or_404(self.profile, user=user)
         
         return user_profile.bookmarks.all()
