@@ -29,15 +29,15 @@ class Category(models.TextChoices):
     SIDEDISH = 'side dish'
     MARINADES = 'marinades and sauces'
 
-def create_slug(title):
-    slug = slugify(title)
-    qs = Recipe.objects.filter(slug=slug)
-    exists = qs.exists()
-    if exists:
-        # slug = "%s%s" %(slug, qs.first().id)
-        return Response(_("Recipe already exist."),
-            status=status.HTTP_400_BAD_REQUEST)
-    return slug
+# def create_slug(title):
+#     slug = slugify(title)
+#     qs = Recipe.objects.filter(slug=slug)
+#     exists = qs.exists()
+#     if exists:
+#         # slug = "%s%s" %(slug, qs.first().id)
+#         return Response(_("Recipe already exist."),
+#             status=status.HTTP_400_BAD_REQUEST)
+#     return slug
 
 class Recipe(models.Model):
     """
@@ -73,10 +73,10 @@ class Recipe(models.Model):
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
     
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = create_slug(self.title)
-        return super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.slug:
+    #         self.slug = create_slug(self.title)
+    #     return super().save(*args, **kwargs)
 
     @property
     def image_url(self):
@@ -105,6 +105,9 @@ class Ingredient(models.Model):
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
 
+    class Meta: 
+        unique_together = ('recipe', 'desc')
+        
     def __str__(self):
         return self.desc
 
@@ -144,6 +147,7 @@ class RecipeReview(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        unique_together = ('recipe', 'slug')
         ordering = ("-date_added",)
 
     def __str__(self):
