@@ -13,7 +13,7 @@ function ChangePasswordForm({ onSubmit }) {
 		handleSubmit,
 		setError,
 		reset,
-		formState: { errors: formErrors, isSubmitting },
+		formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
 	} = useForm();
 
 	useEffect(() => {
@@ -31,11 +31,11 @@ function ChangePasswordForm({ onSubmit }) {
 	}, [errors]);
 
 	useEffect(() => {
-		return () => {
+		if (isSubmitSuccessful) {
 			reset();
 			setErrors(null);
-		};
-	}, []);
+		}
+	}, [isSubmitSuccessful]);
 
 	return (
 		<Form

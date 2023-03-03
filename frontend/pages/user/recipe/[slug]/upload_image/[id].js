@@ -1,10 +1,12 @@
-import UploadPhoto from '@components/Form/AddRecipeForm/UploadPhoto';
-import PrivateRoutes from '@components/Layouts/PrivateRoutes';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import { ENDPOINT_RECIPE_IMAGE } from '@utils/constants';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+
+import UploadPhoto from '@components/Form/AddRecipeForm/UploadPhoto';
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();

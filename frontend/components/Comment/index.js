@@ -5,13 +5,8 @@ function Comments({ comment_list }) {
 		<div className="flex flex-col gap-8">
 			{comment_list.map(({ comments, id, ..._comment }) => {
 				return (
-					<>
-						{
-							<CommentCard
-								key={id}
-								{..._comment}
-							/>
-						}
+					<div key={id}>
+						{<CommentCard {..._comment} />}
 						<div className="ml-10 flex flex-col gap-8">
 							{comments.map((comment) => (
 								<CommentCard
@@ -20,7 +15,7 @@ function Comments({ comment_list }) {
 								/>
 							))}
 						</div>
-					</>
+					</div>
 				);
 			})}
 		</div>

@@ -11,19 +11,23 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categories, images } from '@utils/constants';
+import {
+	categories,
+	EXIST_RECIPE,
+	images,
+	RECIPE_EXIST,
+} from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
+
 import { FaRegLightbulb } from 'react-icons/fa';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
-import { useRouter } from 'next/router';
-import { useAuthContext } from '@context/auth-context';
+import Instructions from './Instructions';
 
-const RECIPE_EXIST = 65;
 function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
 		register,
@@ -35,7 +39,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [{ recipe: 65 }],
+				ingredients: [{ recipe: EXIST_RECIPE }],
 				main_image: null,
 			},
 		},
@@ -46,9 +50,18 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		const { ingredients, ...rest } = recipe;
-		let { main_image } = recipe;
+		const { ingredients, instructions: ins, ...rest } = recipe;
 		const form = new FormData();
+		// instructions
+		const instructions = ins
+			.map(
+				(content, index) =>
+					`<div><h4>Step ${index + 1}:</h4><p>${content}</p></div>`
+			)
+			.join('');
+		form.append('instructions', instructions);
+
+		let { main_image } = recipe;
 		// add ingredients to form
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
@@ -72,7 +85,10 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(createFormData)} noValidate={true}>
+		<form
+			onSubmit={handleSubmit(createFormData)}
+			noValidate={true}
+		>
 			<div className="flex flex-col gap-4">
 				<Title title="Recipe Detail" />
 				<div className="flex gap-6">
@@ -149,30 +165,10 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 						/>
 					)}
 				/>
-				<Controller
-					name="recipe.instructions"
+				<Instructions
+					register={register}
 					control={control}
-					render={({ field }) => (
-						<RichTextField
-							field={field}
-							label="Instructions"
-							placeholder="Step 1: Make the dressing:
-In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine vinegar, water, dried basil, garlic powder, oregano, onion powder, salt, sugar, and red pepper flakes,..."
-							info={{
-								content:
-									'Explain how to make your recipe, including oven temperatures, baking or cooking times, and pan sizes, etc. Use optional headers to organize the different parts of the recipe (i.e. Prep, Bake, Decorate)',
-								placement: 'right',
-							}}
-						/>
-					)}
 				/>
-				{/* <div>
-					<Images
-						control={control}
-						register={register}
-						handleChangeImage={setValue}
-					/>
-				</div> */}
 			</div>
 			<div className="mt-5">
 				<Title
@@ -180,15 +176,19 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					info={{
 						content: (
 							<div>
-								Enter your ingredients. Those ingredient can be a type of
-								ingredient, or any special preparation.
+								Enter your ingredients. Those ingredient can be
+								a type of ingredient, or any special
+								preparation.
 							</div>
 						),
 						placement: 'right',
 					}}
 				/>
 
-				<Ingredients control={control} register={register} />
+				<Ingredients
+					control={control}
+					register={register}
+				/>
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
@@ -199,7 +199,8 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					error={formErr?.recipe?.search_vector}
 					placeholder="e.g. salad dressings"
 					info={{
-						content: 'Keyword that can be used to search for this recipe',
+						content:
+							'Keyword that can be used to search for this recipe',
 						placement: 'right',
 					}}
 				/>
@@ -225,12 +226,16 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 			/>
 			<p className="mx-auto mt-5">
 				<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
-				You can add more photos after you add the recipe. We all love photos
-				recipes with good finished-product photos generally sort higher than
-				those without.
+				You can add more photos after you add the recipe. We all love
+				photos recipes with good finished-product photos generally sort
+				higher than those without.
 			</p>
 			<div className="flex gap-4 mt-5 justify-end items-center">
-				<Button className="cancle" type="reset" onClick={handleCancel}>
+				<Button
+					className="cancle"
+					type="reset"
+					onClick={handleCancel}
+				>
 					Cancel
 				</Button>
 				<Button

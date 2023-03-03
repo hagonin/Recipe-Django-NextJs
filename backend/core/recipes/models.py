@@ -1,13 +1,8 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.db.models import Index
-from django.core.exceptions import ValidationError
 from django.core import validators
-from rest_framework import status
-from rest_framework.response import Response
-from django.http import Http404
 from django.conf import settings
-from django.utils.text import slugify
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 from django.db.models import Avg
@@ -28,16 +23,6 @@ class Category(models.TextChoices):
     SOUPS = 'soups, stew and chill'
     SIDEDISH = 'side dish'
     MARINADES = 'marinades and sauces'
-
-def create_slug(title):
-    slug = slugify(title)
-    qs = Recipe.objects.filter(slug=slug)
-    exists = qs.exists()
-    if exists:
-        # slug = "%s%s" %(slug, qs.first().id)
-        return Response(_("Recipe already exist."),
-            status=status.HTTP_400_BAD_REQUEST)
-    return slug
 
 class Recipe(models.Model):
     """
@@ -72,11 +57,6 @@ class Recipe(models.Model):
 
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = create_slug(self.title)
-        return super().save(*args, **kwargs)
 
     @property
     def image_url(self):
@@ -100,13 +80,16 @@ class Ingredient(models.Model):
     Returns ingredients for a recipe
     """
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients',null=True)
-    title = models.CharField(max_length=220, blank=True)
-    desc = models.TextField(blank=True, null=True)  
+    heading = models.CharField(max_length=220, blank=True, null=True)
+    title = models.CharField(max_length=1500,blank=True)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
 
+    class Meta: 
+        unique_together = ('recipe', 'title')
+        
     def __str__(self):
-        return self.desc
+        return self.title
 
 
 class RecipeImage(models.Model):
@@ -134,7 +117,7 @@ class RecipeReview(models.Model):
     """
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='reviews', related_query_name='review')
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True, null=True)
     slug = models.SlugField(db_index=True, max_length=255)
     rating = models.PositiveIntegerField(validators=[
@@ -144,6 +127,7 @@ class RecipeReview(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        unique_together = ('recipe', 'slug')
         ordering = ("-date_added",)
 
     def __str__(self):

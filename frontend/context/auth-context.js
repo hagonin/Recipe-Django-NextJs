@@ -64,12 +64,13 @@ const AuthProvider = ({ children }) => {
 	const tokenAuthen = async () => {
 		if (token.access || token.refresh) {
 			try {
-				const profile = await getProfile();
-				const { user, ...rest } = profile.data;
-				const avatar = await getAvatar();
-				const { image_url } = avatar.data;
+				const user = await getUser();
+				const {
+					profile: { image_url: avatar, ..._profile },
+					...rest
+				} = user.data;
 
-				setUser({ ...user, ...rest, avatar: image_url });
+				setUser({ avatar, ..._profile, ...rest });
 			} catch (error) {
 				console.log('ERROR AT TOKEN AUTHENTICATION', error);
 			} finally {
@@ -112,12 +113,13 @@ const AuthProvider = ({ children }) => {
 			setToken({ access: access, refresh: refresh });
 			remember && setCookie(access, refresh);
 
-			const profile = await getProfile(access);
-			const { user, ...rest } = profile.data;
+			const user = await getUser(access);
+			const {
+				profile: { image_url: avatar, ..._profile },
+				...rest
+			} = user.data;
 
-			const avatar = await getAvatar(access);
-			const { image_url } = avatar.data;
-			setUser({ ...user, ...rest, avatar: image_url });
+			setUser({ avatar, ..._profile, ...rest });
 			router.push('/');
 		} catch ({ status, _error }) {
 			if (status === 400) {
@@ -132,8 +134,6 @@ const AuthProvider = ({ children }) => {
 				} else {
 					toast.error(_error.detail);
 				}
-			} else {
-				console.log('error in login', status, _error);
 			}
 		} finally {
 			setLoading(false);
@@ -152,6 +152,7 @@ const AuthProvider = ({ children }) => {
 				);
 			})
 			.catch();
+
 	const signup = async ({
 		username,
 		firstname,
@@ -187,51 +188,62 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const updateProfile = async (data) => {
-		const {
-			personal: { username, last_name, first_name },
-			bio,
-			avatar: formAvatar,
-		} = data;
+	const updateProfile = async ({ personal, formProfile }) => {
 		try {
-			await api.patch(
-				ENDPOINT_USER,
-				{ username, last_name, first_name },
-				configAuth()
-			);
-			const profileRes = await api.patch(
-				ENDPOINT_USER_PROFILE,
-				{
-					bio,
-				},
-				configAuth()
-			);
-			const { user, ...rest } = profileRes.data;
-
-			const avatarRes = await setAvatar(formAvatar);
-			const { image_url: avatar } = avatarRes.data;
-
-			setUser({ avatar, ...user, ...rest });
+			await api.patch(ENDPOINT_USER_PROFILE, formProfile, configAuth());
+			const res = await api.patch(ENDPOINT_USER, personal, configAuth());
+			const {
+				profile: { image_url: avatar, ..._profile },
+				...rest
+			} = res.data;
+			setUser({ avatar, ..._profile, ...rest });
 			router.push('/user/profile/');
 		} catch ({ status, _error }) {
 			if (status === 400) {
 				setErrors({ account: { ..._error } });
-			} else {
-				console.log(status, _error);
 			}
 		}
 	};
 
-	const setAvatar = (
-		formAvatar,
-		access = token.access || getAccessTokenFromCookie()
-	) => api.patch(ENDPOINT_USER_AVATAR, formAvatar, configAuth(access));
+	const getUser = (access = token.access) =>
+		api.get(ENDPOINT_USER, configAuth(access));
 
-	const getAvatar = (access = token.access || getAccessTokenFromCookie()) =>
-		api.get(ENDPOINT_USER_AVATAR, configAuth(access));
+	const handleToggleBookmark = async (act, id) => {
+		if (!act) {
+			api.post(
+				`user/profile/${user?.id}/bookmarks`,
+				{
+					id: id,
+				},
+				configAuth()
+			).then((res) => {
+				setUser((pre) => {
+					const newBookmarks = [...user?.bookmarks, id];
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Add bookmark success');
+			});
+		} else {
+			api.delete(`user/profile/${user?.id}/bookmarks`, {
+				headers: configAuth().headers,
+				data: {
+					id: id,
+				},
+			}).then(() => {
+				setUser((pre) => {
+					const newBookmarks = user?.bookmarks.filter(
+						(item) => item !== id
+					);
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Delete bookmark success');
+			});
+		}
+	};
 
-	const getProfile = (access = token.access) =>
-		api.get(ENDPOINT_USER_PROFILE, configAuth(access));
+	const checkBookmarkAct = (bookmarkID) =>
+		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
+		0;
 
 	const configAuth = (access = token.access) => ({
 		headers: {
@@ -240,7 +252,6 @@ const AuthProvider = ({ children }) => {
 		},
 	});
 
-	
 	return (
 		<AuthContext.Provider
 			value={{
@@ -256,6 +267,8 @@ const AuthProvider = ({ children }) => {
 				token,
 				handleResendVerify,
 				configAuth,
+				handleToggleBookmark,
+				checkBookmarkAct,
 			}}
 		>
 			{children}

@@ -1,7 +1,8 @@
+import Link from 'next/link';
+
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
-import Link from 'next/link';
 
 function About(props) {
 	const { isAuthenticated } = useAuthContext();

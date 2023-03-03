@@ -12,7 +12,7 @@ class RecipeImageInline(admin.StackedInline):
     extra = 0
 
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin): 
+class RecipeModelAdmin(admin.ModelAdmin): 
     inlines = [IngredientInline,RecipeImageInline]
     search_fields = ('title','ingredients')
     list_display= ('title','user')
@@ -21,7 +21,9 @@ class RecipeAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
     raw_id_fields = ('user',)
 
-admin.site.register(RecipeReview)
+@admin.register(RecipeReview)
+class RecipeReviewModelAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('title',)}
 
 
 admin.site.unregister(Group)
