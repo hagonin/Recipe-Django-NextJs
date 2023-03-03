@@ -21,7 +21,7 @@ function Update() {
 	const { slug } = router?.query;
 	const { fetcher } = useRecipeContext();
 	const { data, isLoading, mutate } = useSWR(
-		`${ENDPOINT_RECIPE_DETAIL}${slug}`,
+		`${ENDPOINT_RECIPE_DETAIL}${slug}/`,
 		fetcher
 	);
 	const { configAuth } = useAuthContext();

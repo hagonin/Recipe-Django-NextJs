@@ -49,9 +49,9 @@ function Profile() {
 
 	const onDeleteBookmark = async (act, id) => {
 		await handleToggleBookmark(act, id);
-		await  mutate2();
+		await mutate2();
 	};
-	
+
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">Profile</h1>
@@ -87,7 +87,6 @@ function Profile() {
 				<p>{user?.bio}</p>
 			</div>
 			{deleting && 'Deleting...'}
-			<button>+ Add bookmark</button>
 			<Tabs>
 				<TabPanel tab="All Recipes">
 					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
@@ -109,7 +108,7 @@ function Profile() {
 											handleDelete={handleDeleteRecipe}
 											goToUpdate={goToUpdate}
 											goToAddPhoto={goToAddPhoto}
-											isPreview
+											secondary
 										/>
 										<span>{recipe.author}</span>
 									</div>
@@ -135,6 +134,7 @@ function Profile() {
 									id={bookmark.id}
 									actBookmark
 									handleToggleBookmark={onDeleteBookmark}
+									noBookmark
 								/>
 							))}
 						</div>

@@ -11,7 +11,12 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categories, EXIST_RECIPE, images, RECIPE_EXIST } from '@utils/constants';
+import {
+	categories,
+	EXIST_RECIPE,
+	images,
+	RECIPE_EXIST,
+} from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
@@ -21,7 +26,7 @@ import 'tippy.js/themes/light.css';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
-
+import Instructions from './Instructions';
 
 function AddRecipeForm({ onSubmit, handleCancel }) {
 	const {
@@ -45,9 +50,18 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		const { ingredients, ...rest } = recipe;
-		let { main_image } = recipe;
+		const { ingredients, instructions: ins, ...rest } = recipe;
 		const form = new FormData();
+		// instructions
+		const instructions = ins
+			.map(
+				(content, index) =>
+					`<div><h4>Step ${index + 1}:</h4><p>${content}</p></div>`
+			)
+			.join('');
+		form.append('instructions', instructions);
+
+		let { main_image } = recipe;
 		// add ingredients to form
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
@@ -151,30 +165,10 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 						/>
 					)}
 				/>
-				<Controller
-					name="recipe.instructions"
+				<Instructions
+					register={register}
 					control={control}
-					render={({ field }) => (
-						<RichTextField
-							field={field}
-							label="Instructions"
-							placeholder="Step 1: Make the dressing:
-In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine vinegar, water, dried basil, garlic powder, oregano, onion powder, salt, sugar, and red pepper flakes,..."
-							info={{
-								content:
-									'Explain how to make your recipe, including oven temperatures, baking or cooking times, and pan sizes, etc. Use optional headers to organize the different parts of the recipe (i.e. Prep, Bake, Decorate)',
-								placement: 'right',
-							}}
-						/>
-					)}
 				/>
-				{/* <div>
-					<Images
-						control={control}
-						register={register}
-						handleChangeImage={setValue}
-					/>
-				</div> */}
 			</div>
 			<div className="mt-5">
 				<Title
