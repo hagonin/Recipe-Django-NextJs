@@ -18,9 +18,10 @@ function RecipePreView() {
 		addIngredientToRecipe,
 		deleteIngredientById,
 	} = useRecipeContext();
+	const router = useRouter();
 	const {
 		query: { slug },
-	} = useRouter();
+	} = router;
 	const {
 		data: recipe,
 		isLoading,
