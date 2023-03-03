@@ -105,11 +105,13 @@ class ImageViewSet(viewsets.ModelViewSet):
         return Response("Success")
     
 class RecipeReviewViewset(mixins.CreateModelMixin,
-                    mixins.DestroyModelMixin,
-                    viewsets.GenericViewSet):
+                        mixins.DestroyModelMixin,
+                        viewsets.GenericViewSet):
     """
     Add and delete reviews a recipe
     """
+    
+    lookup_field = 'slug'
     queryset = RecipeReview.objects.all()
     serializer_class = serializers.ReviewSerializer
     permission_classes = [IsAuthenticated, IsOwner]
@@ -118,7 +120,8 @@ class RecipeReviewViewset(mixins.CreateModelMixin,
         if self.action == "create":
             return get_object_or_404(Recipe, slug = self.kwargs['recipe_slug'])
         if self.action == "destroy":
-            return get_object_or_404(RecipeReview, recipe__slug= self.kwargs['recipe_slug'])
+            return get_object_or_404(RecipeReview, recipe__slug= self.kwargs['recipe_slug'],
+                                    slug=self.kwargs['slug'])
 
     def perform_create(self, serializer):
         serializer.save(recipe=self.get_object(), user=self.request.user)        
