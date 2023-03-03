@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { GrStatusGood } from 'react-icons/gr';
 import { images } from '@utils/constants';
 

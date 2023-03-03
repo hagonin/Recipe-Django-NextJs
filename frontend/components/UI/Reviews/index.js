@@ -9,15 +9,11 @@ function Reviews({
 	currentUserId,
 	handleDelete,
 }) {
-	const reviewed =
-		reviews.filter((review) => review.user_id === currentUserId).length > 0;
 	return (
 		<div className=" my-10 py-10 px-7 bg-third rounded-md">
 			<h1>Reviews ({reviews.length})</h1>
 			<div className="mt-5">
-				{isAuth && reviewed ? (
-					<span>You reviewed. Delete your review to make new</span>
-				) : isAuth ? (
+				{isAuth ? (
 					<ReviewForm onSubmit={onSubmit} />
 				) : (
 					<>

@@ -1,11 +1,11 @@
 import api from '@services/axios';
+import { categories, ENDPOINT_RECIPE } from '@utils/constants';
+
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
-import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
-import { categories } from '@utils/constants';
 
 export default function Home({ categories }) {
 	const recipesRandom = [

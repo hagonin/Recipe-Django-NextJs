@@ -1,14 +1,13 @@
-import { useRecipeContext } from '@context/recipe-context';
-import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { toast } from 'react-toastify';
+import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { useRecipeContext } from '@context/recipe-context';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import { Form } from '@components/Form/FormControl';
 import IngredientUpdateForm from '@components/Form/Recipe/Ingredient/Update';
 
 function RecipePreView() {
@@ -72,7 +71,7 @@ function RecipePreView() {
 	const goToEdit = () => {
 		router.push(`/user/recipe/${recipe?.slug}/update`);
 	};
-	
+
 	return (
 		<div className="container py-14">
 			{isValidating && 'Validating...'}

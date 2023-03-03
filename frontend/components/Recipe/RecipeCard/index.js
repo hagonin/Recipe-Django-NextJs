@@ -4,6 +4,7 @@ import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import Link from 'next/link';
 import { AiFillClockCircle } from 'react-icons/ai';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GrUpdate, GrView } from 'react-icons/gr';
 import { MdDelete, MdPhoto } from 'react-icons/md';
 
@@ -25,7 +26,10 @@ function RecipeCard({
 	goToUpdate,
 	goToAddPhoto,
 	isPreview,
+	actBookmark,
+	handleToggleBookmark,
 }) {
+	
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
 	return (
@@ -34,17 +38,29 @@ function RecipeCard({
 				border ? 'pb-8 mt-8 border-b border-border' : ''
 			} ${className}`}
 		>
-			<Link
-				href={isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`}
-				className={`${lgCard ? 'lg:col-span-5' : ''}`}
-			>
-				<Img
-					src={image}
-					alt={`recipe ${name}`}
-					className="h-64"
-					cover
-				/>
-			</Link>
+			<div className={`relative ${lgCard ? 'lg:col-span-5' : ''}`}>
+				<Link
+					href={
+						isPreview ? `/user/recipe/${slug}` : `/recipes/${slug}`
+					}
+				>
+					<Img
+						src={image}
+						alt={`recipe ${name}`}
+						className="h-64"
+						cover
+					/>
+				</Link>
+
+				<button
+					onClick={() => handleToggleBookmark(actBookmark, id)}
+					className={`text-2xl absolute top-2 right-2 shadow-lg ${
+						actBookmark ? 'text-primary' : 'text-white'
+					} `}
+				>
+					<BsBookmarkFill />
+				</button>
+			</div>
 			<div className={`${lgCard ? 'lg:col-span-7' : ''}`}>
 				<Link
 					href={

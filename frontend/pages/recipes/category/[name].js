@@ -1,10 +1,38 @@
-import WidgetLayout from '@components/Layouts/WidgetLayout';
-import Category from '@components/Recipe/Category';
 import api from '@services/axios';
 import { categories, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 
+import WidgetLayout from '@components/Layouts/WidgetLayout';
+import RecipeCard from '@components/Recipe/RecipeCard';
+import { useAuthContext } from '@context/auth-context';
+import Img from '@components/UI/Image';
+
 function CategoryPage({ category }) {
-	return <Category {...category} />;
+	const { handleToggleBookmark, checkBookmarkAct } = useAuthContext();
+	return (
+		<>
+			<div className="border-b border-border pb-5">
+				<Img
+					src={category.cover}
+					alt={category.name}
+				/>
+				<h1 className="mt-6 capitalize">{category.name}</h1>
+				<p className="mt-3">{category.desc}</p>
+			</div>
+			<div className="grid">
+				{category.recipes.map((recipe) => (
+					<RecipeCard
+						key={recipe.id}
+						{...recipe}
+						handleToggleBookmark={handleToggleBookmark}
+						actBookmark={checkBookmarkAct(recipe.id)}
+						lgCard
+						border
+						className="grid lg:grid-cols-12 gap-6 grid-cols-1"
+					/>
+				))}
+			</div>
+		</>
+	);
 }
 
 export default CategoryPage;
@@ -21,6 +49,7 @@ export const getStaticProps = async ({ params }) => {
 	});
 	const recipes = res?.data?.results.map(
 		({
+			id,
 			title: name,
 			slug,
 			image_url: image,
@@ -29,6 +58,7 @@ export const getStaticProps = async ({ params }) => {
 			description: summary,
 			updated_at: date,
 		}) => ({
+			id,
 			name,
 			slug,
 			image,

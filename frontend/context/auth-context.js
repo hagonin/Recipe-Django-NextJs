@@ -208,6 +208,43 @@ const AuthProvider = ({ children }) => {
 	const getUser = (access = token.access) =>
 		api.get(ENDPOINT_USER, configAuth(access));
 
+	const handleToggleBookmark = async (act, id) => {
+		if (!act) {
+			api.post(
+				`user/profile/${user?.id}/bookmarks`,
+				{
+					id: id,
+				},
+				configAuth()
+			).then((res) => {
+				setUser((pre) => {
+					const newBookmarks = [...user?.bookmarks, id];
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Add bookmark success');
+			});
+		} else {
+			api.delete(`user/profile/${user?.id}/bookmarks`, {
+				headers: configAuth().headers,
+				data: {
+					id: id,
+				},
+			}).then(() => {
+				setUser((pre) => {
+					const newBookmarks = user?.bookmarks.filter(
+						(item) => item !== id
+					);
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Delete bookmark success');
+			});
+		}
+	};
+
+	const checkBookmarkAct = (bookmarkID) =>
+		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
+		0;
+
 	const configAuth = (access = token.access) => ({
 		headers: {
 			Authorization: `Bearer ${access}`,
@@ -230,6 +267,8 @@ const AuthProvider = ({ children }) => {
 				token,
 				handleResendVerify,
 				configAuth,
+				handleToggleBookmark,
+				checkBookmarkAct,
 			}}
 		>
 			{children}

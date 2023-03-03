@@ -1,10 +1,8 @@
 import { useAuthContext } from '@context/auth-context';
+import { images } from '@utils/constants';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
-import { images } from '@utils/constants';
-import api from '@services/axios';
-import { toast } from 'react-toastify';
 
 function Login() {
 	const { login, handleResendVerify } = useAuthContext();

@@ -1,11 +1,11 @@
-import WidgetLayout from '@components/Layouts/WidgetLayout';
-import Loader from '@components/UI/Loader';
-import api from '@services/axios';
-import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import api from '@services/axios';
+import { ENDPOINT_RECIPE} from '@utils/constants';
+import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
+
+import WidgetLayout from '@components/Layouts/WidgetLayout';
 
 function Search() {
 	const {
@@ -27,6 +27,7 @@ function Search() {
 				setLoading(false);
 			});
 	}, [search]);
+	
 	return (
 		<div className="container">
 			<h1 className=" flex gap-2">
