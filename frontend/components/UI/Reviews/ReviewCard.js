@@ -6,6 +6,7 @@ import Img from '../Image';
 
 function ReviewCard({
 	id,
+	slug,
 	user,
 	rating,
 	date_added,
@@ -30,7 +31,7 @@ function ReviewCard({
 						{hasEdit && (
 							<button
 								className="text-2xl text-red"
-								onClick={() => handleDelete(id)}
+								onClick={() => handleDelete(slug, id)}
 							>
 								<MdDelete />
 							</button>

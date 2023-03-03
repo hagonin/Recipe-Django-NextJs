@@ -12,7 +12,9 @@ function ReviewForm({ onSubmit }) {
 		formState: { isSubmitting, isSubmitSuccessful },
 		setValue,
 		reset,
-	} = useForm();
+	} = useForm({defaultValues: {
+		avatar: ''
+	}});
 
 	const handleChangeStart = (rating) => {
 		setValue('review.rating', rating);

@@ -60,18 +60,18 @@ function Recipe({ recipe }) {
 				{ ...data, avatar: user?.avatar },
 				configAuth()
 			);
-			const recipe = res?.data;
+			const review = res?.data;
 			toast.success('Your review has been submitted successfully.');
 			setListReviews((preReviews) => {
-				return [recipe, ...preReviews];
+				return [review, ...preReviews];
 			});
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	const handleDelete = async (id) => {
-		await api.delete(`recipe/${slug}/reviews${id}/`, configAuth());
+	const handleDelete = async (review_slug, id) => {
+		await api.delete(`recipe/${slug}/reviews${review_slug}/`, configAuth());
 		setListReviews((pre) => {
 			const newArr = pre.filter((pre) => pre.id !== id);
 			return newArr;
