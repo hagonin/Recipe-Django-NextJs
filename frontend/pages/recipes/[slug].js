@@ -105,7 +105,7 @@ function Recipe({ recipe }) {
 	const handleSubmitReview = async (data) => {
 		try {
 			const res = await api.post(
-				`/recipe/${slug}/reviews`,
+				`recipe/${slug}/reviews`,
 				{ ...data, avatar: userAuthen?.avatar },
 				configAuth()
 			);
@@ -119,13 +119,15 @@ function Recipe({ recipe }) {
 		}
 	};
 
-	const handleDelete = (index) =>
-		// await api.delete()
+	const handleDelete = async (id) => {
+		await api.delete(`recipe/${slug}/reviews${id}/`, configAuth());
 		setListReviews((pre) => {
-			const newArr = [...pre];
-			newArr.splice(index, 1);
+			const newArr = pre.filter((pre) => pre.id !== id);
 			return newArr;
 		});
+		toast.success('Delete review success');
+	};
+
 	return (
 		<>
 			<SingRecipe
@@ -137,7 +139,7 @@ function Recipe({ recipe }) {
 				isAuth={isAuthenticated}
 				onSubmit={handleSubmitReview}
 				reviews={listReviews}
-				currentName={userAuthen?.username}
+				currentUserId={userAuthen?.id}
 				handleDelete={handleDelete}
 			/>
 

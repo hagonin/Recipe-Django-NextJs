@@ -26,7 +26,6 @@ function ReviewCard({
 				/>
 				<div className="flex-1">
 					<div className="flex items-center justify-between">
-						{id}
 						<h3>{user}</h3>
 						{hasEdit && (
 							<button
