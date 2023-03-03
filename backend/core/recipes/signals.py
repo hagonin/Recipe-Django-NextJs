@@ -1,5 +1,6 @@
 import re
-
+# from django.core.cache import cache
+# from django.db.models.signals import post_delete, post_save
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
@@ -47,3 +48,13 @@ def add_slug_to_reviews(instance, **kwargs):
     """sent before the recipereview model save() 
     called  to give a unique slug"""
     instance.slug = unique_slugify(instance, instance.title)
+
+
+# @receiver(post_delete, sender=Object)
+# def object_post_delete_handler(sender, **kwargs):
+#      cache.delete('objects')
+
+
+# @receiver(post_save, sender=Object)
+# def object_post_save_handler(sender, **kwargs):
+#     cache.delete('objects')

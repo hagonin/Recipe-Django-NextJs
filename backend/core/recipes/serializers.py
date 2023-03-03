@@ -57,8 +57,8 @@ class ReviewSerializer(serializers.ModelSerializer):
             'slug': {'read_only': True}
         }
 
-class RecipeDetailSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username',read_only=True)
+class RecipeDetailReadSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
@@ -72,6 +72,23 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time','search_vector',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
+        
+    def get_reviews(self, obj):
+        reviews = obj.reviews.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return serializer.data
+    
+class RecipeDetailWriteSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username',read_only=True)
+    ingredients = IngredientSerializer(many=True)
+    images = ImageSerializer(many=True,required=False)
+    
+
+    class Meta:
+        model = Recipe
+        fields = ('id','user','title','slug','category','main_image','image_url','ingredients',
+                'description', 'instructions', 'images', 'serving', 'prep_time','cook_time','search_vector',
+                'created_at','updated_at','source','notes')
 
     
     def _create_ingredients(self, ingredients, recipe):
@@ -112,7 +129,4 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-    def get_reviews(self, obj):
-        reviews = obj.reviews.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        return serializer.data
+ 

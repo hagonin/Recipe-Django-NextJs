@@ -163,7 +163,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'recipe',
+        'LOCATION': 'recipe_cache',
     }
 }
 

@@ -6,15 +6,17 @@ from django.views.decorators.vary import vary_on_cookie
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import mixins
-from rest_framework import mixins
-from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly  
+from rest_framework.mixins import (CreateModelMixin,DestroyModelMixin, 
+                                UpdateModelMixin)
+
+from rest_framework.permissions import IsAuthenticated,AllowAny  
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
 from .filters import SearchVectorFilter
 from . import serializers
 from .models import Recipe,RecipeImage,RecipeReview,Ingredient
+from users.models import CustomUser
 
 from .permissions import IsOwner
 
@@ -31,19 +33,22 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ('category','ingredients__title', 'title')
 
     
-class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
-                            mixins.DestroyModelMixin,
-                            mixins.UpdateModelMixin,
-                            viewsets.GenericViewSet):
+class RecipeDetailViewSet(CreateModelMixin,
+                        UpdateModelMixin,
+                        DestroyModelMixin,
+                        viewsets.GenericViewSet):
     """
     CRUD recipe
     """
-    lookup_field = 'slug'
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeDetailSerializer
-    ordering_fields = ['created_at']  
+    lookup_field = 'slug' 
+    queryset = Recipe.objects.all()   
     permission_classes = [IsOwner]
-    
+    serializer_class = serializers.RecipeDetailWriteSerializer
+    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
+    search_fields = ['^search_vector']
+    ordering_fields = ['created_at', 'rating']
+    filterset_fields = ('category','ingredients__title', 'title')
+
     
     def _params_to_ints(self, qs):
         """Convert a list of strings to integers."""
@@ -51,9 +56,7 @@ class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
     
     def get_serializer_context(self):
         return {'user': self.request.user}    
-    
-    @method_decorator(cache_page(60*60*24))
-    @method_decorator(vary_on_cookie)
+
     def get_queryset(self):
         ingredients =self.request.query_params.get('ingredients')
         images =self.request.query_params.get('images')
@@ -66,23 +69,31 @@ class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
             queryset = queryset.filter(images__id__in=img_ids)
 
         return queryset.filter(user=self.request.user).order_by('-id').distinct()    
-
-class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
-    lookup_field = 'slug'
-    queryset = Recipe.objects.all()
-    serializer_class = serializers.RecipeDetailSerializer
-    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
-    search_fields = ['^search_vector']
-    ordering_fields = ['created_at', 'rating']
-    filterset_fields = ('category','ingredients__title', 'title')
     
+class RecipeDetailReadViewSet(viewsets.ViewSet):
+    lookup_field = 'slug' 
+    permission_classes = [AllowAny]
+
+    @method_decorator(cache_page(60*60*24))
+    @method_decorator(vary_on_cookie)
+    def list(self, request):
+        queryset = Recipe.objects.all()
+        serializer = serializers.RecipeDetailReadSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, slug=None):
+        queryset = Recipe.objects.all()
+        recipe = get_object_or_404(queryset, slug=slug)
+        serializer = serializers.RecipeDetailReadSerializer(recipe)
+        return Response(serializer.data)
+
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
     """
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwner]
     filterset_fields = ['title']
     search_fields = ['title']
 
@@ -116,8 +127,8 @@ class ImageViewSet(viewsets.ModelViewSet):
 
         return Response("Success")
     
-class RecipeReviewViewset(mixins.CreateModelMixin,
-                        mixins.DestroyModelMixin,
+class RecipeReviewViewset(CreateModelMixin,
+                        DestroyModelMixin,
                         viewsets.GenericViewSet):
     """
     Add and delete reviews a recipe
