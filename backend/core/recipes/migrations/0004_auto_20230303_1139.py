@@ -12,9 +12,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/lookups/#trigram-similarity
+        #https://docs.djangoproject.com/en/4.1/ref/contrib/postgres/lookups/
         TrigramExtension(),
-        # https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/lookups/#unaccent
+        # https://docs.djangoproject.com/en/4.1/ref/contrib/postgres/lookups/#unaccent
         UnaccentExtension(),
         # create a custom unaccented language configuration
         migrations.RunSQL("CREATE TEXT SEARCH CONFIGURATION {} ( COPY = english )".format(POSTGRES_LANGUAGE_UNACCENT)),
