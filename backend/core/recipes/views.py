@@ -1,10 +1,14 @@
 from rest_framework import viewsets
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.gzip import gzip_page
+from django.views.decorators.vary import vary_on_cookie
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status, mixins
 from rest_framework import mixins
-from rest_framework.permissions import IsAuthenticated  
+from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly  
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
@@ -24,8 +28,9 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
     ordering_fields = ['created_at']
-    filterset_fields = ('category','ingredients__desc', 'title')
+    filterset_fields = ('category','ingredients__title', 'title')
 
+    
 class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
                             mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
@@ -47,6 +52,8 @@ class RecipeWriteDetailViewSet(mixins.CreateModelMixin,
     def get_serializer_context(self):
         return {'user': self.request.user}    
     
+    @method_decorator(cache_page(60*60*24))
+    @method_decorator(vary_on_cookie)
     def get_queryset(self):
         ingredients =self.request.query_params.get('ingredients')
         images =self.request.query_params.get('images')
@@ -67,17 +74,22 @@ class RecipeDetailViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['^search_vector']
     ordering_fields = ['created_at', 'rating']
-    filterset_fields = ('category','ingredients__desc', 'title')
-
+    filterset_fields = ('category','ingredients__title', 'title')
+    
 class IngredientViewSet(viewsets.ModelViewSet):
     """
     List and Retrieve ingredients
     """
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
-    permission_classes = [IsOwner]
-    filterset_fields = ['desc']
-    search_fields = ['desc']
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filterset_fields = ['title']
+    search_fields = ['title']
+
+    @method_decorator(cache_page(60*60*24))    # With cookie: cache requested url for each user for 24 hours
+    @method_decorator(vary_on_cookie)
+    def list(self, *args, **kwargs):
+        return super().list(*args, **kwargs)
 
 class ImageViewSet(viewsets.ModelViewSet):
     """

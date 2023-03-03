@@ -2,7 +2,7 @@ from pint import UnitRegistry
 from django.core.exceptions import ValidationError
 from pint.errors import UndefinedUnitError
 
-valid_unit_measurements = ['pounds', 'lbs', 'oz', 'g', 'kg', 'cup', 'teaspoon','tablespoon']
+valid_unit_measurements = ['pounds', 'lbs', 'oz', 'g', 'kg', 'cup', 'teaspoon(s)','tablespoon(s)','pcs']
 
 def validate_unit_of_measure(value):
     ureg = UnitRegistry()

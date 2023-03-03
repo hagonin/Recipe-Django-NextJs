@@ -5,7 +5,7 @@ from users.serializers import UserSerializer
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
-        fields = ('id','title','desc','quantity', 'unit','recipe')
+        fields = ('id','heading','title','quantity', 'unit','recipe')
 
 
 class ImageSerializer(serializers.ModelSerializer):
