@@ -1,4 +1,9 @@
-import { BsClock, BsPinterest, BsPrinter } from 'react-icons/bs';
+import {
+	BsBookmarkFill,
+	BsClock,
+	BsPinterest,
+	BsPrinter,
+} from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
@@ -6,8 +11,10 @@ import formatDate from '@utils/formatdate';
 import Check from './Check';
 import createMarkup from '@utils/createMarkup';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
+import { RiBookMarkFill } from 'react-icons/ri';
 
 function SingRecipe({
+	id,
 	updated_at,
 	author,
 	cover,
@@ -20,6 +27,8 @@ function SingRecipe({
 	notes,
 	ingredients,
 	images = [],
+	actBookmark,
+	handleToggleBookmark,
 }) {
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
@@ -27,8 +36,17 @@ function SingRecipe({
 	return (
 		<div>
 			<h1 className="text-center">{title}</h1>
+
 			<span className="block text-center font-medium mt-3">
 				{updated_at_format} / by {author}
+				<button
+					onClick={() => handleToggleBookmark(actBookmark, id)}
+					className={`text-2xl ml-2  ${
+						actBookmark ? 'text-primary' : 'text-black'
+					} `}
+				>
+					<BsBookmarkFill />
+				</button>
 			</span>
 			<Img
 				src={cover}
@@ -50,7 +68,7 @@ function SingRecipe({
 				dangerouslySetInnerHTML={descriptionMarkup}
 				className="mt-5 mb-10"
 			/>
-			<Thumbnail images={images} />
+			{images.length > 0 && <Thumbnail images={images} />}
 
 			<div className="border border-border rounded-md p-6 mt-10">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">

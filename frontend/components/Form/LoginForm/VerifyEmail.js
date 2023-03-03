@@ -41,7 +41,6 @@ function VerifyEmail({ onSubmit }) {
 				activate your account. The link in the email will
 				<b> expire in 3 hours.</b>
 			</p>
-
 			<span className="block my-3">
 				Still cannot find the email ? <br />
 			</span>

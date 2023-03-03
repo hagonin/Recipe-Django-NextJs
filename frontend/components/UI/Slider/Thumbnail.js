@@ -83,7 +83,10 @@ function Thumbnail({ images }) {
 				className="keen-slider thumbnail mt-6 justify-center"
 			>
 				{images.map((img) => (
-					<div className="keen-slider__slide rounded border-border">
+					<div
+						className="keen-slider__slide rounded border-border"
+						key={img.id}
+					>
 						<Img
 							src={img.image_url}
 							alt={img.caption}

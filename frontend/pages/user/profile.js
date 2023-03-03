@@ -1,18 +1,20 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import useSWR from 'swr';
+
+import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-context';
+import { images } from '@utils/constants';
+
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
-import { useAuthContext } from '@context/auth-context';
-import { useRecipeContext } from '@context/recipe-context';
-import { images } from '@utils/constants';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import useSWR from 'swr';
 
 function Profile() {
-	const { user } = useAuthContext();
+	const { user, handleToggleBookmark } = useAuthContext();
 	const { deleteRecipe, fetcher } = useRecipeContext();
 	const {
 		data: recipes,
@@ -21,14 +23,14 @@ function Profile() {
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
 	const [deleting, setDeleting] = useState(false);
 
-	// const {
-	// 	data: bookmarks,
-	// 	isLoading: loading2,
-	// 	mutate: mutate2,
-	// } = useSWR(`/user/profile/${user.id}/bookmarks/`, fetcher);
-	// console.log('bookmarks', bookmarks);
+	const {
+		data: bookmarks,
+		isLoading: loading2,
+		mutate: mutate2,
+	} = useSWR(`/user/profile/${user.id}/bookmarks`, fetcher);
 	const router = useRouter();
-	const handleDelete = async (slug) => {
+
+	const handleDeleteRecipe = async (slug) => {
 		try {
 			setDeleting(true);
 			await deleteRecipe(slug);
@@ -45,6 +47,11 @@ function Profile() {
 	const goToAddPhoto = (id, slug) =>
 		router.push(`/user/recipe/${slug}/upload_image/${id}`);
 
+	const onDeleteBookmark = async (act, id) => {
+		await handleToggleBookmark(act, id);
+		await mutate2();
+	};
+
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">Profile</h1>
@@ -56,7 +63,11 @@ function Profile() {
 					cover
 				/>
 				<div className="flex flex-col">
-					<h2>{user?.username}</h2>
+					<span>id:{user?.id}</span>
+					<h2>Last Name: {user?.last_name}</h2>
+					<h2>First Name: {user?.first_name}</h2>
+					<h2>User name: {user?.username}</h2>
+
 					<span className="text-lg mt-1">Email: {user?.email}</span>
 					<Button
 						type="link"
@@ -94,10 +105,10 @@ function Profile() {
 											slug={recipe.slug}
 											id={recipe.id}
 											hasControl
-											handleDelete={handleDelete}
+											handleDelete={handleDeleteRecipe}
 											goToUpdate={goToUpdate}
 											goToAddPhoto={goToAddPhoto}
-											isPreview
+											secondary
 										/>
 										<span>{recipe.author}</span>
 									</div>
@@ -105,7 +116,31 @@ function Profile() {
 					</div>
 				</TabPanel>
 				<TabPanel tab="Bookmarks">
-					<div>Bookmarks</div>
+					{loading2 ? (
+						'Loading...'
+					) : bookmarks.length > 0 ? (
+						<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
+							{bookmarks.map((bookmark) => (
+								<RecipeCard
+									image={bookmark.image_url}
+									name={bookmark.title}
+									date={
+										bookmark.updated_at ||
+										bookmark.created_at
+									}
+									category={bookmark.category}
+									smallCard
+									slug={bookmark.slug}
+									id={bookmark.id}
+									actBookmark
+									handleToggleBookmark={onDeleteBookmark}
+									noBookmark
+								/>
+							))}
+						</div>
+					) : (
+						'Empty'
+					)}
 				</TabPanel>
 			</Tabs>
 		</div>

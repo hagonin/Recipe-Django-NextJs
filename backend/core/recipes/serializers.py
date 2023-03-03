@@ -51,7 +51,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta: 
         model = RecipeReview
-        fields = ('user','title', 'slug','rating','date_added','avatar',
+        fields = ('id','user','user_id','title', 'slug','rating','date_added','avatar',
                 'content')
         extra_kwargs = {
             'slug': {'read_only': True}

@@ -1,4 +1,7 @@
-import { ENDPOINT_CREATE_RECIPE } from '@utils/constants';
+import {
+	ENDPOINT_CREATE_RECIPE,
+	ENDPOINT_RECIPE_DETAIL,
+} from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import api from '@services/axios';
@@ -10,13 +13,17 @@ import { useRecipeContext } from '@context/recipe-context';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
 import UpdateForm from '@components/Form/AddRecipeForm/UpdateForm';
+import useSWR from 'swr';
 
 function Update() {
 	const [cancel, setCancel] = useState(false);
-	const { getRecipeSingleBySlug } = useRecipeContext();
 	const router = useRouter();
 	const { slug } = router?.query;
-	const [initValues, setInitValues] = useState(null);
+	const { fetcher } = useRecipeContext();
+	const { data, isLoading, mutate } = useSWR(
+		`${ENDPOINT_RECIPE_DETAIL}${slug}/`,
+		fetcher
+	);
 	const { configAuth } = useAuthContext();
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
@@ -31,9 +38,6 @@ function Update() {
 				console.log(_error);
 			});
 	};
-	useEffect(() => {
-		getRecipeSingleBySlug(slug).then((res) => setInitValues(res));
-	}, []);
 
 	const toggleCancel = () => {
 		setCancel(!cancel);
@@ -45,15 +49,15 @@ function Update() {
 				<h1 className="ml-4 mb-14">Update Recipe</h1>
 			</div>
 
-			{initValues ? (
-				<UpdateForm
-					onSubmit={onSubmit}
-					handleCancel={toggleCancel}
-					initValues={initValues}
-				/>
-			) : (
-				'Loading...'
-			)}
+			{isLoading
+				? 'Loading'
+				: data && (
+						<UpdateForm
+							onSubmit={onSubmit}
+							handleCancel={toggleCancel}
+							initValues={data}
+						/>
+				  )}
 			<ModalPrimary
 				handleCloseModal={toggleCancel}
 				show={cancel}

@@ -36,13 +36,14 @@ function UpdateProfileForm({
 		reset({ ...defaultValues });
 	};
 
-	const handleBeforeSubmit = ({ account }) => {
+	const createForm = ({ account }) => {
 		const { avatar, bio, ...personal } = account;
 
-		const formAvatar = new FormData();
-		avatar.file && formAvatar.append('avatar', avatar.file, avatar.name);
+		const formProfile = new FormData();
+		formProfile.append('bio', bio);
+		avatar.file && formProfile.append('avatar', avatar.file, avatar.name);
 
-		return onSubmit({ personal, bio: bio, avatar: formAvatar });
+		return onSubmit({ personal, formProfile });
 	};
 
 	const handleOnChangeImg = (e) => {
@@ -75,7 +76,7 @@ function UpdateProfileForm({
 	return (
 		<Form
 			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
-			onSubmit={handleSubmit(handleBeforeSubmit)}
+			onSubmit={handleSubmit(createForm)}
 		>
 			<div className="md:col-span-4 flex flex-col items-center ">
 				<PreviewImg
