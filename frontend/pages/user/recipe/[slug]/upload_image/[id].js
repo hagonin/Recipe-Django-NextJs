@@ -5,8 +5,8 @@ import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import { ENDPOINT_RECIPE_IMAGE } from '@utils/constants';
 
-import UploadPhoto from '@components/Form/AddRecipeForm/UploadPhoto';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
+import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();

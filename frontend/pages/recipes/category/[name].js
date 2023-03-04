@@ -1,5 +1,9 @@
 import api from '@services/axios';
-import { categories, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import {
+	categories,
+	ENDPOINT_RECIPE,
+	ENDPOINT_RECIPE_DETAIL,
+} from '@utils/constants';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
@@ -42,32 +46,22 @@ CategoryPage.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 export const getStaticProps = async ({ params }) => {
 	const { name } = params;
 	const infoCategory = categories.filter((item) => item.name === name)[0];
-	const res = await api.get(ENDPOINT_RECIPE_DETAIL, {
+	const res = await api.get(ENDPOINT_RECIPE, {
 		params: {
 			category: name,
 		},
 	});
-	const recipes = res?.data?.results.map(
-		({
-			id,
-			title: name,
-			slug,
-			image_url: image,
-			prep_time,
-			cook_time,
-			description: summary,
-			updated_at: date,
-		}) => ({
-			id,
-			name,
-			slug,
-			image,
-			prep_time,
-			cook_time,
-			summary,
-			date,
-		})
-	);
+	console.log(res?.data?.results);
+	const recipes = res?.data?.results.map((item) => ({
+		id: item.id,
+		name: item.title,
+		slug: item.slug,
+		image: item.image_url,
+		date: item.updated_at,
+		rating: item.rating,
+		bookmark: item.total_number_of_bookmarks,
+		reviews_count: item.reviews_count,
+	}));
 	return {
 		props: {
 			category: {

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BsCamera } from 'react-icons/bs';
 
 function Image({ handleChooseImg, urlInit }) {
+	console.log(urlInit);
 	const [preview, setPreview] = useState(urlInit);
 	const inputFileRef = useRef();
 
@@ -28,7 +29,7 @@ function Image({ handleChooseImg, urlInit }) {
 	};
 
 	return (
-		<div className="relative w-56 h-56 bg-primary rounded-md overflow-hidden">
+		<div className="relative w-56 h-56 max-md:mx-auto bg-primary rounded-md overflow-hidden">
 			<Img
 				src={preview || images.photoDefault}
 				alt="preview"

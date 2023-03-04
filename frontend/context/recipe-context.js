@@ -22,35 +22,6 @@ const RecipeProvider = ({ children }) => {
 	const deletePhotoById = (id) =>
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
 
-	const updateIngredientById = ({ id, title, desc, unit, quantity }) => {
-		return api.patch(
-			`${ENDPOINT_INGREDIENT}${id}/`,
-			{
-				title,
-				unit,
-				quantity,
-				desc,
-			},
-			configAuth()
-		);
-	};
-
-	const addIngredientToRecipe = ({ title, desc, unit, quantity, recipe }) => {
-		return api.post(
-			ENDPOINT_INGREDIENT,
-			{
-				title,
-				desc,
-				unit,
-				quantity,
-				recipe,
-			},
-			configAuth()
-		);
-	};
-
-	const deleteIngredientById = (id) =>
-		api.delete(`${ENDPOINT_INGREDIENT}${id}/`, configAuth());
 	const fetcher = async (url) =>
 		await api
 			.get(url, configAuth())
@@ -64,9 +35,6 @@ const RecipeProvider = ({ children }) => {
 				deleteRecipe,
 				fetcher,
 				deletePhotoById,
-				updateIngredientById,
-				addIngredientToRecipe,
-				deleteIngredientById,
 			}}
 		>
 			{children}

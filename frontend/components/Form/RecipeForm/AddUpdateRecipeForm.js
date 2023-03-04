@@ -27,8 +27,20 @@ import { FaRegLightbulb } from 'react-icons/fa';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
+import { useAuthContext } from '@context/auth-context';
+import Note from './Note';
 
-function AddRecipeForm({ onSubmit, handleCancel }) {
+function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
+	const ingredient = initValues?.ingredients || [
+		{ recipe: EXIST_RECIPE, heading: null },
+	];
+	const instruction = initValues?.instructions || [{ content: '' }];
+	const main_image = getFileFromUrl(
+		initValues?.image_url || images.spoon,
+		'default'
+	);
+	const description = initValues?.description || null;
+	const { errors } = useAuthContext();
 	const {
 		register,
 		control,
@@ -36,11 +48,16 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 		formState: { errors: formErr, isSubmitting },
 		reset,
 		setValue,
+		setError,
+		unregister,
 	} = useForm({
 		defaultValues: {
 			recipe: {
-				ingredients: [{ recipe: EXIST_RECIPE }],
-				main_image: null,
+				...initValues,
+				description: description,
+				main_image: main_image,
+				ingredients: ingredient,
+				instructions: instruction,
 			},
 		},
 	});
@@ -50,18 +67,21 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		const { ingredients, instructions: ins, ...rest } = recipe;
+		console.log('recipe', recipe);
+		const { ingredients, instructions: ins, main_image, ...rest } = recipe;
 		const form = new FormData();
 		// instructions
 		const instructions = ins
+			.filter(({ content }) => content)
 			.map(
-				(content, index) =>
-					`<div><h4>Step ${index + 1}:</h4><p>${content}</p></div>`
+				({ content }, index) =>
+					`<div><span className='font-semibold text-black text-lg'>Step ${
+						index + 1
+					}:</span><p>${content}</p></div>`
 			)
 			.join('');
 		form.append('instructions', instructions);
 
-		let { main_image } = recipe;
 		// add ingredients to form
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
@@ -69,12 +89,10 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 			});
 		}
 		// add image to form
-		main_image = main_image
-			? main_image
-			: await getFileFromUrl(images.spoon, 'default');
-		form.append('main_image', main_image, main_image.name);
+		const img = await main_image;
+		form.append('main_image', img, img.name);
 
-		// add rest to form
+		// // add rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
 		return onSubmit(form);
@@ -84,6 +102,25 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 		setValue('recipe.main_image', file);
 	};
 
+	const handleUngister = (name) => {
+		unregister(name);
+	};
+
+	const handleRegister = (name) => {
+		register(name);
+	};
+	useEffect(() => {
+		errors?.recipe?.title &&
+			setError('recipe.title', {
+				type: 'custom',
+				message: errors?.recipe?.title,
+			});
+		errors?.recipe?.ingredients &&
+			setError('recipe.ingredients', {
+				type: 'custom',
+				message: errors?.recipe?.ingredients,
+			});
+	}, [errors]);
 	return (
 		<form
 			onSubmit={handleSubmit(createFormData)}
@@ -91,7 +128,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 		>
 			<div className="flex flex-col gap-4">
 				<Title title="Recipe Detail" />
-				<div className="flex gap-6">
+				<div className="flex gap-6 max-md:flex-col">
 					<div className="flex flex-col gap-6 flex-1">
 						<InputField
 							name="recipe.title"
@@ -100,6 +137,8 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 							register={register}
 							error={formErr?.recipe?.title}
 							label="Title"
+							required
+							rules={{ required: "What's your recipe called?" }}
 						/>
 						<SelectField
 							name="recipe.category"
@@ -107,9 +146,30 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 							error={formErr?.recipe?.category}
 							options={categories}
 							label="What kind of category ?"
+							rules={{
+								required: 'What kind of category is this?',
+							}}
+							required
+							// error={formErr}
+						/>
+						<Controller
+							name="recipe.description"
+							control={control}
+							render={({ field }) => (
+								<RichTextField
+									field={field}
+									label="Description"
+									placeholder="Homemade salad dressing is pretty low hanging fruit if you’re looking to up your cooking game. It’s quick to make, budget-friendly, and tastier than store-bought. Homemade Italian dressing is a prime example. You shake it up in an ordinary jar using pantry staples. The whole operation will take you under 2 minutes and results in enough dressing to get you through a couple of family-sized salads.  "
+									info={{
+										content:
+											'Share the story behind your recipe and makes it special.',
+										placement: 'right',
+									}}
+								/>
+							)}
 						/>
 					</div>
-					<div>
+					<div className="mt-4">
 						<Label
 							label="Photo"
 							info={{
@@ -118,10 +178,13 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 								placement: 'right',
 							}}
 						/>
-						<Image handleChooseImg={handleChooseImg} />
+						<Image
+							handleChooseImg={handleChooseImg}
+							urlInit={initValues?.image_url}
+						/>
 					</div>
 				</div>
-				<div className="flex gap-4">
+				<div className="flex gap-4 md:flex-row flex-col">
 					<InputField
 						name="recipe.prep_time"
 						label="Pre-time (minutes)"
@@ -148,27 +211,20 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 						placeholder="e.g. 8 people"
 					/>
 				</div>
-
-				<Controller
-					name="recipe.description"
-					control={control}
-					render={({ field }) => (
-						<RichTextField
-							field={field}
-							label="Description"
-							placeholder="Homemade salad dressing is pretty low hanging fruit if you’re looking to up your cooking game. It’s quick to make, budget-friendly, and tastier than store-bought. Homemade Italian dressing is a prime example. You shake it up in an ordinary jar using pantry staples. The whole operation will take you under 2 minutes and results in enough dressing to get you through a couple of family-sized salads.  "
-							info={{
-								content:
-									'Share the story behind your recipe and makes it special.',
-								placement: 'right',
-							}}
-						/>
-					)}
-				/>
-				<Instructions
-					register={register}
-					control={control}
-				/>
+				<div className="mt-4">
+					<Title
+						title="Instructions"
+						info={{
+							content:
+								'Explain how to make your recipe, including oven temperatures, baking or cooking times, and pan sizes, etc.',
+							placement: 'right',
+						}}
+					/>
+					<Instructions
+						register={register}
+						control={control}
+					/>
+				</div>
 			</div>
 			<div className="mt-5">
 				<Title
@@ -178,7 +234,16 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 							<div>
 								Enter your ingredients. Those ingredient can be
 								a type of ingredient, or any special
-								preparation.
+								preparation. <br />
+								For example:
+								<ul className="list-disc px-3">
+									<li>1 tablespoon chopped fresh parsley</li>{' '}
+									<li>½ teaspoon lemon juice</li>
+									<li>
+										1 cup small pasta such as cavatelli,
+										orzo, or ditalini
+									</li>
+								</ul>
 							</div>
 						),
 						placement: 'right',
@@ -188,12 +253,13 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 				<Ingredients
 					control={control}
 					register={register}
+					error={formErr?.recipe?.ingredients}
 				/>
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
 					name="recipe.search_vector"
-					label="Keyword (optional)"
+					label="Keyword"
 					type="text"
 					register={register}
 					error={formErr?.recipe?.search_vector}
@@ -203,11 +269,15 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 							'Keyword that can be used to search for this recipe',
 						placement: 'right',
 					}}
+					rules={{
+						required: 'What keyword is used to search this recipe?',
+					}}
+					required
 				/>
 
 				<InputField
 					name="recipe.source"
-					label="Source of recipe (optional)"
+					label="Source of recipe"
 					type="text"
 					register={register}
 					error={formErr?.recipe?.source}
@@ -218,18 +288,20 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 					}}
 				/>
 			</div>
-			<TextAreaField
-				label="Note (optional)"
-				name="recipe.notes"
-				rows="5"
+			<Note
 				register={register}
+				handleUngister={handleUngister}
+				initValue={initValues?.notes}
+				handleRegister={handleRegister}
 			/>
-			<p className="mx-auto mt-5">
-				<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
-				You can add more photos after you add the recipe. We all love
-				photos recipes with good finished-product photos generally sort
-				higher than those without.
-			</p>
+			{!isUpdate && (
+				<p className="mx-auto mt-5">
+					<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
+					You can add more photos after you add the recipe. We all
+					love photos recipes with good finished-product photos
+					generally sort higher than those without.
+				</p>
+			)}
 			<div className="flex gap-4 mt-5 justify-end items-center">
 				<Button
 					className="cancle"
@@ -244,7 +316,7 @@ function AddRecipeForm({ onSubmit, handleCancel }) {
 					disabled={isSubmitting}
 				>
 					{isSubmitting && <Loader type="submitting" />}
-					Submit Recipe
+					{isUpdate ? 'Save Update' : 'Submit Recipe'}
 				</Button>
 			</div>
 		</form>
@@ -266,4 +338,4 @@ const Title = ({ title, info }) => (
 		)}
 	</div>
 );
-export default AddRecipeForm;
+export default AddUpdateRecipeForm;

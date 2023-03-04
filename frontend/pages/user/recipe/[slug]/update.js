@@ -1,6 +1,8 @@
 import {
 	ENDPOINT_CREATE_RECIPE,
 	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_READ,
+	EXIST_RECIPE,
 } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
@@ -10,10 +12,8 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecipeContext } from '@context/recipe-context';
-import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import Button from '@components/UI/Button';
-import UpdateForm from '@components/Form/AddRecipeForm/UpdateForm';
 import useSWR from 'swr';
+import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 
 function Update() {
 	const [cancel, setCancel] = useState(false);
@@ -21,23 +21,82 @@ function Update() {
 	const { slug } = router?.query;
 	const { fetcher } = useRecipeContext();
 	const { data, isLoading, mutate } = useSWR(
-		`${ENDPOINT_RECIPE_DETAIL}${slug}/`,
+		`${ENDPOINT_RECIPE_READ}${slug}/`,
 		fetcher
 	);
+	const [initValue, setInitValue] = useState(null);
 	const { configAuth } = useAuthContext();
 	const onSubmit = async (data) => {
 		console.log('Data before submit', data);
 		await api
-			.patch(`${ENDPOINT_CREATE_RECIPE}${slug}/`, data, configAuth())
+			.put(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, data, configAuth())
 			.then((res) => {
+				const { slug } = res?.data;
 				toast.success('Update recipe success');
 				router.push(`/user/recipe/${slug}`);
 			})
 			.catch(({ _error }) => {
-				toast.error('Update failed');
-				console.log(_error);
+				const errStr = Object.keys(_error)
+					.map((key) => `${key}: ${_error[key]?.[0]}`)
+					.join('\r\n');
+				toast.error(errStr);
 			});
 	};
+
+	useEffect(() => {
+		if (data) {
+			const {
+				title,
+				description,
+				category,
+				serving,
+				prep_time,
+				cook_time,
+				image_url,
+				ingredients,
+				instructions,
+				search_vector,
+				source,
+				notes,
+			} = data;
+			const obj = {
+				title,
+				description,
+				category,
+				serving,
+				prep_time,
+				cook_time,
+				image_url,
+				ingredients,
+				instructions,
+				search_vector,
+				source,
+				notes,
+			};
+
+			if (instructions) {
+				let ins = data.instructions.split('<p>');
+				ins.shift();
+				ins = ins.map((item) => item.split('</p>'));
+				ins = ins.map((item) => ({ content: item[0] }));
+				obj['instructions'] = ins;
+			}
+
+			if (ingredients) {
+				let ingre = data.ingredients.map((item) => ({
+					...item,
+					recipe: EXIST_RECIPE,
+				}));
+				obj['ingredients'] = ingre;
+			}
+
+			if (notes === 'null') {
+				obj.notes = JSON.parse(notes);
+			}
+
+			setInitValue(obj);
+		}
+	}, [data]);
 
 	const toggleCancel = () => {
 		setCancel(!cancel);
@@ -49,37 +108,16 @@ function Update() {
 				<h1 className="ml-4 mb-14">Update Recipe</h1>
 			</div>
 
-			{isLoading
-				? 'Loading'
-				: data && (
-						<UpdateForm
-							onSubmit={onSubmit}
-							handleCancel={toggleCancel}
-							initValues={data}
-						/>
-				  )}
-			<ModalPrimary
-				handleCloseModal={toggleCancel}
-				show={cancel}
-			>
-				<h1 className="text-red mb-5">Leave Confirm</h1>
-				<p className="mb-5 text-center">
-					Are you sure you want to leave this page? <br /> Your
-					changes will be lost if you go back.
-				</p>
-				<Button
-					onClick={toggleCancel}
-					className="cancle mr-6"
-				>
-					Stay on Page
-				</Button>
-				<Button
-					onClick={() => router.push('/')}
-					className="verify lg"
-				>
-					Leave Page
-				</Button>
-			</ModalPrimary>
+			{isLoading || !initValue ? (
+				'Loading'
+			) : initValue ? (
+				<AddUpdateRecipeForm
+					onSubmit={onSubmit}
+					handleCancel={toggleCancel}
+					initValues={initValue}
+					isUpdate
+				/>
+			) : null}
 		</div>
 	);
 }

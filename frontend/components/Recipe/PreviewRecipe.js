@@ -11,15 +11,7 @@ import { GrAdd } from 'react-icons/gr';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 
-function PreviewRecipe({
-	data,
-	handleDeletePhoto,
-	editIngredient,
-	addNewIngredient,
-	deleteIngredient,
-	goToUpload,
-	goToEdit,
-}) {
+function PreviewRecipe({ data, handleDeletePhoto, goToUpload, goToEdit }) {
 	const {
 		id,
 		title,
@@ -39,7 +31,6 @@ function PreviewRecipe({
 		source,
 		slug,
 	} = data;
-	
 
 	return (
 		<>
@@ -149,10 +140,6 @@ function PreviewRecipe({
 					<div>
 						<div className="flex gap-2 items-center mt-10 ">
 							<h3>Ingredients:</h3>
-
-							<button onClick={addNewIngredient}>
-								<GrAdd />
-							</button>
 						</div>
 						<ul className="list-disc ml-8">
 							{ingredients.map((ingredient) => (
@@ -161,22 +148,6 @@ function PreviewRecipe({
 									className="flex justify-between group gap-2"
 								>
 									<span>{`${ingredient?.quantity} ${ingredient?.unit} ${ingredient?.title}  ${ingredient?.desc}`}</span>
-									<button
-										className="ml-auto visible"
-										onClick={() =>
-											editIngredient(ingredient.id)
-										}
-									>
-										<MdEdit />
-									</button>
-									<button
-										className="visible"
-										onClick={() =>
-											deleteIngredient(ingredient.id)
-										}
-									>
-										<MdDelete />
-									</button>
 								</li>
 							))}
 						</ul>
