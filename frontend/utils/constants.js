@@ -142,7 +142,7 @@ export const ENDPOINT_CHANGE_PASSWORD = '/user/change_password';
 
 export const ENDPOINT_CREATE_RECIPE = '/recipe/recipe-create/';
 export const ENDPOINT_RECIPE = '/recipe/recipe/';
-export const ENDPOINT_RECIPE_DETAIL = '/recipe/recipe-detail/';
+export const ENDPOINT_RECIPE_DETAIL = '/recipe/recipe-read/';
 export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';

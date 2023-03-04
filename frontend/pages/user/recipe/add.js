@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINT_CREATE_RECIPE, images } from '@utils/constants';
+import { ENDPOINT_CREATE_RECIPE, ENDPOINT_RECIPE_DETAIL, images } from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ function AddRecipe() {
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		await api
-			.post(ENDPOINT_CREATE_RECIPE, data, configAuth())
+			.post(ENDPOINT_RECIPE_DETAIL, data, configAuth())
 			.then((res) => {
 				const { slug } = res?.data;
 				toast.success('Add recipe success');

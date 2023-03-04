@@ -17,7 +17,7 @@ const RecipeProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const deleteRecipe = (slug) =>
-		api.delete(`${ENDPOINT_CREATE_RECIPE}${slug}/`, configAuth());
+		api.delete(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, configAuth());
 
 	const deletePhotoById = (id) =>
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());

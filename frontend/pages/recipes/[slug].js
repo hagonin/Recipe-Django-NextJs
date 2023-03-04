@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
 
@@ -121,7 +121,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
 	let paths;
 	try {
-		const res = await api.get(ENDPOINT_RECIPE_DETAIL);
+		const res = await api.get(ENDPOINT_RECIPE);
 		paths = res?.data?.results.map((item) => ({
 			params: {
 				slug: item.slug,
