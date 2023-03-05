@@ -31,6 +31,10 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__title', 'title')
 
+    @method_decorator(cache_page(60*60*4))
+    @method_decorator(vary_on_cookie)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
 class RecipeDetailViewSet(CreateModelMixin,
                         UpdateModelMixin,
@@ -69,26 +73,24 @@ class RecipeDetailViewSet(CreateModelMixin,
 
         return queryset.filter(user=self.request.user).order_by('-id').distinct()    
     
-class RecipeDetailReadViewSet(viewsets.ViewSet):
+class RecipeDetailReadViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug' 
+    queryset = Recipe.objects.all()
+    serializer_class = serializers.RecipeDetailReadSerializer
+    filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
+    search_fields = ['search_vector']
+    ordering_fields = ['created_at', 'rating']
+    filterset_fields = ('category','ingredients__title', 'title')
     permission_classes = [AllowAny]
 
-    @method_decorator(cache_page(60*60*24))
+    @method_decorator(cache_page(60*60*4))
     @method_decorator(vary_on_cookie)
-    def list(self, request):
-        queryset = Recipe.objects.all()
-        serializer = serializers.RecipeDetailReadSerializer(queryset, many=True)
-        return Response(serializer.data)
-    
-    def retrieve(self, request, slug=None):
-        queryset = Recipe.objects.all()
-        recipe = get_object_or_404(queryset, slug=slug)
-        serializer = serializers.RecipeDetailReadSerializer(recipe)
-        return Response(serializer.data)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 class IngredientViewSet(viewsets.ModelViewSet):
     """
-    List and Retrieve ingredients
+    List, retrieve and update ingredients
     """
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
@@ -96,7 +98,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     filterset_fields = ['title']
     search_fields = ['title']
 
-    @method_decorator(cache_page(60*60*24))    # With cookie: cache requested url for each user for 24 hours
+    @method_decorator(cache_page(60*60*4))    # With cookie: cache requested url for each user for 4 hours
     @method_decorator(vary_on_cookie)
     def list(self, *args, **kwargs):
         return super().list(*args, **kwargs)
