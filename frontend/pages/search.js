@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE } from '@utils/constants';
+import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_READ } from '@utils/constants';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
@@ -12,7 +12,7 @@ function Search() {
 	const { query } = useRouter();
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading } = useSWR(
-		[ENDPOINT_RECIPE, queryParams],
+		[ENDPOINT_RECIPE_READ, queryParams],
 		([url, queryParams = {}]) => {
 			return api.get(url, {
 				params: queryParams,
@@ -21,7 +21,6 @@ function Search() {
 	);
 
 	useEffect(() => {
-		console.log(query);
 		setQueryParams(query);
 	}, [query]);
 
@@ -35,20 +34,20 @@ function Search() {
 			<div className="mt-6">
 				{isLoading ? (
 					'Searching...'
-				) : data?.data?.results > 0 ? (
-					<div>
-						{data?.data?.results.map(({ title, slug, id }) => (
-							<Link
-								key={id}
-								href={`/recipes/${slug}`}
-								className="text-2xl font-semibold underline"
-							>
-								{title}
-							</Link>
-						))}
-					</div>
 				) : (
-					'No Result'
+					<div>
+						{data?.data?.results.length > 0
+							? data?.data?.results.map(({ title, slug, id }) => (
+									<Link
+										key={id}
+										href={`/recipes/${slug}`}
+										className="text-2xl font-semibold underline"
+									>
+										{title}
+									</Link>
+							  ))
+							: 'No result.'}
+					</div>
 				)}
 			</div>
 		</div>

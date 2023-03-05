@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { toast } from 'react-toastify';
@@ -13,8 +13,7 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
-	const { deletePhotoById, fetcher, deleteRecipe } =
-		useRecipeContext();
+	const { deletePhotoById, fetcher, deleteRecipe } = useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },

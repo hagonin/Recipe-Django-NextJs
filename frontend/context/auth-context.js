@@ -153,23 +153,9 @@ const AuthProvider = ({ children }) => {
 			})
 			.catch();
 
-	const signup = async ({
-		username,
-		firstname,
-		lastname,
-		password,
-		confirm_password,
-		email,
-	}) => {
+	const signup = async (data) => {
 		try {
-			await api.post(ENDPOINT_REGISTER, {
-				username,
-				lastname,
-				firstname,
-				password,
-				confirm_password,
-				email,
-			});
+			await api.post(ENDPOINT_REGISTER, data);
 			router.push('/login');
 			toast.success('Account successfully created.');
 		} catch ({ status, _error }) {
@@ -207,8 +193,6 @@ const AuthProvider = ({ children }) => {
 
 	const getUser = (access = token.access) =>
 		api.get(ENDPOINT_USER, configAuth(access));
-
-	
 
 	const configAuth = (access = token.access) => ({
 		headers: {
