@@ -29,8 +29,6 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 						name={item.title}
 						rating={item.rating}
 						image={item.image_url}
-						cook_time={item.cook_time}
-						prep_time={item.prep_time}
 						id={item.id}
 						smallCard
 					/>

@@ -15,13 +15,14 @@ import SingRecipe from '@components/Recipe/SingleRecipe';
 import SubscribeSection from '@components/SubcribeSection';
 import Reviews from '@components/UI/Reviews';
 import { useRecipeContext } from '@context/recipe-context';
+import { useRouter } from 'next/router';
 
 function Recipe({ recipe }) {
 	const { isAuthenticated, configAuth, user } = useAuthContext();
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	const { image_url, user: author, slug, reviews, ..._recipe } = recipe;
 	const [listReviews, setListReviews] = useState(reviews);
-	
+	const router = useRouter();
 	const relatedRecipes = [
 		{
 			id: 1,
@@ -81,6 +82,8 @@ function Recipe({ recipe }) {
 		toast.success('Delete review success');
 	};
 
+	const goToLogin = () => router.push('/login');
+
 	return (
 		<>
 			<SingRecipe
@@ -96,6 +99,7 @@ function Recipe({ recipe }) {
 				reviews={listReviews}
 				currentUserId={user?.id}
 				handleDelete={handleDelete}
+				goToLogin={goToLogin}
 			/>
 
 			<SubscribeSection />
@@ -116,7 +120,7 @@ export async function getStaticProps({ params }) {
 	} catch {}
 	return {
 		props: { recipe },
-		revalidate: 5,
+		revalidate: 360,
 	};
 }
 

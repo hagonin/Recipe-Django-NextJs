@@ -3,6 +3,7 @@ import {
 	categories,
 	ENDPOINT_RECIPE,
 	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
@@ -12,6 +13,7 @@ import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 
 function CategoryPage({ category }) {
+	console.log(category);
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
 		<>
@@ -27,7 +29,14 @@ function CategoryPage({ category }) {
 				{category.recipes.map((recipe) => (
 					<RecipeCard
 						key={recipe.id}
-						{...recipe}
+						id={recipe.id}
+						name={recipe.title}
+						slug={recipe.slug}
+						image={recipe.image_url}
+						date={recipe.updated_at}
+						rating={recipe.rating}
+						bookmark={recipe.total_number_of_bookmarks}
+						reviews_count={recipe.reviews_count}
 						handleToggleBookmark={handleToggleBookmark}
 						actBookmark={checkBookmarkAct(recipe.id)}
 						lgCard
@@ -47,26 +56,26 @@ CategoryPage.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 export const getStaticProps = async ({ params }) => {
 	const { name } = params;
 	const infoCategory = categories.filter((item) => item.name === name)[0];
-	const res = await api.get(ENDPOINT_RECIPE, {
+	const res = await api.get(ENDPOINT_RECIPE_READ, {
 		params: {
 			category: name,
 		},
 	});
-	const recipes = res?.data?.results.map((item) => ({
-		id: item.id,
-		name: item.title,
-		slug: item.slug,
-		image: item.image_url,
-		date: item.updated_at,
-		rating: item.rating,
-		bookmark: item.total_number_of_bookmarks,
-		reviews_count: item.reviews_count,
-	}));
+	// const recipes = res?.data?.results.map((item) => ({
+	// 	id: item.id,
+	// 	name: item.title,
+	// 	slug: item.slug,
+	// 	image: item.image_url,
+	// 	date: item.updated_at,
+	// 	rating: item.rating,
+	// 	bookmark: item.total_number_of_bookmarks,
+	// 	reviews_count: item.reviews_count,
+	// }));
 	return {
 		props: {
 			category: {
 				...infoCategory,
-				recipes: recipes,
+				recipes: res?.data?.results,
 			},
 		},
 	};

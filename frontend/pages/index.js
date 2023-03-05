@@ -1,5 +1,9 @@
 import api from '@services/axios';
-import { categories, ENDPOINT_RECIPE } from '@utils/constants';
+import {
+	categories,
+	ENDPOINT_RECIPE,
+	ENDPOINT_RECIPE_READ,
+} from '@utils/constants';
 
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
@@ -81,7 +85,7 @@ export default function Home({ categories }) {
 
 export const getStaticProps = async () => {
 	const requests = categories.map(({ name }) =>
-		api.get(`${ENDPOINT_RECIPE}`, {
+		api.get(`${ENDPOINT_RECIPE_READ}`, {
 			params: {
 				category: name,
 			},
@@ -96,5 +100,6 @@ export const getStaticProps = async () => {
 		props: {
 			categories: results,
 		},
+		revalidate: 360,
 	};
 };

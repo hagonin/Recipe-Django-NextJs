@@ -56,5 +56,6 @@ export const getStaticProps = async () => {
 	const res = await api.get(ENDPOINT_RECIPE);
 	return {
 		props: { recipes: res?.data?.results },
+		revalidate: 960,
 	};
 };

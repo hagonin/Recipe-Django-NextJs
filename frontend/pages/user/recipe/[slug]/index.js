@@ -13,7 +13,7 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
-	const { deletePhotoById, fetcher, setLoading, deleteRecipe } =
+	const { deletePhotoById, fetcher, deleteRecipe } =
 		useRecipeContext();
 	const router = useRouter();
 	const {
