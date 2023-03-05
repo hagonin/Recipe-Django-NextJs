@@ -296,7 +296,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			/>
 			{!isUpdate && (
 				<p className="mx-auto mt-5">
-					<FaRegLightbulb className="inline text-yellow-500 relative -top-[2px]" />{' '}
+					<FaRegLightbulb className="inline text-yellow relative -top-[2px]" />{' '}
 					You can add more photos after you add the recipe. We all
 					love photos recipes with good finished-product photos
 					generally sort higher than those without.
