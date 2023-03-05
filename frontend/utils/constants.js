@@ -87,7 +87,19 @@ export const categories = [
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 ];
-
+export const tags = [
+	'lemon',
+	'fresh food',
+	'healthy',
+	'vegetarian',
+	'chicken breast',
+	'easy pastas',
+	'side dishes',
+	'snacks',
+	'healthy breakfast',
+	'dinner',
+	'fff',
+];
 export const unit = [
 	{ id: 1, name: 'pounds' },
 	{ id: 2, name: 'lbs' },

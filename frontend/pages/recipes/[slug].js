@@ -4,6 +4,7 @@ import {
 	ENDPOINT_RECIPE,
 	ENDPOINT_RECIPE_CREATE,
 	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
@@ -113,7 +114,7 @@ Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 export async function getStaticProps({ params }) {
 	let recipe;
 	try {
-		const res = await api.get(`${ENDPOINT_RECIPE_CREATE}${params?.slug}/`);
+		const res = await api.get(`${ENDPOINT_RECIPE_READ}${params?.slug}/`);
 		recipe = res?.data;
 	} catch {}
 	return {
