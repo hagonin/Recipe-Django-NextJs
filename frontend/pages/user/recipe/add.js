@@ -17,7 +17,7 @@ import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
-	const { configAuth, setErrors } = useAuthContext();
+	const { configAuth } = useAuthContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		await api

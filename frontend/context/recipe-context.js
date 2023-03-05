@@ -13,8 +13,8 @@ const { createContext, useContext, useState, useEffect } = require('react');
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
-	const { configAuth, user } = useAuthContext();
-	const [loading, setLoading] = useState(true);
+	const { configAuth, user, setUser } = useAuthContext();
+	const [loading, setLoading] = useState(false);
 
 	const deleteRecipe = (slug) =>
 		api.delete(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, configAuth());
@@ -22,6 +22,45 @@ const RecipeProvider = ({ children }) => {
 	const deletePhotoById = (id) =>
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
 
+	const handleToggleBookmark = async (act, id) => {
+		setLoading(true);
+		if (!act) {
+			api.post(
+				`user/profile/${user?.id}/bookmarks`,
+				{
+					id: id,
+				},
+				configAuth()
+			).then((res) => {
+				setUser((pre) => {
+					const newBookmarks = [...user?.bookmarks, id];
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				setLoading(false);
+				toast.success('Add bookmark success');
+			});
+		} else {
+			api.delete(`user/profile/${user?.id}/bookmarks`, {
+				headers: configAuth().headers,
+				data: {
+					id: id,
+				},
+			}).then(() => {
+				setUser((pre) => {
+					const newBookmarks = user?.bookmarks.filter(
+						(item) => item !== id
+					);
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Remove bookmark success');
+				setLoading(false);
+			});
+		}
+	};
+
+	const checkBookmarkAct = (bookmarkID) =>
+		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
+		0;
 	const fetcher = async (url) =>
 		await api
 			.get(url, configAuth())
@@ -35,6 +74,8 @@ const RecipeProvider = ({ children }) => {
 				deleteRecipe,
 				fetcher,
 				deletePhotoById,
+				handleToggleBookmark,
+				checkBookmarkAct,
 			}}
 		>
 			{children}

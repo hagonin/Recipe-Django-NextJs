@@ -21,24 +21,26 @@ function NavCategory() {
 				)}
 			</NavItem>
 			<div
-				className={`max-h-[40vh] overflow-y-scroll overflow-x-hidden ${
+				className={`grid grid-cols-2 ml-16  ${
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>
-				<NavItem
+				<button
 					href="/recipes"
 					isSubItem
+					className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 				>
 					All Recipes
-				</NavItem>
+				</button>
 				{categories.map((category) => (
-					<NavItem
+					<button
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
+						className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 						isSubItem
 					>
 						{category.name}
-					</NavItem>
+					</button>
 				))}
 			</div>
 		</>

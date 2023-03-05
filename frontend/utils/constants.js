@@ -17,6 +17,7 @@ export const images = {
 	verify_email: '/static/images/verify_email.png',
 	photoDefault: '/static/images/photoDefault.png',
 	spoon: '/static/images/spoon.jpeg',
+	cooking: '/static/images/cooking.png',
 };
 
 export const categories = [
@@ -160,4 +161,4 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 1;
+export const EXIST_RECIPE = 11;

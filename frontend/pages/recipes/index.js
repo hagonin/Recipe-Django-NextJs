@@ -10,19 +10,28 @@ import {
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
+import { useRecipeContext } from '@context/recipe-context';
 
 function Recipe({ recipes }) {
-	const { checkBookmarkAct, handleToggleBookmark } = useAuthContext();
-
+	const { checkBookmarkAct, handleToggleBookmark } = useRecipeContext();
+	console.log(recipes);
 	return (
 		<div className="container my-14">
 			<div className="grid grid-cols-3 gap-x-6 gap-y-10">
-				{recipes.map((recipe) => (
+				{recipes.map((item) => (
 					<RecipeCard
-						key={recipe.id}
-						{...recipe}
+						key={item.id}
+						id={item.id}
+						slug={item.slug}
+						date={item.updated_at}
+						name={item.title}
+						rating={item.rating}
+						image={item.image_url}
+						cook_time={item.cook_time}
+						prep_time={item.prep_time}
+						category={item.category}
 						smallCard={true}
-						actBookmark={checkBookmarkAct(recipe.id)}
+						actBookmark={checkBookmarkAct(item.id)}
 						handleToggleBookmark={handleToggleBookmark}
 					/>
 				))}
@@ -45,14 +54,7 @@ Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
 
 export const getStaticProps = async () => {
 	const res = await api.get(ENDPOINT_RECIPE);
-	const recipes = res?.data?.results?.map((item) => ({
-		name: item.title,
-		image: item.image_url,
-		date: item.updated_at,
-		id: item.id,
-		slug: item.slug,
-	}));
 	return {
-		props: { recipes: recipes},
+		props: { recipes: res?.data?.results },
 	};
 };

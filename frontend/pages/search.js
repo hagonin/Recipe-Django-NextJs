@@ -7,12 +7,11 @@ import { FaSearch } from 'react-icons/fa';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
-import Login from './login';
 
 function Search() {
 	const { query } = useRouter();
 	const [queryParams, setQueryParams] = useState(query);
-	const { data, isLoading, error } = useSWR(
+	const { data, isLoading } = useSWR(
 		[ENDPOINT_RECIPE, queryParams],
 		([url, queryParams = {}]) => {
 			return api.get(url, {
@@ -22,6 +21,7 @@ function Search() {
 	);
 
 	useEffect(() => {
+		console.log(query);
 		setQueryParams(query);
 	}, [query]);
 
@@ -35,7 +35,7 @@ function Search() {
 			<div className="mt-6">
 				{isLoading ? (
 					'Searching...'
-				) : data?.data?.results ? (
+				) : data?.data?.results > 0 ? (
 					<div>
 						{data?.data?.results.map(({ title, slug, id }) => (
 							<Link

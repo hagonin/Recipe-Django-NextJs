@@ -1,8 +1,6 @@
 import Button from '@components/UI/Button';
 import { tags } from '@utils/constants';
-import useRecipes from 'hook/useRecipes';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 function Tags() {
 	const router = useRouter();

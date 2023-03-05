@@ -14,17 +14,14 @@ import RelatedRecipe from '@components/Recipe/RelatedRecipe';
 import SingRecipe from '@components/Recipe/SingleRecipe';
 import SubscribeSection from '@components/SubcribeSection';
 import Reviews from '@components/UI/Reviews';
+import { useRecipeContext } from '@context/recipe-context';
 
 function Recipe({ recipe }) {
-	const {
-		isAuthenticated,
-		configAuth,
-		user,
-		handleToggleBookmark,
-		checkBookmarkAct,
-	} = useAuthContext();
+	const { isAuthenticated, configAuth, user } = useAuthContext();
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	const { image_url, user: author, slug, reviews, ..._recipe } = recipe;
 	const [listReviews, setListReviews] = useState(reviews);
+	
 	const relatedRecipes = [
 		{
 			id: 1,

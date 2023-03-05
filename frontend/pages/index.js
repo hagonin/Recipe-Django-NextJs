@@ -52,7 +52,6 @@ export default function Home({ categories }) {
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 		},
 	];
-
 	return (
 		<>
 			<Slider>

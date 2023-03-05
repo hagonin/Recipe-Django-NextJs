@@ -1,6 +1,5 @@
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
-import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import CollectionPics from './CollectionPics';
 import CommonSection from './CommonSection';

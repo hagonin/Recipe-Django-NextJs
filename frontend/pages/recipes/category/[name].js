@@ -9,9 +9,10 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import { useAuthContext } from '@context/auth-context';
 import Img from '@components/UI/Image';
+import { useRecipeContext } from '@context/recipe-context';
 
 function CategoryPage({ category }) {
-	const { handleToggleBookmark, checkBookmarkAct } = useAuthContext();
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
 		<>
 			<div className="border-b border-border pb-5">
@@ -51,7 +52,6 @@ export const getStaticProps = async ({ params }) => {
 			category: name,
 		},
 	});
-	console.log(res?.data?.results);
 	const recipes = res?.data?.results.map((item) => ({
 		id: item.id,
 		name: item.title,
