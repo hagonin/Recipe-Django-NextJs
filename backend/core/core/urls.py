@@ -25,10 +25,10 @@ schema_view = get_schema_view(
     openapi.Info(
         title="RECIPE API",
         default_version='v1',
-        description="Test description",
+        description="This API allows users to share recipes and find recipes",
         terms_of_service="https://www.ourapp.com/policies/terms/",
         contact=openapi.Contact(email="contact@homecook.local"),
-        license=openapi.License(name="Test License"),
+        license=openapi.License(name="MIT License"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),

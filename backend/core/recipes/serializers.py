@@ -58,7 +58,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         }
 
 class RecipeDetailReadSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user = serializers.CharField(source='user.username',read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
