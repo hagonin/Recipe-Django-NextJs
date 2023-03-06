@@ -7,6 +7,7 @@ import {
 	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
 import noCache from '@utils/noCache';
+import useRecipes from 'hook/useRecipes';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './auth-context';
 
@@ -17,6 +18,12 @@ const RecipeContext = createContext();
 const RecipeProvider = ({ children }) => {
 	const { configAuth, user, setUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
+	const {
+		data: recipes,
+		isLoading: loadingRecipes,
+		mutate: mutateRecipes,
+		isValidating: validatingRecipes,
+	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
 		api.delete(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, configAuth());
@@ -82,6 +89,10 @@ const RecipeProvider = ({ children }) => {
 				handleToggleBookmark,
 				checkBookmarkAct,
 				getRecipeBySlug,
+				recipes,
+				loadingRecipes,
+				mutateRecipes,
+				validatingRecipes,
 			}}
 		>
 			{children}

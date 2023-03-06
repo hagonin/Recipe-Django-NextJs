@@ -1,4 +1,4 @@
-import { categories } from '@utils/constants';
+import { categoryList } from '@utils/constants';
 import { memo, useState } from 'react';
 import {
 	MdOutlineKeyboardArrowUp,
@@ -32,7 +32,7 @@ function NavCategory() {
 				>
 					All Recipes
 				</button>
-				{categories.map((category) => (
+				{categoryList.map((category) => (
 					<button
 						key={category.id}
 						href={`/recipes/category/${category.name}`}

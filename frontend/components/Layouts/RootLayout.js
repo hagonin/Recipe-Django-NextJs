@@ -8,7 +8,7 @@ import Loader from '@components/UI/Loader';
 import { useRecipeContext } from '@context/recipe-context';
 
 function RootLayout({ children }) {
-	const { loading } = useRecipeContext();
+	const { loading, loadingRecipes } = useRecipeContext();
 	return (
 		<>
 			<Header />
@@ -19,7 +19,7 @@ function RootLayout({ children }) {
 				autoClose={1500}
 				transition={Slide}
 			/>
-			{loading ? (
+			{loading || loadingRecipes ? (
 				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex">
 					<Loader type="handle" />
 				</div>

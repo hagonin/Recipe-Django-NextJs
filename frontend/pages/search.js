@@ -11,11 +11,12 @@ import useSWR from 'swr';
 function Search() {
 	const { query } = useRouter();
 	const [queryParams, setQueryParams] = useState(query);
-	const { data, isLoading } = useSWR(
+	const { data, isLoading, isValidating } = useSWR(
 		[ENDPOINT_RECIPE_READ, queryParams],
 		([url, queryParams = {}]) => {
 			return api.get(url, {
 				params: queryParams,
+				cd: Date.now(),
 			});
 		}
 	);
@@ -32,7 +33,7 @@ function Search() {
 			</h1>
 
 			<div className="mt-6">
-				{isLoading ? (
+				{isLoading || isValidating ? (
 					'Searching...'
 				) : (
 					<div>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { categories } from '@utils/constants';
+import { categoryList } from '@utils/constants';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
@@ -31,7 +31,7 @@ function Navigate() {
 							>
 								All Recipes
 							</Link>
-							{categories.map((category) => (
+							{categoryList.map((category) => (
 								<Link
 									key={category.id}
 									href={`/recipes/category/${category.name}`}

@@ -21,7 +21,7 @@ export const images = {
 	notfound: '/static/images/404-error.png',
 };
 
-export const categories = [
+export const categoryList = [
 	{
 		id: 1,
 		name: 'appetizers',
@@ -100,18 +100,18 @@ export const tags = [
 	'snacks',
 	'healthy breakfast',
 	'dinner',
-	'fff',
 ];
 export const unit = [
 	{ id: 1, name: 'pounds' },
-	{ id: 2, name: 'lbs' },
-	{ id: 3, name: 'oz' },
-	{ id: 4, name: 'g' },
-	{ id: 5, name: 'kg' },
-	{ id: 6, name: 'cup' },
-	{ id: 7, name: 'teaspoon' },
-	{ id: 8, name: 'tablespoon' },
-	{ id: 9, name: 'slice(s)' },
+	{ id: 2, name: 'pounds' },
+	{ id: 3, name: 'lbs' },
+	{ id: 4, name: 'oz' },
+	{ id: 5, name: 'g' },
+	{ id: 6, name: 'kg' },
+	{ id: 7, name: 'cup' },
+	{ id: 8, name: 'teaspoon(s)' },
+	{ id: 9, name: 'tablespoon(s)' },
+	{ id: 10, name: 'pcs' },
 ];
 
 export const ratingScale = [
