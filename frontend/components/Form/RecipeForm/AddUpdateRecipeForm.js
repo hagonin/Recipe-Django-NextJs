@@ -10,7 +10,7 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categories, EXIST_RECIPE, images } from '@utils/constants';
+import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
@@ -129,7 +129,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 							name="recipe.category"
 							register={register}
 							error={formErr?.recipe?.category}
-							options={categories}
+							options={categoryList}
 							label="What kind of category ?"
 							rules={{
 								required: 'What kind of category is this?',

@@ -1,4 +1,5 @@
 import { categoryList } from '@utils/constants';
+import Link from 'next/link';
 import { memo, useState } from 'react';
 import {
 	MdOutlineKeyboardArrowUp,
@@ -25,22 +26,22 @@ function NavCategory() {
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>
-				<button
+				<Link
 					href="/recipes"
 					isSubItem
 					className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 				>
 					All Recipes
-				</button>
+				</Link>
 				{categoryList.map((category) => (
-					<button
+					<Link
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
 						className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 						isSubItem
 					>
 						{category.name}
-					</button>
+					</Link>
 				))}
 			</div>
 		</>
