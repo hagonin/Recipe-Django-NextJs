@@ -15,7 +15,7 @@ function UploadImagePage() {
 		query: { slug, id },
 	} = router;
 
-	const onUploadImg = async (form) => {
+	const onUploadPhoto = async (form) => {
 		try {
 			await api.post(ENDPOINT_RECIPE_IMAGE, form, configAuth());
 			toast.success('Upload new photo success');
@@ -28,7 +28,7 @@ function UploadImagePage() {
 		<div className="container py-14">
 			<h1 className="text-center mb-10">Upload photo</h1>
 			<UploadPhoto
-				onSubmit={onUploadImg}
+				onSubmit={onUploadPhoto}
 				recipe={id}
 			/>
 		</div>

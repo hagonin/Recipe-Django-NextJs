@@ -61,16 +61,6 @@ export const getStaticProps = async ({ params }) => {
 			category: name,
 		},
 	});
-	// const recipes = res?.data?.results.map((item) => ({
-	// 	id: item.id,
-	// 	name: item.title,
-	// 	slug: item.slug,
-	// 	image: item.image_url,
-	// 	date: item.updated_at,
-	// 	rating: item.rating,
-	// 	bookmark: item.total_number_of_bookmarks,
-	// 	reviews_count: item.reviews_count,
-	// }));
 	return {
 		props: {
 			category: {
@@ -85,6 +75,6 @@ export const getStaticPaths = () => {
 	const paths = categories.map((item) => ({ params: { name: item.name } }));
 	return {
 		paths,
-		fallback: 'blocking',
+		fallback: true,
 	};
 };

@@ -1,68 +1,74 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import { toast } from 'react-toastify';
-import {
-	ENDPOINT_RECIPE_CREATE,
-	ENDPOINT_RECIPE_DETAIL,
-	ENDPOINT_RECIPE_READ,
-} from '@utils/constants';
 import { useRecipeContext } from '@context/recipe-context';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
-	const { deletePhotoById, fetcher, deleteRecipe } = useRecipeContext();
+	const { deletePhotoById, deleteRecipe, setLoading, getRecipeBySlug } =
+		useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },
 	} = router;
-	const {
-		data: recipe,
-		isLoading,
-		mutate,
-		isValidating,
-	} = useSWR(`${ENDPOINT_RECIPE_READ}${slug}/`, fetcher);
+	const [recipe, setRecipe] = useState(null);
 
-	const handleDeletePhoto = async (id) => {
+	const handleDeletePhoto = useCallback(async (id) => {
+		setLoading(true);
 		await deletePhotoById(id);
-		await mutate();
-		toast.success('Delete success');
-	};
+		getRecipeBySlug(slug)
+			.then(({ data }) => {
+				setRecipe(data);
+				toast.success('Delete success');
+			})
+			.catch()
+			.then(() => {
+				setLoading(false);
+			});
+	});
 
-	const goToUpload = () =>
-		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`);
+	const goToUploadPhotos = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`)
+	);
 
-	const goToUpdate = () => {
-		router.push(`/user/recipe/${recipe?.slug}/update`);
-	};
-	const handleDeleteRecipe = async (slug) => {
+	const goToUpdate = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/update`)
+	);
+	const handleDeleteRecipe = useCallback(async (slug) => {
 		try {
 			await deleteRecipe(slug);
-			await mutate(null);
 			router.push('/user/profile');
 			toast.success('Delete success');
 		} catch (err) {
 			toast.error('Delete failed');
 		}
-	};
+	});
+
+	useEffect(() => {
+		setLoading(true);
+		getRecipeBySlug(slug)
+			.then(({ data }) => {
+				setRecipe(data);
+			})
+			.catch()
+			.then(() => {
+				setLoading(false);
+			});
+	}, []);
 
 	return (
 		<div className="container py-14">
-			{isLoading || isValidating ? (
-				'LOADING...'
-			) : recipe ? (
+			{recipe ? (
 				<PreviewRecipe
 					data={{ ...recipe }}
 					handleDeletePhoto={handleDeletePhoto}
-					goToUpload={goToUpload}
+					goToUpload={goToUploadPhotos}
 					goToUpdate={goToUpdate}
 					gotoDelete={handleDeleteRecipe}
 				/>
-			) : (
-				<h2>No preview</h2>
-			)}
+			) : null}
 		</div>
 	);
 }

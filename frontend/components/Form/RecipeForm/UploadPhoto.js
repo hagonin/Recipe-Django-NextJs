@@ -6,9 +6,7 @@ import { Form, InputField } from '../FormControl';
 import Image from './Image';
 
 function UploadPhoto({ onSubmit, recipe }) {
-	const handleChoosePhoto = (file) => {
-		setValue('upload_photo.image_url', file);
-	};
+	
 	const {
 		register,
 		handleSubmit,
@@ -22,6 +20,9 @@ function UploadPhoto({ onSubmit, recipe }) {
 			},
 		},
 	});
+	const handleChoosePhoto = (file) => {
+		setValue('upload_photo.image_url', file);
+	};
 
 	const createFormData = ({ upload_photo }) => {
 		const { image_url, caption } = upload_photo;

@@ -1,22 +1,16 @@
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
 import {
 	InputField,
 	SelectField,
-	TextAreaField,
 	RichTextField,
 	Label,
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import {
-	categories,
-	EXIST_RECIPE,
-	images,
-	RECIPE_EXIST,
-} from '@utils/constants';
+import { categories, EXIST_RECIPE, images } from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
@@ -24,22 +18,12 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
 import { FaRegLightbulb } from 'react-icons/fa';
-import { getFileFromUrl } from '@utils/getFileFromUrl';
 import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
-	const ingredient = initValues?.ingredients || [
-		{ recipe: EXIST_RECIPE, heading: null },
-	];
-	const instruction = initValues?.instructions || [{ content: '' }];
-	const main_image = getFileFromUrl(
-		initValues?.image_url || images.spoon,
-		'default'
-	);
-	const description = initValues?.description || null;
 	const { errors } = useAuthContext();
 	const {
 		register,
@@ -54,10 +38,12 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		defaultValues: {
 			recipe: {
 				...initValues,
-				description: description,
-				main_image: main_image,
-				ingredients: ingredient,
-				instructions: instruction,
+				description: initValues?.description || null,
+				main_image: null,
+				ingredients: initValues?.ingredients || [
+					{ recipe: EXIST_RECIPE, heading: null },
+				],
+				instructions: initValues?.instructions || [{ content: '' }],
 			},
 		},
 	});
@@ -67,7 +53,6 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		console.log('recipe', recipe);
 		const { ingredients, instructions: ins, main_image, ...rest } = recipe;
 		const form = new FormData();
 		// instructions
@@ -92,7 +77,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		const img = await main_image;
 		form.append('main_image', img, img.name);
 
-		// // add rest to form
+		// // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
 		return onSubmit(form);
@@ -180,7 +165,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							urlInit={initValues?.image_url}
+							urlInit={initValues?.image_url || images.spoon}
 						/>
 					</div>
 				</div>
@@ -338,4 +323,4 @@ const Title = ({ title, info }) => (
 		)}
 	</div>
 );
-export default AddUpdateRecipeForm;
+export default memo(AddUpdateRecipeForm);

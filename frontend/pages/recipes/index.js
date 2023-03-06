@@ -1,4 +1,3 @@
-import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import { ENDPOINT_RECIPE } from '@utils/constants';
 
@@ -56,6 +55,5 @@ export const getStaticProps = async () => {
 	const res = await api.get(ENDPOINT_RECIPE);
 	return {
 		props: { recipes: res?.data?.results },
-		revalidate: 960,
 	};
 };

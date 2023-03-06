@@ -1,106 +1,102 @@
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { useCallback, useEffect, useState } from 'react';
 import {
-	ENDPOINT_CREATE_RECIPE,
 	ENDPOINT_RECIPE_DETAIL,
 	ENDPOINT_RECIPE_READ,
 	EXIST_RECIPE,
 } from '@utils/constants';
 
-import PrivateRoutes from '@components/Layouts/PrivateRoutes';
-import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useRecipeContext } from '@context/recipe-context';
-import useSWR from 'swr';
+import api from '@services/axios';
+import noCache from '@utils/noCache';
+
+import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 
 function Update() {
+	const [initValue, setInitValue] = useState(null);
 	const [cancel, setCancel] = useState(false);
 	const router = useRouter();
 	const { slug } = router?.query;
-	const { fetcher } = useRecipeContext();
-	const { data, isLoading, mutate } = useSWR(
-		`${ENDPOINT_RECIPE_READ}${slug}/`,
-		fetcher
-	);
-	const [initValue, setInitValue] = useState(null);
 	const { configAuth } = useAuthContext();
-	const onSubmit = async (data) => {
-		console.log('Data before submit', data);
+	const { setLoading } = useRecipeContext();
+
+	const onSubmitUpdate = useCallback(async (data) => {
 		await api
 			.put(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, data, configAuth())
 			.then((res) => {
-				const { slug } = res?.data;
 				toast.success('Update recipe success');
-				router.push(`/user/recipe/${slug}`);
+				router.push(`/user/recipe/${res?.data?.slug}`);
 			})
 			.catch(({ _error }) => {
-				const errStr = Object.keys(_error)
-					.map((key) => `${key}: ${_error[key]?.[0]}`)
-					.join('\r\n');
+				const errStr = handleError(_error);
 				toast.error(errStr);
 			});
-	};
+	});
+
+	const handleInstructions = useCallback((instructions) => {
+		let ins = instructions.split('<p>');
+		ins.shift();
+		ins = ins.map((item) => item.split('</p>'));
+		ins = ins.map((item) => ({ content: item[0] }));
+		return ins;
+	});
+
+	const handleIngredients = useCallback((ingredients) => {
+		let ingre = ingredients.map((item) => ({
+			...item,
+			recipe: EXIST_RECIPE,
+		}));
+		return ingre;
+	});
+
+	const handleKeyWord = useCallback((key) => key.replace(/'/g, ''));
+
+	const handleError = useCallback((err) => {
+		return Object.keys(err)
+			.map((key) => `${key}: ${err[key]?.[0]}`)
+			.join('\r\n');
+	});
 
 	useEffect(() => {
-		if (data) {
-			const {
-				title,
-				description,
-				category,
-				serving,
-				prep_time,
-				cook_time,
-				image_url,
-				ingredients,
-				instructions,
-				search_vector,
-				source,
-				notes,
-			} = data;
-			const obj = {
-				title,
-				description,
-				category,
-				serving,
-				prep_time,
-				cook_time,
-				image_url,
-				ingredients,
-				instructions,
-				search_vector,
-				source,
-				notes,
-			};
+		setLoading(true);
+		api.get(`${ENDPOINT_RECIPE_READ}${slug}/${noCache()}`)
+			.then(({ data }) => {
+				if (data) {
+					if (data.instructions) {
+						data.instructions = handleInstructions(
+							data.instructions
+						);
+					}
 
-			if (instructions) {
-				let ins = data.instructions.split('<p>');
-				ins.shift();
-				ins = ins.map((item) => item.split('</p>'));
-				ins = ins.map((item) => ({ content: item[0] }));
-				obj['instructions'] = ins;
-			}
+					if (data.ingredients) {
+						data['ingredients'] = handleIngredients(
+							data.ingredients
+						);
+					}
 
-			if (ingredients) {
-				let ingre = data.ingredients.map((item) => ({
-					...item,
-					recipe: EXIST_RECIPE,
-				}));
-				obj['ingredients'] = ingre;
-			}
+					if (data.notes === 'null') {
+						data.notes = JSON.parse(data.notes);
+					}
 
-			if (notes === 'null') {
-				obj.notes = JSON.parse(notes);
-			}
+					if (data.search_vector) {
+						data.search_vector = handleKeyWord(data.search_vector);
+					}
 
-			setInitValue(obj);
-		}
-	}, [data]);
+					setInitValue({ ...data });
+				}
+			})
+			.catch()
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
 
-	const toggleCancel = () => {
+	const toggleCancel = useCallback(() => {
 		setCancel(!cancel);
-	};
+	});
 
 	return (
 		<div className="container py-14 lg:w-3/4">
@@ -108,11 +104,9 @@ function Update() {
 				<h1 className="ml-4 mb-14">Update Recipe</h1>
 			</div>
 
-			{isLoading || !initValue ? (
-				'Loading'
-			) : initValue ? (
+			{initValue ? (
 				<AddUpdateRecipeForm
-					onSubmit={onSubmit}
+					onSubmit={onSubmitUpdate}
 					handleCancel={toggleCancel}
 					initValues={initValue}
 					isUpdate

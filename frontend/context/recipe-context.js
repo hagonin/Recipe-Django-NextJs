@@ -4,7 +4,9 @@ import {
 	ENDPOINT_INGREDIENT,
 	ENDPOINT_RECIPE_DETAIL,
 	ENDPOINT_RECIPE_IMAGE,
+	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
+import noCache from '@utils/noCache';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './auth-context';
 
@@ -58,6 +60,9 @@ const RecipeProvider = ({ children }) => {
 		}
 	};
 
+	const getRecipeBySlug = (slug) =>
+		api.get(`${ENDPOINT_RECIPE_READ}${slug}/${noCache()}`);
+
 	const checkBookmarkAct = (bookmarkID) =>
 		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
 		0;
@@ -76,6 +81,7 @@ const RecipeProvider = ({ children }) => {
 				deletePhotoById,
 				handleToggleBookmark,
 				checkBookmarkAct,
+				getRecipeBySlug,
 			}}
 		>
 			{children}
