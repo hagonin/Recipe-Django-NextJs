@@ -9,7 +9,7 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 
 function Changepassword() {
-	const { setErrors, configAuth } = useAuthContext();
+	const { setErrors, errors, configAuth } = useAuthContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		try {

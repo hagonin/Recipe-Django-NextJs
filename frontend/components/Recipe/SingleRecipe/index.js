@@ -16,8 +16,7 @@ import { RiBookMarkFill } from 'react-icons/ri';
 function SingRecipe({
 	id,
 	updated_at,
-	author,
-	cover,
+	image_url: cover,
 	prep_time,
 	cook_time,
 	instructions,
@@ -25,11 +24,13 @@ function SingRecipe({
 	title,
 	description,
 	notes,
+	user: author,
 	ingredients,
 	images = [],
-	actBookmark,
+	checkBookmarkAct,
 	handleToggleBookmark,
 }) {
+	const actBookmark = checkBookmarkAct(id);
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
 	const instructionsMarkup = createMarkup(instructions);

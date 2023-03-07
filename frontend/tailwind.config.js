@@ -27,9 +27,19 @@ module.exports = {
 				border: '#e6e6e6',
 				red: '#F33A58',
 				redLight: 'rgba(243, 58, 89, 0.15)',
+				yellow: '#FFC438',
+				yellowDark: '#f0b62d',
 			},
 			animation: {
 				'spin-slow': 'spin 2s linear infinite',
+				smoothbounceball:
+					'smoothbounceball .6s ease-in-out infinite alternate',
+			},
+			keyframes: {
+				smoothbounceball: {
+					from: { transform: 'translate3d(0, 0, 0)' },
+					to: { transform: 'translate3d(0, 30px, 0)' },
+				},
 			},
 		},
 	},

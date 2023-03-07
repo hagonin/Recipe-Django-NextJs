@@ -1,4 +1,6 @@
+import { images } from '@utils/constants';
 import { RiLoader2Line } from 'react-icons/ri';
+import Img from '../Image';
 
 function Loader({ type }) {
 	switch (type) {
@@ -45,6 +47,16 @@ function Loader({ type }) {
 		case 'btn-user':
 			return (
 				<div className="rounded-full bg-slate-200 h-10 w-10 animate-pulse"></div>
+			);
+		case 'handle':
+			return (
+				<div className="animate-smoothbounceball m-auto bg-white shadow-lg p-4 rounded-full">
+					<Img
+						src={images.cooking}
+						alt="loader"
+						className="h-16 w-16"
+					/>
+				</div>
 			);
 		default:
 			return (

@@ -1,10 +1,11 @@
 import { useAuthContext } from '@context/auth-context';
+import { useRecipeContext } from '@context/recipe-context';
 import Link from 'next/link';
 import { AiOutlineDoubleRight } from 'react-icons/ai';
 import RecipeCard from './RecipeCard';
 
 function GroupCategory({ list = [], name = 'Category name' }) {
-	const { handleToggleBookmark, checkBookmarkAct } = useAuthContext();
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
 		<div className="border-b border-border py-8">
 			<div className="flex justify-between items-center mb-5">
@@ -17,7 +18,7 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 					<AiOutlineDoubleRight />
 				</Link>
 			</div>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-x-6 lg:gap-y-10 md:gap-x-4 md:gap-y-8 gap-8">
+			<div className="grid lg:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-x-4 md:gap-y-8  gap-x-2 gap-y-10">
 				{list.map((item) => (
 					<RecipeCard
 						actBookmark={checkBookmarkAct(item.id)}
@@ -26,11 +27,10 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 						slug={item.slug}
 						date={item.updated_at}
 						name={item.title}
+						rating={item.rating}
 						image={item.image_url}
-						cook_time={item.cook_time}
-						prep_time={item.prep_time}
-						className="grid gap-4"
 						id={item.id}
+						smallCard
 					/>
 				))}
 			</div>

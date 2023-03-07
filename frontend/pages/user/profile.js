@@ -12,34 +12,46 @@ import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
+import { FaUser } from 'react-icons/fa';
+import { HiOutlineClipboardList } from 'react-icons/hi';
+import { BsJournalBookmarkFill } from 'react-icons/bs';
+import { RiMapPinUserFill, RiShieldUserLine } from 'react-icons/ri';
+import { MdEmail } from 'react-icons/md';
 
 function Profile() {
-	const { user, handleToggleBookmark } = useAuthContext();
-	const { deleteRecipe, fetcher } = useRecipeContext();
+	const { user } = useAuthContext();
+	const {
+		deleteRecipe,
+		fetcher,
+		setLoading,
+		handleToggleBookmark,
+		loading: isloadingBookMark,
+	} = useRecipeContext();
 	const {
 		data: recipes,
 		isLoading: loading1,
 		mutate: mutate1,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
-	const [deleting, setDeleting] = useState(false);
 
 	const {
 		data: bookmarks,
 		isLoading: loading2,
 		mutate: mutate2,
+		isValidating: isValidating2,
 	} = useSWR(`/user/profile/${user.id}/bookmarks`, fetcher);
+
 	const router = useRouter();
 
 	const handleDeleteRecipe = async (slug) => {
+		setLoading(true);
 		try {
-			setDeleting(true);
 			await deleteRecipe(slug);
 			await mutate1();
 			toast.success('Delete success');
 		} catch (err) {
 			toast.error('Delete failed');
 		} finally {
-			setDeleting(false);
+			setLoading(false);
 		}
 	};
 
@@ -54,8 +66,8 @@ function Profile() {
 
 	return (
 		<div className="container my-14">
-			<h1 className="text-center">Profile</h1>
-			<div className="flex mt-10 items-center gap-6">
+			<h1 className="text-center">My Profile</h1>
+			<div className="flex mt-14 items-center gap-6">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
@@ -63,12 +75,13 @@ function Profile() {
 					cover
 				/>
 				<div className="flex flex-col">
-					<span>id:{user?.id}</span>
-					<h2>Last Name: {user?.last_name}</h2>
-					<h2>First Name: {user?.first_name}</h2>
-					<h2>User name: {user?.username}</h2>
+					<h2 className="capitalize ">
+						{` ${user?.first_name} ${user?.last_name} ${user?.username}`}
+					</h2>
 
-					<span className="text-lg mt-1">Email: {user?.email}</span>
+					<span className="text-lg mt-1 flex items-center gap-2">
+						<MdEmail /> Email: {user?.email}
+					</span>
 					<Button
 						type="link"
 						href="/user/updateprofile"
@@ -86,36 +99,64 @@ function Profile() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
-			{deleting && 'Deleting...'}
 			<Tabs>
-				<TabPanel tab="All Recipes">
-					<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
-						{loading1
-							? 'Loading...'
-							: recipes?.map((recipe) => (
-									<div key={recipe.id}>
-										<RecipeCard
-											image={recipe.image_url}
-											name={recipe.title}
-											date={
-												recipe.updated_at ||
-												recipe.created_at
-											}
-											smallCard
-											slug={recipe.slug}
-											id={recipe.id}
-											hasControl
-											handleDelete={handleDeleteRecipe}
-											goToUpdate={goToUpdate}
-											goToAddPhoto={goToAddPhoto}
-											secondary
-										/>
-										<span>{recipe.author}</span>
-									</div>
-							  ))}
-					</div>
+				<TabPanel
+					tab={{
+						icon: <HiOutlineClipboardList />,
+						title: 'Manage Recipe',
+					}}
+				>
+					<>
+						{loading1 ? (
+							'Loading...'
+						) : recipes.length > 0 ? (
+							<>
+								<span className="mb-5 inline-block">
+									You have <b>{recipes.length}</b> recipes
+								</span>
+								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
+									{recipes?.map((recipe) => (
+										<div key={recipe.id}>
+											<RecipeCard
+												image={recipe.image_url}
+												name={recipe.title}
+												smallCard
+												slug={recipe.slug}
+												id={recipe.id}
+												hasControl
+												handleDelete={
+													handleDeleteRecipe
+												}
+												goToUpdate={goToUpdate}
+												goToAddPhoto={goToAddPhoto}
+												secondary
+											/>
+											<span>{recipe.author}</span>
+										</div>
+									))}
+								</div>
+							</>
+						) : (
+							<div className='flex gap-6 items-center'>
+								<span>You do not have your own recipe.</span>
+								<Button
+									onClick={() =>
+										router.push('/user/recipe/add')
+									}
+									className="secondary rounded-full"
+								>
+									+ Add new recipe
+								</Button>
+							</div>
+						)}
+					</>
 				</TabPanel>
-				<TabPanel tab="Bookmarks">
+				<TabPanel
+					tab={{
+						icon: <BsJournalBookmarkFill />,
+						title: 'Collections',
+					}}
+				>
 					{loading2 ? (
 						'Loading...'
 					) : bookmarks.length > 0 ? (
@@ -139,7 +180,7 @@ function Profile() {
 							))}
 						</div>
 					) : (
-						'Empty'
+						'You have not saved any bookmarks yet.'
 					)}
 				</TabPanel>
 			</Tabs>

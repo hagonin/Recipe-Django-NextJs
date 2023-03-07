@@ -45,6 +45,10 @@
       @apply text-white border-transparent bg-primary hover:bg-primaryDark
     }
 
+    .btn.secondary {
+      @apply bg-yellow text-white hover:bg-yellowDark border-yellowDark;
+    }
+
     .btn.tag {
       @apply text-black font-light text-[0.7rem] h-[24px] px-3 bg-grey hover:bg-primary hover:border-primary hover:text-white;
     }
@@ -76,7 +80,9 @@
       @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
     }
 
+
 }
+
 
 
 

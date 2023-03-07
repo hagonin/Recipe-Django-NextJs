@@ -1,12 +1,12 @@
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
-import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import CollectionPics from './CollectionPics';
 import CommonSection from './CommonSection';
 import UserSection from './UserSection';
 import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
+import Tags from './Tags';
 
 function Widget() {
 	const { isAuthenticated, loading, user } = useAuthContext();
@@ -79,18 +79,7 @@ function Widget() {
 				<SubscribeForm secondary />
 			</CommonSection>
 			<CommonSection title="tags">
-				<div className="flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<Button
-							key={tag.id}
-							type="link"
-							href={`/recipes/category/${tag.name}`}
-							className="tag"
-						>
-							{tag.name}
-						</Button>
-					))}
-				</div>
+				<Tags />
 			</CommonSection>
 			<CommonSection title="search">
 				<SearchForm

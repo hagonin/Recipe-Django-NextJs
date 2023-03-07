@@ -4,7 +4,10 @@ import {
 	ENDPOINT_INGREDIENT,
 	ENDPOINT_RECIPE_DETAIL,
 	ENDPOINT_RECIPE_IMAGE,
+	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
+import noCache from '@utils/noCache';
+import useRecipes from 'hook/useRecipes';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './auth-context';
 
@@ -13,44 +16,63 @@ const { createContext, useContext, useState, useEffect } = require('react');
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
-	const { configAuth, user } = useAuthContext();
-	const [loading, setLoading] = useState(true);
+	const { configAuth, user, setUser } = useAuthContext();
+	const [loading, setLoading] = useState(false);
+	const {
+		data: recipes,
+		isLoading: loadingRecipes,
+		mutate: mutateRecipes,
+		isValidating: validatingRecipes,
+	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
-		api.delete(`${ENDPOINT_CREATE_RECIPE}${slug}/`, configAuth());
+		api.delete(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, configAuth());
 
 	const deletePhotoById = (id) =>
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
 
-	const updateIngredientById = ({ id, title, desc, unit, quantity }) => {
-		return api.patch(
-			`${ENDPOINT_INGREDIENT}${id}/`,
-			{
-				title,
-				unit,
-				quantity,
-				desc,
-			},
-			configAuth()
-		);
+	const handleToggleBookmark = async (act, id) => {
+		setLoading(true);
+		if (!act) {
+			api.post(
+				`user/profile/${user?.id}/bookmarks`,
+				{
+					id: id,
+				},
+				configAuth()
+			).then((res) => {
+				setUser((pre) => {
+					const newBookmarks = [...user?.bookmarks, id];
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				setLoading(false);
+				toast.success('Add bookmark success');
+			});
+		} else {
+			api.delete(`user/profile/${user?.id}/bookmarks`, {
+				headers: configAuth().headers,
+				data: {
+					id: id,
+				},
+			}).then(() => {
+				setUser((pre) => {
+					const newBookmarks = user?.bookmarks.filter(
+						(item) => item !== id
+					);
+					return { ...pre, bookmarks: newBookmarks };
+				});
+				toast.success('Remove bookmark success');
+				setLoading(false);
+			});
+		}
 	};
 
-	const addIngredientToRecipe = ({ title, desc, unit, quantity, recipe }) => {
-		return api.post(
-			ENDPOINT_INGREDIENT,
-			{
-				title,
-				desc,
-				unit,
-				quantity,
-				recipe,
-			},
-			configAuth()
-		);
-	};
+	const getRecipeBySlug = (slug) =>
+		api.get(`${ENDPOINT_RECIPE_READ}${slug}/${noCache()}`);
 
-	const deleteIngredientById = (id) =>
-		api.delete(`${ENDPOINT_INGREDIENT}${id}/`, configAuth());
+	const checkBookmarkAct = (bookmarkID) =>
+		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
+		0;
 	const fetcher = async (url) =>
 		await api
 			.get(url, configAuth())
@@ -64,9 +86,13 @@ const RecipeProvider = ({ children }) => {
 				deleteRecipe,
 				fetcher,
 				deletePhotoById,
-				updateIngredientById,
-				addIngredientToRecipe,
-				deleteIngredientById,
+				handleToggleBookmark,
+				checkBookmarkAct,
+				getRecipeBySlug,
+				recipes,
+				loadingRecipes,
+				mutateRecipes,
+				validatingRecipes,
 			}}
 		>
 			{children}

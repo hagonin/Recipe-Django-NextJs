@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import {
+	ENDPOINT_RECIPE,
+	ENDPOINT_RECIPE_CREATE,
+	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_READ,
+} from '@utils/constants';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
 
@@ -9,17 +14,21 @@ import RelatedRecipe from '@components/Recipe/RelatedRecipe';
 import SingRecipe from '@components/Recipe/SingleRecipe';
 import SubscribeSection from '@components/SubcribeSection';
 import Reviews from '@components/UI/Reviews';
+import { useRecipeContext } from '@context/recipe-context';
+import { useRouter } from 'next/router';
+import useRecipeBySlug from 'hook/useRecipeBySlug';
+import Loader from '@components/UI/Loader';
 
-function Recipe({ recipe }) {
+function Recipe() {
+	const router = useRouter();
 	const {
-		isAuthenticated,
-		configAuth,
-		user,
-		handleToggleBookmark,
-		checkBookmarkAct,
-	} = useAuthContext();
-	const { image_url, user: author, slug, reviews, ..._recipe } = recipe;
-	const [listReviews, setListReviews] = useState(reviews);
+		query: { slug },
+	} = router;
+	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
+	const { configAuth, user } = useAuthContext();
+	const { handleToggleBookmark, checkBookmarkAct, mutateRecipes } =
+		useRecipeContext();
+
 	const relatedRecipes = [
 		{
 			id: 1,
@@ -55,46 +64,45 @@ function Recipe({ recipe }) {
 
 	const handleSubmitReview = async (data) => {
 		try {
-			const res = await api.post(
+			await api.post(
 				`recipe/${slug}/reviews`,
-				{ ...data, avatar: user?.avatar },
+				{ ...data, avatar: 'a' },
 				configAuth()
 			);
-			const review = res?.data;
+			await mutate();
+			mutateRecipes();
 			toast.success('Your review has been submitted successfully.');
-			setListReviews((preReviews) => {
-				return [review, ...preReviews];
-			});
-		} catch (err) {
-			console.log(err);
-		}
+		} catch {}
 	};
 
-	const handleDelete = async (review_slug, id) => {
+	const handleDelete = async (review_slug) => {
 		await api.delete(`recipe/${slug}/reviews${review_slug}/`, configAuth());
-		setListReviews((pre) => {
-			const newArr = pre.filter((pre) => pre.id !== id);
-			return newArr;
-		});
+		await mutate();
+		mutateRecipes();
 		toast.success('Delete review success');
 	};
 
+	const goToLogin = () => router.push('/login');
 	return (
 		<>
-			<SingRecipe
-				{..._recipe}
-				cover={image_url}
-				author={author}
-				actBookmark={checkBookmarkAct(recipe.id)}
-				handleToggleBookmark={handleToggleBookmark}
-			/>
-			<Reviews
-				isAuth={isAuthenticated}
-				onSubmit={handleSubmitReview}
-				reviews={listReviews}
-				currentUserId={user?.id}
-				handleDelete={handleDelete}
-			/>
+			{isLoading ? (
+				'Loading'
+			) : data ? (
+				<>
+					<SingRecipe
+						{...data}
+						checkBookmarkAct={checkBookmarkAct}
+						handleToggleBookmark={handleToggleBookmark}
+					/>
+					<Reviews
+						onSubmit={handleSubmitReview}
+						reviews={data.reviews}
+						currentUserId={user?.id}
+						handleDelete={handleDelete}
+						goToLogin={goToLogin}
+					/>
+				</>
+			) : null}
 
 			<SubscribeSection />
 			<RelatedRecipe recipes={relatedRecipes} />
@@ -105,32 +113,3 @@ function Recipe({ recipe }) {
 export default Recipe;
 
 Recipe.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;
-
-export async function getStaticProps({ params }) {
-	let recipe;
-	try {
-		const res = await api.get(`${ENDPOINT_RECIPE_DETAIL}${params?.slug}/`);
-		recipe = res?.data;
-	} catch {}
-	return {
-		props: { recipe },
-		revalidate: 5,
-	};
-}
-
-export async function getStaticPaths() {
-	let paths;
-	try {
-		const res = await api.get(ENDPOINT_RECIPE_DETAIL);
-		paths = res?.data?.results.map((item) => ({
-			params: {
-				slug: item.slug,
-			},
-		}));
-	} catch {}
-
-	return {
-		paths,
-		fallback: 'blocking',
-	};
-}

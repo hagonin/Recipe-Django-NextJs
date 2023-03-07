@@ -17,9 +17,11 @@ export const images = {
 	verify_email: '/static/images/verify_email.png',
 	photoDefault: '/static/images/photoDefault.png',
 	spoon: '/static/images/spoon.jpeg',
+	cooking: '/static/images/cooking.png',
+	notfound: '/static/images/404-error.png',
 };
 
-export const categories = [
+export const categoryList = [
 	{
 		id: 1,
 		name: 'appetizers',
@@ -87,17 +89,29 @@ export const categories = [
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 ];
-
+export const tags = [
+	'lemon',
+	'fresh food',
+	'healthy',
+	'vegetarian',
+	'chicken breast',
+	'easy pastas',
+	'side dishes',
+	'snacks',
+	'healthy breakfast',
+	'dinner',
+];
 export const unit = [
 	{ id: 1, name: 'pounds' },
-	{ id: 2, name: 'lbs' },
-	{ id: 3, name: 'oz' },
-	{ id: 4, name: 'g' },
-	{ id: 5, name: 'kg' },
-	{ id: 6, name: 'cup' },
-	{ id: 7, name: 'teaspoon' },
-	{ id: 8, name: 'tablespoon' },
-	{ id: 9, name: 'slice(s)' },
+	{ id: 2, name: 'pounds' },
+	{ id: 3, name: 'lbs' },
+	{ id: 4, name: 'oz' },
+	{ id: 5, name: 'g' },
+	{ id: 6, name: 'kg' },
+	{ id: 7, name: 'cup' },
+	{ id: 8, name: 'teaspoon(s)' },
+	{ id: 9, name: 'tablespoon(s)' },
+	{ id: 10, name: 'pcs' },
 ];
 
 export const ratingScale = [
@@ -142,9 +156,10 @@ export const ENDPOINT_CHANGE_PASSWORD = '/user/change_password';
 
 export const ENDPOINT_CREATE_RECIPE = '/recipe/recipe-create/';
 export const ENDPOINT_RECIPE = '/recipe/recipe/';
+export const ENDPOINT_RECIPE_READ = '/recipe/recipe-read/';
 export const ENDPOINT_RECIPE_DETAIL = '/recipe/recipe-detail/';
 export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 3;
+export const EXIST_RECIPE = 11;

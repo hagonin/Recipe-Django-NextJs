@@ -10,15 +10,15 @@ import { GrAdd } from 'react-icons/gr';
 
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
+import Tippy from '@tippyjs/react';
+import formatDate from '@utils/formatdate';
 
 function PreviewRecipe({
 	data,
 	handleDeletePhoto,
-	editIngredient,
-	addNewIngredient,
-	deleteIngredient,
 	goToUpload,
-	goToEdit,
+	goToUpdate,
+	gotoDelete,
 }) {
 	const {
 		id,
@@ -39,40 +39,32 @@ function PreviewRecipe({
 		source,
 		slug,
 	} = data;
-	
 
 	return (
 		<>
-			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6 container py-14">
+			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 				<div className="md:col-span-8">
-					<div className="flex gap-2 justify-end">
-						<Button
-							icon={{ left: <FiEdit /> }}
-							className="primary"
-							onClick={goToEdit}
-						>
-							Edit
-						</Button>
-						<Button
-							icon={{ left: <MdDeleteForever /> }}
-							className="verify"
-						>
-							Delete
-						</Button>
+					<div className="flex gap-2 mt-3 justify-end text-lg">
+						<Tippy content={<span>Edit</span>}>
+							<button
+								onClick={() => goToUpdate(slug)}
+								className="hover:text-primary"
+							>
+								<FiEdit />
+							</button>
+						</Tippy>
+						<Tippy content={<span>Delete</span>}>
+							<button
+								className="text-red"
+								onClick={() => gotoDelete(slug)}
+							>
+								<MdDelete />
+							</button>
+						</Tippy>
 					</div>
-					<div className="flex gap-2 mt-5">
-						<h1 className="font-bold">{title}</h1>
-						<span className="flex items-center gap-2">
-							<BsFillTagsFill className="text-primary" />{' '}
-							{category}
-						</span>
-					</div>
+					<h1 className="font-bold capitalize">{title}</h1>
 					<div className="flex flex-col mt-5">
-						<div className="flex items-center gap-6">
-							<div className="flex gap-2">
-								<h3>Author:</h3>
-								<span>{author}</span>
-							</div>
+						<div className="flex flex-wrap items-center gap-x-6 gap-y-4">
 							{created_at && (
 								<div className="flex gap-2">
 									<h3>Create at:</h3>
@@ -82,9 +74,12 @@ function PreviewRecipe({
 							{updated_at && (
 								<div className="flex gap-2">
 									<h3>Updated at:</h3>
-									<span>{updated_at}</span>
+									<span>{formatDate(updated_at)}</span>
 								</div>
 							)}
+							<span className="flex items-center gap-2 text-sm uppercase font-bold">
+								<BsFillTagsFill /> {category}
+							</span>
 						</div>
 						<div className="flex items-center gap-2 mt-4">
 							<span className="font-bold px-4 flex gap-2 items-center">
@@ -126,7 +121,7 @@ function PreviewRecipe({
 						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
-					{notes && (
+					{!notes || notes === 'null' ? null : (
 						<div className="mt-10 bg-third rounded-md px-5 py-3">
 							<h3 className="underline decoration-dotted">
 								Notes:
@@ -135,7 +130,7 @@ function PreviewRecipe({
 						</div>
 					)}
 					{source && (
-						<div>
+						<div className="mt-5">
 							<span className="underline">Source</span>: {source}
 						</div>
 					)}
@@ -149,10 +144,6 @@ function PreviewRecipe({
 					<div>
 						<div className="flex gap-2 items-center mt-10 ">
 							<h3>Ingredients:</h3>
-
-							<button onClick={addNewIngredient}>
-								<GrAdd />
-							</button>
 						</div>
 						<ul className="list-disc ml-8">
 							{ingredients.map((ingredient) => (
@@ -160,23 +151,7 @@ function PreviewRecipe({
 									key={ingredient.id}
 									className="flex justify-between group gap-2"
 								>
-									<span>{`${ingredient?.quantity} ${ingredient?.unit} ${ingredient?.title}  ${ingredient?.desc}`}</span>
-									<button
-										className="ml-auto visible"
-										onClick={() =>
-											editIngredient(ingredient.id)
-										}
-									>
-										<MdEdit />
-									</button>
-									<button
-										className="visible"
-										onClick={() =>
-											deleteIngredient(ingredient.id)
-										}
-									>
-										<MdDelete />
-									</button>
+									<span>{`${ingredient?.quantity} ${ingredient?.unit} ${ingredient?.title}  ${ingredient?.heading}`}</span>
 								</li>
 							))}
 						</ul>
