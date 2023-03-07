@@ -1,7 +1,7 @@
 import { ratingScale } from '@utils/constants';
-import { HiStar } from 'react-icons/hi';
+import { GiRoundStar } from 'react-icons/gi';
 
-function Rating({ number }) {
+function Rating({ number , small}) {
 	return (
 		<div className="flex gap-[1px] items-center">
 			{ratingScale.map(({ id }) => {
@@ -9,11 +9,11 @@ function Rating({ number }) {
 					<button
 						key={id}
 						type="button"
-						className={`text-xl ${
-							id <= number ? 'text-yellow-500' : 'text-black'
+						className={`${small ? 'text-base' : 'text-xl'} ${
+							id <= number ? 'text-yellow' : 'text-black'
 						}`}
 					>
-						<HiStar />
+						<GiRoundStar />
 					</button>
 				);
 			})}

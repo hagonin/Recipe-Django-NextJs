@@ -1,18 +1,23 @@
 import { memo, useState } from 'react';
 
 function Tabs({ children }) {
-	const [isActive, setIsActive] = useState(children[0]?.props.tab);
+	const [isActive, setIsActive] = useState(children[0]?.props.tab.title);
 	return (
 		<div className="mt-10">
 			<div className="flex gap-6">
 				{children.map((child) => (
 					<Btn
-						key={child?.props?.tab}
-						index={child?.props?.tab}
+						key={child?.props?.tab.title}
+						index={child?.props?.tab.title}
 						isAct={isActive}
-						onClick={() => setIsActive(child?.props?.tab)}
+						onClick={() => setIsActive(child?.props?.tab.title)}
 					>
-						{child?.props?.tab}
+						{child?.props?.tab.icon && (
+							<span className="relative -top-[1px]">
+								{child?.props?.tab.icon}
+							</span>
+						)}
+						{child?.props?.tab.title}
 					</Btn>
 				))}
 			</div>
@@ -20,9 +25,9 @@ function Tabs({ children }) {
 			<div className="mt-5">
 				{children.map((child) => (
 					<div
-						key={child?.props?.tab}
+						key={child?.props?.tab.title}
 						className={`${
-							isActive === child?.props?.tab ? 'block' : 'hidden'
+							isActive === child?.props?.tab.title ? 'block' : 'hidden'
 						}`}
 					>
 						{child?.props?.children}
@@ -36,7 +41,7 @@ function Tabs({ children }) {
 const Btn = ({ index, isAct, onClick, children }) => {
 	return (
 		<button
-			className={`font-bold text-lg py-4 px-4 border-b-2 ${
+			className={`font-bold text-lg py-4 px-4 border-b-2 flex items-center gap-2 ${
 				index === isAct
 					? 'border-primary text-primary'
 					: ' border-transparent text-black'

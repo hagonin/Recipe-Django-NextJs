@@ -3,18 +3,17 @@ import ReviewForm from '@components/Form/Reviews';
 import ReviewCard from './ReviewCard';
 
 function Reviews({
-	isAuth,
 	reviews = [],
 	onSubmit,
 	currentUserId,
 	handleDelete,
+	goToLogin,
 }) {
-	console.log(reviews);
 	return (
 		<div className=" my-10 py-10 px-7 bg-third rounded-md">
 			<h1>Reviews ({reviews.length})</h1>
 			<div className="mt-5">
-				{isAuth ? (
+				{currentUserId ? (
 					<ReviewForm onSubmit={onSubmit} />
 				) : (
 					<>
@@ -22,7 +21,10 @@ function Reviews({
 							What do you think of this recipe? Share your
 							experience to help others.
 						</p>
-						<button className="underline font-semibold">
+						<button
+							className="underline font-semibold"
+							onClick={goToLogin}
+						>
 							Login to add rating and review
 						</button>
 					</>

@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINT_CREATE_RECIPE, images } from '@utils/constants';
+import {
+	ENDPOINT_CREATE_RECIPE,
+	ENDPOINT_RECIPE_DETAIL,
+	images,
+} from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
 
-import AddRecipeForm from '@components/Form/AddRecipeForm';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
+import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
@@ -17,27 +21,17 @@ function AddRecipe() {
 	const router = useRouter();
 	const onSubmit = async (data) => {
 		await api
-			.post(ENDPOINT_CREATE_RECIPE, data, configAuth())
+			.post(ENDPOINT_RECIPE_DETAIL, data, configAuth())
 			.then((res) => {
 				const { slug } = res?.data;
 				toast.success('Add recipe success');
 				router.push(`/user/recipe/${slug}`);
 			})
-			.catch(({ status, _error }) => {
-				if (status === 500) {
-					toast.error('The name of this recipe already exists.');
-				} else {
-					const errStr = Object.keys(_error)
-						.map((key) => {
-							const str = _error[key]
-								.map((message) => message)
-								.join('<br/>');
-							return `${key}: ${str}`;
-						})
-						.join('<br/>');
-
-					toast.error(errStr);
-				}
+			.catch(({ _error }) => {
+				const errStr = Object.keys(_error)
+					.map((key) => `${key}: ${_error[key]?.[0]}`)
+					.join('<br/>');
+				toast.error(errStr);
 			});
 	};
 
@@ -59,7 +53,7 @@ function AddRecipe() {
 				Uploading personal recipes is easy! Add yours to your favorites,
 				share with friends, family, or the HomeCook community.
 			</p>
-			<AddRecipeForm
+			<AddUpdateRecipeForm
 				onSubmit={onSubmit}
 				handleCancel={toggleCancel}
 			/>

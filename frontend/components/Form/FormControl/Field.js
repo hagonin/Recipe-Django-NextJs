@@ -22,6 +22,7 @@ const InputField = ({
 	hide,
 	icon,
 	info,
+	required,
 	...props
 }) => {
 	const { setErrors, errors } = useAuthContext();
@@ -31,13 +32,14 @@ const InputField = ({
 				label={label}
 				name={name}
 				info={info}
+				required={required}
 			/>
 			<div
 				className={`w-full flex bg-white px-4 ${
 					type !== 'file' && 'border rounded'
 				} h-12 outline-none ${
 					error
-						? 'border-red'
+						? 'border-red border-2'
 						: 'border-border focus-within:border-primary focus-within:border-2'
 				} `}
 			>
@@ -147,6 +149,8 @@ const SelectField = ({
 	register,
 	error,
 	info,
+	rules,
+	required,
 	...props
 }) => {
 	return (
@@ -154,17 +158,19 @@ const SelectField = ({
 			<Label
 				label={label}
 				name={name}
+				required
 			/>
 			<select
 				id={name}
-				{...register(name)}
+				{...register(name, { ...rules })}
 				{...props}
 				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
 					error
-						? 'border-red'
+						? 'border-red border-2'
 						: 'border-border focus:border-primary focus:border-2'
 				}`}
 			>
+				<option value="">Select option</option>
 				{options.map((option) => (
 					<option
 						value={option.name}
@@ -179,12 +185,13 @@ const SelectField = ({
 	);
 };
 
-const TextAreaField = ({ label, name, register, error, info, ...props }) => {
+const TextAreaField = ({ label, name, register, error, info,required, ...props }) => {
 	return (
 		<div className="flex flex-col">
 			<Label
 				label={label}
 				name={name}
+				required
 			/>
 			<textarea
 				id={name}

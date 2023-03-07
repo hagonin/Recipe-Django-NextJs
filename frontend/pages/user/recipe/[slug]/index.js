@@ -1,112 +1,74 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import { toast } from 'react-toastify';
-import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 import { useRecipeContext } from '@context/recipe-context';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
-import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import IngredientUpdateForm from '@components/Form/Recipe/Ingredient/Update';
 
 function RecipePreView() {
-	const {
-		deletePhotoById,
-		fetcher,
-		updateIngredientById,
-		addIngredientToRecipe,
-		deleteIngredientById,
-	} = useRecipeContext();
+	const { deletePhotoById, deleteRecipe, setLoading, getRecipeBySlug } =
+		useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },
 	} = router;
-	const {
-		data: recipe,
-		isLoading,
-		mutate,
-		isValidating,
-	} = useSWR(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, fetcher);
+	const [recipe, setRecipe] = useState(null);
 
-	const [showModal, setShowModal] = useState(false);
-
-	const handleDeletePhoto = async (id) => {
+	const handleDeletePhoto = useCallback(async (id) => {
+		setLoading(true);
 		await deletePhotoById(id);
-		await mutate();
-		toast.success('Delete success');
-	};
+		getRecipeBySlug(slug)
+			.then(({ data }) => {
+				setRecipe(data);
+				toast.success('Delete success');
+			})
+			.catch()
+			.then(() => {
+				setLoading(false);
+			});
+	});
 
-	const [ingredientIdEdit, setIngredientIdEdit] = useState(null);
+	const goToUploadPhotos = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`)
+	);
 
-	const handleEditIngredient = (id) => {
-		setIngredientIdEdit(id);
-		setShowModal(true);
-	};
-
-	const handleModifyIngredient = async (data) => {
-		if (data.id) {
-			await updateIngredientById(data);
-		} else {
-			await addIngredientToRecipe({ ...data, recipe: recipe?.id });
+	const goToUpdate = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/update`)
+	);
+	const handleDeleteRecipe = useCallback(async (slug) => {
+		try {
+			await deleteRecipe(slug);
+			router.push('/user/profile');
+			toast.success('Delete success');
+		} catch (err) {
+			toast.error('Delete failed');
 		}
+	});
 
-		await mutate();
-		setShowModal(false);
-	};
-
-	const addNewIngredient = () => {
-		setShowModal(true);
-		setIngredientIdEdit(null);
-	};
-
-	const deleteIngredient = async (id) => {
-		await deleteIngredientById(id);
-		await mutate();
-		toast.success('delete success');
-	};
-
-	const goToUpload = () =>
-		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`);
-
-	const goToEdit = () => {
-		router.push(`/user/recipe/${recipe?.slug}/update`);
-	};
+	useEffect(() => {
+		setLoading(true);
+		getRecipeBySlug(slug)
+			.then(({ data }) => {
+				setRecipe(data);
+			})
+			.catch()
+			.then(() => {
+				setLoading(false);
+			});
+	}, []);
 
 	return (
 		<div className="container py-14">
-			{isValidating && 'Validating...'}
-			{isLoading ? (
-				'LOADING...'
-			) : recipe ? (
+			{recipe ? (
 				<PreviewRecipe
 					data={{ ...recipe }}
 					handleDeletePhoto={handleDeletePhoto}
-					editIngredient={handleEditIngredient}
-					addNewIngredient={addNewIngredient}
-					deleteIngredient={deleteIngredient}
-					goToUpload={goToUpload}
-					goToEdit={goToEdit}
+					goToUpload={goToUploadPhotos}
+					goToUpdate={goToUpdate}
+					gotoDelete={handleDeleteRecipe}
 				/>
-			) : (
-				<h2>No preview</h2>
-			)}
-			<ModalPrimary
-				show={showModal}
-				handleCloseModal={() => setShowModal(false)}
-			>
-				<div className="md:w-[450px]">
-					<h2 className="mb-6">Add ingredients</h2>
-					<IngredientUpdateForm
-						ingredient={
-							recipe?.ingredients.filter(
-								(item) => item.id === ingredientIdEdit
-							)[0]
-						}
-						onSubmit={handleModifyIngredient}
-					/>
-				</div>
-			</ModalPrimary>
+			) : null}
 		</div>
 	);
 }

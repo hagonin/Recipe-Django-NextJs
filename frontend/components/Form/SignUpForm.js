@@ -81,19 +81,19 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<InputField
-					name="register.firstname"
+					name="register.first_name"
 					type="text"
 					placeholder="Enter your first name"
 					register={register}
-					error={formError?.register?.firstname}
+					error={formError?.register?.first_name}
 				/>
 
 				<InputField
-					name="register.lastname"
+					name="register.last_name"
 					type="text"
 					placeholder="Enter your last name"
 					register={register}
-					error={formError?.register?.lastname}
+					error={formError?.register?.last_name}
 				/>
 
 				<InputField

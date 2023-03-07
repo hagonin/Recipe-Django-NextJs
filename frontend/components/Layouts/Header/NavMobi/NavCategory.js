@@ -1,4 +1,5 @@
-import { categories } from '@utils/constants';
+import { categoryList } from '@utils/constants';
+import Link from 'next/link';
 import { memo, useState } from 'react';
 import {
 	MdOutlineKeyboardArrowUp,
@@ -21,24 +22,26 @@ function NavCategory() {
 				)}
 			</NavItem>
 			<div
-				className={`max-h-[40vh] overflow-y-scroll overflow-x-hidden ${
+				className={`grid grid-cols-2 ml-16  ${
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>
-				<NavItem
+				<Link
 					href="/recipes"
 					isSubItem
+					className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 				>
 					All Recipes
-				</NavItem>
-				{categories.map((category) => (
-					<NavItem
+				</Link>
+				{categoryList.map((category) => (
+					<Link
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
+						className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
 						isSubItem
 					>
 						{category.name}
-					</NavItem>
+					</Link>
 				))}
 			</div>
 		</>

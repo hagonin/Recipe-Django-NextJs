@@ -3,7 +3,7 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import { HiInformationCircle } from 'react-icons/hi';
 
-const Label = ({ label, name, info }) => {
+const Label = ({ label, name, info, required }) => {
 	return (
 		<div className="flex gap-2 items-center">
 			<div className="flex gap-1">
@@ -12,7 +12,7 @@ const Label = ({ label, name, info }) => {
 						className="block text-black text-lg font-semibold mb-2"
 						htmlFor={name}
 					>
-						{label}
+						{required && <span className='text-red mr-1'>*</span>}{label}
 					</label>
 				)}
 			</div>

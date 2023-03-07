@@ -119,3 +119,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+core/settings/development.py

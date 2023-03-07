@@ -54,13 +54,14 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 							</Link>
 							<Link
 								href={`/user/changepassword`}
-								className="block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
+								className="block mb-2 py-2 px-5 hover:bg-[rgba(0,0,0,0.05)]"
 							>
 								Change Password
 							</Link>
+							<span className="block border-t"></span>
 							<Link
 								href="/user/recipe/add"
-								className="block text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2"
+								className="mt-2 block text-left w-full py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] mb-2 "
 							>
 								Add recipe
 							</Link>
