@@ -83,7 +83,7 @@ class Ingredient(models.Model):
     heading = models.CharField(max_length=220, blank=True, null=True)
     title = models.CharField(max_length=1500,blank=True)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
-    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure])  
+    unit = models.CharField(max_length=50,validators=[validate_unit_of_measure], blank=True)  
 
     class Meta: 
         unique_together = ('recipe', 'title')

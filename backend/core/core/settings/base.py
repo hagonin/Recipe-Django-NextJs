@@ -169,6 +169,12 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'recipes_cache',
+    }
+}
 
 POSTGRES_LANGUAGE_UNACCENT = 'unaccent'
 

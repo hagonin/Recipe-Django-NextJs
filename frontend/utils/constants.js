@@ -102,8 +102,8 @@ export const tags = [
 	'dinner',
 ];
 export const unit = [
-	{ id: 1, name: 'pounds' },
-	{ id: 2, name: 'pounds' },
+	{ id: 1, name: 'pound(s)' },
+	{ id: 2, name: 'ml' },
 	{ id: 3, name: 'lbs' },
 	{ id: 4, name: 'oz' },
 	{ id: 5, name: 'g' },
@@ -112,6 +112,7 @@ export const unit = [
 	{ id: 8, name: 'teaspoon(s)' },
 	{ id: 9, name: 'tablespoon(s)' },
 	{ id: 10, name: 'pcs' },
+	{ id: 11, name: 'l' },
 ];
 
 export const ratingScale = [
@@ -162,4 +163,4 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 11;
+export const EXIST_RECIPE = 1;
