@@ -14,26 +14,29 @@ import Img from '@components/UI/Image';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
+import { useRecipeContext } from '@context/recipe-context';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
 	const { configAuth } = useAuthContext();
+	const { mutateRecipes } = useRecipeContext();
 	const router = useRouter();
 	const onSubmit = async (data) => {
-		await api
-			.post(ENDPOINT_RECIPE_DETAIL, data, configAuth())
-			.then((res) => {
-				const { slug } = res?.data;
-				toast.success('Add recipe success');
-				router.push(`/user/recipe/${slug}`);
-			})
-			.catch(({ _error }) => {
-				console.log(_error);
-				// const errStr = Object.keys(_error)
-				// 	.map((key) => `${key}: ${_error[key]?.[0]}`)
-				// 	.join('<br/>');
-				toast.error('Add failed');
-			});
+		try {
+			const res = await api.post(
+				ENDPOINT_RECIPE_DETAIL,
+				data,
+				configAuth()
+			);
+			await mutateRecipes();
+			toast.success('Add recipe success');
+			const { slug } = res?.data;
+			router.push(`/user/recipe/${slug}`);
+		} catch ({ _error }) {
+			if (_error.ingredients) {
+				toast.error('Ingredient title must make a unique set.');
+			}
+		}
 	};
 
 	const toggleCancel = () => {
@@ -86,4 +89,4 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-// AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

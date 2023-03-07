@@ -4,3 +4,4 @@ backend/core/images/
 backend/core/core/media
 backend/core/.env
 images/
+backend/*

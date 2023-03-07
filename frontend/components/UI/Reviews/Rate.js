@@ -9,7 +9,7 @@ function Rating({ number , small}) {
 					<button
 						key={id}
 						type="button"
-						className={`${small ? 'text-base' : 'text-xl'} ${
+						className={`${small ? 'text-sm' : 'text-xl'} ${
 							id <= number ? 'text-yellow' : 'text-black'
 						}`}
 					>

@@ -17,7 +17,7 @@ function IngredientGroup({ control, register, name, error }) {
 					<div className="flex gap-2 ">
 						<div className="w-full">
 							<input
-								className={`border-b outline-none w-full ${
+								className={`border-b outline-none w-1/2 ${
 									error?.[index]?.heading?.message
 										? 'border-red'
 										: 'border-primary'
@@ -51,7 +51,7 @@ function IngredientGroup({ control, register, name, error }) {
 			))}
 			<Button
 				type="button"
-				className="tag"
+				className="tag w-44"
 				onClick={() => append({ heading: null })}
 			>
 				+ Add Heading

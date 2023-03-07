@@ -4,7 +4,7 @@ import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { useEffect, useRef, useState } from 'react';
 import { BsCamera } from 'react-icons/bs';
 
-function Image({ handleChooseImg, urlInit = images.spoon }) {
+function Image({ handleChooseImg, urlInit }) {
 	const [preview, setPreview] = useState(urlInit);
 	const inputFileRef = useRef();
 
@@ -22,12 +22,6 @@ function Image({ handleChooseImg, urlInit = images.spoon }) {
 			preview && URL.revokeObjectURL(preview);
 		};
 	}, [preview]);
-
-	useEffect(() => {
-		getFileFromUrl(preview, 'default').then((res) => {
-			handleChooseImg(res);
-		});
-	}, []);
 
 	const handleOnClick = () => {
 		inputFileRef.current.click();

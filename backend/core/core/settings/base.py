@@ -112,9 +112,9 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'railway',
             'USER': 'postgres',
-            'PASSWORD': config("DB_PASSWORD", default="postgres"),
-            'HOST': config("DB_HOSTNAME"),
-            'PORT': config("DB_PORT")
+            'PASSWORD': config("DB_PASSWORD1", default="postgres"),
+            'HOST': config("DB_HOSTNAME1"),
+            'PORT': config("DB_PORT1")
         }
     }
 
@@ -193,3 +193,18 @@ LOGGING = {
         'level': 'WARNING',
     },
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'recipes_cache',
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')

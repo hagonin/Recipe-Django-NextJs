@@ -7,8 +7,13 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
-	const { deletePhotoById, deleteRecipe, setLoading, getRecipeBySlug } =
-		useRecipeContext();
+	const {
+		deletePhotoById,
+		deleteRecipe,
+		setLoading,
+		getRecipeBySlug,
+		mutateRecipes,
+	} = useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },
@@ -39,6 +44,7 @@ function RecipePreView() {
 	const handleDeleteRecipe = useCallback(async (slug) => {
 		try {
 			await deleteRecipe(slug);
+			await mutateRecipes();
 			router.push('/user/profile');
 			toast.success('Delete success');
 		} catch (err) {

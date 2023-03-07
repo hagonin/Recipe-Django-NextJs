@@ -38,7 +38,10 @@ function ReviewCard({
 						)}
 					</div>
 					<div className="flex items-center gap-4">
-						<Rating number={rating} />
+						<Rating
+							number={rating}
+							small
+						/>
 						<span className="text-sm relative top-[1px]">
 							{formatDate(date_added)}
 						</span>

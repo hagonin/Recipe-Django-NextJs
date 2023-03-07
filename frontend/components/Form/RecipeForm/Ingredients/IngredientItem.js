@@ -38,16 +38,10 @@ function IngredientItem({ register, control, name, error }) {
 							</div>
 							<div className="flex flex-col w-full">
 								<input
-									className={`px-2 border w-full focus:outline-primary h-10 ${
-										error?.[index]?.quantity?.message
-											? 'border-red'
-											: ''
-									}`}
+									className={`px-2 border w-full focus:outline-primary h-10`}
 									type="text"
 									placeholder="quantity"
-									{...register(`${name}.${index}.quantity`, {
-										required: 'Enter quantity',
-									})}
+									{...register(`${name}.${index}.quantity`)}
 								/>
 								<Error
 									error={error?.[index]?.quantity?.message}
@@ -56,15 +50,9 @@ function IngredientItem({ register, control, name, error }) {
 							</div>
 							<div className="flex flex-col w-full">
 								<select
-									className={`px-2 border w-full focus:outline-primary h-10 ${
-										error?.[index]?.unit?.message
-											? 'border-red'
-											: ''
-									}`}
+									className={`px-2 border w-full focus:outline-primary h-10`}
 									placeholder="unit"
-									{...register(`${name}.${index}.unit`, {
-										required: 'Select unit',
-									})}
+									{...register(`${name}.${index}.unit`)}
 								>
 									<option value="">Select option</option>
 									{unit.map((u) => (
@@ -94,7 +82,7 @@ function IngredientItem({ register, control, name, error }) {
 			})}
 			<Button
 				type="button"
-				className="tag "
+				className="tag w-44"
 				onClick={() => append({ recipe: EXIST_RECIPE })}
 			>
 				+ add ingredient

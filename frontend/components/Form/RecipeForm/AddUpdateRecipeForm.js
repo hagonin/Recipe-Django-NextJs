@@ -22,7 +22,7 @@ import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
-import handleIngredientFromArr from '@utils/handleIngredientFromArr';
+import { getFileFromUrl } from '@utils/getFileFromUrl';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -40,11 +40,11 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		defaultValues: {
 			recipe: {
 				...initValues,
-				description: initValues?.description || null,
-				main_image: null,
-				ingredient: handleIngredientFromArr(
-					initValues?.ingredients
-				) || {
+				description: initValues?.description || '',
+				source: initValues?.source || '',
+				notes: initValues?.notes || '',
+				main_image: initValues?.image_url || images.spoon,
+				ingredient: initValues?.ingredients || {
 					item: [{ recipe: EXIST_RECIPE }],
 				},
 				instructions: initValues?.instructions || [{ content: '' }],
@@ -57,7 +57,6 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		console.log(recipe);
 		const { ingredient, instructions: ins, main_image, ...rest } = recipe;
 
 		const form = new FormData();
@@ -81,17 +80,22 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			});
 		}
 		// add image to form
-		const img = main_image;
+		let img;
+		if (typeof main_image === 'string') {
+			img = await getFileFromUrl(main_image, 'defaulrt');
+		} else {
+			img = main_image;
+		}
 		form.append('main_image', img, img.name);
 
-		// // add ...rest to form
+		// // // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
 		return onSubmit(form);
 	};
 
 	const handleIngredients = (ingredients) => {
-		let arr1;
+		let arr1 = [];
 		if (ingredients.group) {
 			arr1 = ingredients.group.map((ingredient) => {
 				return (
@@ -103,7 +107,8 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				);
 			});
 		}
-		const arr2 = ingredients.item || [];
+		const arr2 =
+			ingredients.item.map((item) => ({ ...item, heading: '' })) || [];
 		return [...arr2, ...arr1.flat()];
 	};
 
@@ -190,8 +195,8 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							// urlInit={initValues?.image_url || images.spoon}
-							urlInit={images.spoon}
+							urlInit={initValues?.image_url || images.spoon}
+							// urlInit={images.spoon}
 						/>
 					</div>
 				</div>
@@ -219,6 +224,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						min="1"
 						register={register}
 						error={formErr?.recipe?.serving}
+						rules={{ required: 'Enter people' }}
 						placeholder="e.g. 8 people"
 					/>
 				</div>

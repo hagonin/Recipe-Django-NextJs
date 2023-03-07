@@ -14,6 +14,7 @@ import noCache from '@utils/noCache';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
+import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 
 function Update() {
 	const [initValue, setInitValue] = useState(null);
@@ -21,18 +22,20 @@ function Update() {
 	const router = useRouter();
 	const { slug } = router?.query;
 	const { configAuth } = useAuthContext();
-	const { setLoading } = useRecipeContext();
+	const { setLoading, mutateRecipes } = useRecipeContext();
 
 	const onSubmitUpdate = useCallback(async (data) => {
 		await api
 			.put(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, data, configAuth())
-			.then((res) => {
+			.then(async (res) => {
+				await mutateRecipes();
 				toast.success('Update recipe success');
 				router.push(`/user/recipe/${res?.data?.slug}`);
 			})
 			.catch(({ _error }) => {
-				const errStr = handleError(_error);
-				toast.error(errStr);
+				if (_error.ingredients) {
+					toast.error('Ingredient title must be unique set.');
+				}
 			});
 	});
 
@@ -44,20 +47,13 @@ function Update() {
 		return ins;
 	});
 
-	const handleIngredients = useCallback((ingredients) => {
-		let ingre = ingredients.map((item) => ({
-			...item,
-			recipe: EXIST_RECIPE,
-		}));
-		return ingre;
-	});
-
 	const handleKeyWord = useCallback((key) => key.replace(/'/g, ''));
 
 	const handleError = useCallback((err) => {
-		return Object.keys(err)
-			.map((key) => `${key}: ${err[key]?.[0]}`)
-			.join('\r\n');
+		// console.log(err);
+		if (err.ingredients) {
+			toast.error('Ingredient title must make a unique set.');
+		}
 	});
 
 	useEffect(() => {
@@ -72,11 +68,10 @@ function Update() {
 					}
 
 					if (data.ingredients) {
-						data['ingredients'] = handleIngredients(
+						data.ingredients = handleIngredientFromArr(
 							data.ingredients
 						);
 					}
-
 					if (data.notes === 'null') {
 						data.notes = JSON.parse(data.notes);
 					}

@@ -14,6 +14,8 @@ import Thumbnail from '@components/UI/Slider/Thumbnail';
 import { RiBookMarkFill } from 'react-icons/ri';
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 import Ingredient from './Ingredient';
+import Start from '@components/Form/Reviews/Start';
+import Rating from '@components/UI/Reviews/Rate';
 
 function SingRecipe({
 	id,
@@ -26,6 +28,7 @@ function SingRecipe({
 	title,
 	description,
 	notes,
+	reviews_count,
 	user: author,
 	ingredients,
 	images = [],
@@ -36,8 +39,8 @@ function SingRecipe({
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
 	const instructionsMarkup = createMarkup(instructions);
-	
-	console.log(ingredient);
+
+	// console.log(ingredient);
 	return (
 		<div>
 			<h1 className="text-center">{title}</h1>
@@ -95,13 +98,12 @@ function SingRecipe({
 								<FaUser />
 								<span>Serves: {serving} people</span>
 							</span>
+							{/* <Rating number={averageReviews} /> */}
+							{/* <span>{reviews_count} reviews</span> */}
 						</div>
-						<div
-							dangerouslySetInnerHTML={descriptionMarkup}
-							className="mt-5"
-						/>
+
 						<Title title="Ingredients" />
-						<Ingredient ingredient={ingredients} />
+						<Ingredient ingredients={ingredients} />
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
 						<Img
@@ -109,18 +111,16 @@ function SingRecipe({
 							alt="cover"
 							className="mt-5 mx-auto "
 						/>
-						<Button icon={{ left: <BsPrinter /> }}>
-							Print recipe
-						</Button>
-						<Button icon={{ left: <BsPinterest /> }}>
-							Pin recipe
-						</Button>
 					</div>
 				</div>
 				<Title title="Instructions" />
 				<div dangerouslySetInnerHTML={instructionsMarkup} />
-				<Title title="NOTE" />
-				<p>{notes || 'Nothing'}</p>
+				{notes && (
+					<>
+						<Title title="NOTE" />
+						<p>{notes}</p>
+					</>
+				)}
 			</div>
 		</div>
 	);
