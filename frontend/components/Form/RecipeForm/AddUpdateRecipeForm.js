@@ -22,9 +22,11 @@ import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
+import { getFileFromUrl } from '@utils/getFileFromUrl';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
+
 	const {
 		register,
 		control,
@@ -38,11 +40,13 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		defaultValues: {
 			recipe: {
 				...initValues,
-				description: initValues?.description || null,
-				main_image: null,
-				ingredients: initValues?.ingredients || [
-					{ recipe: EXIST_RECIPE, heading: null },
-				],
+				description: initValues?.description || '',
+				source: initValues?.source || '',
+				notes: initValues?.notes || '',
+				main_image: initValues?.image_url || images.spoon,
+				ingredient: initValues?.ingredients || {
+					item: [{ recipe: EXIST_RECIPE }],
+				},
 				instructions: initValues?.instructions || [{ content: '' }],
 			},
 		},
@@ -53,7 +57,8 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		const { ingredients, instructions: ins, main_image, ...rest } = recipe;
+		const { ingredient, instructions: ins, main_image, ...rest } = recipe;
+
 		const form = new FormData();
 		// instructions
 		const instructions = ins
@@ -68,19 +73,43 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		form.append('instructions', instructions);
 
 		// add ingredients to form
+		const ingredients = handleIngredients(ingredient);
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
 				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
 			});
 		}
 		// add image to form
-		const img = await main_image;
+		let img;
+		if (typeof main_image === 'string') {
+			img = await getFileFromUrl(main_image, 'defaulrt');
+		} else {
+			img = main_image;
+		}
 		form.append('main_image', img, img.name);
 
-		// // add ...rest to form
+		// // // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
 		return onSubmit(form);
+	};
+
+	const handleIngredients = (ingredients) => {
+		let arr1 = [];
+		if (ingredients.group) {
+			arr1 = ingredients.group.map((ingredient) => {
+				return (
+					ingredient.items &&
+					ingredient.items.map((item) => ({
+						...item,
+						heading: ingredient.heading,
+					}))
+				);
+			});
+		}
+		const arr2 =
+			ingredients.item.map((item) => ({ ...item, heading: '' })) || [];
+		return [...arr2, ...arr1.flat()];
 	};
 
 	const handleChooseImg = (file) => {
@@ -106,6 +135,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				message: errors?.recipe?.ingredients,
 			});
 	}, [errors]);
+
 	return (
 		<form
 			onSubmit={handleSubmit(createFormData)}
@@ -166,6 +196,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						<Image
 							handleChooseImg={handleChooseImg}
 							urlInit={initValues?.image_url || images.spoon}
+							// urlInit={images.spoon}
 						/>
 					</div>
 				</div>
@@ -193,6 +224,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						min="1"
 						register={register}
 						error={formErr?.recipe?.serving}
+						rules={{ required: 'Enter people' }}
 						placeholder="e.g. 8 people"
 					/>
 				</div>
@@ -238,7 +270,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				<Ingredients
 					control={control}
 					register={register}
-					error={formErr?.recipe?.ingredients}
+					error={formErr?.recipe?.ingredient}
 				/>
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
@@ -300,7 +332,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					type="submit"
 					disabled={isSubmitting}
 				>
-					{isSubmitting && <Loader type="submitting" />}
+					{isSubmitting ? <Loader type="submitting" /> : null}
 					{isUpdate ? 'Save Update' : 'Submit Recipe'}
 				</Button>
 			</div>

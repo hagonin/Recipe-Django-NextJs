@@ -12,10 +12,8 @@ import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
-import { FaUser } from 'react-icons/fa';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
-import { RiMapPinUserFill, RiShieldUserLine } from 'react-icons/ri';
 import { MdEmail } from 'react-icons/md';
 
 function Profile() {
@@ -26,6 +24,7 @@ function Profile() {
 		setLoading,
 		handleToggleBookmark,
 		loading: isloadingBookMark,
+		mutateRecipes,
 	} = useRecipeContext();
 	const {
 		data: recipes,
@@ -47,6 +46,7 @@ function Profile() {
 		try {
 			await deleteRecipe(slug);
 			await mutate1();
+			mutateRecipes();
 			toast.success('Delete success');
 		} catch (err) {
 			toast.error('Delete failed');
@@ -74,13 +74,20 @@ function Profile() {
 					className="h-52 w-52 border border-border rounded-full overflow-hidden"
 					cover
 				/>
-				<div className="flex flex-col">
-					<h2 className="capitalize ">
-						{` ${user?.first_name} ${user?.last_name} ${user?.username}`}
-					</h2>
+				<div className="flex flex-col gap-1">
+					<h2 className="capitalize ">{`${user?.username}`}</h2>
 
-					<span className="text-lg mt-1 flex items-center gap-2">
-						<MdEmail /> Email: {user?.email}
+					<div className="flex gap-6 text-lg">
+						<span className="font-semibold">
+							First Name: {user?.first_name}
+						</span>
+						<span className="font-semibold border-l-2 px-5">
+							Last Name: {user?.last_name}
+						</span>
+					</div>
+
+					<span className="text-lg flex items-center gap-2">
+						<MdEmail /> {user?.email}
 					</span>
 					<Button
 						type="link"
@@ -137,7 +144,7 @@ function Profile() {
 								</div>
 							</>
 						) : (
-							<div className='flex gap-6 items-center'>
+							<div className="flex gap-6 items-center">
 								<span>You do not have your own recipe.</span>
 								<Button
 									onClick={() =>

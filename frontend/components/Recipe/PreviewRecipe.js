@@ -12,6 +12,7 @@ import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tippy from '@tippyjs/react';
 import formatDate from '@utils/formatdate';
+import Ingredient from './SingleRecipe/Ingredient';
 
 function PreviewRecipe({
 	data,
@@ -68,7 +69,7 @@ function PreviewRecipe({
 							{created_at && (
 								<div className="flex gap-2">
 									<h3>Create at:</h3>
-									<span>{created_at}</span>
+									<span>{formatDate(created_at)}</span>
 								</div>
 							)}
 							{updated_at && (
@@ -143,18 +144,12 @@ function PreviewRecipe({
 					/>
 					<div>
 						<div className="flex gap-2 items-center mt-10 ">
-							<h3>Ingredients:</h3>
+							<h3 className='underline'>Ingredients:</h3>
 						</div>
-						<ul className="list-disc ml-8">
-							{ingredients.map((ingredient) => (
-								<li
-									key={ingredient.id}
-									className="flex justify-between group gap-2"
-								>
-									<span>{`${ingredient?.quantity} ${ingredient?.unit} ${ingredient?.title}  ${ingredient?.heading}`}</span>
-								</li>
-							))}
-						</ul>
+						<Ingredient
+							ingredients={ingredients}
+							isPreview
+						/>
 					</div>
 				</div>
 			</div>

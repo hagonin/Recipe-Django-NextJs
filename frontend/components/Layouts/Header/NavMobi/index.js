@@ -22,7 +22,7 @@ function NavMobi() {
 	};
 
 	return (
-		<div className="lg:hidden">
+		<div className="lg:hidden ">
 			<button
 				className="cursor-pointer"
 				onClick={toggleNavMobi}
@@ -53,7 +53,7 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  w-2/3 py-12 pl-5 bg-white overflow-y-auto overflow-x-hidden">
+					<nav className="fixed top-0 left-0 bottom-0 z-20  w-2/3 py-12 pl-5 bg-white overflow-y-auto overflow-x-hidden scrollbar">
 						<button
 							className="absolute top-2 right-2 text-4xl"
 							onClick={toggleNavMobi}

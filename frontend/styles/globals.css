@@ -19,7 +19,11 @@
     }
 
     h4 {
-       @apply text-sm font-medium text-black;
+       @apply text-lg font-medium text-black;
+    }
+    
+    h5 {
+       @apply text-base font-medium text-black;
     }
 
     a, [href] {
@@ -83,6 +87,25 @@
 
 }
 
+
+@layer utilities  {
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: #f7f4ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-md;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  }
+}
 
 
 
