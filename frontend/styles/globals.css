@@ -19,7 +19,11 @@
     }
 
     h4 {
-       @apply text-sm font-medium text-black;
+       @apply text-lg font-medium text-black;
+    }
+    
+    h5 {
+       @apply text-base font-medium text-black;
     }
 
     a, [href] {

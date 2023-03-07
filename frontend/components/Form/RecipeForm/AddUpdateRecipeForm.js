@@ -22,9 +22,11 @@ import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
+import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
+
 	const {
 		register,
 		control,
@@ -40,7 +42,9 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				...initValues,
 				description: initValues?.description || null,
 				main_image: null,
-				ingredient: initValues?.ingredients || {
+				ingredient: handleIngredientFromArr(
+					initValues?.ingredients
+				) || {
 					item: [{ recipe: EXIST_RECIPE }],
 				},
 				instructions: initValues?.instructions || [{ content: '' }],
@@ -48,19 +52,6 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		},
 	});
 
-	const handleIngredientsInput = (ingredients) => {
-		if (ingredients) {
-			const item = [];
-			const group = [];
-			ingredients.forEach((ingredient) => {
-				if (ingredient?.heading) {
-					 
-				} else {
-					item.push(ingredient);
-				}
-			});
-		}
-	};
 	useEffect(() => {
 		reset();
 	}, []);
@@ -199,7 +190,8 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							urlInit={initValues?.image_url || images.spoon}
+							// urlInit={initValues?.image_url || images.spoon}
+							urlInit={images.spoon}
 						/>
 					</div>
 				</div>

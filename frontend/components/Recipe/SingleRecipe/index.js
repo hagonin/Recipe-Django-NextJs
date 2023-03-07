@@ -12,6 +12,8 @@ import Check from './Check';
 import createMarkup from '@utils/createMarkup';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
 import { RiBookMarkFill } from 'react-icons/ri';
+import handleIngredientFromArr from '@utils/handleIngredientFromArr';
+import Ingredient from './Ingredient';
 
 function SingRecipe({
 	id,
@@ -34,6 +36,8 @@ function SingRecipe({
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
 	const instructionsMarkup = createMarkup(instructions);
+	
+	console.log(ingredient);
 	return (
 		<div>
 			<h1 className="text-center">{title}</h1>
@@ -97,14 +101,7 @@ function SingRecipe({
 							className="mt-5"
 						/>
 						<Title title="Ingredients" />
-						<div className="flex flex-col gap-3">
-							{ingredients.map((ingredient, index) => (
-								<Check
-									key={index}
-									label={`${ingredient.quantity} ${ingredient.unit} ${ingredient.title} ${ingredient.description}`}
-								/>
-							))}
-						</div>
+						<Ingredient ingredient={ingredients} />
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
 						<Img
