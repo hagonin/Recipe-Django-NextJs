@@ -28,10 +28,11 @@ function AddRecipe() {
 				router.push(`/user/recipe/${slug}`);
 			})
 			.catch(({ _error }) => {
-				const errStr = Object.keys(_error)
-					.map((key) => `${key}: ${_error[key]?.[0]}`)
-					.join('<br/>');
-				toast.error(errStr);
+				console.log(_error);
+				// const errStr = Object.keys(_error)
+				// 	.map((key) => `${key}: ${_error[key]?.[0]}`)
+				// 	.join('<br/>');
+				toast.error('Add failed');
 			});
 	};
 
@@ -85,4 +86,4 @@ function AddRecipe() {
 
 export default AddRecipe;
 
-AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;
+// AddRecipe.getLayout = (page) => <PrivateRoutes>{page}</PrivateRoutes>;

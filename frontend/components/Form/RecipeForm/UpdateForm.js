@@ -73,7 +73,7 @@ function UpdateForm({ onSubmit, handleCancel, initValues }) {
 		const { ingredients, ...rest } = recipe;
 		let { main_image } = recipe;
 		const form = new FormData();
-		
+
 		// add image to form
 		main_image = main_image
 			? main_image
@@ -199,7 +199,7 @@ In a large, lidded jar that holds at least 8 ounces, add the olive oil, red wine
 					/>
 				</div> */}
 			</div>
-			
+
 			<div className="flex gap-4 mt-8 mb-4">
 				<InputField
 					name="recipe.search_vector"

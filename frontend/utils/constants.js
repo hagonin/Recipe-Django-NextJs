@@ -102,7 +102,6 @@ export const tags = [
 	'dinner',
 ];
 export const unit = [
-	{ id: 1, name: 'pounds' },
 	{ id: 2, name: 'pounds' },
 	{ id: 3, name: 'lbs' },
 	{ id: 4, name: 'oz' },

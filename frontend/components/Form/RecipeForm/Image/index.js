@@ -24,7 +24,9 @@ function Image({ handleChooseImg, urlInit = images.spoon }) {
 	}, [preview]);
 
 	useEffect(() => {
-		getFileFromUrl(preview, 'default').then((res) => handleChooseImg(res));
+		getFileFromUrl(preview, 'default').then((res) => {
+			handleChooseImg(res);
+		});
 	}, []);
 
 	const handleOnClick = () => {

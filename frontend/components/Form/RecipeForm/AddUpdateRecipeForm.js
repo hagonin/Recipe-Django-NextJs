@@ -40,20 +40,35 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				...initValues,
 				description: initValues?.description || null,
 				main_image: null,
-				ingredients: initValues?.ingredients || [
-					{ recipe: EXIST_RECIPE, heading: null },
-				],
+				ingredient: initValues?.ingredients || {
+					item: [{ recipe: EXIST_RECIPE }],
+				},
 				instructions: initValues?.instructions || [{ content: '' }],
 			},
 		},
 	});
 
+	const handleIngredientsInput = (ingredients) => {
+		if (ingredients) {
+			const item = [];
+			const group = [];
+			ingredients.forEach((ingredient) => {
+				if (ingredient?.heading) {
+					 
+				} else {
+					item.push(ingredient);
+				}
+			});
+		}
+	};
 	useEffect(() => {
 		reset();
 	}, []);
 
 	const createFormData = async ({ recipe }) => {
-		const { ingredients, instructions: ins, main_image, ...rest } = recipe;
+		console.log(recipe);
+		const { ingredient, instructions: ins, main_image, ...rest } = recipe;
+
 		const form = new FormData();
 		// instructions
 		const instructions = ins
@@ -68,19 +83,37 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		form.append('instructions', instructions);
 
 		// add ingredients to form
+		const ingredients = handleIngredients(ingredient);
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
 				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
 			});
 		}
 		// add image to form
-		const img = await main_image;
+		const img = main_image;
 		form.append('main_image', img, img.name);
 
 		// // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
 		return onSubmit(form);
+	};
+
+	const handleIngredients = (ingredients) => {
+		let arr1;
+		if (ingredients.group) {
+			arr1 = ingredients.group.map((ingredient) => {
+				return (
+					ingredient.items &&
+					ingredient.items.map((item) => ({
+						...item,
+						heading: ingredient.heading,
+					}))
+				);
+			});
+		}
+		const arr2 = ingredients.item || [];
+		return [...arr2, ...arr1.flat()];
 	};
 
 	const handleChooseImg = (file) => {
@@ -106,6 +139,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				message: errors?.recipe?.ingredients,
 			});
 	}, [errors]);
+
 	return (
 		<form
 			onSubmit={handleSubmit(createFormData)}
@@ -238,7 +272,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				<Ingredients
 					control={control}
 					register={register}
-					error={formErr?.recipe?.ingredients}
+					error={formErr?.recipe?.ingredient}
 				/>
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
@@ -300,7 +334,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					type="submit"
 					disabled={isSubmitting}
 				>
-					{isSubmitting && <Loader type="submitting" />}
+					{isSubmitting ? <Loader type="submitting" /> : null}
 					{isUpdate ? 'Save Update' : 'Submit Recipe'}
 				</Button>
 			</div>
