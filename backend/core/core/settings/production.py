@@ -2,7 +2,9 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = ["recipe-api.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://recipe-api.up.railway.app"]
 
 cloudinary.config(
     cloud_name=config('CLOUD_NAME'),
