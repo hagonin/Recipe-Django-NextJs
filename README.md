@@ -58,7 +58,9 @@ Ha Gonin  – goninha@outlook.fr - feel free to contact me
 Mi Huynh - huynhmi1209@gmail.com 
  
  You can find me here at:
-[Ha](https://github.com/hagonin)     [Mi](https://github.com/HuynhMi)
+[Ha Gonin](goninha@outlook.fr)  - feel free to contact me 
+
+[Mi Huynh](huynhmi1209@gmail.com)
 
 ## License
 
