@@ -16,7 +16,7 @@ function RootLayout({ children }) {
 			{children}
 			<Footer />
 			<ToastContainer
-				position="top-left"
+				position="top-right"
 				autoClose={1500}
 				transition={Slide}
 			/>

@@ -152,7 +152,10 @@ function SingRecipe({
 					</div>
 				</div>
 				<Title title="Instructions" />
-				<div dangerouslySetInnerHTML={instructionsMarkup} />
+				<div
+					dangerouslySetInnerHTML={instructionsMarkup}
+					className="ml-5"
+				/>
 				{notes && (
 					<>
 						<Title title="NOTE" />
@@ -165,7 +168,7 @@ function SingRecipe({
 }
 
 const Title = ({ title }) => (
-	<span className="text-lg font-bold text-black uppercase border-b border-primary pb-1 mt-6 mb-4 inline-block">
+	<span className="text-lg font-bold text-black uppercase border-b border-primary pb-1 mt-6 mb-2 inline-block">
 		{title}
 	</span>
 );

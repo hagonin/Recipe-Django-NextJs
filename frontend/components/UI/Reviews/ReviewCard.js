@@ -5,7 +5,8 @@ import { images } from '@utils/constants';
 import formatDate from '@utils/formatdate';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { MdDelete } from 'react-icons/md';
+import { FaRegWindowClose } from 'react-icons/fa';
+import { MdDelete, MdDeleteSweep } from 'react-icons/md';
 import Button from '../Button';
 import Img from '../Image';
 import Loader from '../Loader';
@@ -32,7 +33,6 @@ function ReviewCard({
 	return (
 		<div className="py-5 border-b">
 			<ConfirmDelete
-				
 				handleDelete={onDelete}
 				showConfirm={showConfirmDeleteteReview}
 				handleCloseConfirm={() => setShowConfirmDeleteReview(false)}
@@ -49,10 +49,10 @@ function ReviewCard({
 						<h3>{user}</h3>
 						{hasEdit && (
 							<button
-								className="text-2xl text-red"
+								className="text-sm text-red"
 								onClick={() => setShowConfirmDeleteReview(true)}
 							>
-								<MdDelete />
+								Delete
 							</button>
 						)}
 					</div>
