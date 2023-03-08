@@ -104,7 +104,8 @@ export const tags = [
 	'dinner',
 ];
 export const unit = [
-	{ id: 2, name: 'pounds' },
+	{ id: 1, name: 'pound(s)' },
+	{ id: 2, name: 'ml' },
 	{ id: 3, name: 'lbs' },
 	{ id: 4, name: 'oz' },
 	{ id: 5, name: 'g' },
@@ -113,6 +114,7 @@ export const unit = [
 	{ id: 8, name: 'teaspoon(s)' },
 	{ id: 9, name: 'tablespoon(s)' },
 	{ id: 10, name: 'pcs' },
+	{ id: 11, name: 'l' },
 ];
 
 export const ratingScale = [

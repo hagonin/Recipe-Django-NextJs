@@ -33,8 +33,9 @@ class RecipeSerializer(serializers.ModelSerializer):
     
     class Meta: 
         model = Recipe
-        fields = ('id','title','slug','category','main_image','image_url','rating',
-            'updated_at','total_number_of_bookmarks','reviews_count','search_rank')
+        fields = ('id','title','slug','category','main_image','image_url','description',
+            'updated_at','total_number_of_bookmarks','rating','reviews_count',
+            'search_rank','search_vector')
     
     def get_total_number_of_bookmarks(self, obj):
         return obj.get_total_number_of_bookmarks()

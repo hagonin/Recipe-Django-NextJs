@@ -87,7 +87,7 @@ class ResendVerifyEmail(views.APIView):
     serializer_class = serializers.RegistrationSerializer
 
     email = openapi.Parameter('email', in_=openapi.IN_QUERY,
-                        type=openapi.TYPE_INTEGER)
+                        type=openapi.TYPE_STRING)
     @swagger_auto_schema(
         operation_description="Resend your email to get an email verify",
         manual_parameters=[email],
