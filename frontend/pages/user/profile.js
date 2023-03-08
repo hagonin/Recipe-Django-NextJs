@@ -42,7 +42,6 @@ function Profile() {
 	const router = useRouter();
 
 	const handleDeleteRecipe = async (slug) => {
-		setLoading(true);
 		try {
 			await deleteRecipe(slug);
 			await mutate1();
@@ -50,8 +49,6 @@ function Profile() {
 			toast.success('Delete success');
 		} catch (err) {
 			toast.error('Delete failed');
-		} finally {
-			setLoading(false);
 		}
 	};
 

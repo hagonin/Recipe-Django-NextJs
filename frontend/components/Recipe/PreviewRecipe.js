@@ -1,18 +1,20 @@
-import { memo } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
 import { FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
-import { MdDelete, MdDeleteForever, MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
 import createMarkup from '@utils/createMarkup';
-import { GrAdd } from 'react-icons/gr';
 
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tippy from '@tippyjs/react';
 import formatDate from '@utils/formatdate';
 import Ingredient from './SingleRecipe/Ingredient';
+import ConfirmDelete from '@components/Form/ConfirmDelete';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 function PreviewRecipe({
 	data,
@@ -21,6 +23,7 @@ function PreviewRecipe({
 	goToUpdate,
 	gotoDelete,
 }) {
+	const router = useRouter();
 	const {
 		id,
 		title,
@@ -40,9 +43,36 @@ function PreviewRecipe({
 		source,
 		slug,
 	} = data;
+	
+	const [showConfirmDeletePhoto, setShowConfirmDeletePhoto] = useState(false);
+	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
+		useState(false);
+
+	const [idPhotoDelete, setIdPhotoDelete] = useState(null);
+
+	useEffect(() => {
+		idPhotoDelete
+			? setShowConfirmDeletePhoto(true)
+			: setShowConfirmDeletePhoto(false);
+	}, [idPhotoDelete]);
+
+	const onDeletePhoto = useCallback(async () => {
+		await handleDeletePhoto(idPhotoDelete);
+	});
+
+	const onDeleteRecipe = useCallback(async () => {
+		await gotoDelete(slug);
+		toast.success('Delete success');
+		router.push('/user/profile');
+	});
 
 	return (
 		<>
+			<ConfirmDelete
+				showConfirm={showConfirmDeleteRecipe}
+				handleCloseConfirm={() => setShowConfirmDeleteRecipe(false)}
+				handleDelete={onDeleteRecipe}
+			/>
 			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 				<div className="md:col-span-8">
 					<div className="flex gap-2 mt-3 justify-end text-lg">
@@ -57,7 +87,7 @@ function PreviewRecipe({
 						<Tippy content={<span>Delete</span>}>
 							<button
 								className="text-red"
-								onClick={() => gotoDelete(slug)}
+								onClick={() => setShowConfirmDeleteRecipe(true)}
 							>
 								<MdDelete />
 							</button>
@@ -144,7 +174,7 @@ function PreviewRecipe({
 					/>
 					<div>
 						<div className="flex gap-2 items-center mt-10 ">
-							<h3 className='underline'>Ingredients:</h3>
+							<h3 className="underline">Ingredients:</h3>
 						</div>
 						<Ingredient
 							ingredients={ingredients}
@@ -174,13 +204,18 @@ function PreviewRecipe({
 							/>
 							<button
 								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
-								onClick={() => handleDeletePhoto(img.id)}
+								onClick={() => setIdPhotoDelete(img.id)}
 							>
 								<BsTrash />
 							</button>
 						</div>
 					);
 				})}
+				<ConfirmDelete
+					showConfirm={showConfirmDeletePhoto}
+					handleCloseConfirm={() => setIdPhotoDelete(false)}
+					handleDelete={onDeletePhoto}
+				/>
 			</div>
 			<button className="rounded-full underline text-lg hover:text-primary">
 				Load More

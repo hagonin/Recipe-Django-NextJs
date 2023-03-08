@@ -4,7 +4,7 @@ import Check from './Check';
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col gap-3">
 			<div className="flex flex-col">
 				{ingredient?.item.map((i, index) =>
 					isPreview ? (
@@ -31,7 +31,7 @@ function Ingredient({ ingredients, isPreview }) {
 									key={index}
 								>{`${i.quantity} ${i.unit} ${i.title}`}</span>
 							) : (
-								<CheckComponent
+								<Check
 									key={index}
 									label={`${i.quantity} ${i.unit} ${i.title}`}
 								/>
