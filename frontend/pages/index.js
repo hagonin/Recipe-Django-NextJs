@@ -18,9 +18,7 @@ export default function Home() {
 				id,
 				name,
 				desc,
-				recipes: recipes.filter(
-					(recipe) => recipe.category === name
-				),
+				recipes: recipes.filter((recipe) => recipe.category === name),
 			}));
 			setCategories(arr);
 		}

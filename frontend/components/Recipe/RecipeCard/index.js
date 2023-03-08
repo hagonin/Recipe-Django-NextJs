@@ -38,11 +38,32 @@ function RecipeCard({
 	secondary,
 	actBookmark,
 	handleToggleBookmark,
+	lastPost,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-	return (
+	return lastPost ? (
+		<div className={`flex lg:gap-6 md:gap-4 gap-2 border-b pb-4`}>
+			<Link href={`/recips/${slug}`}>
+				<Img
+					src={image}
+					alt={name}
+					className="h-24 w-24"
+					cover
+				/>
+			</Link>
+			<div>
+				<Link
+					href={`/recips/${slug}`}
+					className="text-semibold text-black line-clamp-2"
+				>
+					{name}
+				</Link>
+				<span className="text-sm block mt-2">{date_format}</span>
+			</div>
+		</div>
+	) : (
 		<>
 			<ConfirmDelete
 				showConfirm={showConfirmDelete}

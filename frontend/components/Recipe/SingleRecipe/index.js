@@ -10,6 +10,7 @@ import Ingredient from './Ingredient';
 import Tippy from '@tippyjs/react';
 import getAverageReviews from '@utils/getAverageReviews';
 import Rating from '@components/UI/Reviews/Rate';
+import formatTime from '@utils/formatTime';
 
 function SingRecipe({
 	id,
@@ -58,7 +59,9 @@ function SingRecipe({
 			</div>
 			<span className="block text-center font-medium mt-3">
 				Pushlished {updated_at_format} / by{' '}
-				<span className="font-bold">{author}</span>
+				<span className="font-bold text-yellow underline">
+					{author}
+				</span>
 			</span>
 			<Img
 				src={cover}
@@ -68,13 +71,25 @@ function SingRecipe({
 			/>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm gap-4">
 				<div className="flex items-center gap-2 text-primaryDark font-semibold">
-					<BsClock /> <span>Pre-cook: {prep_time} minutes</span>
+					<BsClock />{' '}
+					<span>
+						<span className="font-bold">Pre time:</span>{' '}
+						{formatTime(prep_time)}
+					</span>
 				</div>
 				<div className="flex items-center gap-2 text-primaryDark font-semibold">
-					<BsClock /> <span>Cook-cook: {cook_time} minutes</span>
+					<BsClock />{' '}
+					<span>
+						<span className="font-bold">Cook time:</span>{' '}
+						{formatTime(cook_time)}
+					</span>
 				</div>
 				<div className="flex items-center gap-2 text-primaryDark font-semibold">
-					<FaUser /> <span>Serves: {serving} people</span>
+					<FaUser />{' '}
+					<span>
+						<span className="font-bold ">Serves:</span> {serving}{' '}
+						people
+					</span>
 				</div>
 			</div>
 			<div
@@ -88,7 +103,10 @@ function SingRecipe({
 					<div className="lg:col-span-8 ">
 						<h2 className="text-center">{title}</h2>
 						<span className="block text-center mt-3">
-							{updated_at_format} / by <b>{author}</b>
+							{updated_at_format} / by{' '}
+							<span className="font-bold text-yellow underline">
+								{author}
+							</span>
 						</span>
 						<div className="text-center flex items-center justify-center gap-2">
 							<Rating number={averageReviews} />
@@ -99,18 +117,25 @@ function SingRecipe({
 							</span>
 						</div>
 
-						<div className="flex flex-col gap-3 mt-5 text-sm">
+						<div className="flex gap-3 mt-5 text-sm  flex-wrap">
 							<span className="flex items-center gap-2">
 								<BsClock />
-								<span>Pre-cook: {prep_time} minutes</span>
+								<span className="font-bold">
+									Pre-cook:
+								</span>{' '}
+								{prep_time} minutes
 							</span>
 							<span className="flex items-center gap-2">
 								<BsClock />
-								<span>Cook-cook: {cook_time} minutes</span>
+								<span className="font-bold">
+									Cook-cook:
+								</span>{' '}
+								{cook_time} minutes
 							</span>
 							<span className="flex items-center gap-2">
 								<FaUser />
-								<span>Serves: {serving} people</span>
+								<span className="font-bold">Serves: </span>
+								{serving} people
 							</span>
 						</div>
 

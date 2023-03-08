@@ -7,6 +7,7 @@ import CommonSection from './CommonSection';
 import UserSection from './UserSection';
 import Loader from '@components/UI/Loader';
 import Tags from './Tags';
+import LastPost from './LastPost';
 
 function Widget() {
 	const { isAuthenticated, loading, user } = useAuthContext();
@@ -29,7 +30,7 @@ function Widget() {
 			) : null}
 			<CollectionPics />
 			<CommonSection title="LATEST POSTS">
-				Lastest Post here!
+				<LastPost />
 			</CommonSection>
 			<CommonSection title="Banner">
 				<Img

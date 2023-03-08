@@ -15,6 +15,7 @@ import Ingredient from './SingleRecipe/Ingredient';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import formatTime from '@utils/formatTime';
 
 function PreviewRecipe({
 	data,
@@ -118,28 +119,28 @@ function PreviewRecipe({
 								<span className="">{serving}</span>
 							</span>
 							<span className="font-bold border-l-2  px-4 flex gap-2 items-center">
-								<FaRegClock className="relative -top-[1px]" />
+								<FaRegClock className="text-xl  relative -top-[1px]" />
 								<div className="flex flex-col text-sm">
 									<span className="font-bold">
-										{prep_time}MIN
+										{formatTime(prep_time)}
 									</span>
-									<span className=" text-[#ccc]">PREP</span>
+									<span className=" text-[#bbb]">PREP</span>
 								</div>
 							</span>
 							<span className="font-bold border-l-2  px-4 flex gap-2 items-center">
-								<FaRegClock className="relative -top-[1px]" />
+								<FaRegClock className="text-xl relative -top-[1px]" />
 								<div className="flex flex-col text-sm">
 									<span className="font-bold">
-										{cook_time}MIN
+										{formatTime(cook_time)}
 									</span>
-									<span className=" text-[#ccc]">COOK</span>
+									<span className="text-[#bbb]">COOK</span>
 								</div>
 							</span>
 						</div>
 					</div>
 
 					<div className="my-10">
-						<h3>Description</h3>
+						<h3 className='underline'>Description</h3>
 						<div
 							dangerouslySetInnerHTML={createMarkup(description)}
 						/>
@@ -183,7 +184,7 @@ function PreviewRecipe({
 					</div>
 				</div>
 			</div>
-			<h2>Photos</h2>
+			<h2 className='mt-5'>Photos</h2>
 			<Button
 				className="w-56 mt-5"
 				icon={{ left: <HiPhotograph /> }}
@@ -201,6 +202,8 @@ function PreviewRecipe({
 							<Img
 								src={img.image_url}
 								alt={img.caption}
+								className="h-44 w-full"
+								cover
 							/>
 							<button
 								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
