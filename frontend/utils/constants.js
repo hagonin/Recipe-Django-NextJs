@@ -19,6 +19,7 @@ export const images = {
 	spoon: '/static/images/spoon.jpeg',
 	cooking: '/static/images/cooking.png',
 	notfound: '/static/images/404-error.png',
+	tick: '/static/images/tick.png',
 };
 
 export const categoryList = [

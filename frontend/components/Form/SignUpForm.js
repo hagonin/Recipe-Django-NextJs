@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Form, InputField } from './FormControl';
 import Img from '@components/UI/Image';
@@ -9,6 +9,9 @@ import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import VerifyEmail from './VerifyEmaiForm/VerifyEmailModal';
+import ModalPrimary from '@components/UI/Modal/ModalPrimary';
+import { images } from '@utils/constants';
 
 function SignUpForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -19,7 +22,6 @@ function SignUpForm({ onSubmit }) {
 		setError,
 		reset,
 	} = useForm();
-
 	useEffect(() => {
 		errors?.register?.username &&
 			setError('register.username', {
@@ -70,99 +72,102 @@ function SignUpForm({ onSubmit }) {
 				</span>
 			) : null}
 
-			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
-				<InputField
-					name="register.username"
-					type="text"
-					placeholder="Enter your name"
-					register={register}
-					error={formError?.register?.username}
-					required
-				/>
-
-				<InputField
-					name="register.first_name"
-					type="text"
-					placeholder="Enter your first name"
-					register={register}
-					error={formError?.register?.first_name}
-				/>
-
-				<InputField
-					name="register.last_name"
-					type="text"
-					placeholder="Enter your last name"
-					register={register}
-					error={formError?.register?.last_name}
-				/>
-
-				<InputField
-					name="register.email"
-					type="email"
-					placeholder="Enter your email"
-					register={register}
-					error={formError?.register?.email}
-					required
-					icon={<MdEmail />}
-				/>
-
-				<InputField
-					name="register.password"
-					type="password"
-					placeholder="Enter your password"
-					register={register}
-					error={formError?.register?.password}
-					required
-					icon={<RiLockPasswordFill />}
-				/>
-
-				<InputField
-					name="register.confirm_password"
-					type="password"
-					placeholder="Confirm password"
-					register={register}
-					error={formError?.register?.confirm_password}
-					required
-					icon={<RiLockPasswordFill />}
-				/>
-
-				<Button
-					className="primary login w-full mt-5"
-					type="submit"
-					disabled={isSubmitting}
+			{isSubmitSuccessful ? null : (
+				<Form
+					onSubmit={handleSubmit((data) => onSubmit(data.register))}
 				>
-					{isSubmitting && <Loader type="submitting" />}
-					create account
-				</Button>
+					<InputField
+						name="register.username"
+						type="text"
+						placeholder="Enter your name"
+						register={register}
+						error={formError?.register?.username}
+						required
+					/>
 
-				<p className="text-center mt-4">
-					Have an account?
-					<Link
-						href="/login"
-						className="ml-2 underline font-semibold text-primary "
+					<InputField
+						name="register.first_name"
+						type="text"
+						placeholder="Enter your first name"
+						register={register}
+						error={formError?.register?.first_name}
+					/>
+
+					<InputField
+						name="register.last_name"
+						type="text"
+						placeholder="Enter your last name"
+						register={register}
+						error={formError?.register?.last_name}
+					/>
+
+					<InputField
+						name="register.email"
+						type="email"
+						placeholder="Enter your email"
+						register={register}
+						error={formError?.register?.email}
+						required
+						icon={<MdEmail />}
+					/>
+
+					<InputField
+						name="register.password"
+						type="password"
+						placeholder="Enter your password"
+						register={register}
+						error={formError?.register?.password}
+						required
+						icon={<RiLockPasswordFill />}
+					/>
+
+					<InputField
+						name="register.confirm_password"
+						type="password"
+						placeholder="Confirm password"
+						register={register}
+						error={formError?.register?.confirm_password}
+						required
+						icon={<RiLockPasswordFill />}
+					/>
+
+					<Button
+						className="primary login w-full mt-5"
+						type="submit"
+						disabled={isSubmitting}
 					>
-						Login
-					</Link>
-				</p>
-				<span className="text-sm text-center px-12">
-					By clicking "Create Account", I consent to
-					<Link
-						href="/"
-						className="underline text-primary ml-1"
-					>
-						the Terms of Services
-					</Link>{' '}
-					and{' '}
-					<Link
-						href="/"
-						className="underline text-primary"
-					>
-						Privacy Policy
-					</Link>
-					.
-				</span>
-			</Form>
-			
+						{isSubmitting && <Loader type="submitting" />}
+						create account
+					</Button>
+
+					<p className="text-center mt-4">
+						Have an account?
+						<Link
+							href="/login"
+							className="ml-2 underline font-semibold text-primary "
+						>
+							Login
+						</Link>
+					</p>
+					<span className="text-sm text-center px-12">
+						By clicking "Create Account", I consent to
+						<Link
+							href="/"
+							className="underline text-primary ml-1"
+						>
+							the Terms of Services
+						</Link>{' '}
+						and{' '}
+						<Link
+							href="/"
+							className="underline text-primary"
+						>
+							Privacy Policy
+						</Link>
+						.
+					</span>
+				</Form>
+			)}
 		</div>
 	);
 }

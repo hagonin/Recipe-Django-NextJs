@@ -23,7 +23,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 	const [errors, setErrors] = useState(null);
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [token, setToken] = useState({
 		access: getAccessTokenFromCookie(),
@@ -95,15 +95,13 @@ const AuthProvider = ({ children }) => {
 			clearCookie();
 			setToken({ access: null, refresh: null });
 			router.push('/login');
-		} catch ({ status, _error }) {
-			console.log('ERROR IN LOGOUT', status, _error);
+		} catch {
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	const login = async ({ email, password, remember }) => {
-		setLoading(true);
 		try {
 			const loginRes = await api.post(ENDPOINT_LOGIN, {
 				email,
@@ -135,8 +133,6 @@ const AuthProvider = ({ children }) => {
 					toast.error(_error.detail);
 				}
 			}
-		} finally {
-			setLoading(false);
 		}
 	};
 
@@ -145,19 +141,22 @@ const AuthProvider = ({ children }) => {
 			.post(ENDPOINT_RESEND_VERIFY, {
 				email,
 			})
-			.then(() => {
+			.then((res) => {
 				setErrors(null);
-				toast.success(
-					'We have sent the new verify email. Please check your email.'
-				);
+				if (res.data.msg === 'No such user, register first') {
+					toast.error('Resend failed!');
+					return 400;
+				} else {
+					toast.success('We have sent the new verify email.');
+				}
 			})
 			.catch();
 
 	const signup = async (data) => {
 		try {
 			await api.post(ENDPOINT_REGISTER, data);
-			router.push('/login');
-			toast.success('Account successfully created.');
+			setUser((pre) => ({ ...pre, email: data.email }));
+			router.push('/signup/thanks');
 		} catch ({ status, _error }) {
 			const { errors } = _error;
 			if (status === 400) {
@@ -208,7 +207,7 @@ const AuthProvider = ({ children }) => {
 				setErrors,
 				user,
 				setUser,
-				isAuthenticated: !!user,
+				isAuthenticated: !!user?.username,
 				login,
 				signup,
 				logout,

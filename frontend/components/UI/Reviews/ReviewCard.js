@@ -1,3 +1,4 @@
+import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { Form } from '@components/Form/FormControl';
 import Rating from '@components/UI/Reviews/Rate';
 import { images } from '@utils/constants';
@@ -24,34 +25,18 @@ function ReviewCard({
 }) {
 	const [showConfirmDeleteteReview, setShowConfirmDeleteReview] =
 		useState(false);
-	const {
-		handleSubmit,
-		formState: { isSubmitting },
-	} = useForm();
-
 	const onDelete = async () => {
 		await handleDelete(slug, id);
 		setShowConfirmDeleteReview(false);
 	};
 	return (
 		<div className="py-5 border-b">
-			<ModalPrimary
-				show={showConfirmDeleteteReview}
-				handleCloseModal={() => setShowConfirmDeleteReview(false)}
-			>
-				<div className='px-3 pt-4 flex flex-col gap-2'>
-					<h3>Are you sure to delete?</h3>
-					<Form onSubmit={handleSubmit(onDelete)}>
-						<Button
-							type="submit"
-							className="verify"
-						>
-							{isSubmitting ? <Loader type="submitting" /> : null}
-							Delete
-						</Button>
-					</Form>
-				</div>
-			</ModalPrimary>
+			<ConfirmDelete
+				
+				handleDelete={onDelete}
+				showConfirm={showConfirmDeleteteReview}
+				handleCloseConfirm={() => setShowConfirmDeleteReview(false)}
+			/>
 			<div className="flex gap-4 ">
 				<Img
 					src={avatar || images.defaultAvatar}
