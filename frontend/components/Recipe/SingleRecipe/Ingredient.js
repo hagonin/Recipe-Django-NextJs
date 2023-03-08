@@ -20,7 +20,7 @@ function Ingredient({ ingredients, isPreview }) {
 				)}
 			</div>
 			{ingredient?.group.map((item, index) => (
-				<div>
+				<div key={index}>
 					<span className="text-lg font-semibold text-black">
 						{item.heading}
 					</span>

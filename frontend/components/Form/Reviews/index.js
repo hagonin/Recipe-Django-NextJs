@@ -12,9 +12,11 @@ function ReviewForm({ onSubmit }) {
 		formState: { isSubmitting, isSubmitSuccessful },
 		setValue,
 		reset,
-	} = useForm({defaultValues: {
-		avatar: ''
-	}});
+	} = useForm({
+		defaultValues: {
+			review: { avatar: '', rating: 1 },
+		},
+	});
 
 	const handleChangeStart = (rating) => {
 		setValue('review.rating', rating);
@@ -34,9 +36,14 @@ function ReviewForm({ onSubmit }) {
 				name="review.title"
 				register={register}
 				rules={{ required: 'Enter your review title' }}
-				placeholder="Enter your "
+				placeholder="Enter your review title"
+				required
 			/>
-			<Start handleChangeStart={handleChangeStart} />
+			<Start
+				handleChangeStart={handleChangeStart}
+				disabled={isSubmitting}
+				submitSuccess={isSubmitSuccessful}
+			/>
 			{}
 			<TextAreaField
 				label="Your reviews (optional)"

@@ -6,7 +6,7 @@ import formatDate from '@utils/formatdate';
 import { AiFillClockCircle } from 'react-icons/ai';
 import { BsBookmarksFill } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
-import { HiOutlineTag, HiPhotograph } from 'react-icons/hi';
+import { HiOutlineTag } from 'react-icons/hi';
 import { MdDateRange, MdAddPhotoAlternate, MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';

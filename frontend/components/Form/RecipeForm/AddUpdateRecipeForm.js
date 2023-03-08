@@ -65,9 +65,9 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			.filter(({ content }) => content)
 			.map(
 				({ content }, index) =>
-					`<div><span className='font-semibold text-black text-lg'>Step ${
+					`<div><h4>Step ${
 						index + 1
-					}:</span><p>${content}</p></div>`
+					}</h4><p>${content}</p></div>`
 			)
 			.join('');
 		form.append('instructions', instructions);

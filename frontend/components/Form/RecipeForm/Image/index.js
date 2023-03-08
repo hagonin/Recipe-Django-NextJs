@@ -28,11 +28,12 @@ function Image({ handleChooseImg, urlInit }) {
 	};
 
 	return (
-		<div className="relative w-56 h-56 max-md:mx-auto bg-primary rounded-md overflow-hidden">
+		<div className="relative w-56 h-56 max-md:mx-auto rounded-md overflow-hidden">
 			<Img
 				src={preview || images.photoDefault}
 				alt="preview"
-				className="absolute inset-0 "
+				className="absolute inset-0 w-full h-full"
+				cover
 			/>
 			<input
 				type="file"

@@ -14,7 +14,8 @@ function UserSection({ name, bio, avatar }) {
 					'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2020/03/allure_post_12.jpg'
 				}
 				alt="avatar"
-				className="rounded-md overflow-hidden h-48 w-full bg-gray-50"
+				className="overflow-hidden h-36 w-36 mx-auto rounded-full"
+				cover
 			/>
 			<span className="text-lg text-black text-center mt-4 block">
 				{name}

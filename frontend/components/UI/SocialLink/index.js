@@ -1,3 +1,4 @@
+import Tippy from '@tippyjs/react';
 import {
 	FaInstagram,
 	FaFacebookF,
@@ -46,20 +47,24 @@ function SocialLink({
 	return (
 		<div className={`flex flex-wrap gap-4 ${center && 'justify-center'}`}>
 			{socialList.map((item) => (
-				<a
+				<Tippy
+					content={<span>{item.name}</span>}
 					key={item.id}
-					href={item.href}
-					className={`flex items-center px-1 transition-all cursor-pointer hover:opacity-70 ${
-						color ? `text-${color}` : 'text-white'
-					} cursor-pointer`}
 				>
-					{item.icon}
-					{hasLabel && (
-						<span className=" uppercase text-sm ml-2 md:block hidden relative top-[1px]">
-							{item.name}
-						</span>
-					)}
-				</a>
+					<a
+						href={item.href}
+						className={`flex items-center px-1 transition-all cursor-pointer hover:opacity-70 ${
+							color ? `text-${color}` : 'text-white'
+						} cursor-pointer`}
+					>
+						{item.icon}
+						{hasLabel && (
+							<span className=" uppercase text-sm ml-2 md:block hidden relative top-[1px]">
+								{item.name}
+							</span>
+						)}
+					</a>
+				</Tippy>
 			))}
 		</div>
 	);

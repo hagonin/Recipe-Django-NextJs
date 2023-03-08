@@ -43,7 +43,7 @@ function PreviewRecipe({
 		source,
 		slug,
 	} = data;
-	
+
 	const [showConfirmDeletePhoto, setShowConfirmDeletePhoto] = useState(false);
 	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
 		useState(false);
@@ -139,14 +139,14 @@ function PreviewRecipe({
 					</div>
 
 					<div className="my-10">
-						<h3>Description:</h3>
+						<h3>Description</h3>
 						<div
 							dangerouslySetInnerHTML={createMarkup(description)}
 						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					<div className="my-10">
-						<h3>Instruction:</h3>
+						<h3>Instruction</h3>
 						<div
 							dangerouslySetInnerHTML={createMarkup(instructions)}
 						/>
@@ -217,9 +217,9 @@ function PreviewRecipe({
 					handleDelete={onDeletePhoto}
 				/>
 			</div>
-			<button className="rounded-full underline text-lg hover:text-primary">
+			{/* <button className="rounded-full underline text-lg hover:text-primary">
 				Load More
-			</button>
+			</button> */}
 		</>
 	);
 }

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
@@ -14,7 +13,11 @@ import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
-import { MdEmail } from 'react-icons/md';
+import {
+	MdEmail,
+} from 'react-icons/md';
+import { GrUpdate } from 'react-icons/gr';
+import { AiFillEdit } from 'react-icons/ai';
 
 function Profile() {
 	const { user } = useAuthContext();
@@ -64,15 +67,15 @@ function Profile() {
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">My Profile</h1>
-			<div className="flex mt-14 items-center gap-6">
+			<div className="flex mt-14 items-center gap-6 md:flex-row flex-col">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
 					className="h-52 w-52 border border-border rounded-full overflow-hidden"
 					cover
 				/>
-				<div className="flex flex-col gap-1">
-					<h2 className="capitalize ">{`${user?.username}`}</h2>
+				<div className="flex flex-col gap-1 max-md:items-center">
+					<h2 className="capitalize">{`${user?.username}`}</h2>
 
 					<div className="flex gap-6 text-lg">
 						<span className="font-semibold">
@@ -86,13 +89,24 @@ function Profile() {
 					<span className="text-lg flex items-center gap-2">
 						<MdEmail /> {user?.email}
 					</span>
-					<Button
-						type="link"
-						href="/user/updateprofile"
-						className="mt-3"
-					>
-						Update Profile
-					</Button>
+					<div className="flex gap-6 items-center mt-2">
+						<Button
+							type="link"
+							href="/user/updateprofile"
+							className=""
+							icon={{ left: <AiFillEdit /> }}
+						>
+							Update Profile
+						</Button>
+
+						<Button
+							className=""
+							onClick={() => router.push('/user/changepassword')}
+							icon={{ left: <GrUpdate /> }}
+						>
+							Change passowrd
+						</Button>
+					</div>
 				</div>
 			</div>
 			<div className="mt-6 bg-primaryLight rounded-md py-4 px-5 flex gap-4 items-center">
@@ -103,6 +117,7 @@ function Profile() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
+
 			<Tabs>
 				<TabPanel
 					tab={{
@@ -115,9 +130,14 @@ function Profile() {
 							'Loading...'
 						) : recipes.length > 0 ? (
 							<>
-								<span className="mb-5 inline-block">
-									You have <b>{recipes.length}</b> recipes
-								</span>
+								<div className='mb-5 flex gap-4'>
+									<span className="inline-block">
+										You have <b>{recipes.length}</b> recipes
+									</span>
+									<button className="font-bold text-yellow text-lg block underline" onClick={()=>router.push('/user/recipe/add')}>
+										+ Add recipe
+									</button>
+								</div>
 								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
 									{recipes?.map((recipe) => (
 										<div key={recipe.id}>

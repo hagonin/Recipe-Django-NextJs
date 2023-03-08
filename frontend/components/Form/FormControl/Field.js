@@ -185,13 +185,21 @@ const SelectField = ({
 	);
 };
 
-const TextAreaField = ({ label, name, register, error, info,required, ...props }) => {
+const TextAreaField = ({
+	label,
+	name,
+	register,
+	error,
+	info,
+	required,
+	...props
+}) => {
 	return (
 		<div className="flex flex-col">
 			<Label
 				label={label}
 				name={name}
-				required
+				required={required}
 			/>
 			<textarea
 				id={name}

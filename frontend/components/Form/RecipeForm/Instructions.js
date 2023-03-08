@@ -4,7 +4,7 @@ import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { InputField, Label } from '../FormControl';
 
 function Instructions({ register, control, error }) {
-	const { fields, append, prepend, remove, swap, move, insert } =
+	const { fields, append, remove} =
 		useFieldArray({
 			control, // control props comes from useForm (optional: if you are using FormContext)
 			name: 'recipe.instructions', // unique name for your Field Array

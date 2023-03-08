@@ -27,7 +27,7 @@ function Navigate() {
 						<div className="top-full left-0 bg-white  absolute z-10 w-[500px] shadow-md border-t-2 border-primary grid grid-cols-3 p-2">
 							<Link
 								href="/recipes"
-								className="block font-semibold py-3 px-5 hover:text-primary hover:underline border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+								className="block font-semibold py-3 px-5 hover:text-primary border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 							>
 								All Recipes
 							</Link>
@@ -35,7 +35,7 @@ function Navigate() {
 								<Link
 									key={category.id}
 									href={`/recipes/category/${category.name}`}
-									className="block font-semibold py-3 px-5  hover:text-primary  hover:underline  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+									className="block font-semibold py-3 px-5  hover:text-primary  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 								>
 									{category.name}
 								</Link>
