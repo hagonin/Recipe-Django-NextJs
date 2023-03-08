@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
@@ -26,7 +26,6 @@ import { getFileFromUrl } from '@utils/getFileFromUrl';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
-
 	const {
 		register,
 		control,
@@ -36,6 +35,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		setValue,
 		setError,
 		unregister,
+		watch,
 	} = useForm({
 		defaultValues: {
 			recipe: {
@@ -43,6 +43,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				description: initValues?.description || '',
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
+				search_vector: initValues?.search_vector || '',
 				main_image: initValues?.image_url || images.spoon,
 				ingredient: initValues?.ingredients || {
 					item: [{ recipe: EXIST_RECIPE }],
@@ -65,9 +66,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			.filter(({ content }) => content)
 			.map(
 				({ content }, index) =>
-					`<div><h4>Step ${
-						index + 1
-					}</h4><p>${content}</p></div>`
+					`<div><h4>Step ${index + 1}</h4><p>${content}</p></div>`
 			)
 			.join('');
 		form.append('instructions', instructions);
@@ -136,6 +135,10 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			});
 	}, [errors]);
 
+	useEffect(() => {
+		const key = watch('recipe.search_vector').replace(/[^\w\s]/gi, '');
+		setValue('recipe.search_vector', key);
+	}, [watch('recipe.search_vector')]);
 	return (
 		<form
 			onSubmit={handleSubmit(createFormData)}
@@ -251,7 +254,8 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 							<div>
 								Enter your ingredients. Those ingredient can be
 								a type of ingredient, or any special
-								preparation. <br />
+								preparation. Besides, you can group your
+								ingredient by use add heading. <br />
 								For example:
 								<ul className="list-disc px-3">
 									<li>1 tablespoon chopped fresh parsley</li>{' '}
@@ -274,36 +278,40 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				/>
 			</div>
 			<div className="flex gap-4 mt-8 mb-4">
-				<InputField
-					name="recipe.search_vector"
-					label="Keyword"
-					type="text"
-					register={register}
-					error={formErr?.recipe?.search_vector}
-					placeholder="e.g. salad dressings"
-					info={{
-						content:
-							'Keyword that can be used to search for this recipe',
-						placement: 'right',
-					}}
-					rules={{
-						required: 'What keyword is used to search this recipe?',
-					}}
-					required
-				/>
-
-				<InputField
-					name="recipe.source"
-					label="Source of recipe"
-					type="text"
-					register={register}
-					error={formErr?.recipe?.source}
-					placeholder="e.g. recipe.example.com"
-					info={{
-						content: 'Where did this recipe come from ?',
-						placement: 'right',
-					}}
-				/>
+				<div className="flex flex-col flex-1">
+					<InputField
+						name="recipe.search_vector"
+						label="Keyword"
+						type="text"
+						register={register}
+						error={formErr?.recipe?.search_vector}
+						placeholder="e.g. salad dressings italian food"
+						info={{
+							content:
+								'Keyword that can be used to search for this recipe. No characters.',
+							placement: 'right',
+						}}
+						rules={{
+							required:
+								'What keyword is used to search this recipe?',
+						}}
+						required
+					/>
+				</div>
+				<div className="flex-1">
+					<InputField
+						name="recipe.source"
+						label="Source of recipe"
+						type="text"
+						register={register}
+						error={formErr?.recipe?.source}
+						placeholder="e.g. recipe.example.com"
+						info={{
+							content: 'Where did this recipe come from ?',
+							placement: 'right',
+						}}
+					/>
+				</div>
 			</div>
 			<Note
 				register={register}

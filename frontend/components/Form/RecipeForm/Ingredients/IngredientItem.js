@@ -18,9 +18,9 @@ function IngredientItem({ register, control, name, error }) {
 						key={field.id}
 					>
 						<div className="flex gap-2 flex-1">
-							<div className="flex flex-col w-full">
+							<div className="flex flex-col basis-1/2">
 								<input
-									className={`px-2 border w-full focus:outline-primary h-10 ${
+									className={`px-3 border rounded-md w-full focus:outline-primary h-10 ${
 										error?.[index]?.title?.message
 											? 'border-red'
 											: ''
@@ -29,18 +29,18 @@ function IngredientItem({ register, control, name, error }) {
 									{...register(`${name}.${index}.title`, {
 										required: 'Enter title',
 									})}
-									placeholder="title"
+									placeholder="Ingredient title. E.g. deseeded and finely chopped"
 								/>
 								<Error
 									error={error?.[index]?.title?.message}
 									className="mt-[1px] ml-0 text-sm"
 								/>
 							</div>
-							<div className="flex flex-col w-full">
+							<div className="flex flex-col  basis-1/4">
 								<input
-									className={`px-2 border w-full focus:outline-primary h-10`}
+									className={`px-3 border rounded-md w-full focus:outline-primary h-10`}
 									type="text"
-									placeholder="quantity"
+									placeholder="Quantity. E.g. 1, ½, 2,..."
 									{...register(`${name}.${index}.quantity`)}
 								/>
 								<Error
@@ -48,13 +48,13 @@ function IngredientItem({ register, control, name, error }) {
 									className="mt-[1px] ml-0 text-sm"
 								/>
 							</div>
-							<div className="flex flex-col w-full">
+							<div className="flex flex-col basis-1/4">
 								<select
-									className={`px-2 border w-full focus:outline-primary h-10`}
+									className={`px-3 border rounded-md w-full focus:outline-primary h-10`}
 									placeholder="unit"
 									{...register(`${name}.${index}.unit`)}
 								>
-									<option value="">Select option</option>
+									<option value="">Unit</option>
 									{unit.map((u) => (
 										<option
 											key={u.id}

@@ -35,7 +35,7 @@ function Instructions({ register, control, error }) {
 				))}
 			</ul>
 			<Button
-				className="border-2 border-primary mt-4"
+				className="tag mt-4"
 				onClick={() => append()}
 			>
 				+ Add Step
