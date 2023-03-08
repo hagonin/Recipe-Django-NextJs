@@ -11,5 +11,3 @@ cloudinary.config(
     api_key=config('CLOUD_API_KEY_1'),
     api_secret=config('CLOUD_API_SECRET_1')
 )
-
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]

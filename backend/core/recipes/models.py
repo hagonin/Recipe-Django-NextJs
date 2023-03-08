@@ -66,7 +66,7 @@ class Recipe(models.Model):
     
     @property
     def reviews_count(self):
-        """gets the reviews count for that recipes"""
+        """gets the reviews count for that recipe"""
         return self.reviews.count()
 
     @property
