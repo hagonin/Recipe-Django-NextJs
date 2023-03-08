@@ -3,10 +3,9 @@ import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
-	console.log(ingredient);
 	return (
-		<div className="">
-			<div>
+		<div className="flex flex-col">
+			<div className="flex flex-col">
 				{ingredient?.item.map((i, index) =>
 					isPreview ? (
 						<span key={index}>
@@ -25,7 +24,7 @@ function Ingredient({ ingredients, isPreview }) {
 					<span className="text-lg font-semibold text-black">
 						{item.heading}
 					</span>
-					<div>
+					<div className="flex flex-col">
 						{item.items.map((i) =>
 							isPreview ? (
 								<span

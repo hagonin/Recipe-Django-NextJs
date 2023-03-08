@@ -40,7 +40,6 @@ function SingRecipe({
 	const descriptionMarkup = createMarkup(description);
 	const instructionsMarkup = createMarkup(instructions);
 
-	// console.log(ingredient);
 	return (
 		<div>
 			<h1 className="text-center">{title}</h1>

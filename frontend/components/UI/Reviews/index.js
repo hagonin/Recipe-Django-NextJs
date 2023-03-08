@@ -9,6 +9,7 @@ function Reviews({
 	handleDelete,
 	goToLogin,
 }) {
+
 	return (
 		<div className=" my-10 py-10 px-7 bg-third rounded-md">
 			<h1>Reviews ({reviews.length})</h1>
@@ -40,6 +41,7 @@ function Reviews({
 					/>
 				))}
 			</div>
+			
 		</div>
 	);
 }
