@@ -4,26 +4,29 @@
 
 @layer base {
    html {
-      @apply  text-second leading-7;
+      @apply  text-second leading-7 ;
+   }
+   p, span {
+    @apply text-base;
    }
     h1 {
-       @apply text-3xl font-semibold text-black;
+       @apply text-3xl font-medium;
     }
 
     h2 {
-       @apply text-2xl font-semibold text-black;
+       @apply text-2xl font-medium;
     } 
 
     h3 {
-       @apply text-xl font-medium text-black;
+       @apply text-xl font-medium;
     }
 
     h4 {
-       @apply text-lg font-medium text-black;
+       @apply text-lg font-medium;
     }
     
     h5 {
-       @apply text-base font-medium text-black;
+       @apply font-medium;
     }
 
     a, [href] {

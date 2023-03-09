@@ -1,3 +1,5 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -14,6 +16,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			fontFamily: {
+				sans: ['var(--open-sans)', ...fontFamily.sans],
+			},
 			colors: {
 				primary: '#96b7ae',
 				primaryLight: '#7ba39617',
@@ -22,7 +27,7 @@ module.exports = {
 				second: '#757575',
 				third: '#F9F8F3',
 				grey: '#EEEEEE',
-				black: '#111111',
+				black: '#1a1a1a',
 				blackLight: '#575757',
 				border: '#e6e6e6',
 				red: '#F33A58',
@@ -42,8 +47,15 @@ module.exports = {
 				},
 			},
 		},
+		fontSize: {
+			xsm: '0.625rem', //10px
+			sm: '0.75rem', //12px
+			base: '0.8125rem', //13px
+			lg: '0.875rem', //14px
+			xl: '1rem', //16px
+			'2xl': '1.125rem', //18px
+			'3xl': '1.375rem', //22px
+		},
 	},
-	plugins: [
-		require('@tailwindcss/line-clamp'),
-	],
+	plugins: [require('@tailwindcss/line-clamp')],
 };
