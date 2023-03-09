@@ -3,12 +3,21 @@ import { useEffect, useState } from 'react';
 import { HiStar } from 'react-icons/hi';
 import { Label } from '../FormControl';
 
-function Start({ handleChangeStart = () => {}, initValue = 1 }) {
+function Start({
+	handleChangeStart = () => {},
+	initValue = 1,
+	disabled,
+	submitSuccess,
+}) {
 	const [rating, setRating] = useState(initValue);
 
 	useEffect(() => {
 		rating && handleChangeStart(rating);
 	}, [rating]);
+
+	useEffect(() => {
+		submitSuccess && setRating(1);
+	}, [submitSuccess]);
 	return (
 		<div className="flex lg:gap-4 lg:items-center flex-col lg:flex-row ">
 			<Label label="Your rating" />
@@ -19,11 +28,10 @@ function Start({ handleChangeStart = () => {}, initValue = 1 }) {
 							key={id}
 							type="button"
 							onClick={() => setRating(id)}
-							onMouseEnter={() => setRating(id)}
-							onMouseLeave={() => setRating(id)}
-							className={`text-4xl mb-2 ${
+							className={`text-[2rem] mb-2 ${
 								id <= rating ? 'text-yellow' : 'text-black'
 							}`}
+							disabled={disabled}
 						>
 							<HiStar />
 						</button>

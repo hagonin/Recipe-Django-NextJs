@@ -17,7 +17,6 @@ import Reviews from '@components/UI/Reviews';
 import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import useRecipeBySlug from 'hook/useRecipeBySlug';
-import Loader from '@components/UI/Loader';
 
 function Recipe() {
 	const router = useRouter();
@@ -75,13 +74,14 @@ function Recipe() {
 		} catch {}
 	};
 
+	// const confirmDelete = (review_slug);
+
 	const handleDelete = async (review_slug) => {
 		await api.delete(`recipe/${slug}/reviews${review_slug}/`, configAuth());
 		await mutate();
 		mutateRecipes();
 		toast.success('Delete review success');
 	};
-
 	const goToLogin = () => router.push('/login');
 	return (
 		<>

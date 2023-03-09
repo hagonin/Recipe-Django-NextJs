@@ -1,8 +1,16 @@
+import ConfirmDelete from '@components/Form/ConfirmDelete';
+import { Form } from '@components/Form/FormControl';
 import Rating from '@components/UI/Reviews/Rate';
 import { images } from '@utils/constants';
 import formatDate from '@utils/formatdate';
-import { MdDelete } from 'react-icons/md';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaRegWindowClose } from 'react-icons/fa';
+import { MdDelete, MdDeleteSweep } from 'react-icons/md';
+import Button from '../Button';
 import Img from '../Image';
+import Loader from '../Loader';
+import ModalPrimary from '../Modal/ModalPrimary';
 
 function ReviewCard({
 	id,
@@ -12,12 +20,23 @@ function ReviewCard({
 	date_added,
 	title,
 	content,
-	avatar,
+	main_image:avatar,
 	hasEdit,
 	handleDelete,
 }) {
+	const [showConfirmDeleteteReview, setShowConfirmDeleteReview] =
+		useState(false);
+	const onDelete = async () => {
+		await handleDelete(slug, id);
+		setShowConfirmDeleteReview(false);
+	};
 	return (
 		<div className="py-5 border-b">
+			<ConfirmDelete
+				handleDelete={onDelete}
+				showConfirm={showConfirmDeleteteReview}
+				handleCloseConfirm={() => setShowConfirmDeleteReview(false)}
+			/>
 			<div className="flex gap-4 ">
 				<Img
 					src={avatar || images.defaultAvatar}
@@ -30,10 +49,10 @@ function ReviewCard({
 						<h3>{user}</h3>
 						{hasEdit && (
 							<button
-								className="text-2xl text-red"
-								onClick={() => handleDelete(slug, id)}
+								className="text-sm text-red"
+								onClick={() => setShowConfirmDeleteReview(true)}
 							>
-								<MdDelete />
+								Delete
 							</button>
 						)}
 					</div>

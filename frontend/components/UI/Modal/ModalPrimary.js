@@ -3,11 +3,12 @@ import { Fragment } from 'react';
 import { GrClose } from 'react-icons/gr';
 import Modal from '.';
 
-function ModalPrimary({ show, handleCloseModal, children }) {
+function ModalPrimary({ show, handleCloseModal, children, disabled, noClose }) {
 	return (
 		<Modal
 			show={show}
 			handleClose={handleCloseModal}
+			disabled={disabled}
 		>
 			<Transition.Child
 				as={Fragment}
@@ -19,12 +20,16 @@ function ModalPrimary({ show, handleCloseModal, children }) {
 				leaveTo="opacity-0"
 			>
 				<div className="absolute text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-10 rounded-md shadow-lg">
-					<button
-						className="absolute top-4 right-4 md:text-3xl text-4xl"
-						onClick={handleCloseModal}
-					>
-						<GrClose />
-					</button>
+					{noClose ? null : (
+						<button
+							className="absolute top-4 right-4 md:text-3xl text-4xl"
+							onClick={handleCloseModal}
+							disabled={disabled}
+						>
+							<GrClose />
+						</button>
+					)}
+
 					{children}
 				</div>
 			</Transition.Child>

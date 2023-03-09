@@ -28,11 +28,12 @@ function Image({ handleChooseImg, urlInit }) {
 	};
 
 	return (
-		<div className="relative w-56 h-56 max-md:mx-auto bg-primary rounded-md overflow-hidden">
+		<div className="mx-auto relative w-56 h-56 max-md:mx-auto rounded-md overflow-hidden">
 			<Img
 				src={preview || images.photoDefault}
 				alt="preview"
-				className="absolute inset-0 "
+				className="absolute inset-0 w-full h-full"
+				cover
 			/>
 			<input
 				type="file"
@@ -42,7 +43,7 @@ function Image({ handleChooseImg, urlInit }) {
 				accept="image/png, image/jpeg"
 			/>
 			<button
-				className="text-3xl bg-white absolute bottom-2 right-2 p-4 rounded-full border-[3px] border-yellow-500"
+				className="text-2xl bg-white absolute bottom-2 right-2 p-3 rounded-full border-[3px] border-yellow-500 hover:opacity-80"
 				title="Choose image"
 				onClick={handleOnClick}
 				type="button"

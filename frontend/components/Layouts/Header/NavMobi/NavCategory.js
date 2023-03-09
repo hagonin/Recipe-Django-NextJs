@@ -29,7 +29,7 @@ function NavCategory() {
 				<Link
 					href="/recipes"
 					isSubItem
-					className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
+					className="block font-semibold capitalize py-2 px-3 hover:text-primary text-left"
 				>
 					All Recipes
 				</Link>
@@ -37,7 +37,7 @@ function NavCategory() {
 					<Link
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
-						className="block font-semibold capitalize py-2 px-3 hover:text-primary hover:underline text-left"
+						className="block font-semibold capitalize py-2 px-3 hover:text-primary text-left"
 						isSubItem
 					>
 						{category.name}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
@@ -14,44 +13,36 @@ import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
-import { MdEmail } from 'react-icons/md';
+import { MdEmail, MdSecurity } from 'react-icons/md';
+import { GrUpdate } from 'react-icons/gr';
+import { AiFillEdit } from 'react-icons/ai';
 
 function Profile() {
 	const { user } = useAuthContext();
-	const {
-		deleteRecipe,
-		fetcher,
-		setLoading,
-		handleToggleBookmark,
-		loading: isloadingBookMark,
-		mutateRecipes,
-	} = useRecipeContext();
+	const { deleteRecipe, fetcher, handleToggleBookmark, mutateRecipes } =
+		useRecipeContext();
 	const {
 		data: recipes,
 		isLoading: loading1,
-		mutate: mutate1,
+		mutate: mutateOwnRecipe,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
 
 	const {
 		data: bookmarks,
 		isLoading: loading2,
-		mutate: mutate2,
-		isValidating: isValidating2,
+		mutate: mutateBookMark,
 	} = useSWR(`/user/profile/${user.id}/bookmarks`, fetcher);
 
 	const router = useRouter();
 
 	const handleDeleteRecipe = async (slug) => {
-		setLoading(true);
 		try {
 			await deleteRecipe(slug);
-			await mutate1();
+			await mutateOwnRecipe();
 			mutateRecipes();
-			toast.success('Delete success');
+			toast.success('Delete recipe success');
 		} catch (err) {
-			toast.error('Delete failed');
-		} finally {
-			setLoading(false);
+			toast.error('Delete recipe failed');
 		}
 	};
 
@@ -61,44 +52,59 @@ function Profile() {
 
 	const onDeleteBookmark = async (act, id) => {
 		await handleToggleBookmark(act, id);
-		await mutate2();
+		await mutateBookMark();
 	};
 
 	return (
 		<div className="container my-14">
 			<h1 className="text-center">My Profile</h1>
-			<div className="flex mt-14 items-center gap-6">
+			<div className="flex mt-14 items-center gap-6 md:flex-row flex-col">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
 					className="h-52 w-52 border border-border rounded-full overflow-hidden"
 					cover
 				/>
-				<div className="flex flex-col gap-1">
-					<h2 className="capitalize ">{`${user?.username}`}</h2>
+				<div className="flex flex-col gap-1 max-md:items-center">
+					<h2 className="capitalize font-serif">{`${user?.username}`}</h2>
 
-					<div className="flex gap-6 text-lg">
-						<span className="font-semibold">
-							First Name: {user?.first_name}
+					<div className="flex">
+						<span className="text-lg ">First name:</span>
+						<span className="text-lg text-black font-semibold capitalize ml-2">
+							{user?.first_name}
 						</span>
-						<span className="font-semibold border-l-2 px-5">
-							Last Name: {user?.last_name}
+						<span className="text-lg border-l-2 pl-5 ml-6">
+							Last name:
+						</span>
+						<span className="text-lg text-black font-semibold capitalize ml-2">
+							{user?.last_name}
 						</span>
 					</div>
 
 					<span className="text-lg flex items-center gap-2">
 						<MdEmail /> {user?.email}
 					</span>
-					<Button
-						type="link"
-						href="/user/updateprofile"
-						className="mt-3"
-					>
-						Update Profile
-					</Button>
+					<div className="flex gap-6 items-center mt-2">
+						<Button
+							type="link"
+							href="/user/updateprofile"
+							className="outline"
+							icon={{ left: <AiFillEdit /> }}
+						>
+							Update Profile
+						</Button>
+
+						<Button
+							className="outline"
+							onClick={() => router.push('/user/changepassword')}
+							icon={{ left: <MdSecurity /> }}
+						>
+							Change passowrd
+						</Button>
+					</div>
 				</div>
 			</div>
-			<div className="mt-6 bg-primaryLight rounded-md py-4 px-5 flex gap-4 items-center">
+			<div className="my-6 bg-primaryLight rounded-md py-4 px-5 flex gap-4 items-center">
 				<Img
 					src={images.bio}
 					className="h-10 w-10"
@@ -106,6 +112,7 @@ function Profile() {
 				/>
 				<p>{user?.bio}</p>
 			</div>
+
 			<Tabs>
 				<TabPanel
 					tab={{
@@ -118,9 +125,19 @@ function Profile() {
 							'Loading...'
 						) : recipes.length > 0 ? (
 							<>
-								<span className="mb-5 inline-block">
-									You have <b>{recipes.length}</b> recipes
-								</span>
+								<div className="mb-5 flex gap-4">
+									<span className="inline-block">
+										You have <b>{recipes.length}</b> recipes
+									</span>
+									<button
+										className="font-bold text-yellow text-lg block underline"
+										onClick={() =>
+											router.push('/user/recipe/add')
+										}
+									>
+										+ Add recipe
+									</button>
+								</div>
 								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
 									{recipes?.map((recipe) => (
 										<div key={recipe.id}>
@@ -187,7 +204,7 @@ function Profile() {
 							))}
 						</div>
 					) : (
-						'You have not saved any bookmarks yet.'
+						<p>You have not saved any bookmarks yet.</p>
 					)}
 				</TabPanel>
 			</Tabs>

@@ -6,7 +6,6 @@ import { Form, InputField } from '../FormControl';
 import Image from './Image';
 
 function UploadPhoto({ onSubmit, recipe }) {
-	
 	const {
 		register,
 		handleSubmit,
@@ -34,27 +33,27 @@ function UploadPhoto({ onSubmit, recipe }) {
 			form.append('recipe', recipe);
 			return onSubmit(form);
 		} else {
-			toast.error('Choose photo to upload.')
+			toast.error('Choose photo to upload.');
 		}
 	};
 	return (
 		<div>
 			<Form
 				onSubmit={handleSubmit(createFormData)}
-				className="!flex-row gap-6"
+				className="w-1/3 mx-auto"
 			>
 				<Image handleChooseImg={handleChoosePhoto} />
-				<div>
+				<div className="flex flex-col items-center">
 					<InputField
 						type="text"
 						name="upload_photo.caption"
 						register={register}
-						label="Caption"
+						label="Caption (optional)"
 					/>
 					<Button
 						type="submit"
 						disabled={isSubmitting}
-						className="mt-5 primary"
+						className="mt-5 primary w-full"
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Upload Photo

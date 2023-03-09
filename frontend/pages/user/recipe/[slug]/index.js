@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useRecipeContext } from '@context/recipe-context';
@@ -21,17 +21,13 @@ function RecipePreView() {
 	const [recipe, setRecipe] = useState(null);
 
 	const handleDeletePhoto = useCallback(async (id) => {
-		setLoading(true);
 		await deletePhotoById(id);
-		getRecipeBySlug(slug)
+		await getRecipeBySlug(slug)
 			.then(({ data }) => {
 				setRecipe(data);
 				toast.success('Delete success');
 			})
-			.catch()
-			.then(() => {
-				setLoading(false);
-			});
+			.catch();
 	});
 
 	const goToUploadPhotos = useCallback(() =>
@@ -42,14 +38,8 @@ function RecipePreView() {
 		router.push(`/user/recipe/${recipe?.slug}/update`)
 	);
 	const handleDeleteRecipe = useCallback(async (slug) => {
-		try {
-			await deleteRecipe(slug);
-			await mutateRecipes();
-			router.push('/user/profile');
-			toast.success('Delete success');
-		} catch (err) {
-			toast.error('Delete failed');
-		}
+		await deleteRecipe(slug);
+		await mutateRecipes();
 	});
 
 	useEffect(() => {

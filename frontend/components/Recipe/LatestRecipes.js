@@ -31,6 +31,7 @@ function LatestRecipes() {
 					<RecipeCard
 						key={recipe.id}
 						{...recipe}
+						image={recipe.main_image}
 						smallCard
 						border
 						className="grid grid-cols-2 gap-4"

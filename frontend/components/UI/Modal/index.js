@@ -1,7 +1,9 @@
 import { Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 
-function Modal({ children, handleClose, show }) {
+function Modal({ children, handleClose, show, disabled }) {
+	const divRef = useRef();
+
 	return (
 		<Transition.Root
 			show={show}
@@ -19,7 +21,8 @@ function Modal({ children, handleClose, show }) {
 				>
 					<div
 						className="absolute inset-0 z-10 bg-[rgba(0,0,0,0.15)]"
-						onClick={handleClose}
+						onClick={disabled ? () => false : handleClose}
+						ref={divRef}
 					></div>
 				</Transition.Child>
 				{children}

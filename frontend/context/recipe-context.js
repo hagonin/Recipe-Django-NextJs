@@ -71,7 +71,7 @@ const RecipeProvider = ({ children }) => {
 		api.get(`${ENDPOINT_RECIPE_READ}${slug}/${noCache()}`);
 
 	const checkBookmarkAct = (bookmarkID) =>
-		user?.bookmarks.filter((bookmark) => bookmark === bookmarkID).length >
+		user?.bookmarks?.filter((bookmark) => bookmark === bookmarkID).length >
 		0;
 	const fetcher = async (url) =>
 		await api

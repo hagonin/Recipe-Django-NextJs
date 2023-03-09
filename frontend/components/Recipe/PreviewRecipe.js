@@ -1,18 +1,21 @@
-import { memo } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
 import { FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
-import { MdDelete, MdDeleteForever, MdEdit } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
 import createMarkup from '@utils/createMarkup';
-import { GrAdd } from 'react-icons/gr';
 
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tippy from '@tippyjs/react';
 import formatDate from '@utils/formatdate';
 import Ingredient from './SingleRecipe/Ingredient';
+import ConfirmDelete from '@components/Form/ConfirmDelete';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import formatTime from '@utils/formatTime';
 
 function PreviewRecipe({
 	data,
@@ -21,6 +24,7 @@ function PreviewRecipe({
 	goToUpdate,
 	gotoDelete,
 }) {
+	const router = useRouter();
 	const {
 		id,
 		title,
@@ -32,7 +36,7 @@ function PreviewRecipe({
 		instructions,
 		created_at,
 		updated_at,
-		image_url: image,
+		main_image: image,
 		images,
 		category,
 		ingredients,
@@ -41,8 +45,35 @@ function PreviewRecipe({
 		slug,
 	} = data;
 
+	const [showConfirmDeletePhoto, setShowConfirmDeletePhoto] = useState(false);
+	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
+		useState(false);
+
+	const [idPhotoDelete, setIdPhotoDelete] = useState(null);
+
+	useEffect(() => {
+		idPhotoDelete
+			? setShowConfirmDeletePhoto(true)
+			: setShowConfirmDeletePhoto(false);
+	}, [idPhotoDelete]);
+
+	const onDeletePhoto = useCallback(async () => {
+		await handleDeletePhoto(idPhotoDelete);
+	});
+
+	const onDeleteRecipe = useCallback(async () => {
+		await gotoDelete(slug);
+		toast.success('Delete success');
+		router.push('/user/profile');
+	});
+
 	return (
 		<>
+			<ConfirmDelete
+				showConfirm={showConfirmDeleteRecipe}
+				handleCloseConfirm={() => setShowConfirmDeleteRecipe(false)}
+				handleDelete={onDeleteRecipe}
+			/>
 			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 				<div className="md:col-span-8">
 					<div className="flex gap-2 mt-3 justify-end text-lg">
@@ -57,7 +88,7 @@ function PreviewRecipe({
 						<Tippy content={<span>Delete</span>}>
 							<button
 								className="text-red"
-								onClick={() => gotoDelete(slug)}
+								onClick={() => setShowConfirmDeleteRecipe(true)}
 							>
 								<MdDelete />
 							</button>
@@ -88,35 +119,35 @@ function PreviewRecipe({
 								<span className="">{serving}</span>
 							</span>
 							<span className="font-bold border-l-2  px-4 flex gap-2 items-center">
-								<FaRegClock className="relative -top-[1px]" />
+								<FaRegClock className="text-xl  relative -top-[1px]" />
 								<div className="flex flex-col text-sm">
 									<span className="font-bold">
-										{prep_time}MIN
+										{formatTime(prep_time)}
 									</span>
-									<span className=" text-[#ccc]">PREP</span>
+									<span className=" text-[#bbb]">PREP</span>
 								</div>
 							</span>
 							<span className="font-bold border-l-2  px-4 flex gap-2 items-center">
-								<FaRegClock className="relative -top-[1px]" />
+								<FaRegClock className="text-xl relative -top-[1px]" />
 								<div className="flex flex-col text-sm">
 									<span className="font-bold">
-										{cook_time}MIN
+										{formatTime(cook_time)}
 									</span>
-									<span className=" text-[#ccc]">COOK</span>
+									<span className="text-[#bbb]">COOK</span>
 								</div>
 							</span>
 						</div>
 					</div>
 
 					<div className="my-10">
-						<h3>Description:</h3>
+						<h3 className='underline'>Description</h3>
 						<div
 							dangerouslySetInnerHTML={createMarkup(description)}
 						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					<div className="my-10">
-						<h3>Instruction:</h3>
+						<h3>Instruction</h3>
 						<div
 							dangerouslySetInnerHTML={createMarkup(instructions)}
 						/>
@@ -144,7 +175,7 @@ function PreviewRecipe({
 					/>
 					<div>
 						<div className="flex gap-2 items-center mt-10 ">
-							<h3 className='underline'>Ingredients:</h3>
+							<h3 className="underline">Ingredients:</h3>
 						</div>
 						<Ingredient
 							ingredients={ingredients}
@@ -153,7 +184,7 @@ function PreviewRecipe({
 					</div>
 				</div>
 			</div>
-			<h2>Photos</h2>
+			<h2 className='mt-5'>Photos</h2>
 			<Button
 				className="w-56 mt-5"
 				icon={{ left: <HiPhotograph /> }}
@@ -171,20 +202,27 @@ function PreviewRecipe({
 							<Img
 								src={img.image_url}
 								alt={img.caption}
+								className="h-44 w-full"
+								cover
 							/>
 							<button
 								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
-								onClick={() => handleDeletePhoto(img.id)}
+								onClick={() => setIdPhotoDelete(img.id)}
 							>
 								<BsTrash />
 							</button>
 						</div>
 					);
 				})}
+				<ConfirmDelete
+					showConfirm={showConfirmDeletePhoto}
+					handleCloseConfirm={() => setIdPhotoDelete(false)}
+					handleDelete={onDeletePhoto}
+				/>
 			</div>
-			<button className="rounded-full underline text-lg hover:text-primary">
+			{/* <button className="rounded-full underline text-lg hover:text-primary">
 				Load More
-			</button>
+			</button> */}
 		</>
 	);
 }
