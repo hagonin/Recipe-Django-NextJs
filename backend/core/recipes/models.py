@@ -1,5 +1,4 @@
 from django.db import models
-from cloudinary.models import CloudinaryField
 from django.db.models import Index
 from django.core import validators
 from django.conf import settings
@@ -30,7 +29,7 @@ class Recipe(models.Model):
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='recipes')
     category = models.CharField(max_length=50, choices=Category.choices)
-    main_image = CloudinaryField('image', overwrite=True, blank=True)     
+    main_image = models.ImageField(upload_to='recipes',default='recipes/default.jpg')   
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
@@ -57,12 +56,6 @@ class Recipe(models.Model):
 
     def get_total_number_of_bookmarks(self):
         return self.bookmarked_by.count()
-
-    @property
-    def image_url(self):
-        return (
-            f"http://res.cloudinary.com/dfjtkh7ie/{self.main_image}"
-        )
     
     @property
     def reviews_count(self):
@@ -79,9 +72,9 @@ class Ingredient(models.Model):
     """
     Returns ingredients for a recipe
     """
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients',null=True)
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients')
     heading = models.CharField(max_length=220, blank=True, null=True)
-    title = models.CharField(max_length=1500,blank=True)  
+    title = models.CharField(max_length=1500)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure], blank=True)  
 
@@ -97,19 +90,13 @@ class RecipeImage(models.Model):
     Returns images for a recipe
     """
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='images',null=True)
-    image = CloudinaryField('image',overwrite=True, null=True,)
+    image = models.ImageField(upload_to='recipes',blank=True)
     caption = models.CharField(
         max_length=200, 
         verbose_name= 'Photo|caption',
         null=True,
         blank=True
     )
-
-    @property
-    def image_url(self):
-        return (
-            f"http://res.cloudinary.com/dfjtkh7ie/{self.image}"
-        )
 
 class RecipeReview(models.Model):
     """
