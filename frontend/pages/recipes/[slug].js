@@ -82,7 +82,6 @@ function Recipe() {
 		mutateRecipes();
 		toast.success('Delete review success');
 	};
-
 	const goToLogin = () => router.push('/login');
 	return (
 		<>

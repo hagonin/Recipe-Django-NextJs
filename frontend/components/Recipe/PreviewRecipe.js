@@ -36,7 +36,7 @@ function PreviewRecipe({
 		instructions,
 		created_at,
 		updated_at,
-		image_url: image,
+		main_image: image,
 		images,
 		category,
 		ingredients,

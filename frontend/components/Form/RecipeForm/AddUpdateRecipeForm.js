@@ -46,7 +46,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
 				search_vector: initValues?.search_vector || '',
-				main_image: initValues?.image_url || images.spoon,
+				// main_image: initValues?.image_url || images.spoon,
 				ingredient: initValues?.ingredients || {
 					item: [{ recipe: EXIST_RECIPE }],
 				},
@@ -82,13 +82,13 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			});
 		}
 		// add image to form
-		let img;
-		if (typeof main_image === 'string') {
-			img = await getFileFromUrl(main_image, 'defaulrt');
-		} else {
-			img = main_image;
-		}
-		form.append('main_image', img, img.name);
+		// let img;
+		// if (typeof main_image === 'string') {
+		// 	img = await getFileFromUrl(main_image, 'defaulrt');
+		// } else {
+		// 	img = main_image;
+		// }
+		// form.append('main_image', img, img.name);
 
 		// // // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));

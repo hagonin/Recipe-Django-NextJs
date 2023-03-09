@@ -15,7 +15,7 @@ import formatTime from '@utils/formatTime';
 function SingRecipe({
 	id,
 	updated_at,
-	image_url: cover,
+	main_image: cover,
 	prep_time,
 	cook_time,
 	instructions,
@@ -110,11 +110,6 @@ function SingRecipe({
 						</span>
 						<div className="text-center flex items-center justify-center gap-2">
 							<Rating number={rating} />
-							<span className="relative top-[1px]">
-								{`${reviews_count} ${
-									reviews_count > 1 ? 'ratings' : 'rating'
-								}`}{' '}
-							</span>
 						</div>
 
 						<div className="flex gap-3 mt-5 text-sm  flex-wrap">

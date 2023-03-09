@@ -66,7 +66,7 @@ const AuthProvider = ({ children }) => {
 			try {
 				const user = await getUser();
 				const {
-					profile: { image_url: avatar, ..._profile },
+					profile: { avatar, ..._profile },
 					...rest
 				} = user.data;
 

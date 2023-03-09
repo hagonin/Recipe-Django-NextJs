@@ -11,7 +11,6 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 	const [visible, setVisible] = useState(false);
 	const show = () => setVisible(true);
 	const hide = () => setVisible(false);
-
 	return (
 		<div
 			className="relative flex items-center"
