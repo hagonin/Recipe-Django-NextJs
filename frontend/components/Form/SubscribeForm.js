@@ -4,7 +4,7 @@ import sleep from '@utils/sleep';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { InputField } from './FormControl';
+import { Form, InputField } from './FormControl';
 import { email } from './FormControl/validate';
 
 function SubscribeForm({ secondary }) {
@@ -29,16 +29,15 @@ function SubscribeForm({ secondary }) {
 	}, [isSubmitSuccessful]);
 
 	return (
-		<form
-			className={`flex ${
-				secondary ? 'flex-col' : ''
-			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 `}
-			noValidate={true}
+		<Form
 			onSubmit={handleSubmit(onSubmit)}
+			className={`flex ${
+				secondary ? '' : '!flex-row lg:w-[450px]'
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 `}
 		>
 			<InputField
 				name="subscribe.email"
-				placeholder="Your email address"
+				placeholder="Enter your email address"
 				register={register}
 				type="email"
 				rules={{ required: true, pattern: email }}
@@ -52,7 +51,7 @@ function SubscribeForm({ secondary }) {
 				{isSubmitting ? <Loader type="submitting" /> : null}
 				Subscribe
 			</Button>
-		</form>
+		</Form>
 	);
 }
 

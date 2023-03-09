@@ -1,5 +1,6 @@
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
+import { garamond } from '@utils/fonts';
 import CommonSection from './CommonSection';
 
 function UserSection({ name, bio, avatar }) {
@@ -17,7 +18,9 @@ function UserSection({ name, bio, avatar }) {
 				className="overflow-hidden h-36 w-36 mx-auto rounded-full"
 				cover
 			/>
-			<span className="text-lg text-black text-center mt-4 block">
+			<span
+				className={`text-3xl font-medium text-black font-serif text-center mt-4 block`}
+			>
 				{name}
 			</span>
 			<p className="text-center mt-1 mb-5 ">

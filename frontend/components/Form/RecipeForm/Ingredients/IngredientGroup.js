@@ -5,6 +5,7 @@ import IngredientItem from './IngredientItem';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import Button from '@components/UI/Button';
 import Tippy from '@tippyjs/react';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
 
 function IngredientGroup({ control, register, name, error }) {
 	const { fields, append, remove } = useFieldArray({
@@ -45,7 +46,7 @@ function IngredientGroup({ control, register, name, error }) {
 							onClick={() => remove(index)}
 							className="h-10"
 						>
-							<IoIosCloseCircleOutline />
+							<AiOutlineMinusCircle />
 						</button>
 					</div>
 					<IngredientItem

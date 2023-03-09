@@ -1,4 +1,3 @@
-import Tippy from '@tippyjs/react';
 import {
 	FaInstagram,
 	FaFacebookF,
@@ -6,6 +5,7 @@ import {
 	FaTwitter,
 	FaLinkedin,
 } from 'react-icons/fa';
+import Tooltip from '../Tooltip';
 
 function SocialLink({
 	socialList = [
@@ -23,7 +23,7 @@ function SocialLink({
 		},
 		{
 			id: 3,
-			name: 'PINTEREST',
+			name: 'Pinterest',
 			href: 'https://vi-vn.facebook.com/',
 			icon: <FaPinterestP />,
 		},
@@ -47,8 +47,8 @@ function SocialLink({
 	return (
 		<div className={`flex flex-wrap gap-4 ${center && 'justify-center'}`}>
 			{socialList.map((item) => (
-				<Tippy
-					content={<span>{item.name}</span>}
+				<Tooltip
+					content={item.name}
 					key={item.id}
 				>
 					<a
@@ -64,7 +64,7 @@ function SocialLink({
 							</span>
 						)}
 					</a>
-				</Tippy>
+				</Tooltip>
 			))}
 		</div>
 	);

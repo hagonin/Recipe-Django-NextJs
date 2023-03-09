@@ -9,24 +9,25 @@
    p, span {
     @apply text-base;
    }
+    
     h1 {
-       @apply text-3xl font-medium;
+       @apply text-4xl font-semibold text-black;
     }
 
     h2 {
-       @apply text-2xl font-medium;
+       @apply text-3xl font-medium text-black;
     } 
 
     h3 {
-       @apply text-xl font-medium;
+       @apply text-2xl font-medium text-black;
     }
 
     h4 {
-       @apply text-lg font-medium;
+       @apply text-xl font-medium text-black;
     }
     
     h5 {
-       @apply font-medium;
+       @apply text-lg font-medium text-black;
     }
 
     a, [href] {
@@ -61,7 +62,7 @@
     }
 
     .btn.lg {
-      @apply text-sm font-medium h-12 px-6;
+      @apply text-base font-medium h-10 px-6;
     }
 
      .btn.login {
@@ -85,6 +86,10 @@
 
     .btn.reset {
       @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
+    }
+
+    .btn.outline {
+      @apply border-primaryDark;
     }
 
 

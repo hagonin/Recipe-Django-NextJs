@@ -3,7 +3,7 @@ import { images } from '@utils/constants';
 
 import Img from '../Image';
 
-function Slide({ id, image, name, description }) {
+function Slide({ id, image, name, description, slug }) {
 	return (
 		<Link
 			key={id}
@@ -18,8 +18,15 @@ function Slide({ id, image, name, description }) {
 				cover
 			/>
 			<div className="absolute bottom-0 left-0 w-full z-20 bg-primaryTransparent text-center py-3 px-5">
-				<span className="text-xl text-white">{name}</span>
-				<p className="leading-6 text-white mt-1 ">{description}</p>
+				<Link
+					className="text-3xl text-white font-serif"
+					href={`/recipes/${slug}`}
+				>
+					{name}
+				</Link>
+				<p className="leading-6 text-white mt-1 line-clamp-2">
+					{description}
+				</p>
 			</div>
 		</Link>
 	);

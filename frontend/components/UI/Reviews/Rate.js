@@ -1,12 +1,12 @@
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-function Rating({ number, small }) {
+function number({ number, small }) {
 	return (
-		<div className="flex gap-[1px] items-center">
+		<div className="flex gap-[1px] items-center relative top-[2px]">
 			<span className={`${small ? 'text-sm' : 'text-xl'} text-yellow`}>
 				{number > 0.5 ? (
 					<BsStarFill />
-				) : number >= 0 && number <= 0.5 ? (
+				) : number > 0 && number <= 0.5 ? (
 					<BsStarHalf />
 				) : (
 					<BsStar />
@@ -49,8 +49,9 @@ function Rating({ number, small }) {
 					<BsStar />
 				)}
 			</span>
+			<span className="font-semibold ml-2">({number})</span>
 		</div>
 	);
 }
 
-export default Rating;
+export default number;

@@ -9,9 +9,6 @@ import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import VerifyEmail from './VerifyEmaiForm/VerifyEmailModal';
-import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import { images } from '@utils/constants';
 
 function SignUpForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();

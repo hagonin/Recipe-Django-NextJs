@@ -13,33 +13,24 @@ import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
-import {
-	MdEmail,
-} from 'react-icons/md';
+import { MdEmail, MdSecurity } from 'react-icons/md';
 import { GrUpdate } from 'react-icons/gr';
 import { AiFillEdit } from 'react-icons/ai';
 
 function Profile() {
 	const { user } = useAuthContext();
-	const {
-		deleteRecipe,
-		fetcher,
-		setLoading,
-		handleToggleBookmark,
-		loading: isloadingBookMark,
-		mutateRecipes,
-	} = useRecipeContext();
+	const { deleteRecipe, fetcher, handleToggleBookmark, mutateRecipes } =
+		useRecipeContext();
 	const {
 		data: recipes,
 		isLoading: loading1,
-		mutate: mutate1,
+		mutate: mutateOwnRecipe,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
 
 	const {
 		data: bookmarks,
 		isLoading: loading2,
-		mutate: mutate2,
-		isValidating: isValidating2,
+		mutate: mutateBookMark,
 	} = useSWR(`/user/profile/${user.id}/bookmarks`, fetcher);
 
 	const router = useRouter();
@@ -47,11 +38,11 @@ function Profile() {
 	const handleDeleteRecipe = async (slug) => {
 		try {
 			await deleteRecipe(slug);
-			await mutate1();
+			await mutateOwnRecipe();
 			mutateRecipes();
-			toast.success('Delete success');
+			toast.success('Delete recipe success');
 		} catch (err) {
-			toast.error('Delete failed');
+			toast.error('Delete recipe failed');
 		}
 	};
 
@@ -61,7 +52,7 @@ function Profile() {
 
 	const onDeleteBookmark = async (act, id) => {
 		await handleToggleBookmark(act, id);
-		await mutate2();
+		await mutateBookMark();
 	};
 
 	return (
@@ -75,14 +66,18 @@ function Profile() {
 					cover
 				/>
 				<div className="flex flex-col gap-1 max-md:items-center">
-					<h2 className="capitalize">{`${user?.username}`}</h2>
+					<h2 className="capitalize font-serif">{`${user?.username}`}</h2>
 
-					<div className="flex gap-6 text-lg">
-						<span className="font-semibold">
-							First Name: {user?.first_name}
+					<div className="flex">
+						<span className="text-lg ">First name:</span>
+						<span className="text-lg text-black font-semibold capitalize ml-2">
+							{user?.first_name}
 						</span>
-						<span className="font-semibold border-l-2 px-5">
-							Last Name: {user?.last_name}
+						<span className="text-lg border-l-2 pl-5 ml-6">
+							Last name:
+						</span>
+						<span className="text-lg text-black font-semibold capitalize ml-2">
+							{user?.last_name}
 						</span>
 					</div>
 
@@ -93,23 +88,23 @@ function Profile() {
 						<Button
 							type="link"
 							href="/user/updateprofile"
-							className=""
+							className="outline"
 							icon={{ left: <AiFillEdit /> }}
 						>
 							Update Profile
 						</Button>
 
 						<Button
-							className=""
+							className="outline"
 							onClick={() => router.push('/user/changepassword')}
-							icon={{ left: <GrUpdate /> }}
+							icon={{ left: <MdSecurity /> }}
 						>
 							Change passowrd
 						</Button>
 					</div>
 				</div>
 			</div>
-			<div className="mt-6 bg-primaryLight rounded-md py-4 px-5 flex gap-4 items-center">
+			<div className="my-6 bg-primaryLight rounded-md py-4 px-5 flex gap-4 items-center">
 				<Img
 					src={images.bio}
 					className="h-10 w-10"
@@ -130,11 +125,16 @@ function Profile() {
 							'Loading...'
 						) : recipes.length > 0 ? (
 							<>
-								<div className='mb-5 flex gap-4'>
+								<div className="mb-5 flex gap-4">
 									<span className="inline-block">
 										You have <b>{recipes.length}</b> recipes
 									</span>
-									<button className="font-bold text-yellow text-lg block underline" onClick={()=>router.push('/user/recipe/add')}>
+									<button
+										className="font-bold text-yellow text-lg block underline"
+										onClick={() =>
+											router.push('/user/recipe/add')
+										}
+									>
 										+ Add recipe
 									</button>
 								</div>
@@ -204,7 +204,7 @@ function Profile() {
 							))}
 						</div>
 					) : (
-						'You have not saved any bookmarks yet.'
+						<p>You have not saved any bookmarks yet.</p>
 					)}
 				</TabPanel>
 			</Tabs>

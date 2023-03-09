@@ -23,6 +23,8 @@ import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
+import { info_recipeform } from './info';
+import { keyword } from '../FormControl/validate';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -51,6 +53,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				instructions: initValues?.instructions || [{ content: '' }],
 			},
 		},
+		mode: 'onChange',
 	});
 
 	useEffect(() => {
@@ -135,19 +138,15 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			});
 	}, [errors]);
 
-	useEffect(() => {
-		const key = watch('recipe.search_vector').replace(/[^\w\s]/gi, '');
-		setValue('recipe.search_vector', key);
-	}, [watch('recipe.search_vector')]);
 	return (
 		<form
 			onSubmit={handleSubmit(createFormData)}
 			noValidate={true}
 		>
-			<div className="flex flex-col gap-4">
+			<div className="flex flex-col">
 				<Title title="Recipe Detail" />
 				<div className="flex gap-6 max-md:flex-col">
-					<div className="flex flex-col gap-6 flex-1">
+					<div className="flex flex-col gap-4 flex-1">
 						<InputField
 							name="recipe.title"
 							placeholder="E.g. Homemade Italian Dressing"
@@ -158,18 +157,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 							required
 							rules={{ required: "What's your recipe called?" }}
 						/>
-						<SelectField
-							name="recipe.category"
-							register={register}
-							error={formErr?.recipe?.category}
-							options={categoryList}
-							label="What kind of category ?"
-							rules={{
-								required: 'What kind of category is this?',
-							}}
-							required
-							// error={formErr}
-						/>
+
 						<Controller
 							name="recipe.description"
 							control={control}
@@ -177,11 +165,11 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 								<RichTextField
 									field={field}
 									label="Description"
-									placeholder="Homemade salad dressing is pretty low hanging fruit if you’re looking to up your cooking game. It’s quick to make, budget-friendly, and tastier than store-bought. Homemade Italian dressing is a prime example. You shake it up in an ordinary jar using pantry staples. The whole operation will take you under 2 minutes and results in enough dressing to get you through a couple of family-sized salads.  "
+									placeholder={
+										info_recipeform.desc.placeholder
+									}
 									info={{
-										content:
-											'Share the story behind your recipe and makes it special.',
-										placement: 'right',
+										content: info_recipeform.desc.info,
 									}}
 								/>
 							)}
@@ -191,19 +179,27 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						<Label
 							label="Photo"
 							info={{
-								content:
-									'A beautiful picture of the result after cooking from this recipe.',
-								placement: 'right',
+								content: info_recipeform.photo.info,
 							}}
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
 							urlInit={initValues?.image_url || images.spoon}
-							// urlInit={images.spoon}
 						/>
 					</div>
 				</div>
-				<div className="flex gap-4 md:flex-row flex-col">
+				<div className="grid md:grid-cols-4 grid-cols-2 gap-4 mt-4">
+					<SelectField
+						name="recipe.category"
+						register={register}
+						error={formErr?.recipe?.category}
+						options={categoryList}
+						label="Category"
+						rules={{
+							required: 'What kind of category is this?',
+						}}
+						required
+					/>
 					<InputField
 						name="recipe.prep_time"
 						label="Pre-time (minutes)"
@@ -223,21 +219,22 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					<InputField
 						name="recipe.serving"
 						label="Serve (people)"
-						type="number"
-						min="1"
+						type="text"
 						register={register}
 						error={formErr?.recipe?.serving}
-						rules={{ required: 'Enter people' }}
-						placeholder="e.g. 8 people"
+						rules={{ required: 'Please enter people' }}
+						placeholder="e.g. 1, 2, 1-3, 4-5"
+						required
+						info={{
+							content: info_recipeform.serving.info,
+						}}
 					/>
 				</div>
 				<div className="mt-4">
 					<Title
 						title="Instructions"
 						info={{
-							content:
-								'Explain how to make your recipe, including oven temperatures, baking or cooking times, and pan sizes, etc.',
-							placement: 'right',
+							content: info_recipeform.instructions.info,
 						}}
 					/>
 					<Instructions
@@ -250,24 +247,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				<Title
 					title="Ingredients"
 					info={{
-						content: (
-							<div>
-								Enter your ingredients. Those ingredient can be
-								a type of ingredient, or any special
-								preparation. Besides, you can group your
-								ingredient by use add heading. <br />
-								For example:
-								<ul className="list-disc px-3">
-									<li>1 tablespoon chopped fresh parsley</li>{' '}
-									<li>½ teaspoon lemon juice</li>
-									<li>
-										1 cup small pasta such as cavatelli,
-										orzo, or ditalini
-									</li>
-								</ul>
-							</div>
-						),
-						placement: 'right',
+						content: info_recipeform.ingredients.info,
 					}}
 				/>
 
@@ -277,7 +257,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					error={formErr?.recipe?.ingredient}
 				/>
 			</div>
-			<div className="flex gap-4 mt-8 mb-4">
+			<div className="flex gap-4 mt-4 mb-4">
 				<div className="flex flex-col flex-1">
 					<InputField
 						name="recipe.search_vector"
@@ -287,14 +267,9 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.search_vector}
 						placeholder="e.g. salad dressings italian food"
 						info={{
-							content:
-								'Keyword that can be used to search for this recipe. No characters.',
-							placement: 'right',
+							content: info_recipeform.search_vector.info,
 						}}
-						rules={{
-							required:
-								'What keyword is used to search this recipe?',
-						}}
+						rules={keyword}
 						required
 					/>
 				</div>
@@ -336,7 +311,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					Cancel
 				</Button>
 				<Button
-					className="login primary px-24"
+					className="lg primary px-24"
 					type="submit"
 					disabled={isSubmitting}
 				>
@@ -350,7 +325,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 
 const Title = ({ title, info }) => (
 	<div className="flex gap-2 items-center border-b border-primary pb-1 mb-2">
-		<h2>{title}</h2>
+		<h2 className="font-serif">{title}</h2>
 		{info && (
 			<Tippy
 				content={info.content}

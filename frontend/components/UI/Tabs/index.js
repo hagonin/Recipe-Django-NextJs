@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 function Tabs({ children }) {
 	const [isActive, setIsActive] = useState(children[0]?.props.tab.title);
 	return (
-		<div className="mt-10">
+		<>
 			<div className="flex gap-6">
 				{children.map((child) => (
 					<Btn
@@ -34,7 +34,7 @@ function Tabs({ children }) {
 					</div>
 				))}
 			</div>
-		</div>
+		</>
 	);
 }
 

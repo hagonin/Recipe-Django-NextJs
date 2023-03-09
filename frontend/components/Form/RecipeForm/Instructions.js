@@ -1,14 +1,14 @@
 import Button from '@components/UI/Button';
 import { useFieldArray } from 'react-hook-form';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { InputField, Label } from '../FormControl';
 
 function Instructions({ register, control, error }) {
-	const { fields, append, remove} =
-		useFieldArray({
-			control, // control props comes from useForm (optional: if you are using FormContext)
-			name: 'recipe.instructions', // unique name for your Field Array
-		});
+	const { fields, append, remove } = useFieldArray({
+		control, // control props comes from useForm (optional: if you are using FormContext)
+		name: 'recipe.instructions', // unique name for your Field Array
+	});
 	return (
 		<div>
 			<ul className="flex flex-col gap-2">
@@ -28,7 +28,7 @@ function Instructions({ register, control, error }) {
 								className="text-2xl hover:text-red"
 								onClick={() => remove(index)}
 							>
-								<IoIosCloseCircleOutline />
+								<AiOutlineMinusCircle />
 							</button>
 						</div>
 					</li>

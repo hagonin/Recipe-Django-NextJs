@@ -58,7 +58,7 @@ export default function Home() {
 			name: 'Seafood paella',
 			image: null,
 			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+				'Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,  consectetur adipiscing elit Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,  consectetur adipiscing elit.',
 		},
 		{
 			id: 6,

@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Tippy from '@tippyjs/react';
-// import 'tippy.js/dist/tippy.css';
 import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
 import { AiFillClockCircle } from 'react-icons/ai';
@@ -13,6 +11,7 @@ import Img from '@components/UI/Image';
 import Rating from '@components/UI/Reviews/Rate';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useState } from 'react';
+import Tooltip from '@components/UI/Tooltip';
 
 function RecipeCard({
 	name,
@@ -25,7 +24,6 @@ function RecipeCard({
 	slug,
 	rating,
 	reviews_count,
-	total_number_of_bookmarks,
 	category,
 	smallCard,
 	lgCard,
@@ -96,20 +94,18 @@ function RecipeCard({
 					</Link>
 
 					{secondary ? null : (
-						<Tippy
+						<Tooltip
 							content={
-								<span>
-									{actBookmark
-										? 'Remove collection'
-										: 'Add collection'}
-								</span>
+								actBookmark
+									? 'Remove collection'
+									: 'Add collection'
 							}
 						>
 							<button
 								onClick={() =>
 									handleToggleBookmark(actBookmark, id)
 								}
-								className={`p-2 rounded-full  text-lg absolute top-2 right-2 shadow-lg ${
+								className={`p-2 rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
 									actBookmark
 										? 'bg-white text-primary'
 										: 'bg-primary text-white'
@@ -117,7 +113,7 @@ function RecipeCard({
 							>
 								<BsBookmarksFill />
 							</button>
-						</Tippy>
+						</Tooltip>
 					)}
 				</div>
 				<div
@@ -138,17 +134,21 @@ function RecipeCard({
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
 						}
-						className={`inline font-semibold ${
+						className={`inline font-serif ${
 							smallCard
-								? 'text-lg'
+								? 'text-2xl'
 								: lgCard
 								? 'text-2xl'
 								: 'text-xl'
-						} text-black line-clamp-2  hover:text-primary transition-all duration-200`}
+						} text-black line-clamp-2  hover:text-primaryDark transition-all duration-200`}
 					>
 						{name}
 					</Link>
-					<div className="flex gap-x-3 gap-y-1 flex-row flex-wrap">
+					<div
+						className={` flex gap-x-3 gap-y-1 flex-row flex-wrap justify-between ${
+							secondary ? '' : 'border-t mt-4'
+						}`}
+					>
 						{date_format && (
 							<span
 								className={`mt-2 ${
@@ -159,12 +159,12 @@ function RecipeCard({
 								{date_format}
 							</span>
 						)}
-						{rating && (
+						{rating ? (
 							<Rating
 								number={rating}
 								small={smallCard}
 							/>
-						)}
+						) : null}
 					</div>
 
 					<div className="flex gap-x-4 flex-wrap">
@@ -204,30 +204,30 @@ function RecipeCard({
 					)}
 					{hasControl && (
 						<div className="flex gap-2 mt-3 justify-end text-lg">
-							<Tippy content={<span>Edit</span>}>
+							<Tooltip content="Edit">
 								<button
 									onClick={() => goToUpdate(slug)}
 									className="hover:text-primary"
 								>
 									<FiEdit />
 								</button>
-							</Tippy>
-							<Tippy content={<span>Add photo</span>}>
+							</Tooltip>
+							<Tooltip content="Add photo">
 								<button
 									onClick={() => goToAddPhoto(id, slug)}
 									className="hover:text-primary"
 								>
 									<MdAddPhotoAlternate />
 								</button>
-							</Tippy>
-							<Tippy content={<span>Delete</span>}>
+							</Tooltip>
+							<Tooltip content="Delete">
 								<button
 									className="text-red"
 									onClick={() => setShowConfirmDelete(true)}
 								>
 									<MdDelete />
 								</button>
-							</Tippy>
+							</Tooltip>
 						</div>
 					)}
 				</div>
