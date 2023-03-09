@@ -33,7 +33,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
-    serving = models.PositiveSmallIntegerField(blank=True, null=True)
+    serving = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(unique=True, max_length=255, blank=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
