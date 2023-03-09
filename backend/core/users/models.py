@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from cloudinary.models import CloudinaryField
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -37,18 +36,12 @@ class CustomUser(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='profile')
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
-    avatar = CloudinaryField('image',overwrite=True, blank=True)
+    avatar = models.ImageField(upload_to='avatar',default='avatar/default.jpg')
     bio = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.user.username
     
-    @property
-    def image_url(self):
-        return (
-            f"http://res.cloudinary.com/dfjtkh7ie/{self.avatar}"
-        ) 
-
     @receiver(post_save, sender=CustomUser)
     def create_profile(sender, instance, created, **kwargs):
         if created:
@@ -58,5 +51,4 @@ class Profile(models.Model):
     def save_profile(sender, instance, **kwargs):
         instance.profile.save()
     
-
 

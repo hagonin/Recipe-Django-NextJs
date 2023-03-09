@@ -1,4 +1,4 @@
 try:
-    from .development  import *
+    from .local_settings  import *
 except:
-    from .production  import *
+    from .prod_settings  import *

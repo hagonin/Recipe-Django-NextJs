@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import cloudinary
 import os
 import dj_database_url
 from pathlib import Path
@@ -26,8 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-ALLOWED_HOSTS = ["recipe-api.up.railway.app", 
-                "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'drf_yasg',
-    'cloudinary',
     'django_filters',
     #local apps
     'recipes',
@@ -112,9 +108,9 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'railway',
             'USER': 'postgres',
-            'PASSWORD': config("DB_PASSWORD", default="postgres"),
-            'HOST': config("DB_HOSTNAME"),
-            'PORT': config("DB_PORT")
+            'PASSWORD': config("DB_PASSWORD_1"),
+            'HOST': config("DB_HOSTNAME_1"),
+            'PORT': config("DB_PORT_1")
         }
     }
 
@@ -145,6 +141,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# Password validation
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -166,13 +178,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'recipes_cache',
-    }
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -200,9 +205,23 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
+        'null': {  
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
     },
     'root': {
         'handlers': ['console'],
         'level': 'WARNING',
     },
+    'loggers': {
+        'django.security.DisallowedHost': { 
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    }
 }

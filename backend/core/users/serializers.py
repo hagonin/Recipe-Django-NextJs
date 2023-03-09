@@ -14,17 +14,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer the user profile model 
     """
-    image_url = serializers.CharField()
 
     class Meta:
         model = Profile
-        fields = ('bookmarks','bio','image_url','avatar')
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation.pop("avatar")
-
-        return representation
+        fields = ('bookmarks','bio','avatar')
 
 class UserSerializer(serializers.ModelSerializer):	
     date_joined = serializers.ReadOnlyField()
@@ -186,4 +179,3 @@ class ChangePasswordSerializer(serializers.Serializer):
         instance.set_password(validated_data['new_password'])
         instance.save()
         return instance 
-
