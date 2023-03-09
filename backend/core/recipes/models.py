@@ -77,9 +77,6 @@ class Ingredient(models.Model):
     title = models.CharField(max_length=1500)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure], blank=True)  
-
-    class Meta: 
-        unique_together = ('recipe', 'title')
         
     def __str__(self):
         return self.title

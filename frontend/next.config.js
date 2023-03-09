@@ -10,10 +10,8 @@ const nextConfig = {
 			{
 				hostname: 'res.cloudinary.com',
 			},
-			{
-				hostname: 'http://127.0.0.1',
-			},
 		],
+		domains: ['127.0.0.1'],
 	},
 };
 
