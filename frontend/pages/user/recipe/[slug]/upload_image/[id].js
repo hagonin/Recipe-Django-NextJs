@@ -29,19 +29,17 @@ function UploadImagePage() {
 		<div className="container py-14">
 			<h1 className="text-center mb-14">Upload photo</h1>
 
-			<div className="">
-				<UploadPhoto
-					onSubmit={onUploadPhoto}
-					recipe={id}
-				/>
-			</div>
+			<UploadPhoto
+				onSubmit={onUploadPhoto}
+				recipe={id}
+			/>
 			<div className="mt-5 font-medium text-base w-[400px]  mx-auto bg-third p-3 rounded-md text-center">
-				<span className="flex justify-center">
+				<div className="flex justify-center">
 					<span>
 						<MdOutlineTipsAndUpdates className="text-yellow text-3xl relative top-1 mr-2" />
 					</span>
 					<b>Tips for snapping the perfect recipe photo:</b>
-				</span>
+				</div>
 				<p>
 					(1) Getting the lighting right. (2) Picking the right angle.
 					(3)Styling to set the scene. (4) Editing your recipe photos

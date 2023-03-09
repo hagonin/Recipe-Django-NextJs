@@ -23,6 +23,7 @@ function SingRecipe({
 	title,
 	description,
 	notes,
+	rating,
 	reviews_count,
 	reviews,
 	user: author,
@@ -35,7 +36,6 @@ function SingRecipe({
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
 	const instructionsMarkup = createMarkup(instructions);
-	const averageReviews = getAverageReviews(reviews, reviews_count);
 	return (
 		<div>
 			<div className="flex gap-2 justify-center items-start ">
@@ -59,7 +59,7 @@ function SingRecipe({
 			</div>
 			<span className="block text-center font-medium mt-3">
 				Pushlished {updated_at_format} / by{' '}
-				<span className="font-bold text-yellow underline">
+				<span className="font-bold text-yellow">
 					{author}
 				</span>
 			</span>
@@ -104,12 +104,12 @@ function SingRecipe({
 						<h2 className="text-center">{title}</h2>
 						<span className="block text-center mt-3">
 							{updated_at_format} / by{' '}
-							<span className="font-bold text-yellow underline">
+							<span className="font-bold text-yellow">
 								{author}
 							</span>
 						</span>
 						<div className="text-center flex items-center justify-center gap-2">
-							<Rating number={averageReviews} />
+							<Rating number={rating} />
 							<span className="relative top-[1px]">
 								{`${reviews_count} ${
 									reviews_count > 1 ? 'ratings' : 'rating'
@@ -168,7 +168,7 @@ function SingRecipe({
 }
 
 const Title = ({ title }) => (
-	<span className="text-lg font-bold text-black uppercase border-b border-primary pb-1 mt-6 mb-2 inline-block">
+	<span className="text-lg font-medium font-serif text-black uppercase border-b border-primary pb-1 mt-6 mb-2 inline-block">
 		{title}
 	</span>
 );

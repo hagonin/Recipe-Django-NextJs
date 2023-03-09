@@ -10,7 +10,7 @@ function Ingredient({ ingredients, isPreview }) {
 					isPreview ? (
 						<span
 							key={index}
-							className="border-b pb-2"
+							className="border-b pb-2 text-base"
 						>
 							{`${i.quantity} ${i.unit} ${i.title}`}
 						</span>
@@ -24,7 +24,7 @@ function Ingredient({ ingredients, isPreview }) {
 			</div>
 			{ingredient?.group.map((item, index) => (
 				<div key={index}>
-					<span className="font-semibold text-black">
+					<span className="font-medium text-black">
 						{item.heading}
 					</span>
 					<div className="flex flex-col">

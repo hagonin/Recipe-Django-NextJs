@@ -44,7 +44,6 @@ function ReviewForm({ onSubmit }) {
 				disabled={isSubmitting}
 				submitSuccess={isSubmitSuccessful}
 			/>
-			{}
 			<TextAreaField
 				label="Your reviews (optional)"
 				name={'review.content'}
