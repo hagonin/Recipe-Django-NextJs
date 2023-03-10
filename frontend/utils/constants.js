@@ -166,3 +166,7 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
 export const EXIST_RECIPE = 1;
+
+
+// DATA_KEY
+export const RECIPE_MAIN_IMAGE = 'main_image';

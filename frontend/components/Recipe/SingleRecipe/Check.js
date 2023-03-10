@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 function Check({ label }) {
 	const [check, setCheck] = useState(false);
 
 	return (
 		<label
-			className={`text-base select-none cursor-pointer block border-b border-border pb-2 ${
+			className={`text-base capitalize select-none cursor-pointer block border-b border-border py-1 ${
 				check ? 'line-through' : ''
 			}`}
 		>
@@ -13,7 +13,7 @@ function Check({ label }) {
 				type="checkbox"
 				onChange={() => setCheck(!check)}
 				value={check}
-				className="mr-3 text-base"
+				className="mr-3 text-base relative top-[1px]"
 			/>
 			{label}
 		</label>

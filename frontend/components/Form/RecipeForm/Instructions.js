@@ -20,7 +20,7 @@ function Instructions({ register, control, error }) {
 						<div className="flex gap-4 items-center">
 							<TextAreaField
 								type="text"
-								rows='1'
+								rows='3'
 								name={`recipe.instructions.${index}.content`}
 								register={register}
 								placeholder="Slice half of the lemon into rounds and use the other half to squeeze over the chicken,..."

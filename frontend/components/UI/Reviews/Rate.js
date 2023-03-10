@@ -1,6 +1,6 @@
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-function number({ number, small }) {
+function number({ number, count, small }) {
 	return (
 		<div className="flex gap-[1px] items-center relative top-[2px]">
 			<span className={`${small ? 'text-sm' : 'text-xl'} text-yellow`}>
@@ -49,7 +49,7 @@ function number({ number, small }) {
 					<BsStar />
 				)}
 			</span>
-			<span className="font-semibold ml-2">({number})</span>
+			<span className="font-semibold ml-2">({count})</span>
 		</div>
 	);
 }

@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import { images } from '@utils/constants';
+import { images, RECIPE_MAIN_IMAGE } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import RecipeCard from '@components/Recipe/RecipeCard';
@@ -142,7 +142,9 @@ function Profile() {
 									{recipes?.map((recipe) => (
 										<div key={recipe.id}>
 											<RecipeCard
-												image={recipe.image_url}
+												image={
+													recipe[RECIPE_MAIN_IMAGE]
+												}
 												name={recipe.title}
 												smallCard
 												slug={recipe.slug}

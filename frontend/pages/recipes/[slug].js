@@ -1,11 +1,4 @@
-import { useState } from 'react';
 import api from '@services/axios';
-import {
-	ENDPOINT_RECIPE,
-	ENDPOINT_RECIPE_CREATE,
-	ENDPOINT_RECIPE_DETAIL,
-	ENDPOINT_RECIPE_READ,
-} from '@utils/constants';
 import { useAuthContext } from '@context/auth-context';
 import { toast } from 'react-toastify';
 
@@ -17,6 +10,8 @@ import Reviews from '@components/UI/Reviews';
 import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import useRecipeBySlug from 'hook/useRecipeBySlug';
+import { useEffect } from 'react';
+import { RECIPE_MAIN_IMAGE } from '@utils/constants';
 
 function Recipe() {
 	const router = useRouter();
@@ -25,8 +20,13 @@ function Recipe() {
 	} = router;
 	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
 	const { configAuth, user } = useAuthContext();
-	const { handleToggleBookmark, checkBookmarkAct, mutateRecipes } =
-		useRecipeContext();
+	const {
+		handleToggleBookmark,
+		checkBookmarkAct,
+		mutateRecipes,
+		slugUpdate,
+		setSlugUpdate,
+	} = useRecipeContext();
 
 	const relatedRecipes = [
 		{
@@ -74,15 +74,22 @@ function Recipe() {
 		} catch {}
 	};
 
-	// const confirmDelete = (review_slug);
-
 	const handleDelete = async (review_slug) => {
 		await api.delete(`recipe/${slug}/reviews${review_slug}/`, configAuth());
 		await mutate();
 		mutateRecipes();
 		toast.success('Delete review success');
 	};
+
 	const goToLogin = () => router.push('/login');
+
+	useEffect(() => {
+		slugUpdate && mutate();
+		if (slugUpdate) {
+			mutate();
+			setSlugUpdate(null);
+		}
+	}, [slugUpdate]);
 	return (
 		<>
 			{isLoading ? (
@@ -91,6 +98,7 @@ function Recipe() {
 				<>
 					<SingRecipe
 						{...data}
+						cover={data[RECIPE_MAIN_IMAGE]}
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>

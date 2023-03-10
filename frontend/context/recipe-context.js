@@ -1,7 +1,5 @@
 import api from '@services/axios';
 import {
-	ENDPOINT_CREATE_RECIPE,
-	ENDPOINT_INGREDIENT,
 	ENDPOINT_RECIPE_DETAIL,
 	ENDPOINT_RECIPE_IMAGE,
 	ENDPOINT_RECIPE_READ,
@@ -18,6 +16,7 @@ const RecipeContext = createContext();
 const RecipeProvider = ({ children }) => {
 	const { configAuth, user, setUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
+	const [slugUpdate, setSlugUpdate] = useState(null);
 	const {
 		data: recipes,
 		isLoading: loadingRecipes,
@@ -93,6 +92,8 @@ const RecipeProvider = ({ children }) => {
 				loadingRecipes,
 				mutateRecipes,
 				validatingRecipes,
+				setSlugUpdate,
+				slugUpdate,
 			}}
 		>
 			{children}

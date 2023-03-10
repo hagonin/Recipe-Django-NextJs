@@ -18,6 +18,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ['var(--open-sans)', ...fontFamily.sans],
+				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
 			},
 			colors: {
 				primary: '#96b7ae',
@@ -56,6 +57,7 @@ module.exports = {
 			'2xl': '1.125rem', //18px
 			'3xl': '1.25rem', //20px
 			'4xl': '1.375rem', //22px
+			'5xl': '1.5rem', //24px
 		},
 	},
 	plugins: [require('@tailwindcss/line-clamp')],

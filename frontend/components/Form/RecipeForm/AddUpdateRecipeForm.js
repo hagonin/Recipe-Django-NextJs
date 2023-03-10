@@ -25,6 +25,7 @@ import Note from './Note';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
+import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -38,7 +39,6 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		setValue,
 		setError,
 		unregister,
-		watch,
 	} = useForm({
 		defaultValues: {
 			recipe: {
@@ -69,13 +69,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 
 		const form = new FormData();
 		// instructions
-		const instructions = ins
-			.filter(({ content }) => content)
-			.map(
-				({ content }, index) =>
-					`<div><h4>Step ${index + 1}</h4><p>${content}</p></div>`
-			)
-			.join('');
+		const instructions = getInstructionAsDrawHtml(ins);
 		form.append('instructions', instructions);
 
 		// add ingredients to form
@@ -95,7 +89,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		// // // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
 
-		return onSubmit(form);
+		return onSubmit({ form });
 	};
 
 	const handleIngredientsToArr = (ingredients) => {
