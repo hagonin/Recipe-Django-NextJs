@@ -12,10 +12,9 @@ import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
-import { AiOutlineReload } from 'react-icons/ai';
-import VerifyEmail from './VerifyEmail';
+import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
 
-function LoginForm({ onSubmit, resendVerifyEmail }) {
+function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
 	const {
 		handleSubmit,
@@ -45,13 +44,6 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 		reset();
 	}, []);
 
-	const handleResendVerifyEmail = () => {
-		const {
-			login: { email },
-		} = getValues();
-		resendVerifyEmail({ email: email });
-	};
-
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
@@ -62,9 +54,9 @@ function LoginForm({ onSubmit, resendVerifyEmail }) {
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
-			<VerifyEmail onSubmit={handleResendVerifyEmail} />
+			<VerifyEmail />
 
-			<Form onSubmit={handleSubmit((data) => onSubmit(data.login))}>
+			<Form onSubmit={handleSubmit(({ login }) => onSubmit(login))}>
 				<InputField
 					name="login.email"
 					type="email"

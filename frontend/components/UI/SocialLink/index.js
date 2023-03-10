@@ -5,6 +5,7 @@ import {
 	FaTwitter,
 	FaLinkedin,
 } from 'react-icons/fa';
+import Tooltip from '../Tooltip';
 
 function SocialLink({
 	socialList = [
@@ -22,7 +23,7 @@ function SocialLink({
 		},
 		{
 			id: 3,
-			name: 'PINTEREST',
+			name: 'Pinterest',
 			href: 'https://vi-vn.facebook.com/',
 			icon: <FaPinterestP />,
 		},
@@ -46,20 +47,24 @@ function SocialLink({
 	return (
 		<div className={`flex flex-wrap gap-4 ${center && 'justify-center'}`}>
 			{socialList.map((item) => (
-				<a
+				<Tooltip
+					content={item.name}
 					key={item.id}
-					href={item.href}
-					className={`flex items-center px-1 transition-all cursor-pointer hover:opacity-70 ${
-						color ? `text-${color}` : 'text-white'
-					} cursor-pointer`}
 				>
-					{item.icon}
-					{hasLabel && (
-						<span className=" uppercase text-sm ml-2 md:block hidden relative top-[1px]">
-							{item.name}
-						</span>
-					)}
-				</a>
+					<a
+						href={item.href}
+						className={`flex items-center px-1 transition-all cursor-pointer hover:opacity-70 ${
+							color ? `text-${color}` : 'text-white'
+						} cursor-pointer`}
+					>
+						{item.icon}
+						{hasLabel && (
+							<span className=" uppercase text-sm ml-2 md:block hidden relative top-[1px]">
+								{item.name}
+							</span>
+						)}
+					</a>
+				</Tooltip>
 			))}
 		</div>
 	);

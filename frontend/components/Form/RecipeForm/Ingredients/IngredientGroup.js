@@ -1,9 +1,11 @@
-import { Error, InputField } from '@components/Form/FormControl';
+import { Error, InputField, Label } from '@components/Form/FormControl';
 import { useFieldArray } from 'react-hook-form';
 import { MdDeleteOutline } from 'react-icons/md';
 import IngredientItem from './IngredientItem';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import Button from '@components/UI/Button';
+import Tippy from '@tippyjs/react';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
 
 function IngredientGroup({ control, register, name, error }) {
 	const { fields, append, remove } = useFieldArray({
@@ -11,34 +13,40 @@ function IngredientGroup({ control, register, name, error }) {
 		name: name,
 	});
 	return (
-		<div className="flex flex-col gap-y-4 ">
+		<div className="flex flex-col gap-2">
 			{fields.map((field, index) => (
-				<div key={field.id}>
+				<div
+					key={field.id}
+					className="flex flex-col gap-2"
+				>
 					<div className="flex gap-2 ">
 						<div className="w-full">
-							<input
-								className={`border-b outline-none w-1/2 ${
-									error?.[index]?.heading?.message
-										? 'border-red'
-										: 'border-primary'
-								}`}
+							<InputField
+								label="Heading"
+								info={{
+									content: (
+										<span>
+											Put your heading of ingredient
+											group, example: sauce, toppings,
+											main ingredient, optional ingredient
+										</span>
+									),
+									placement: 'right',
+								}}
+								name={`${name}.${index}.heading`}
 								type="text"
-								{...register(`${name}.${index}.heading`, {
-									required: 'Enter heading',
-								})}
-								placeholder="Heading"
-							/>
-							<Error
-								error={error?.[index]?.heading?.message}
-								className="mt-[1px] ml-0 text-sm"
+								register={register}
+								rules={{ required: 'Enter heading' }}
+								placeholder="Heading of ingredient group."
+								error={error?.[index]?.heading}
 							/>
 						</div>
 						<button
 							type="button"
 							onClick={() => remove(index)}
-							className='h-10 '
+							className="h-10"
 						>
-							<IoIosCloseCircleOutline />
+							<AiOutlineMinusCircle />
 						</button>
 					</div>
 					<IngredientItem

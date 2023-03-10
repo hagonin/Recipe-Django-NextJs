@@ -37,10 +37,10 @@ const InputField = ({
 			<div
 				className={`w-full flex bg-white px-4 ${
 					type !== 'file' && 'border rounded'
-				} h-12 outline-none ${
+				} h-10 outline-none ${
 					error
-						? 'border-red border-2'
-						: 'border-border focus-within:border-primary focus-within:border-2'
+						? 'border-red border'
+						: 'border-border focus-within:border-primary focus-within:border-1'
 				} `}
 			>
 				<input
@@ -53,7 +53,7 @@ const InputField = ({
 						...rules,
 					})}
 					{...props}
-					className={`w-full border-none outline-none flex-1 bg-transparent pr-3 `}
+					className={`text-base w-full border-none outline-none flex-1 bg-transparent pr-3 `}
 				/>
 				{icon && (
 					<span className="text-primary flex items-center justify-center">
@@ -164,10 +164,10 @@ const SelectField = ({
 				id={name}
 				{...register(name, { ...rules })}
 				{...props}
-				className={`capitalize w-full px-5 h-12 border outline-none rounded ${
+				className={`text-base capitalize w-full px-5 h-10 border outline-none rounded ${
 					error
-						? 'border-red border-2'
-						: 'border-border focus:border-primary focus:border-2'
+						? 'border-red border-1'
+						: 'border-border focus:border-primary focus:border-1'
 				}`}
 			>
 				<option value="">Select option</option>
@@ -185,19 +185,27 @@ const SelectField = ({
 	);
 };
 
-const TextAreaField = ({ label, name, register, error, info,required, ...props }) => {
+const TextAreaField = ({
+	label,
+	name,
+	register,
+	error,
+	info,
+	required,
+	...props
+}) => {
 	return (
 		<div className="flex flex-col">
 			<Label
 				label={label}
 				name={name}
-				required
+				required={required}
 			/>
 			<textarea
 				id={name}
 				{...register(name)}
 				{...props}
-				className={`w-full border rounded px-5 py-2 outline-none ${
+				className={`text-base w-full border rounded px-5 py-2 outline-none ${
 					error ? 'border-red' : 'border-border focus:border-primary'
 				}`}
 			/>

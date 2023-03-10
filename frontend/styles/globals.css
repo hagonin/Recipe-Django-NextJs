@@ -4,26 +4,30 @@
 
 @layer base {
    html {
-      @apply  text-second leading-7;
+      @apply  text-second leading-7 ;
    }
+   p, span {
+    @apply text-lg;
+   }
+    
     h1 {
-       @apply text-3xl font-semibold text-black;
+       @apply text-4xl font-semibold text-black;
     }
 
     h2 {
-       @apply text-2xl font-semibold text-black;
+       @apply text-3xl font-medium text-black;
     } 
 
     h3 {
-       @apply text-xl font-medium text-black;
+       @apply text-2xl font-medium text-black;
     }
 
     h4 {
-       @apply text-lg font-medium text-black;
+       @apply text-xl font-medium text-black;
     }
     
     h5 {
-       @apply text-base font-medium text-black;
+       @apply text-lg font-medium text-black;
     }
 
     a, [href] {
@@ -58,7 +62,7 @@
     }
 
     .btn.lg {
-      @apply text-sm font-medium h-12 px-6;
+      @apply text-base font-medium h-10 px-6;
     }
 
      .btn.login {
@@ -84,6 +88,10 @@
       @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
     }
 
+    .btn.outline {
+      @apply border-primaryDark;
+    }
+
 
 }
 
@@ -106,6 +114,3 @@
     background: #c0a0b9;
   }
 }
-
-
-

@@ -18,7 +18,7 @@ function CollectionPics({ isFooter }) {
 			let newArr = recipes.slice(0, 11);
 			newArr = newArr.map((item) => ({
 				id: item.id,
-				src: item.image_url,
+				src: item.main_image,
 				slug: item.slug,
 			}));
 			setPhotos(newArr);

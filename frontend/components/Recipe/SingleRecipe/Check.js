@@ -5,7 +5,7 @@ function Check({ label }) {
 
 	return (
 		<label
-			className={`select-none cursor-pointer block border-b border-border pb-2 ${
+			className={`text-base select-none cursor-pointer block border-b border-border pb-2 ${
 				check ? 'line-through' : ''
 			}`}
 		>
@@ -13,7 +13,7 @@ function Check({ label }) {
 				type="checkbox"
 				onChange={() => setCheck(!check)}
 				value={check}
-				className="mr-3"
+				className="mr-3 text-base"
 			/>
 			{label}
 		</label>

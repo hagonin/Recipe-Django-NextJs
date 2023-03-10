@@ -9,17 +9,18 @@ const Label = ({ label, name, info, required }) => {
 			<div className="flex gap-1">
 				{label && (
 					<label
-						className="block text-black text-lg font-semibold mb-2"
+						className="block text-black text-lg font-medium mb-1"
 						htmlFor={name}
 					>
-						{required && <span className='text-red mr-1'>*</span>}{label}
+						{label}
+						{required && <span className="text-red ml-1 font-bold">*</span>}
 					</label>
 				)}
 			</div>
 			{info && (
 				<Tippy
 					content={info.content}
-					placement={info.placement || 'top'}
+					placement={info.placement || 'right'}
 				>
 					<button className="relative -top-1 text-primaryDark">
 						<HiInformationCircle />

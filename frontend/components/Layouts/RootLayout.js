@@ -9,17 +9,18 @@ import { useRecipeContext } from '@context/recipe-context';
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();
+	const { loading: loadAuth } = useAuthContext();
 	return (
 		<>
 			<Header />
 			{children}
 			<Footer />
 			<ToastContainer
-				position="top-left"
+				position="top-right"
 				autoClose={1500}
 				transition={Slide}
 			/>
-			{loading || loadingRecipes ? (
+			{loading || loadingRecipes || loadAuth ? (
 				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex">
 					<Loader type="handle" />
 				</div>

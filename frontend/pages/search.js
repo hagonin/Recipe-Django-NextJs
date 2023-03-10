@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_READ } from '@utils/constants';
+import {
+	ENDPOINT_RECIPE,
+	ENDPOINT_RECIPE_READ,
+	images,
+} from '@utils/constants';
 import Link from 'next/link';
 import { FaSearch } from 'react-icons/fa';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
+import RecipeCard from '@components/Recipe/RecipeCard';
+import LastPost from '@components/Layouts/SideBar/Widget/LastPost';
+import Img from '@components/UI/Image';
 
 function Search() {
 	const { query } = useRouter();
@@ -34,21 +41,34 @@ function Search() {
 
 			<div className="mt-6">
 				{isLoading || isValidating ? (
-					'Searching...'
+					<span className='text-lg'>Searching...</span>
 				) : (
-					<div>
-						{data?.data?.results.length > 0
-							? data?.data?.results.map(({ title, slug, id }) => (
-									<Link
-										key={id}
-										href={`/recipes/${slug}`}
-										className="text-2xl font-semibold underline"
-									>
-										{title}
-									</Link>
-							  ))
-							: 'No result.'}
-					</div>
+					<>
+						{data?.data?.results.length > 0 ? (
+							data?.data?.results.map((item) => (
+								<RecipeCard
+									key={item.id}
+									slug={item.slug}
+									name={item.title}
+									image={item.image_url}
+									date={item.updated_at}
+									lastPost
+								/>
+							))
+						) : (
+							<>
+								<Img
+									src={images.no_search}
+									alt="no result"
+									className="h-24 w-24 mx-auto my-10"
+								/>
+								<h2 className="mb-4">
+									Discover lastest post
+								</h2>
+								<LastPost />
+							</>
+						)}
+					</>
 				)}
 			</div>
 		</div>

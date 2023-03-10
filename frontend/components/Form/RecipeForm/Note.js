@@ -1,5 +1,6 @@
 import Button from '@components/UI/Button';
 import { useEffect, useState } from 'react';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { Label, TextAreaField } from '../FormControl';
 
@@ -22,20 +23,19 @@ function Note({ register, handleUngister, handleRegister, initValue }) {
 		<>
 			<Label label="Notes" />
 			{show ? (
-				<div className="relative">
+				<>
+					<button
+						className="float-right ml-2"
+						onClick={handleClose}
+					>
+						<AiOutlineMinusCircle />
+					</button>
 					<TextAreaField
-						label="Note (optional)"
 						name="recipe.notes"
 						rows="5"
 						register={register}
 					/>
-					<button
-						className="absolute top-2 right-2"
-						onClick={handleClose}
-					>
-						<IoIosCloseCircleOutline />
-					</button>
-				</div>
+				</>
 			) : (
 				<Button
 					onClick={handleOpen}

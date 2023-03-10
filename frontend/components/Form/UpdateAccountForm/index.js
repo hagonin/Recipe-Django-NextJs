@@ -91,21 +91,21 @@ function UpdateProfileForm({
 			</div>
 			<div className="flex flex-col gap-4 md:col-span-8">
 				<InputField
-					label="First Name"
+					label="First name"
 					name="account.first_name"
 					type="text"
 					register={register}
 					error={formError?.account?.first_name}
 				/>
 				<InputField
-					label="Last Name"
+					label="Last name"
 					name="account.last_name"
 					type="text"
 					register={register}
 					error={formError?.account?.last_name}
 				/>
 				<InputField
-					label="User Name"
+					label="User name"
 					name="account.username"
 					type="text"
 					register={register}
@@ -121,19 +121,20 @@ function UpdateProfileForm({
 					rows={6}
 					error={formError?.account?.bio}
 				/>
-				<div className="flex lg:gap-6 md:gap-4 max-md:flex-col mt-7 ">
+				<div className="flex lg:gap-6 md:gap-4 max-md:flex-col mt-7 justify-end ">
 					<Button
-						type="submit"
-						className="lg primary w-full"
-					>
-						{isSubmitting && <Loader type="submitting" />}
-						Save
-					</Button>
-					<Button
-						className="lg w-full reset"
+						className="lg cancle"
+						type='button'
 						onClick={handleReset}
 					>
 						Reset
+					</Button>
+					<Button
+						type="submit"
+						className="lg primary w-44"
+					>
+						{isSubmitting && <Loader type="submitting" />}
+						Save
 					</Button>
 				</div>
 			</div>

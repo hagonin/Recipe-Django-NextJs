@@ -1,6 +1,6 @@
 import AuthProvider from '@context/auth-context';
 import RootLayout from '@layouts/RootLayout';
-import { nunito } from '@utils/fonts';
+import { nunito, open_sans } from '@utils/fonts';
 import { images } from '@utils/constants';
 import Head from 'next/head';
 import '@styles/globals.css';
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
 					href={images.logoIcon}
 				/>
 			</Head>
-			<main className={nunito.className}>
+			<main className={`${open_sans.variable} font-sans`}>
 				<AuthProvider>
 					<RecipeProvider>
 						<RootLayout>
