@@ -9,12 +9,9 @@ import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import { images } from '@utils/constants';
-import VerifyEmailForm from './VerifyEmaiForm';
 
 function SignUpForm({ onSubmit }) {
-	const { errors, setErrors } = useAuthContext();
+	const { errors, setErrors, registerSuccess } = useAuthContext();
 	const {
 		handleSubmit,
 		register,
@@ -47,8 +44,7 @@ function SignUpForm({ onSubmit }) {
 			});
 	}, [errors]);
 
-	const handleEffectAfterResend = () => router.push('/login');
-
+	
 	useEffect(() => {
 		setErrors(null);
 		reset();
@@ -56,40 +52,7 @@ function SignUpForm({ onSubmit }) {
 
 	return (
 		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
-			<ModalPrimary
-				show={isSubmitSuccessful}
-				noClose
-			>
-				<div className="flex flex-col items-center justify-center py-10 px-10 container">
-					<Img
-						src={images.tick}
-						alt="tick"
-						className="lg:h-32 lg:w-32  md:h-28 md:w-28 h-24 w-24"
-					/>
-					<h2 className="mt-6">You are registered</h2>
-					<p className="mt-2 text-center">
-						We have sent an email verify to activate your account. .
-						The link in the email will
-						<b> expire in 3 hours.</b>
-						<br />
-						Please check it and
-						<button
-							className="underline text-primary ml-2"
-							onClick={() => router.push('/login')}
-						>
-							Login
-						</button>
-					</p>
-					<div className="flex flex-col mt-4">
-						<p className="text-base">
-							If you don't see any verify email.
-						</p>
-						<VerifyEmailForm
-							handleEffectAfterResend={handleEffectAfterResend}
-						/>
-					</div>
-				</div>
-			</ModalPrimary>
+			
 
 			<div className="flex justify-center items-center ">
 				<h1 className="text-center">Register</h1>

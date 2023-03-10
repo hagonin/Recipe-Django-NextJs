@@ -22,7 +22,7 @@ function ReviewCard({
 	date_added,
 	title,
 	content,
-	main_image: avatar,
+	avatar,
 	hasEdit,
 	handleDelete,
 }) {

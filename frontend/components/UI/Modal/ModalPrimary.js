@@ -8,7 +8,7 @@ function ModalPrimary({ show, handleCloseModal, children, disabled, noClose }) {
 		<Modal
 			show={show}
 			handleClose={handleCloseModal}
-			disabled={disabled}
+			disabled={noClose || disabled}
 		>
 			<Transition.Child
 				as={Fragment}
@@ -19,10 +19,10 @@ function ModalPrimary({ show, handleCloseModal, children, disabled, noClose }) {
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 			>
-				<div className="absolute w-4/5 lg:w-1/3 md:w-1/2 text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg">
+				<div className="absolute w-4/5 lg:w-1/3 md:w-1/2 text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg p-8">
 					{noClose ? null : (
 						<button
-							className="absolute top-4 right-4 md:text-3xl text-4xl"
+							className="absolute top-4 right-4 text-5xl"
 							onClick={handleCloseModal}
 							disabled={disabled}
 						>

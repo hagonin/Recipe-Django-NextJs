@@ -19,7 +19,7 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 		>
 			<button className=" h-10 w-10 rounded-full border outline-none border-border transition-all  hover:shadow-[0px_0px_0px_4px_rgba(255,255,255,0.15)] overflow-hidden">
 				<Img
-					src={avatar}
+					src={avatar || images.defaultAvatar}
 					alt="avatar"
 					cover
 					className="h-full w-full"
@@ -29,7 +29,7 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 				<div className="absolute z-[999] top-[calc(100%+6px)] right-0 pt-5 pb-1 min-w-[250px] bg-white shadow-lg border-t-2 border-primary text-left before:content-[''] before:absolute before:right-0 before:-top-7 before:h-10 before:bg-transparent before:w-20">
 					<div className="flex items-center px-5 mb-5">
 						<Img
-							src={avatar}
+							src={avatar || images.defaultAvatar}
 							alt="avatar"
 							className="h-20 w-20 rounded-full overflow-hidden"
 							cover

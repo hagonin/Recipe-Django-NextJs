@@ -14,7 +14,7 @@ const useRecipes = () => {
 		if (data) {
 			const keys = data
 				.map((item) => {
-					let key = item.search_vector.replace(/'/g, '').split(' ');
+					let key = item?.search_vector?.replace(/'/g, '').split(' ');
 					return key;
 				})
 				.flat();

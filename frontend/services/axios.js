@@ -1,10 +1,4 @@
-import {
-	ENDPOINT_USER,
-	ENDPOINT_USER_AVATAR,
-	ENDPOINT_USER_PROFILE,
-	images,
-} from '@utils/constants';
-import { getRefreshTokenFromCookie, setCookie } from '@utils/cookies';
+import { ENDPOINT_USER, ENDPOINT_USER_PROFILE, images } from '@utils/constants';
 import { createAvatarForm } from '@utils/getFileFromUrl';
 import axios from 'axios';
 
@@ -26,7 +20,6 @@ api.interceptors.request.use(
 api.interceptors.response.use(
 	(res) => res,
 	async (error) => {
-		console.log('error at interceptor', error);
 		const { status, data: _error } = error?.response;
 		const _config = error?.config;
 
@@ -53,7 +46,6 @@ api.interceptors.response.use(
 		} else {
 			return Promise.reject({ status, _error, _config, error });
 		}
-		// return Promise.reject(error);
 	}
 );
 export default api;

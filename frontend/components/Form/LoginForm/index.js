@@ -22,7 +22,6 @@ function LoginForm({ onSubmit }) {
 		formState: { errors: formError, isSubmitting },
 		setError,
 		reset,
-		getValues,
 	} = useForm();
 
 	useEffect(() => {
@@ -54,7 +53,7 @@ function LoginForm({ onSubmit }) {
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
-			<VerifyEmail />
+			<VerifyEmail/>
 
 			<Form onSubmit={handleSubmit(({ login }) => onSubmit(login))}>
 				<InputField

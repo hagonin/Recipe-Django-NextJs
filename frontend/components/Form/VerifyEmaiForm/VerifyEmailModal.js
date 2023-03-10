@@ -6,7 +6,7 @@ import Img from '@components/UI/Image';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import VerifyEmailForm from '.';
 
-function VerifyEmail() {
+function VerifyEmail({email}) {
 	const { errors, setErrors } = useAuthContext();
 	const [show, setShow] = useState(false);
 

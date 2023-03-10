@@ -33,12 +33,13 @@ class RecipeSerializer(serializers.ModelSerializer):
         return obj.get_total_number_of_bookmarks()
     
 class ReviewSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username',read_only=True)
-    avatar = serializers.CharField(source='user.profile.avatar')
+    # user = serializers.CharField(source='user.username',read_only=True)
+    # avatar = serializers.CharField(source='user.profile.avatar')
+    user = UserSerializer(read_only=True)
 
     class Meta: 
         model = RecipeReview
-        fields = ('id','user','user_id','title', 'slug','rating','date_added','avatar',
+        fields = ('id','user','title', 'slug','rating','date_added',
                 'content')
         extra_kwargs = {
             'slug': {'read_only': True}

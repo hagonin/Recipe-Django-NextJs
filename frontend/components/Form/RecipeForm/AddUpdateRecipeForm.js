@@ -10,7 +10,7 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categoryList, EXIST_RECIPE } from '@utils/constants';
+import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
@@ -47,7 +47,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
 				search_vector: initValues?.search_vector || '',
-				main_image: initValues?.image_url || null,
+				main_image: initValues?.image_url || images.spoon,
 				ingredient: (initValues && {
 					item: initValues.ingredients.item,
 					group: initValues.ingredients.group,
@@ -80,14 +80,20 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			});
 		}
 		// check img before add to form
-		let img;
 		if (typeof main_image === 'string') {
-			img = await getFileFromUrl(main_image, 'defaulrt');
+			let img = await getFileFromUrl(main_image, 'default.png');
+			img && form.append('main_image', img, img.name);
+		} else {
+			form.append('main_image', main_image, main_image.name);
 		}
-		img && form.append('main_image', img, img.name);
-
-		// // // add ...rest to form
-		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
+		// add ...rest to form
+		Object.keys(rest).forEach((key) => {
+			const value =
+				typeof rest[key] === 'string'
+					? rest[key].toLowerCase()
+					: rest[key];
+			form.append(key, value);
+		});
 
 		return onSubmit({ form });
 	};
@@ -100,13 +106,18 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					ingredient.items &&
 					ingredient.items.map((item) => ({
 						...item,
-						heading: ingredient.heading,
+						title: item.title.toLowerCase(),
+						heading: ingredient.heading.toLowerCase(),
 					}))
 				);
 			});
 		}
 		const arr2 =
-			ingredients.item.map((item) => ({ ...item, heading: '' })) || [];
+			ingredients.item.map((item) => ({
+				...item,
+				title: item.title.toLowerCase(),
+				heading: '',
+			})) || [];
 		return [...arr2, ...arr1.flat()];
 	};
 
@@ -186,7 +197,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							urlInit={initValues?.image_url}
+							urlInit={initValues?.image_url || images.spoon}
 						/>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
+import { images } from '@utils/constants';
 import { garamond } from '@utils/fonts';
 import CommonSection from './CommonSection';
 
@@ -10,10 +11,7 @@ function UserSection({ name, bio, avatar }) {
 			center
 		>
 			<Img
-				src={
-					avatar ||
-					'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2020/03/allure_post_12.jpg'
-				}
+				src={avatar || images.defaultAvatar}
 				alt="avatar"
 				className="overflow-hidden h-36 w-36 mx-auto rounded-full"
 				cover

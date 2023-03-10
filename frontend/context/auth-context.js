@@ -15,7 +15,6 @@ import {
 	ENDPOINT_REGISTER,
 	ENDPOINT_RESEND_VERIFY,
 	ENDPOINT_USER,
-	ENDPOINT_USER_AVATAR,
 	ENDPOINT_USER_PROFILE,
 } from '@utils/constants';
 
@@ -71,8 +70,7 @@ const AuthProvider = ({ children }) => {
 				} = user.data;
 
 				setUser({ avatar, ..._profile, ...rest });
-			} catch (error) {
-				console.log('ERROR AT TOKEN AUTHENTICATION', error);
+			} catch {
 			} finally {
 				setLoading(false);
 			}
@@ -120,6 +118,7 @@ const AuthProvider = ({ children }) => {
 			setUser({ avatar, ..._profile, ...rest });
 			router.push('/');
 		} catch ({ status, _error }) {
+			setUser((pre) => ({ ...pre, email: email }));
 			if (status === 400) {
 				setErrors({ login: { ..._error } });
 			} else if (status === 401) {
@@ -151,26 +150,6 @@ const AuthProvider = ({ children }) => {
 				}
 			})
 			.catch();
-
-	const signup = async (data) => {
-		try {
-			await api.post(ENDPOINT_REGISTER, data);
-			setUser((pre) => ({ ...pre, email: data.email }));
-		} catch ({ status, _error }) {
-			const { errors } = _error;
-			if (status === 400) {
-				if (errors?.error) {
-					setErrors({
-						register: { confirm_password: errors?.error },
-					});
-				} else {
-					setErrors({ register: { ...errors } });
-				}
-			} else {
-				console.log('ERROR IN SIGNUP', status, _error);
-			}
-		}
-	};
 
 	const updateProfile = async ({ personal, formProfile }) => {
 		try {
@@ -208,7 +187,6 @@ const AuthProvider = ({ children }) => {
 				setUser,
 				isAuthenticated: !!user?.username,
 				login,
-				signup,
 				logout,
 				loading,
 				setLoading,
@@ -216,8 +194,6 @@ const AuthProvider = ({ children }) => {
 				token,
 				handleResendVerify,
 				configAuth,
-				// handleToggleBookmark,
-				// checkBookmarkAct,
 			}}
 		>
 			{children}
