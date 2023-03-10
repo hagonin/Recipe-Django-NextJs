@@ -1,12 +1,10 @@
 from rest_framework import serializers
 from .models import Recipe, RecipeReview, Ingredient,RecipeImage
-from users.serializers import UserSerializer
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
         fields = ('id','heading','title','quantity', 'unit','recipe')
-
 
 class ImageSerializer(serializers.ModelSerializer):
     
@@ -38,8 +36,9 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta: 
         model = RecipeReview
-        fields = ('id','user','user_id','title', 'slug','rating','date_added','avatar',
-                'content')
+        fields = ('id','user','user_id','title', 'slug','rating',
+                'date_added','avatar','content')
+        
         extra_kwargs = {
             'slug': {'read_only': True}
         }
@@ -74,10 +73,9 @@ class RecipeDetailWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id','user','title','slug','category','main_image','ingredients',
-                'description', 'instructions', 'images', 'serving', 'prep_time','cook_time','search_vector',
-                'created_at','updated_at','source','notes')
+                'description', 'instructions', 'images', 'serving', 'prep_time',
+                'cook_time','search_vector','created_at','updated_at','source','notes')
 
-    
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
             ingr = Ingredient.objects.create(**ingredient)

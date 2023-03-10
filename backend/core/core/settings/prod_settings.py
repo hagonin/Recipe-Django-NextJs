@@ -8,6 +8,7 @@ CSRF_TRUSTED_ORIGINS = ['https://recipe-api.up.railway.app']
 
 SECURE_SSL_REDIRECT=True
 SESSION_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
 
 INSTALLED_APPS += [
     'cloudinary_storage',

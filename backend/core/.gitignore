@@ -63,7 +63,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-**settings/development.py
 
 # Flask stuff:
 instance/
@@ -121,3 +120,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# media
+core/media/*

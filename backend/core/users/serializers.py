@@ -1,11 +1,11 @@
-from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.password_validation import validate_password
 from django.contrib import auth
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 from .models import CustomUser, Profile
@@ -14,7 +14,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer the user profile model 
     """
-
     class Meta:
         model = Profile
         fields = ('bookmarks','bio','avatar')
@@ -25,7 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id','email','username', 'first_name', 'last_name', 'date_joined', 'password', 'profile')
+        fields = ('id','email','username', 'first_name', 'last_name', 
+                'date_joined', 'password', 'profile')
+        
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -38,7 +39,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'password','confirm_password','email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'password','confirm_password',
+                'email', 'first_name', 'last_name')
 
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""

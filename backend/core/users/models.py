@@ -37,7 +37,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='profile')
     bookmarks = models.ManyToManyField(Recipe, related_name='bookmarked_by', blank=True)
     avatar = models.ImageField(upload_to='avatar',default='avatar/default.jpg')
-    bio = models.CharField(max_length=200, blank=True)
+    bio = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.user.username

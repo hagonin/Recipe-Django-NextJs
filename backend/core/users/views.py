@@ -1,32 +1,31 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from django.utils.translation import gettext_lazy as _
-from rest_framework.response import Response
 import jwt
 from django.conf import settings
+from .utils import Util
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
+from django.utils.encoding import smart_str,smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.http import HttpResponsePermanentRedirect
+from django.shortcuts import redirect
+from decouple import config
 
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import generics, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.sites.shortcuts import get_current_site
-from django.urls import reverse
-from .utils import Util
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str,smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
+from . import serializers
+from recipes.serializers import RecipeSerializer
 from recipes.models import Recipe
 from .models import Profile, CustomUser
-from recipes.serializers import RecipeSerializer
-from . import serializers
 from .renderers import UserRenderer
-from django.shortcuts import redirect
-from django.http import HttpResponsePermanentRedirect
-from decouple import config
 
-from django.shortcuts import redirect
 
 class CustomRedirect(HttpResponsePermanentRedirect):
 
@@ -36,7 +35,6 @@ class RegisterView(generics.GenericAPIView):
     """
     Enpoint to create a new user
     """
-    # permission_classes = (AllowAny,)
     serializer_class = serializers.RegistrationSerializer
     renderer_classes = (UserRenderer,)
 
@@ -225,7 +223,6 @@ class UpdateView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         return self.request.user
 
-
 class ProfileView(generics.RetrieveUpdateAPIView):
     """
     Get, update user profile
@@ -240,7 +237,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 class UserRecipesView(generics.ListAPIView):
     """Lists all recipes a user has"""
 
-    serializer_class = RecipeSerializer
+    serializer_class = serializers.RecipeSerializer
 
     def get_queryset(self):
         return Recipe.objects.filter(user__username=self.kwargs['username'])
