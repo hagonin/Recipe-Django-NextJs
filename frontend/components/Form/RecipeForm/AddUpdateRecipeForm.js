@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
@@ -10,7 +10,7 @@ import {
 } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
-import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
+import { categoryList, EXIST_RECIPE } from '@utils/constants';
 import Image from './Image';
 
 import Tippy from '@tippyjs/react';
@@ -28,6 +28,7 @@ import { keyword } from '../FormControl/validate';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
+	const exist_recipe = useRef(EXIST_RECIPE);
 	const {
 		register,
 		control,
@@ -46,9 +47,12 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
 				search_vector: initValues?.search_vector || '',
-				// main_image: initValues?.image_url || images.spoon,
-				ingredient: initValues?.ingredients || {
-					item: [{ recipe: EXIST_RECIPE }],
+				main_image: initValues?.image_url || null,
+				ingredient: (initValues && {
+					item: initValues.ingredients.item,
+					group: initValues.ingredients.group,
+				}) || {
+					item: [{ recipe: exist_recipe.current }],
 				},
 				instructions: initValues?.instructions || [{ content: '' }],
 			},
@@ -75,20 +79,18 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		form.append('instructions', instructions);
 
 		// add ingredients to form
-		const ingredients = handleIngredients(ingredient);
+		const ingredients = handleIngredientsToArr(ingredient);
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
 				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
 			});
 		}
-		// add image to form
-		// let img;
-		// if (typeof main_image === 'string') {
-		// 	img = await getFileFromUrl(main_image, 'defaulrt');
-		// } else {
-		// 	img = main_image;
-		// }
-		// form.append('main_image', img, img.name);
+		// check img before add to form
+		let img;
+		if (typeof main_image === 'string') {
+			img = await getFileFromUrl(main_image, 'defaulrt');
+		}
+		img && form.append('main_image', img, img.name);
 
 		// // // add ...rest to form
 		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
@@ -96,7 +98,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		return onSubmit(form);
 	};
 
-	const handleIngredients = (ingredients) => {
+	const handleIngredientsToArr = (ingredients) => {
 		let arr1 = [];
 		if (ingredients.group) {
 			arr1 = ingredients.group.map((ingredient) => {
@@ -137,6 +139,12 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				message: errors?.recipe?.ingredients,
 			});
 	}, [errors]);
+
+	useEffect(() => {
+		if (initValues.ingredients) {
+			exist_recipe.current = initValues.ingredients.exist_recipe;
+		}
+	}, [initValues]);
 
 	return (
 		<form
@@ -184,7 +192,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							urlInit={initValues?.image_url || images.spoon}
+							urlInit={initValues?.image_url}
 						/>
 					</div>
 				</div>
@@ -255,6 +263,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					control={control}
 					register={register}
 					error={formErr?.recipe?.ingredient}
+					exist_recipe={exist_recipe.current}
 				/>
 			</div>
 			<div className="flex gap-4 mt-4 mb-4">

@@ -1,7 +1,7 @@
 import IngredientGroup from './IngredientGroup';
 import IngredientItem from './IngredientItem';
 
-function Ingredients({ control, register, error }) {
+function Ingredients({ control, register, error, exist_recipe }) {
 	return (
 		<div className="flex  flex-col gap-4">
 			<IngredientItem
@@ -9,6 +9,7 @@ function Ingredients({ control, register, error }) {
 				control={control}
 				name={`recipe.ingredient.item`}
 				error={error?.item}
+				exist_recipe={exist_recipe}
 			/>
 			<IngredientGroup
 				register={register}
