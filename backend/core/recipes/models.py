@@ -29,7 +29,7 @@ class Recipe(models.Model):
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='recipes')
     category = models.CharField(max_length=50, choices=Category.choices)
-    main_image = models.ImageField(upload_to='recipes',default='recipes/default.jpg')   
+    main_image = models.ImageField(upload_to='recipes')   
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
