@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import { images, RECIPE_MAIN_IMAGE } from '@utils/constants';
+import { images } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import RecipeCard from '@components/Recipe/RecipeCard';
@@ -14,7 +14,6 @@ import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
 import { MdEmail, MdSecurity } from 'react-icons/md';
-import { GrUpdate } from 'react-icons/gr';
 import { AiFillEdit } from 'react-icons/ai';
 
 function Profile() {
@@ -142,9 +141,7 @@ function Profile() {
 									{recipes?.map((recipe) => (
 										<div key={recipe.id}>
 											<RecipeCard
-												image={
-													recipe[RECIPE_MAIN_IMAGE]
-												}
+												main_image={recipe.main_image}
 												name={recipe.title}
 												smallCard
 												slug={recipe.slug}

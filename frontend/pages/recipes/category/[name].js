@@ -17,9 +17,7 @@ function CategoryPage() {
 
 	useEffect(() => {
 		if (recipes && name) {
-			const arr = recipes.filter(
-				(recipe) => recipe.category === name
-			);
+			const arr = recipes.filter((recipe) => recipe.category === name);
 			const [info] = categoryList.filter((item) => item.name === name);
 			return setCategory({ recipes: arr, ...info });
 		}
@@ -43,9 +41,10 @@ function CategoryPage() {
 								id={recipe.id}
 								name={recipe.title}
 								slug={recipe.slug}
-								image={recipe.image_url}
+								main_image={recipe.main_image}
 								date={recipe.updated_at}
 								rating={recipe.rating}
+								summary={recipe.description}
 								bookmark={recipe.total_number_of_bookmarks}
 								reviews_count={recipe.reviews_count}
 								handleToggleBookmark={handleToggleBookmark}

@@ -13,13 +13,13 @@ function LastPost({ isFooter, number = 3 }) {
 			}`}
 		>
 			{data
-				? data.slice(0, number).map((item) => (
+				? data.map((item) => (
 						<RecipeCard
 							key={item.id}
 							slug={item.slug}
-							image={item.image_url}
+							main_image={item.main_image}
 							name={item.title}
-							date={item.created_at}
+							date={item.created_at || item.updated_at}
 							lastPost
 						/>
 				  ))

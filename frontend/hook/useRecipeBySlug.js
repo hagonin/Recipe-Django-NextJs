@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import fetcher from './fetcher';
 
 function useRecipeBySlug(slug) {
-	return useSWR(`${ENDPOINT_RECIPE_READ}${slug}/`, fetcher, {
+	return useSWR({ url: `${ENDPOINT_RECIPE_READ}${slug}/` }, fetcher, {
 		revalidateIfStale: false,
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,

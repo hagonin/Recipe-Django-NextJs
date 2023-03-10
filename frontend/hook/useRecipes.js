@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import fetcher from './fetcher';
 
 const useRecipes = () => {
-	return useSWR(ENDPOINT_RECIPE, fetcher, {
+	return useSWR({ url: ENDPOINT_RECIPE }, fetcher, {
 		revalidateIfStale: false,
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,

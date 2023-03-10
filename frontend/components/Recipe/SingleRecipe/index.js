@@ -88,12 +88,11 @@ function SingRecipe({
 							{updated_at_format} / {author}
 						</span>
 						{rating && (
-							<div className="text-center flex items-center justify-center gap-2">
-								<Rating
-									number={rating}
-									count={reviews_count}
-								/>
-							</div>
+							<Rating
+								number={rating}
+								count={reviews_count}
+								isAverage
+							/>
 						)}
 
 						<div className="grid md:grid-cols-2 grid-cols-1 gap-x-6 mt-3 mb-2">
@@ -117,12 +116,12 @@ function SingRecipe({
 					</div>
 				</div>
 				<Title title="Method" />
-					{instructionsArr.map(({ content }, index) => (
-						<Check
-							key={index}
-							label={`${index + 1}) ${content}`}
-						/>
-					))}
+				{instructionsArr.map(({ content }, index) => (
+					<Check
+						key={index}
+						label={`${index + 1}) ${content}`}
+					/>
+				))}
 				{notes && (
 					<>
 						<Title title="NOTE" />

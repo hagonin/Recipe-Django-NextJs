@@ -29,7 +29,7 @@ function ReviewForm({ onSubmit }) {
 	return (
 		<Form
 			onSubmit={handleSubmit(({ review }) => onSubmit(review))}
-			className="bg-white p-5 rounded-md"
+			className="bg-white p-5 rounded-md !gap-1"
 		>
 			<InputField
 				label="Title"
@@ -52,7 +52,7 @@ function ReviewForm({ onSubmit }) {
 			/>
 			<Button
 				type="submit"
-				className="lg primary md:w-52 w-46 ml-auto"
+				className="lg primary md:w-52 w-46 ml-auto mt-3"
 				disabled={isSubmitting}
 			>
 				{isSubmitting && <Loader type="submitting" />}

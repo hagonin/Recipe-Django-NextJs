@@ -70,7 +70,7 @@ function Thumbnail({ images }) {
 						key={img.id}
 					>
 						<Img
-							src={img.image_url}
+							src={img.image}
 							alt={img.caption}
 							className="md:w-1/2  h-60 mx-auto"
 						/>
@@ -88,7 +88,7 @@ function Thumbnail({ images }) {
 						key={img.id}
 					>
 						<Img
-							src={img.image_url}
+							src={img.image}
 							alt={img.caption}
 							className="h-24"
 							cover

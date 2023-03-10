@@ -98,7 +98,7 @@ function Recipe() {
 				<>
 					<SingRecipe
 						{...data}
-						cover={data[RECIPE_MAIN_IMAGE]}
+						cover={data.main_image}
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>

@@ -15,7 +15,7 @@ import Tooltip from '@components/UI/Tooltip';
 
 function RecipeCard({
 	name,
-	image,
+	main_image,
 	date,
 	id,
 	summary,
@@ -45,7 +45,7 @@ function RecipeCard({
 		<div className={`flex lg:gap-6 md:gap-4 gap-2 border-b pb-4`}>
 			<Link href={`/recips/${slug}`}>
 				<Img
-					src={image}
+					src={main_image}
 					alt={name}
 					className="h-24 w-24"
 					cover
@@ -54,11 +54,11 @@ function RecipeCard({
 			<div>
 				<Link
 					href={`/recips/${slug}`}
-					className="text-semibold text-black line-clamp-2"
+					className="text-semibold text-xl font-serif text-black line-clamp-2"
 				>
 					{name}
 				</Link>
-				<span className="text-sm block mt-2">{date_format}</span>
+				<span className="text-sm block">{date_format}</span>
 			</div>
 		</div>
 	) : (
@@ -86,7 +86,7 @@ function RecipeCard({
 						}
 					>
 						<Img
-							src={image}
+							src={main_image}
 							alt={`recipe ${name}`}
 							className="h-64"
 							cover
@@ -144,9 +144,12 @@ function RecipeCard({
 					>
 						{name}
 					</Link>
+
 					<div
-						className={` flex gap-x-3 gap-y-1 flex-row flex-wrap justify-between ${
-							secondary ? '' : 'border-t mt-4'
+						className={` ${
+							lgCard ? '' : 'justify-between'
+						}flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
+							secondary || lgCard ? '' : 'border-t mt-4'
 						}`}
 					>
 						{date_format && (
@@ -163,9 +166,30 @@ function RecipeCard({
 							<Rating
 								number={rating}
 								small={smallCard}
+								count={reviews_count}
 							/>
 						) : null}
 					</div>
+
+					{summaryMarkup && (
+						<>
+							<div
+								dangerouslySetInnerHTML={summaryMarkup}
+								className="mt-3 line-clamp-4 text-lg"
+							/>
+							<Button
+								type="link"
+								href={
+									secondary
+										? `/user/recipe/${slug}`
+										: `/recipes/${slug}`
+								}
+								className="mt-6"
+							>
+								Continue Reading
+							</Button>
+						</>
+					)}
 
 					<div className="flex gap-x-4 flex-wrap">
 						{prep_time && (
@@ -183,25 +207,7 @@ function RecipeCard({
 							</div>
 						)}
 					</div>
-					{summaryMarkup && (
-						<>
-							<div
-								dangerouslySetInnerHTML={summaryMarkup}
-								className="mt-3 line-clamp-6"
-							/>
-							<Button
-								type="link"
-								href={
-									secondary
-										? `/user/recipe/${slug}`
-										: `/recipes/${slug}`
-								}
-								className="mt-6"
-							>
-								Continue Reading
-							</Button>
-						</>
-					)}
+
 					{hasControl && (
 						<div className="flex gap-2 mt-3 justify-end text-lg">
 							<Tooltip content="Edit">

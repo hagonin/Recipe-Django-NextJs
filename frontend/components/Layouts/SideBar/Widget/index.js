@@ -7,7 +7,7 @@ import CommonSection from './CommonSection';
 import UserSection from './UserSection';
 import Loader from '@components/UI/Loader';
 import Tags from './Tags';
-import LastPost from './LastPost';
+import LastPost from '../../../Recipe/LastestRecipes';
 
 function Widget() {
 	const { isAuthenticated, loading, user } = useAuthContext();

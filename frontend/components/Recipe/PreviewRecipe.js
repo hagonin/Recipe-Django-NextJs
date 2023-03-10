@@ -16,6 +16,7 @@ import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import formatTime from '@utils/formatTime';
+import { getInstructionAsArr } from '@utils/handleInstruction';
 
 function PreviewRecipe({
 	data,
@@ -26,17 +27,15 @@ function PreviewRecipe({
 }) {
 	const router = useRouter();
 	const {
-		id,
 		title,
 		prep_time,
 		cook_time,
 		serving,
-		user: author,
 		description,
 		instructions,
 		created_at,
 		updated_at,
-		main_image: image,
+		main_image,
 		images,
 		category,
 		ingredients,
@@ -59,6 +58,7 @@ function PreviewRecipe({
 
 	const onDeletePhoto = useCallback(async () => {
 		await handleDeletePhoto(idPhotoDelete);
+		setIdPhotoDelete(null);
 	});
 
 	const onDeleteRecipe = useCallback(async () => {
@@ -67,6 +67,8 @@ function PreviewRecipe({
 		router.push('/user/profile');
 	});
 
+	const arrInstructions = getInstructionAsArr(instructions);
+
 	return (
 		<>
 			<ConfirmDelete
@@ -74,49 +76,38 @@ function PreviewRecipe({
 				handleCloseConfirm={() => setShowConfirmDeleteRecipe(false)}
 				handleDelete={onDeleteRecipe}
 			/>
-			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
+			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-8 md:gap-4 gap-6 mb-10">
 				<div className="md:col-span-8">
-					<div className="flex gap-2 mt-3 justify-end text-lg">
-						<Tippy content={<span>Edit</span>}>
-							<button
-								onClick={() => goToUpdate(slug)}
-								className="hover:text-primary"
-							>
-								<FiEdit />
-							</button>
-						</Tippy>
-						<Tippy content={<span>Delete</span>}>
-							<button
-								className="text-red"
-								onClick={() => setShowConfirmDeleteRecipe(true)}
-							>
-								<MdDelete />
-							</button>
-						</Tippy>
-					</div>
-					<h1 className="font-bold capitalize">{title}</h1>
+					<h1 className="capitalize font-serif ">{title}</h1>
 					<div className="flex flex-col mt-5">
 						<div className="flex flex-wrap items-center gap-x-6 gap-y-4">
 							{created_at && (
 								<div className="flex gap-2">
-									<h3>Create at:</h3>
-									<span>{formatDate(created_at)}</span>
+									<span className="text-xl">Create at:</span>
+									<span className="text-xl text-medium text-black">
+										{formatDate(created_at)}
+									</span>
 								</div>
 							)}
 							{updated_at && (
 								<div className="flex gap-2">
-									<h3>Updated at:</h3>
-									<span>{formatDate(updated_at)}</span>
+									<span className="text-xl">Update at:</span>
+									<span className="text-xl text-medium text-black">
+										{formatDate(updated_at)}
+									</span>
 								</div>
 							)}
-							<span className="flex items-center gap-2 text-sm uppercase font-bold">
+							<span className="flex items-center gap-2 uppercase font-bold text-yellow">
 								<BsFillTagsFill /> {category}
 							</span>
 						</div>
 						<div className="flex items-center gap-2 mt-4">
 							<span className="font-bold px-4 flex gap-2 items-center">
 								<HiUserGroup className="relative -top-[1px]" />
-								<span className="">{serving}</span>
+								<div className="flex flex-col text-sm">
+									<span className="font-bold">{serving}</span>
+									<span className=" text-[#bbb]">SERVES</span>
+								</div>
 							</span>
 							<span className="font-bold border-l-2  px-4 flex gap-2 items-center">
 								<FaRegClock className="text-xl  relative -top-[1px]" />
@@ -139,26 +130,28 @@ function PreviewRecipe({
 						</div>
 					</div>
 
-					<div className="my-10">
-						<h3 className='underline'>Description</h3>
+					<div className="my-7">
+						<Title label="Description" />
 						<div
+							className="text-justify text-lg pl-6 border-l-2 border-primary"
 							dangerouslySetInnerHTML={createMarkup(description)}
 						/>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
-					<div className="my-10">
-						<h3>Instruction</h3>
-						<div
-							dangerouslySetInnerHTML={createMarkup(instructions)}
-						/>
+					<div className="my-7">
+						<Title label="Instructions" />
+
+						<ul className="list-decimal flex flex-col gap-2 ml-5 text-lg">
+							{arrInstructions.map(({ content }, index) => (
+								<li className="text-justify">{content}</li>
+							))}
+						</ul>
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					{!notes || notes === 'null' ? null : (
 						<div className="mt-10 bg-third rounded-md px-5 py-3">
-							<h3 className="underline decoration-dotted">
-								Notes:
-							</h3>
-							<p>{notes}</p>
+							<Title label="Notes" />
+							<p className='relative -top-2'>{notes}</p>
 						</div>
 					)}
 					{source && (
@@ -167,16 +160,15 @@ function PreviewRecipe({
 						</div>
 					)}
 				</div>
-				<div className="md:col-span-4 border-l bg-[#F9F9F9] p-5">
+				<div className="md:col-span-4 ">
 					<Img
 						alt="recipe"
-						src={image}
-						className="h-64"
+						src={main_image}
+						className="h-64 w-full"
+						cover
 					/>
-					<div>
-						<div className="flex gap-2 items-center mt-10 ">
-							<h3 className="underline">Ingredients:</h3>
-						</div>
+					<div className="px-5 py-6 bg-[#F9F9F9]  border">
+						<Title label="Ingredients" />
 						<Ingredient
 							ingredients={ingredients}
 							isPreview
@@ -184,9 +176,13 @@ function PreviewRecipe({
 					</div>
 				</div>
 			</div>
-			<h2 className='mt-5'>Photos</h2>
+
+			<Title label="Photos" />
+			<p className="relative -top-3">
+				Add more photos to make your recipe fantasy
+			</p>
 			<Button
-				className="w-56 mt-5"
+				className="w-56"
 				icon={{ left: <HiPhotograph /> }}
 				onClick={goToUpload}
 			>
@@ -200,7 +196,7 @@ function PreviewRecipe({
 							key={img.id}
 						>
 							<Img
-								src={img.image_url}
+								src={img.image}
 								alt={img.caption}
 								className="h-44 w-full"
 								cover
@@ -216,15 +212,18 @@ function PreviewRecipe({
 				})}
 				<ConfirmDelete
 					showConfirm={showConfirmDeletePhoto}
-					handleCloseConfirm={() => setIdPhotoDelete(false)}
+					handleCloseConfirm={() => setIdPhotoDelete(null)}
 					handleDelete={onDeletePhoto}
 				/>
 			</div>
+
 			{/* <button className="rounded-full underline text-lg hover:text-primary">
 				Load More
 			</button> */}
 		</>
 	);
 }
+
+const Title = ({ label }) => <h4 className="mb-4">{label}</h4>;
 
 export default memo(PreviewRecipe);

@@ -12,7 +12,7 @@ import { FaSearch } from 'react-icons/fa';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
-import LastPost from '@components/Layouts/SideBar/Widget/LastPost';
+import LastPost from '@components/Recipe/LastestRecipes';
 import Img from '@components/UI/Image';
 
 function Search() {
@@ -41,7 +41,7 @@ function Search() {
 
 			<div className="mt-6">
 				{isLoading || isValidating ? (
-					<span className='text-lg'>Searching...</span>
+					<span className="text-lg">Searching...</span>
 				) : (
 					<>
 						{data?.data?.results.length > 0 ? (
@@ -62,9 +62,7 @@ function Search() {
 									alt="no result"
 									className="h-24 w-24 mx-auto my-10"
 								/>
-								<h2 className="mb-4">
-									Discover lastest post
-								</h2>
+								<h2 className="mb-4">Discover lastest post</h2>
 								<LastPost />
 							</>
 						)}

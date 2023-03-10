@@ -19,7 +19,7 @@ function UserSection({ name, bio, avatar }) {
 				cover
 			/>
 			<span
-				className={`text-3xl font-medium text-black font-serif text-center mt-4 block`}
+				className={`text-2xl font-medium text-black font-serif text-center mt-4 block`}
 			>
 				{name}
 			</span>
