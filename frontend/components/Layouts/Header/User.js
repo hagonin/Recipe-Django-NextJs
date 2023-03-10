@@ -45,15 +45,15 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 					<div className="text-black">
 						<Item
 							label="Profile"
-							href={`/user/profile/`}
+							href="/user/profile/"
 						/>
 						<Item
 							label="Update Profile"
-							href={`/user/updateprofile`}
+							href="/user/updateprofile"
 						/>
 						<Item
 							label="Change Password"
-							href={`/user/changepassword`}
+							href="/user/changepassword"
 						/>
 						<Separate />
 						<Item
@@ -63,7 +63,6 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 						<Separate />
 						<Item
 							label="Log out"
-							href="/user/recipe/add"
 							icon={<BsBoxArrowRight className="mr-2" />}
 							onClick={logout}
 						/>
@@ -80,7 +79,7 @@ const Item = ({ label, href, icon, ...props }) => {
 	return (
 		<Comp
 			href={href}
-			className={`text-lg block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] flex items-center gap-2 hover:text-primaryDark`}
+			className={`text-lg block py-2 px-5 hover:bg-[rgba(0,0,0,0.05)] flex items-center gap-2 hover:text-primaryDark w-full`}
 			{...props}
 		>
 			{icon && icon}

@@ -117,7 +117,7 @@ function RecipeCard({
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 py-4 ${
+					className={`md:px-4 px-2 pt-3 pb-2 ${
 						lgCard ? 'lg:col-span-7' : ''
 					}`}
 				>
@@ -154,7 +154,7 @@ function RecipeCard({
 					>
 						{date_format && (
 							<span
-								className={`mt-2 ${
+								className={`mt-1 ${
 									lgCard ? 'text-base' : 'text-sm'
 								} flex items-center gap-2`}
 							>
@@ -191,7 +191,7 @@ function RecipeCard({
 						</>
 					)}
 
-					<div className="flex gap-x-4 flex-wrap">
+					{/* <div className="flex gap-x-4 flex-wrap">
 						{prep_time && (
 							<div className="flex items-center gap-2 text-sm mt-5">
 								<AiFillClockCircle />
@@ -206,7 +206,7 @@ function RecipeCard({
 								<span>{cook_time}</span>
 							</div>
 						)}
-					</div>
+					</div> */}
 
 					{hasControl && (
 						<div className="flex gap-2 mt-3 justify-end text-lg">
