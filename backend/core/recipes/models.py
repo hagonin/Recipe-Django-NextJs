@@ -33,7 +33,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100, verbose_name='Recipe|title')
     description = models.TextField(blank=True, verbose_name='Recipe|description')
     instructions = models.TextField(blank=True, verbose_name='Recipe|instruction')
-    serving = models.PositiveSmallIntegerField(blank=True, null=True)
+    serving = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(unique=True, max_length=255, blank=True)
     prep_time = models.CharField(max_length=100, blank=True)  
     cook_time = models.CharField(max_length=100, blank=True)  
@@ -72,14 +72,11 @@ class Ingredient(models.Model):
     """
     Returns ingredients for a recipe
     """
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients')
+    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE, related_name='ingredients',null=True)
     heading = models.CharField(max_length=220, blank=True, null=True)
     title = models.CharField(max_length=1500)  
     quantity = models.CharField(max_length=50, blank=True, null=True)
     unit = models.CharField(max_length=50,validators=[validate_unit_of_measure], blank=True)  
-
-    class Meta: 
-        unique_together = ('recipe', 'title')
         
     def __str__(self):
         return self.title
