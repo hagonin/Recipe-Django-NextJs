@@ -22,6 +22,7 @@ const RecipeProvider = ({ children }) => {
 		isLoading: loadingRecipes,
 		mutate: mutateRecipes,
 		isValidating: validatingRecipes,
+		keywords,
 	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
@@ -94,6 +95,7 @@ const RecipeProvider = ({ children }) => {
 				validatingRecipes,
 				setSlugUpdate,
 				slugUpdate,
+				keywords,
 			}}
 		>
 			{children}

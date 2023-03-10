@@ -14,9 +14,14 @@ import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import LastPost from '@components/Recipe/LastestRecipes';
 import Img from '@components/UI/Image';
+import { useRecipeContext } from '@context/recipe-context';
+import Button from '@components/UI/Button';
 
 function Search() {
-	const { query } = useRouter();
+	const router = useRouter();
+	const { query } = router;
+	const { keywords } = useRecipeContext();
+
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
 		[ENDPOINT_RECIPE_READ, queryParams],
@@ -35,9 +40,26 @@ function Search() {
 	return (
 		<div className="container">
 			<h1 className=" flex gap-2">
-				<FaSearch /> Search Result:
+				<FaSearch className="relative top-[1px]" /> Search Result:
 				{/* <span>{results && results.length}</span> */}
 			</h1>
+			<div className="flex gap-2 mt-4">
+				{keywords.map((item) => (
+					<Button
+						className="tag"
+						onClick={() =>
+							router.push({
+								pathname: '/search',
+								query: {
+									search: item,
+								},
+							})
+						}
+					>
+						{item}
+					</Button>
+				))}
+			</div>
 
 			<div className="mt-6">
 				{isLoading || isValidating ? (
@@ -50,7 +72,7 @@ function Search() {
 									key={item.id}
 									slug={item.slug}
 									name={item.title}
-									image={item.image_url}
+									main_image={item.main_image}
 									date={item.updated_at}
 									lastPost
 								/>
