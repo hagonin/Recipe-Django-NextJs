@@ -1,10 +1,8 @@
-import SocialLink from '@components/UI/SocialLink';
 import CopyRight from './CopyRight';
-import LatestRecipes from '../../Recipe/LatestRecipes';
 import SocialLinkBar from './SocialLinkBar';
 import WebInfo from './WebInfo';
 import CollectionPics from '../SideBar/Widget/CollectionPics';
-import LastPost from '../SideBar/Widget/LastPost';
+import LastPost from '../../Recipe/LastestRecipes';
 
 function Footer() {
 	return (

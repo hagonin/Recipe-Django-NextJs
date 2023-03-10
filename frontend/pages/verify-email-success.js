@@ -12,7 +12,7 @@ function VerifyEmailSuccess() {
 				alt="not_verify_email"
 				className="h-36 w-36 mx-auto"
 			/>
-			<h2 className="mt-5">Your email address has been verified.</h2>
+			<h3 className="mt-5">Your email address has been verified.</h3>
 
 			<h3 className="block my-3">
 				Now you can{' '}

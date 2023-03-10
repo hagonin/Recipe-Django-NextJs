@@ -7,7 +7,7 @@ import Button from '@components/UI/Button';
 import Tippy from '@tippyjs/react';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
 
-function IngredientGroup({ control, register, name, error }) {
+function IngredientGroup({ control, register, name, error, exist_recipe }) {
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: name,
@@ -54,6 +54,7 @@ function IngredientGroup({ control, register, name, error }) {
 						control={control}
 						name={`${name}.${index}.items`}
 						error={error?.[index]?.items}
+						exist_recipe={exist_recipe}
 					/>
 				</div>
 			))}

@@ -1,6 +1,6 @@
 import AuthProvider from '@context/auth-context';
 import RootLayout from '@layouts/RootLayout';
-import { nunito, open_sans } from '@utils/fonts';
+import { open_sans, libre_baskerville } from '@utils/fonts';
 import { images } from '@utils/constants';
 import Head from 'next/head';
 import '@styles/globals.css';
@@ -26,7 +26,9 @@ function MyApp({ Component, pageProps }) {
 					href={images.logoIcon}
 				/>
 			</Head>
-			<main className={`${open_sans.variable} font-sans`}>
+			<main
+				className={`${open_sans.variable} ${libre_baskerville.variable} font-sans`}
+			>
 				<AuthProvider>
 					<RecipeProvider>
 						<RootLayout>

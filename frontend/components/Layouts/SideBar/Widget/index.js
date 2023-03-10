@@ -7,14 +7,20 @@ import CommonSection from './CommonSection';
 import UserSection from './UserSection';
 import Loader from '@components/UI/Loader';
 import Tags from './Tags';
-import LastPost from './LastPost';
+import LastPost from '../../../Recipe/LastestRecipes';
+import { useRouter } from 'next/router';
 
 function Widget() {
 	const { isAuthenticated, loading, user } = useAuthContext();
-
+	const router = useRouter();
 	const bannerImg =
 		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
 
+	const onSubmitSearch = (data) =>
+		router.push({
+			pathname: '/search',
+			query: data,
+		});
 	return (
 		<section className="flex flex-col gap-y-10">
 			{loading ? (
@@ -50,9 +56,7 @@ function Widget() {
 			<CommonSection title="search">
 				<SearchForm
 					secondary
-					onSubmit={(data) => {
-						console.log(data);
-					}}
+					onSubmit={onSubmitSearch}
 				/>
 			</CommonSection>
 		</section>

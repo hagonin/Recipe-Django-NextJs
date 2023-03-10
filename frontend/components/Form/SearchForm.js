@@ -4,6 +4,7 @@ import Loader from '@components/UI/Loader';
 import { useForm } from 'react-hook-form';
 import { InputField } from './FormControl';
 import Button from '@components/UI/Button';
+import { useRecipeContext } from '@context/recipe-context';
 
 function SearchForm({ onSubmit, secondary }) {
 	const {
@@ -53,7 +54,7 @@ function SearchForm({ onSubmit, secondary }) {
 					</Button>
 				</div>
 			) : (
-				<div className="flex">
+				<div className="flex relative">
 					<button
 						className="px-2 text-2xl"
 						type="submit"
@@ -64,11 +65,13 @@ function SearchForm({ onSubmit, secondary }) {
 						id="search"
 						type="text"
 						placeholder="Type to search"
-						className="w-full pr-2 placeholder-white bg-transparent outline-none focus:border-b focus:border-grey"
+						className="text-lg w-full pr-2 placeholder-white bg-transparent outline-none focus:border-b focus:border-grey"
 						{...register('search', {
 							required: true,
+							onChange: handleChange,
 						})}
 					/>
+
 					<div className="flex items-center justify-center px-2">
 						{isSubmitting && <Loader type="searching" />}
 						{isTyping && (

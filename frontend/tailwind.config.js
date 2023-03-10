@@ -18,6 +18,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ['var(--open-sans)', ...fontFamily.sans],
+				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
 			},
 			colors: {
 				primary: '#96b7ae',
@@ -31,6 +32,7 @@ module.exports = {
 				blackLight: '#575757',
 				border: '#e6e6e6',
 				red: '#e3304e',
+				red2: '#d85734',
 				redLight: 'rgba(243, 58, 89, 0.15)',
 				yellow: '#FFC438',
 				yellowDark: '#f0b62d',
@@ -50,12 +52,13 @@ module.exports = {
 		fontSize: {
 			xsm: '0.625rem', //10px
 			sm: '0.75rem', //12px
-			base: '0.8125rem', //13px
-			lg: '0.875rem', //14px
+			base: '0.875rem', //14px
+			lg: '0.9375rem', //15px
 			xl: '1rem', //16px
 			'2xl': '1.125rem', //18px
 			'3xl': '1.25rem', //20px
 			'4xl': '1.375rem', //22px
+			'5xl': '1.5rem', //24px
 		},
 	},
 	plugins: [require('@tailwindcss/line-clamp')],

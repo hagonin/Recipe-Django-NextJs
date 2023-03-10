@@ -28,7 +28,7 @@ function Recipe() {
 								date={item.updated_at}
 								name={item.title}
 								rating={item.rating}
-								image={item.image_url}
+								main_image={item.main_image}
 								cook_time={item.cook_time}
 								prep_time={item.prep_time}
 								category={item.category}

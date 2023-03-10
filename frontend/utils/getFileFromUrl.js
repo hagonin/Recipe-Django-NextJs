@@ -2,7 +2,9 @@ import axios from 'axios';
 
 export const getFileFromUrl = async (url, name) => {
 	const res = await axios.get(url, { responseType: 'blob' });
-	const file = new File([res.data], name);
+	const file = new File([res.data], name, {
+		type: res?.data.type
+	});
 	return file;
 };
 

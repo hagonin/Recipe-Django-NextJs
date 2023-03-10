@@ -7,26 +7,30 @@
       @apply  text-second leading-7 ;
    }
    p, span {
-    @apply text-lg;
+    @apply text-base;
    }
     
     h1 {
-       @apply text-4xl font-semibold text-black;
+       @apply text-5xl font-medium text-black;
     }
 
     h2 {
-       @apply text-3xl font-medium text-black;
+       @apply text-4xl font-medium text-black;
     } 
 
     h3 {
-       @apply text-2xl font-medium text-black;
+       @apply text-3xl font-medium text-black;
     }
 
     h4 {
-       @apply text-xl font-medium text-black;
+       @apply text-2xl font-medium text-black;
     }
     
     h5 {
+       @apply text-xl font-medium text-black;
+    }
+
+    h6 {
        @apply text-lg font-medium text-black;
     }
 

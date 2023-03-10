@@ -84,7 +84,7 @@ const CheckboxField = ({
 				name={name}
 			/>
 			{isSingle.label ? (
-				<label className="flex items-center gap-4 mb-2">
+				<label className="flex items-center gap-4 mb-2 text-lg">
 					<input
 						id={name}
 						type="checkbox"
@@ -195,7 +195,7 @@ const TextAreaField = ({
 	...props
 }) => {
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col w-full">
 			<Label
 				label={label}
 				name={name}

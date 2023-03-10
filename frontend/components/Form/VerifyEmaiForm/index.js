@@ -7,7 +7,7 @@ import { Form } from '../FormControl';
 function VerifyEmailForm({ handleEffectAfterResend }) {
 	const {
 		handleSubmit,
-		formState: { isSubmitting, isSubmitSuccessful },
+		formState: { isSubmitting },
 	} = useForm();
 	const { handleResendVerify, user } = useAuthContext();
 

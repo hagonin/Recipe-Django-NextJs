@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
@@ -25,9 +25,11 @@ import Note from './Note';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
+import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
+	const exist_recipe = useRef(EXIST_RECIPE);
 	const {
 		register,
 		control,
@@ -37,7 +39,6 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		setValue,
 		setError,
 		unregister,
-		watch,
 	} = useForm({
 		defaultValues: {
 			recipe: {
@@ -46,9 +47,12 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
 				search_vector: initValues?.search_vector || '',
-				// main_image: initValues?.image_url || images.spoon,
-				ingredient: initValues?.ingredients || {
-					item: [{ recipe: EXIST_RECIPE }],
+				main_image: initValues?.image_url || images.spoon,
+				ingredient: (initValues && {
+					item: initValues.ingredients.item,
+					group: initValues.ingredients.group,
+				}) || {
+					item: [{ recipe: exist_recipe.current }],
 				},
 				instructions: initValues?.instructions || [{ content: '' }],
 			},
@@ -65,38 +69,36 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 
 		const form = new FormData();
 		// instructions
-		const instructions = ins
-			.filter(({ content }) => content)
-			.map(
-				({ content }, index) =>
-					`<div><h4>Step ${index + 1}</h4><p>${content}</p></div>`
-			)
-			.join('');
+		const instructions = getInstructionAsDrawHtml(ins);
 		form.append('instructions', instructions);
 
 		// add ingredients to form
-		const ingredients = handleIngredients(ingredient);
+		const ingredients = handleIngredientsToArr(ingredient);
 		for (var i = 0; i < ingredients.length; i++) {
 			Object.keys(ingredients[i]).forEach((key) => {
 				form.append(`ingredients[${i}]${key}`, ingredients[i][key]);
 			});
 		}
-		// add image to form
-		// let img;
-		// if (typeof main_image === 'string') {
-		// 	img = await getFileFromUrl(main_image, 'defaulrt');
-		// } else {
-		// 	img = main_image;
-		// }
-		// form.append('main_image', img, img.name);
+		// check img before add to form
+		if (typeof main_image === 'string') {
+			let img = await getFileFromUrl(main_image, 'default.png');
+			img && form.append('main_image', img, img.name);
+		} else {
+			form.append('main_image', main_image, main_image.name);
+		}
+		// add ...rest to form
+		Object.keys(rest).forEach((key) => {
+			const value =
+				typeof rest[key] === 'string'
+					? rest[key].toLowerCase()
+					: rest[key];
+			form.append(key, value);
+		});
 
-		// // // add ...rest to form
-		Object.keys(rest).forEach((key) => form.append(key, rest[key]));
-
-		return onSubmit(form);
+		return onSubmit({ form });
 	};
 
-	const handleIngredients = (ingredients) => {
+	const handleIngredientsToArr = (ingredients) => {
 		let arr1 = [];
 		if (ingredients.group) {
 			arr1 = ingredients.group.map((ingredient) => {
@@ -104,13 +106,18 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					ingredient.items &&
 					ingredient.items.map((item) => ({
 						...item,
-						heading: ingredient.heading,
+						title: item.title.toLowerCase(),
+						heading: ingredient.heading.toLowerCase(),
 					}))
 				);
 			});
 		}
 		const arr2 =
-			ingredients.item.map((item) => ({ ...item, heading: '' })) || [];
+			ingredients.item.map((item) => ({
+				...item,
+				title: item.title.toLowerCase(),
+				heading: '',
+			})) || [];
 		return [...arr2, ...arr1.flat()];
 	};
 
@@ -137,6 +144,12 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				message: errors?.recipe?.ingredients,
 			});
 	}, [errors]);
+
+	useEffect(() => {
+		if (initValues?.ingredients) {
+			exist_recipe.current = initValues.ingredients.exist_recipe;
+		}
+	}, [initValues]);
 
 	return (
 		<form
@@ -255,6 +268,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					control={control}
 					register={register}
 					error={formErr?.recipe?.ingredient}
+					exist_recipe={exist_recipe.current}
 				/>
 			</div>
 			<div className="flex gap-4 mt-4 mb-4">

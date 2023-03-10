@@ -5,7 +5,7 @@ import { useFieldArray } from 'react-hook-form';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
-function IngredientItem({ register, control, name, error }) {
+function IngredientItem({ register, control, name, error, exist_recipe }) {
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: name,
@@ -84,7 +84,7 @@ function IngredientItem({ register, control, name, error }) {
 			<Button
 				type="button"
 				className="tag w-44"
-				onClick={() => append({ recipe: EXIST_RECIPE })}
+				onClick={() => append({ recipe: exist_recipe })}
 			>
 				+ add ingredient
 			</Button>

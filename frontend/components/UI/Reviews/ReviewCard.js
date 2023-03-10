@@ -6,11 +6,13 @@ import formatDate from '@utils/formatdate';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegWindowClose } from 'react-icons/fa';
+import { FiDelete } from 'react-icons/fi';
 import { MdDelete, MdDeleteSweep } from 'react-icons/md';
 import Button from '../Button';
 import Img from '../Image';
 import Loader from '../Loader';
 import ModalPrimary from '../Modal/ModalPrimary';
+import Tooltip from '../Tooltip';
 
 function ReviewCard({
 	id,
@@ -20,7 +22,7 @@ function ReviewCard({
 	date_added,
 	title,
 	content,
-	main_image:avatar,
+	avatar,
 	hasEdit,
 	handleDelete,
 }) {
@@ -46,13 +48,13 @@ function ReviewCard({
 				/>
 				<div className="flex-1">
 					<div className="flex items-center justify-between">
-						<h3>{user}</h3>
+						<h5>{user}</h5>
 						{hasEdit && (
 							<button
-								className="text-sm text-red"
+								className="text-xl text-red"
 								onClick={() => setShowConfirmDeleteReview(true)}
 							>
-								Delete
+								<FiDelete />
 							</button>
 						)}
 					</div>
@@ -65,7 +67,7 @@ function ReviewCard({
 							{formatDate(date_added)}
 						</span>
 					</div>
-					<span className="capitalize mt-2 block font-semibold text-black">
+					<span className="capitalize mt-1 block font-medium text-black">
 						{title}
 					</span>
 					<p>{content}</p>

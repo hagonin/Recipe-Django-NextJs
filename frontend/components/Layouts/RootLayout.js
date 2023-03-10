@@ -9,7 +9,7 @@ import { useRecipeContext } from '@context/recipe-context';
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();
-	const { loading: loadAuth } = useAuthContext();
+	// const { loading: loadAuth } = useAuthContext();
 	return (
 		<>
 			<Header />
@@ -20,7 +20,7 @@ function RootLayout({ children }) {
 				autoClose={1500}
 				transition={Slide}
 			/>
-			{loading || loadingRecipes || loadAuth ? (
+			{loading || loadingRecipes ? (
 				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex">
 					<Loader type="handle" />
 				</div>

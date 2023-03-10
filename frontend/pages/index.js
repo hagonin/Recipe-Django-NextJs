@@ -7,10 +7,12 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
+import getRandomRecipes from '@utils/getRandomRecipes';
 
 export default function Home() {
 	const { recipes } = useRecipeContext();
 	const [categories, setCategories] = useState(null);
+	const [randomRecipes, setRandomRecipes] = useState(null);
 
 	useEffect(() => {
 		if (recipes) {
@@ -21,6 +23,9 @@ export default function Home() {
 				recipes: recipes.filter((recipe) => recipe.category === name),
 			}));
 			setCategories(arr);
+
+			const randoms = getRandomRecipes(recipes);
+			setRandomRecipes(randoms);
 		}
 	}, [recipes]);
 
@@ -70,14 +75,21 @@ export default function Home() {
 	];
 	return (
 		<>
-			<Slider>
-				{recipesRandom.map((recipe) => (
-					<Slide
-						{...recipe}
-						key={recipe.id}
-					/>
-				))}
-			</Slider>
+			{randomRecipes && (
+				<Slider>
+					{randomRecipes.map((recipe, index) => (
+						<Slide
+							id={recipe.id}
+							image={recipe.main_image}
+							name={recipe.title}
+							description={recipe.description}
+							slug={recipe.slug}
+							key={index}
+						/>
+					))}
+				</Slider>
+			)}
+
 			<SubscribeSection />
 
 			{categories && (

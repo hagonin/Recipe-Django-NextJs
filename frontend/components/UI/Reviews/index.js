@@ -9,7 +9,6 @@ function Reviews({
 	handleDelete,
 	goToLogin,
 }) {
-
 	return (
 		<div className=" my-10 py-10 px-7 bg-third rounded-md">
 			<h3>Reviews ({reviews.length})</h3>
@@ -35,13 +34,15 @@ function Reviews({
 				{reviews.map((review, index) => (
 					<ReviewCard
 						{...review}
+						id={review?.id}
+						user={review?.user?.username}
+						avatar={review?.user?.profile?.avatar}
 						key={index}
-						hasEdit={currentUserId === review.user_id}
+						hasEdit={currentUserId === review?.user?.id}
 						handleDelete={handleDelete}
 					/>
 				))}
 			</div>
-			
 		</div>
 	);
 }

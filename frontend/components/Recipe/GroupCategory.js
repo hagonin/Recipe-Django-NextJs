@@ -28,7 +28,7 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 						date={item.updated_at}
 						name={item.title}
 						rating={item.rating}
-						image={item.main_image}
+						main_image={item.main_image}
 						id={item.id}
 						smallCard
 					/>

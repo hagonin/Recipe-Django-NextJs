@@ -16,7 +16,7 @@ function WebInfo() {
 				improve your health is by preparing more home-cooked meals.
 				HomeCook will help you how to get started.
 			</p>
-			<SocialLink color="grey" />
+			<SocialLink color="black" />
 		</div>
 	);
 }

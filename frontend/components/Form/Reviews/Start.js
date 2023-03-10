@@ -19,7 +19,7 @@ function Start({
 		submitSuccess && setRating(1);
 	}, [submitSuccess]);
 	return (
-		<div className="flex lg:gap-4 lg:items-center flex-col lg:flex-row ">
+		<div className="flex lg:gap-4 lg:items-center flex-col lg:flex-row mt-3">
 			<Label label="Your rating" />
 			<div className="flex gap-2 items-center">
 				{ratingScale.map(({ id }) => {

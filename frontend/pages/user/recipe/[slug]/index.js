@@ -46,7 +46,7 @@ function RecipePreView() {
 		setLoading(true);
 		getRecipeBySlug(slug)
 			.then(({ data }) => {
-				setRecipe(data);
+				setRecipe({...data});
 			})
 			.catch()
 			.then(() => {

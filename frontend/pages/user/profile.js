@@ -14,7 +14,6 @@ import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
 import { MdEmail, MdSecurity } from 'react-icons/md';
-import { GrUpdate } from 'react-icons/gr';
 import { AiFillEdit } from 'react-icons/ai';
 
 function Profile() {
@@ -142,7 +141,7 @@ function Profile() {
 									{recipes?.map((recipe) => (
 										<div key={recipe.id}>
 											<RecipeCard
-												image={recipe.image_url}
+												main_image={recipe.main_image}
 												name={recipe.title}
 												smallCard
 												slug={recipe.slug}

@@ -2,9 +2,9 @@ const CommonSection = ({ title, children }) => (
 	<div className="border border-border rounded px-5 pt-5 pb-7 relative">
 		{title && (
 			<div className="text-center">
-				<h5 className="inline-block text-black leading-6 uppercase mb-6 ">
+				<h6 className="inline-block text-blackLight leading-6 uppercase mb-6 font-semibold">
 					{title}
-				</h5>
+				</h6>
 			</div>
 		)}
 		{children}

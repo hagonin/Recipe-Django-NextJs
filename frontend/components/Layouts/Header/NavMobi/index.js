@@ -13,6 +13,9 @@ import SocialLink from '@components/UI/SocialLink';
 import Img from '@components/UI/Image';
 import { Transition } from '@headlessui/react';
 import NavCategory from './NavCategory';
+import { BsMenuApp, BsMenuButton } from 'react-icons/bs';
+import { AiOutlineMenu } from 'react-icons/ai';
+import { GrClose } from 'react-icons/gr';
 
 function NavMobi() {
 	const { isAuthenticated, user, logout } = useAuthContext();
@@ -27,7 +30,7 @@ function NavMobi() {
 				className="cursor-pointer"
 				onClick={toggleNavMobi}
 			>
-				<HiMenu className="text-3xl" />
+				<AiOutlineMenu className="text-[2rem]" />
 			</button>
 			<Transition.Root show={showNavMobi}>
 				<Transition.Child
@@ -53,12 +56,12 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  w-2/3 py-12 pl-5 bg-white overflow-y-auto overflow-x-hidden scrollbar">
+					<nav className="fixed top-0 left-0 bottom-0 z-20  w-2/3 py-12 pl-5 bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg">
 						<button
-							className="absolute top-2 right-2 text-4xl"
+							className="absolute top-3 right-3 text-[2rem]"
 							onClick={toggleNavMobi}
 						>
-							<MdClose />
+							<GrClose />
 						</button>
 						{isAuthenticated ? (
 							<div>
