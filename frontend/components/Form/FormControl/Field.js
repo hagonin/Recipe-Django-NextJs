@@ -84,7 +84,7 @@ const CheckboxField = ({
 				name={name}
 			/>
 			{isSingle.label ? (
-				<label className="flex items-center gap-4 mb-2">
+				<label className="flex items-center gap-4 mb-2 text-lg">
 					<input
 						id={name}
 						type="checkbox"

@@ -77,7 +77,7 @@ function LoginForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 				/>
 
-				<div className="flex justify-between items-center  mb-7 mt-5 max-sm:flex-col">
+				<div className="flex justify-between items-center  mb-5 mt-5 max-sm:flex-col">
 					<CheckboxField
 						name="login.remember"
 						isSingle={{ label: 'Remember me' }}
@@ -86,13 +86,13 @@ function LoginForm({ onSubmit }) {
 					/>
 					<Link
 						href="/resetpassword"
-						className="font-semibold hover:text-primary max-sm:mt-2"
+						className="text-lg font-semibold hover:text-primary max-sm:mt-2"
 					>
 						Forgot Password?
 					</Link>
 				</div>
 				<Button
-					className="primary login w-full"
+					className="primary lg w-full"
 					type="submit"
 					disabled={isSubmitting}
 				>

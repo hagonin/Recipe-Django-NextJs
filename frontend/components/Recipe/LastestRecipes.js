@@ -1,8 +1,8 @@
 import RecipeCard from '@components/Recipe/RecipeCard';
-import useLastestPost from 'hook/useLastestPost';
+import useQuery from 'hook/useQuery';
 
 function LastPost({ isFooter, number = 3 }) {
-	const { data } = useLastestPost(number);
+	const { data } = useQuery(number, { ordering: 'created_at' });
 
 	return (
 		<div

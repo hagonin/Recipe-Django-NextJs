@@ -166,4 +166,3 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
 export const EXIST_RECIPE = 1;
-

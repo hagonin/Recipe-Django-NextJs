@@ -19,8 +19,6 @@ function RecipeCard({
 	date,
 	id,
 	summary,
-	prep_time,
-	cook_time,
 	slug,
 	rating,
 	reviews_count,
@@ -42,7 +40,7 @@ function RecipeCard({
 	const summaryMarkup = summary && createMarkup(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastPost ? (
-		<div className={`flex lg:gap-6 md:gap-4 gap-2 border-b pb-4`}>
+		<div className={`flex md:gap-4 gap-2 border-b pb-4`}>
 			<Link href={`/recips/${slug}`}>
 				<Img
 					src={main_image}
@@ -59,6 +57,13 @@ function RecipeCard({
 					{name}
 				</Link>
 				<span className="text-sm block">{date_format}</span>
+				{rating && (
+					<Rating
+						number={rating}
+						count={reviews_count}
+						small
+					/>
+				)}
 			</div>
 		</div>
 	) : (
@@ -117,12 +122,12 @@ function RecipeCard({
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 pt-3 pb-2 ${
+					className={`md:px-4 px-2 pt-3 pb-4 ${
 						lgCard ? 'lg:col-span-7' : ''
 					}`}
 				>
 					{category && (
-						<span className="tag font-bold text-[0.8rem] mb-1 uppercase  !text-[#d85734] inline-flex px-2 rounded-md gap-2 items-center">
+						<span className="tag font-bold text-[0.8rem] mb-1 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
 							<HiOutlineTag />
 							{category}
 						</span>

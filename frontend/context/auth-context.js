@@ -156,7 +156,6 @@ const AuthProvider = ({ children }) => {
 		try {
 			await api.post(ENDPOINT_REGISTER, data);
 			setUser((pre) => ({ ...pre, email: data.email }));
-			router.push('/signup/thanks');
 		} catch ({ status, _error }) {
 			const { errors } = _error;
 			if (status === 400) {

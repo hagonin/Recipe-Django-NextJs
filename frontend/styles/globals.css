@@ -7,7 +7,7 @@
       @apply  text-second leading-7 ;
    }
    p, span {
-    @apply text-lg;
+    @apply text-base;
    }
     
     h1 {

@@ -10,6 +10,7 @@ function SignUp() {
 
 	return (
 		<div className="bg-primaryLight select-none">
+			
 			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
 				<div className="flex flex-col items-center justify-center">
 					<Img
@@ -19,7 +20,7 @@ function SignUp() {
 					/>
 					<h1>Create An Account</h1>
 					<h2>What you will get?</h2>
-					<ul className="mt-10">
+					<ul className="mt-10 text-base">
 						<li className="flex items-center">
 							<GrStatusGood className="mr-2" /> Manage your
 							recipes by the easy way

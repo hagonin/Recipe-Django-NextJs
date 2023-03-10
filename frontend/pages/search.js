@@ -16,6 +16,9 @@ import LastPost from '@components/Recipe/LastestRecipes';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
+import TopRating from '@components/Recipe/TopRating';
+import useQuery from 'hook/useQuery';
 
 function Search() {
 	const router = useRouter();
@@ -32,6 +35,8 @@ function Search() {
 			});
 		}
 	);
+
+	const { data: recipesTop } = useQuery(5, { ordering: 'rating' });
 
 	useEffect(() => {
 		setQueryParams(query);
@@ -61,36 +66,39 @@ function Search() {
 				))}
 			</div>
 
-			<div className="mt-6">
-				{isLoading || isValidating ? (
-					<span className="text-lg">Searching...</span>
-				) : (
-					<>
-						{data?.data?.results.length > 0 ? (
-							data?.data?.results.map((item) => (
-								<RecipeCard
-									key={item.id}
-									slug={item.slug}
-									name={item.title}
-									main_image={item.main_image}
-									date={item.updated_at}
-									lastPost
-								/>
-							))
-						) : (
-							<>
-								<Img
-									src={images.no_search}
-									alt="no result"
-									className="h-24 w-24 mx-auto my-10"
-								/>
-								<h2 className="mb-4">Discover lastest post</h2>
-								<LastPost />
-							</>
-						)}
-					</>
-				)}
-			</div>
+			{isLoading || isValidating ? (
+				<div className="flex justify-center mt-10">
+					<Loader type="searching" />
+				</div>
+			) : (
+				<div className="mt-7">
+					{data?.data?.results.length > 0 ? (
+						data?.data?.results.map((item) => (
+							<RecipeCard
+								key={item.id}
+								slug={item.slug}
+								name={item.title}
+								main_image={item.main_image}
+								date={item.updated_at}
+								lastPost
+							/>
+						))
+					) : (
+						<>
+							<Img
+								src={images.no_search}
+								alt="no result"
+								className="h-24 w-24 mx-auto my-10"
+							/>
+							<h4 className="text-center mb-16">
+								Sorry. No result found.
+							</h4>
+
+							<TopRating recipes={recipesTop} />
+						</>
+					)}
+				</div>
+			)}
 		</div>
 	);
 }

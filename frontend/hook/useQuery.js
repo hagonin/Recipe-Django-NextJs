@@ -3,14 +3,14 @@ import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_READ } from '@utils/constants';
 import useSWR from 'swr';
 import fetcher from './fetcher';
 
-function useLastestPost(number) {
+function useQuery(numberOfResult, query) {
 	return useSWR(
 		{
 			url: `${ENDPOINT_RECIPE}`,
 			config: {
 				params: {
-					ordering: 'created_at',
-					p: number,
+					...query,
+					p: numberOfResult,
 				},
 			},
 		},
@@ -23,4 +23,4 @@ function useLastestPost(number) {
 	);
 }
 
-export default useLastestPost;
+export default useQuery;
