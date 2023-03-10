@@ -195,7 +195,7 @@ const TextAreaField = ({
 	...props
 }) => {
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col w-full">
 			<Label
 				label={label}
 				name={name}

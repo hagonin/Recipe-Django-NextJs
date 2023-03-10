@@ -16,6 +16,7 @@ function Ingredients({ control, register, error, exist_recipe }) {
 				control={control}
 				name={`recipe.ingredient.group`}
 				error={error?.group}
+				exist_recipe={exist_recipe}
 			/>
 		</div>
 	);

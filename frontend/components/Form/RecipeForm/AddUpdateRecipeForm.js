@@ -141,7 +141,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	}, [errors]);
 
 	useEffect(() => {
-		if (initValues.ingredients) {
+		if (initValues?.ingredients) {
 			exist_recipe.current = initValues.ingredients.exist_recipe;
 		}
 	}, [initValues]);
