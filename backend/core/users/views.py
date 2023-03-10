@@ -237,7 +237,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 class UserRecipesView(generics.ListAPIView):
     """Lists all recipes a user has"""
 
-    serializer_class = serializers.RecipeSerializer
+    serializer_class = RecipeSerializer
 
     def get_queryset(self):
         return Recipe.objects.filter(user__username=self.kwargs['username'])
