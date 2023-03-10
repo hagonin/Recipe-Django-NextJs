@@ -11,6 +11,7 @@ const nextConfig = {
 				hostname: 'res.cloudinary.com',
 			},
 		],
+		domains: ['127.0.0.1'],
 	},
 };
 
