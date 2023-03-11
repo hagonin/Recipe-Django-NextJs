@@ -33,7 +33,7 @@ function RecipeCard({
 	goToAddPhoto,
 	secondary,
 	actBookmark,
-	handleToggleBookmark,
+	handleToggleBookmark = () => {},
 	lastPost,
 	isAverage,
 }) {
@@ -143,11 +143,11 @@ function RecipeCard({
 						}
 						className={`inline font-serif line-clamp-2  ${
 							smallCard
-								? 'text-2xl'
+								? 'text-2xl h-14 '
 								: lgCard
 								? 'text-2xl'
 								: 'text-xl'
-						} h-14  text-black   hover:text-primaryDark transition-all duration-200`}
+						}  text-black   hover:text-primaryDark transition-all duration-200`}
 					>
 						{name}
 					</Link>

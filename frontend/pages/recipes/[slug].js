@@ -80,6 +80,7 @@ function Recipe() {
 			) : null}
 
 			<SubscribeSection />
+			
 			{data?.category && <RelatedRecipe categoryName={data?.category} />}
 		</>
 	);

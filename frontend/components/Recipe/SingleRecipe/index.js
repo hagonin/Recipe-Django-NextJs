@@ -129,7 +129,7 @@ function SingRecipe({
 				</ul>
 				{notes && (
 					<div>
-						<Title title="NOTE" />
+						<Title title="NOTES" />
 						<p>{notes}</p>
 					</div>
 				)}

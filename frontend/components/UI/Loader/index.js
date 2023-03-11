@@ -24,7 +24,7 @@ function Loader({ type }) {
 			);
 		case 'recipe-small-card':
 			return (
-				<div className="animate-pulse flex gap-4 items-center">
+				<div className="animate-pulse flex md:flex-row flex-col gap-4 items-center">
 					<div className="h-24 w-32 bg-gray-200 rounded-md"></div>
 					<div className="w-full">
 						<div className="h-4 w-full  bg-gray-200 rounded-md"></div>
@@ -33,11 +33,22 @@ function Loader({ type }) {
 					</div>
 				</div>
 			);
+		case 'recipe-lg-card':
+			return (
+				<div className="animate-pulse flex md:flex-row flex-col gap-4 items-center">
+					<div className="h-56 w-[580px] bg-gray-200 rounded-md"></div>
+					<div className="w-full">
+						<div className="h-8 w-full  bg-gray-200 rounded-md"></div>
+						<div className="h-5 w-1/2 bg-gray-200 rounded-md mt-3"></div>
+						<div className="h-4 w-1/5 bg-gray-200 rounded-md mt-3"></div>
+					</div>
+				</div>
+			);
 		case 'recipe-card':
 			return (
 				<div className="animate-pulse  w-full border bg-white shadow-md rounded-md">
 					<div className="h-48 w-full bg-gray-200"></div>
-					<div className='px-3 py-6'>
+					<div className="px-3 py-6">
 						<div className="h-6 w-full  bg-gray-200 rounded-md "></div>
 						<div className="flex gap-2 justify-between items-center">
 							<div className="h-3 w-1/2 bg-gray-200 rounded-md mt-3"></div>

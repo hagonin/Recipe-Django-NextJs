@@ -11,13 +11,13 @@ function Instructions({ register, control, error }) {
 	});
 	return (
 		<div>
-			<ul className="flex flex-col gap-2">
+			<ul className="flex flex-col gap-2 list-none ml-0">
 				{fields.map((field, index) => (
 					<li key={field.id}>
 						<span className="mb-1 block">{`Step ${
 							index + 1
 						}`}</span>
-						<div className="flex gap-4 items-center">
+						<div className="flex gap-4 items-start">
 							<TextAreaField
 								type="text"
 								rows='3'

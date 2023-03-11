@@ -1,3 +1,4 @@
+import Loader from '@components/UI/Loader';
 import Slider from '@components/UI/Slider';
 import useQuery from 'hook/useQuery';
 import RecipeCard from './RecipeCard';
@@ -9,7 +10,7 @@ function RelatedRecipe({ categoryName }) {
 			<span className="uppercase border-b border-border">
 				You may also like
 			</span>
-			{recipes && (
+			{recipes ? (
 				<Slider>
 					{recipes.map((recipe) => {
 						return (
@@ -17,13 +18,21 @@ function RelatedRecipe({ categoryName }) {
 								key={recipe.id}
 								main_image={recipe.main_image}
 								name={recipe.title}
+								slug={recipe.slug}
 								smallCard
 								date={recipe.created_at || recipe.updated_at}
 								className="keen-slider__slide mb-10"
+								secondary
 							/>
 						);
 					})}
 				</Slider>
+			) : (
+				<div className="grid grid-cols-3 md:gap-6 gap-2 mt-5">
+					<Loader type="recipe-card" />
+					<Loader type="recipe-card" />
+					<Loader type="recipe-card" />
+				</div>
 			)}
 		</div>
 	);

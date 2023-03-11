@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
-import { FaRegClock } from 'react-icons/fa';
+import { BsFillTagsFill, BsListTask, BsTrash } from 'react-icons/bs';
+import { FaClipboardList, FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
 import createMarkup from '@utils/createMarkup';
 
@@ -156,17 +156,22 @@ function PreviewRecipe({
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					<div className="my-7">
-						<Title label="Instructions" />
+						<Title label="Method" />
 
 						{arrInstructions.length > 0 ? (
 							<ul className="list-decimal flex flex-col gap-2 ml-5 text-lg">
 								{arrInstructions.map(({ content }, index) => (
-									<li className="text-justify" key={index}>{content}</li>
+									<li
+										className="text-justify"
+										key={index}
+									>
+										{content}
+									</li>
 								))}
 							</ul>
 						) : (
 							<span className="opacity-60 italic">
-								You have not added instructions
+								You have not added method.
 							</span>
 						)}
 					</div>
@@ -198,13 +203,9 @@ function PreviewRecipe({
 						cover
 					/>
 					<div className="px-5 py-6 bg-[#F9F9F9]  border">
-						<div className="flex items-center gap-4 h-12 mt-4">
+						<div className="flex items-center gap-1 h-12 mt-4">
+							<FaClipboardList className='mb-4' />
 							<Title label="Ingredients" />
-							<Img
-								src={iconImg.ingredient_icon}
-								alt="icon"
-								className="h-10 w-10 mb-10"
-							/>
 						</div>
 						<Ingredient
 							ingredients={ingredients}

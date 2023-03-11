@@ -99,6 +99,10 @@
       @apply border-primaryDark;
     }
 
+    .btn:disabled {
+      @apply  bg-white select-none hover:bg-white hover:border-border hover:text-black opacity-80;
+    }
+
 
 }
 
