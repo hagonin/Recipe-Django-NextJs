@@ -204,7 +204,7 @@ function PreviewRecipe({
 					/>
 					<div className="px-5 py-6 bg-[#F9F9F9]  border">
 						<div className="flex items-center gap-1 h-12 mt-4">
-							<FaClipboardList className='mb-4' />
+							<FaClipboardList className="mb-4" />
 							<Title label="Ingredients" />
 						</div>
 						<Ingredient
@@ -255,23 +255,23 @@ function PreviewRecipe({
 				/>
 			</div>
 
-			<div className="flex md:gap-4 gap-2 ">
+			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">
 				<Button
-					className="primary !h-7 !text-sm mt-8"
+					className="primary !h-7 !text-sm "
 					icon={{ right: <FiEdit /> }}
 					onClick={goToUpdate}
 				>
 					Update
 				</Button>
 				<Button
-					className="verify !h-7 !text-sm mt-8"
+					className="verify !h-7 !text-sm"
 					icon={{ right: <RiDeleteBack2Line /> }}
 					onClick={() => setShowConfirmDeleteRecipe(true)}
 				>
 					Delete
 				</Button>
 				<Button
-					className="secondary !h-7 !text-sm mt-8"
+					className="secondary !h-7 !text-sm "
 					onClick={goToRecipeSingle}
 				>
 					Go to your publish recipe

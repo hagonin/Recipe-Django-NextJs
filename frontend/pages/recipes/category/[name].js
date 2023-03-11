@@ -60,8 +60,7 @@ function CategoryPage() {
 								handleToggleBookmark={handleToggleBookmark}
 								actBookmark={checkBookmarkAct(recipe.id)}
 								lgCard
-								border
-								className="grid lg:grid-cols-12 gap-6 grid-cols-1"
+								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1"
 							/>
 						))
 					) : (
