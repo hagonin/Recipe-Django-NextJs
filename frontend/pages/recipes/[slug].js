@@ -11,16 +11,9 @@ import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import useRecipeBySlug from 'hook/useRecipeBySlug';
 import { useEffect } from 'react';
-import { RECIPE_MAIN_IMAGE } from '@utils/constants';
 import Loader from '@components/UI/Loader';
 
 function Recipe() {
-	const router = useRouter();
-	const {
-		query: { slug },
-	} = router;
-	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
-	const { configAuth, user } = useAuthContext();
 	const {
 		handleToggleBookmark,
 		checkBookmarkAct,
@@ -28,39 +21,12 @@ function Recipe() {
 		slugUpdate,
 		setSlugUpdate,
 	} = useRecipeContext();
-
-	const relatedRecipes = [
-		{
-			id: 1,
-			name: 'Simple Blueberry Muffins',
-			date: 'January 18, 2021',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/05/32-878x1024.jpg',
-		},
-		{
-			id: 2,
-			name: 'Simple Blueberry Muffins',
-			date: 'January 18, 2021',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/05/32-878x1024.jpg',
-		},
-		{
-			id: 3,
-			name: 'Simple Blueberry Muffins',
-			date: 'January 18, 2021',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/05/32-878x1024.jpg',
-		},
-		{
-			id: 4,
-			name: 'Simple Blueberry Muffins',
-			date: 'January 18, 2021',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/05/32-878x1024.jpg',
-		},
-		{
-			id: 5,
-			name: 'Simple Blueberry Muffins',
-			date: 'January 18, 2021',
-			image: 'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/05/32-878x1024.jpg',
-		},
-	];
+	const { configAuth, user } = useAuthContext();
+	const router = useRouter();
+	const {
+		query: { slug },
+	} = router;
+	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
 
 	const handleSubmitReview = async (data) => {
 		try {
@@ -114,7 +80,7 @@ function Recipe() {
 			) : null}
 
 			<SubscribeSection />
-			<RelatedRecipe recipes={relatedRecipes} />
+			{data?.category && <RelatedRecipe categoryName={data?.category} />}
 		</>
 	);
 }

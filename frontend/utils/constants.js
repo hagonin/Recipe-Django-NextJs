@@ -21,6 +21,7 @@ export const images = {
 	notfound: '/static/images/404-error.png',
 	tick: '/static/images/tick.png',
 	no_search: '/static/images/no-results.png',
+	ingredient_icon: '/static/images/ingredient_icon.png',
 };
 
 export const categoryList = [
@@ -165,4 +166,4 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 1;
+export const EXIST_RECIPE = 3;

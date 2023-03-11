@@ -1,4 +1,4 @@
-import { BsClock, BsClockFill } from 'react-icons/bs';
+import { BsClockFill } from 'react-icons/bs';
 import { BsBookmarksFill } from 'react-icons/bs';
 
 import { FaUser } from 'react-icons/fa';
@@ -8,12 +8,9 @@ import createMarkup from '@utils/createMarkup';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
 import Ingredient from './Ingredient';
 import Tippy from '@tippyjs/react';
-import getAverageReviews from '@utils/getAverageReviews';
 import Rating from '@components/UI/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
-import Check from './Check';
-
 function SingRecipe({
 	id,
 	updated_at,
@@ -76,7 +73,7 @@ function SingRecipe({
 			</div>
 			<div
 				dangerouslySetInnerHTML={descriptionMarkup}
-				className="mt-5 text-justify capitalize"
+				className="my-5 text-justify capitalize"
 			/>
 			{images.length > 0 && <Thumbnail images={images} />}
 
@@ -104,6 +101,7 @@ function SingRecipe({
 						</div>
 
 						<Title title="Ingredients" />
+
 						<Ingredient ingredients={ingredients} />
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
@@ -118,7 +116,10 @@ function SingRecipe({
 				<Title title="Method" />
 				<ul className="text-base flex flex-col gap-2">
 					{instructionsArr.map(({ content }, index) => (
-						<li className="flex gap-2">
+						<li
+							className="flex gap-2"
+							key={index}
+						>
 							<span className="w-5 h-5 leading-5 text-sm border rounded-full shrink-0 text-center relative top-1">
 								{index + 1}
 							</span>

@@ -8,6 +8,7 @@ import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
 import getRandomRecipes from '@utils/getRandomRecipes';
+import Loader from '@components/UI/Loader';
 
 export default function Home() {
 	const { recipes } = useRecipeContext();
@@ -29,50 +30,6 @@ export default function Home() {
 		}
 	}, [recipes]);
 
-	const recipesRandom = [
-		{
-			id: 1,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		},
-		{
-			id: 2,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-		},
-		{
-			id: 3,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-		},
-		{
-			id: 4,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		},
-		{
-			id: 5,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,  consectetur adipiscing elit Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,  consectetur adipiscing elit.',
-		},
-		{
-			id: 6,
-			name: 'Seafood paella',
-			image: null,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		},
-	];
 	return (
 		<>
 			{randomRecipes && (
@@ -92,9 +49,9 @@ export default function Home() {
 
 			<SubscribeSection />
 
-			{categories && (
-				<WidgetLayout>
-					{categories.map(
+			<WidgetLayout>
+				{categories ? (
+					categories.map(
 						(category) =>
 							category.recipes.length > 0 && (
 								<GroupCategory
@@ -103,9 +60,15 @@ export default function Home() {
 									name={category.name}
 								/>
 							)
-					)}
-				</WidgetLayout>
-			)}
+					)
+				) : (
+					<div className="flex gap-2">
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+					</div>
+				)}
+			</WidgetLayout>
 		</>
 	);
 }

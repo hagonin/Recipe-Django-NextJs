@@ -35,6 +35,7 @@ function RecipeCard({
 	actBookmark,
 	handleToggleBookmark,
 	lastPost,
+	isAverage,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
@@ -52,7 +53,7 @@ function RecipeCard({
 			<div>
 				<Link
 					href={`/recips/${slug}`}
-					className="text-semibold text-xl font-serif text-black line-clamp-2"
+					className="text-semibold text-xl font-serif text-black line-clamp-2 capitalize"
 				>
 					{name}
 				</Link>
@@ -62,6 +63,7 @@ function RecipeCard({
 						number={rating}
 						count={reviews_count}
 						small
+						isAverage={isAverage}
 					/>
 				)}
 			</div>
@@ -74,7 +76,7 @@ function RecipeCard({
 				handleCloseConfirm={() => setShowConfirmDelete(false)}
 			/>
 			<div
-				className={`h-full rounded overflow-hidden ${
+				className={`h-full  rounded overflow-hidden ${
 					smallCard && 'shadow-md'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
@@ -139,13 +141,13 @@ function RecipeCard({
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
 						}
-						className={`inline font-serif ${
+						className={`inline font-serif line-clamp-2  ${
 							smallCard
 								? 'text-2xl'
 								: lgCard
 								? 'text-2xl'
 								: 'text-xl'
-						} text-black line-clamp-2  hover:text-primaryDark transition-all duration-200`}
+						} h-14  text-black   hover:text-primaryDark transition-all duration-200`}
 					>
 						{name}
 					</Link>
@@ -153,7 +155,7 @@ function RecipeCard({
 					<div
 						className={` ${
 							lgCard ? '' : 'justify-between'
-						}flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
+						} flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
 							secondary || lgCard ? '' : 'border-t mt-4'
 						}`}
 					>
@@ -171,6 +173,7 @@ function RecipeCard({
 							<Rating
 								number={rating}
 								small={smallCard}
+								isAverage={isAverage}
 								count={reviews_count}
 							/>
 						) : null}
