@@ -105,17 +105,17 @@ export const tags = [
 	'dinner',
 ];
 export const unit = [
-	{ id: 1, name: 'pound(s)' },
-	{ id: 2, name: 'ml' },
-	{ id: 3, name: 'lbs' },
-	{ id: 4, name: 'oz' },
-	{ id: 5, name: 'g' },
-	{ id: 6, name: 'kg' },
-	{ id: 7, name: 'cup' },
-	{ id: 8, name: 'teaspoon(s)' },
-	{ id: 9, name: 'tablespoon(s)' },
-	{ id: 10, name: 'pcs' },
-	{ id: 11, name: 'l' },
+	{ id: 1, name: 'cup(s)' },
+	{ id: 2, name: 'g' },
+	{ id: 3, name: 'ml' },
+	{ id: 4, name: 'l' },
+	{ id: 5, name: 'teaspoon(s)' },
+	{ id: 6, name: 'tablespoon(s)' },
+	{ id: 7, name: 'pound(s)' },
+	{ id: 8, name: 'pcs' },
+	{ id: 9, name: 'kg' },
+	{ id: 10, name: 'oz' },
+	{ id: 11, name: 'lbs' },
 ];
 
 export const ratingScale = [
