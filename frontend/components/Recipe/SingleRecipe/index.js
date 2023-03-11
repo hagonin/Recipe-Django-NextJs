@@ -40,7 +40,7 @@ function SingRecipe({
 	return (
 		<div>
 			<div className="flex gap-2 justify-center items-start ">
-				<h1 className="text-center font-serif">{title}</h1>
+				<h1 className="text-center font-serif capitalize">{title}</h1>
 				<Tippy
 					content={
 						<span>
@@ -50,7 +50,7 @@ function SingRecipe({
 				>
 					<button
 						onClick={() => handleToggleBookmark(actBookmark, id)}
-						className={`text-xl ml-2  ${
+						className={`text-2xl ml-2  ${
 							actBookmark ? 'text-primary' : 'text-black'
 						}`}
 					>
@@ -76,14 +76,14 @@ function SingRecipe({
 			</div>
 			<div
 				dangerouslySetInnerHTML={descriptionMarkup}
-				className="mt-5 mb-10 text-justify"
+				className="mt-5 text-justify capitalize"
 			/>
 			{images.length > 0 && <Thumbnail images={images} />}
 
-			<div className="border border-border rounded-md p-6 mt-10">
+			<div className="border border-border rounded-md p-6 mt-8">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
-						<h3 className="font-serif">{title}</h3>
+						<h2 className="font-serif capitalize">{title}</h2>
 						<span className="block mt-1">
 							{updated_at_format} / {author}
 						</span>
@@ -116,17 +116,21 @@ function SingRecipe({
 					</div>
 				</div>
 				<Title title="Method" />
-				{instructionsArr.map(({ content }, index) => (
-					<Check
-						key={index}
-						label={`${index + 1}) ${content}`}
-					/>
-				))}
+				<ul className="text-base flex flex-col gap-2">
+					{instructionsArr.map(({ content }, index) => (
+						<li className="flex gap-2">
+							<span className="w-5 h-5 leading-5 text-sm border rounded-full shrink-0 text-center relative top-1">
+								{index + 1}
+							</span>
+							<span>{content}</span>
+						</li>
+					))}
+				</ul>
 				{notes && (
-					<>
+					<div>
 						<Title title="NOTE" />
 						<p>{notes}</p>
-					</>
+					</div>
 				)}
 			</div>
 		</div>

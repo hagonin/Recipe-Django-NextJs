@@ -6,7 +6,7 @@ import Check from './Check';
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-2">
 			<div className="flex flex-col ">
 				{ingredient?.item.map((i, index) =>
 					isPreview ? (

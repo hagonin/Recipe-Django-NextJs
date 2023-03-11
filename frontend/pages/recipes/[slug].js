@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import useRecipeBySlug from 'hook/useRecipeBySlug';
 import { useEffect } from 'react';
 import { RECIPE_MAIN_IMAGE } from '@utils/constants';
+import Loader from '@components/UI/Loader';
 
 function Recipe() {
 	const router = useRouter();
@@ -93,7 +94,7 @@ function Recipe() {
 	return (
 		<>
 			{isLoading ? (
-				'Loading'
+				<Loader type="single-recipe" />
 			) : data ? (
 				<>
 					<SingRecipe
