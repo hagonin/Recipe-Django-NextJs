@@ -1,11 +1,16 @@
-import Footer from './Footer';
-import Header from './Header';
+import { useRecipeContext } from '@context/recipe-context';
 
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuthContext } from '@context/auth-context';
+
+import Footer from './Footer';
+import Header from './Header';
 import Loader from '@components/UI/Loader';
-import { useRecipeContext } from '@context/recipe-context';
+
+const contextClass = {
+	success: 'bg-[#edfce9]',
+	error: 'bg-[#ffe6e6]',
+};
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();
@@ -17,8 +22,14 @@ function RootLayout({ children }) {
 			<Footer />
 			<ToastContainer
 				position="top-right"
-				autoClose={1500}
+				autoClose={1000}
 				transition={Slide}
+				toastClassName={({ type }) =>
+					contextClass[type] +
+					' relative flex px-2 pb-2 rounded-md justify-between overflow-hidden cursor-pointer border'
+				}
+				bodyClassName={() => 'text-lg text-black flex p-3'}
+				icon={false}
 			/>
 			{loading || loadingRecipes ? (
 				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex">

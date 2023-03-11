@@ -49,7 +49,7 @@ function number({ number, count, small, isAverage }) {
 					<BsStar />
 				)}
 			</span>
-			{isAverage && <span className="font-semibold ml-2">({count})</span>}
+			{isAverage && <span className="text-base font-medium ml-2">({count})</span>}
 		</div>
 	);
 }

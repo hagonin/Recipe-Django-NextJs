@@ -72,7 +72,8 @@ function Thumbnail({ images }) {
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="md:w-1/2  h-60 mx-auto"
+							className="h-72 w-72 mx-auto "
+							cover
 						/>
 					</div>
 				))}
@@ -90,7 +91,7 @@ function Thumbnail({ images }) {
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-24"
+							className="h-16 rounded-md"
 							cover
 						/>
 					</div>

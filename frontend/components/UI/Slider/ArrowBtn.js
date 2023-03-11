@@ -5,11 +5,13 @@ function ArrowBtn({ right, onClick }) {
 	return (
 		<button
 			onClick={onClick}
-			className={`lg:visible invisible md:text-[2rem] text-3xl text-white md:p-3 p-2 rounded-full absolute top-1/2 -translate-y-1/2 bg-[rgba(255,255,255,0.5)] ${
+			className={` border border-border lg:visible invisible md:text-[2rem]  text-white md:p-2 p-2 rounded-full absolute top-[43%] -translate-y-1/2 bg-[rgba(255,255,255,0.7)] ${
 				right ? 'right-3' : 'left-3'
 			} hover:bg-[rgba(255,255,255,0.8)] hover:text-black transition-all duration-300`}
 		>
-			{right ? <HiOutlineChevronRight /> : <HiOutlineChevronLeft />}
+			<span className='text-[2.7rem]'>
+				{right ? <HiOutlineChevronRight /> : <HiOutlineChevronLeft />}
+			</span>
 		</button>
 	);
 }

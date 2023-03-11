@@ -4,7 +4,7 @@ function Tooltip({ content, children }) {
 	return (
 		<Tippy
 			// theme="light"
-			content={<span className="text-xl">{content}</span>}
+			content={<span className="text-base">{content}</span>}
 		>
 			{children}
 		</Tippy>

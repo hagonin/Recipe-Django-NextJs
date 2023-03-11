@@ -40,7 +40,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 		<div>
 			<Form
 				onSubmit={handleSubmit(createFormData)}
-				className="w-1/3 mx-auto"
+				className="md:w-1/3 mx-auto"
 			>
 				<Image handleChooseImg={handleChoosePhoto} />
 				<div className="flex flex-col items-center">

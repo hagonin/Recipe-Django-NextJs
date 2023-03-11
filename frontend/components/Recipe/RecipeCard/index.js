@@ -33,8 +33,9 @@ function RecipeCard({
 	goToAddPhoto,
 	secondary,
 	actBookmark,
-	handleToggleBookmark,
+	handleToggleBookmark = () => {},
 	lastPost,
+	isAverage,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && createMarkup(summary);
@@ -52,7 +53,7 @@ function RecipeCard({
 			<div>
 				<Link
 					href={`/recips/${slug}`}
-					className="text-semibold text-xl font-serif text-black line-clamp-2"
+					className="text-semibold text-xl font-serif text-black line-clamp-2 capitalize"
 				>
 					{name}
 				</Link>
@@ -62,6 +63,7 @@ function RecipeCard({
 						number={rating}
 						count={reviews_count}
 						small
+						isAverage={isAverage}
 					/>
 				)}
 			</div>
@@ -74,14 +76,16 @@ function RecipeCard({
 				handleCloseConfirm={() => setShowConfirmDelete(false)}
 			/>
 			<div
-				className={`h-full rounded overflow-hidden ${
+				className={`h-full  rounded overflow-hidden ${
 					smallCard && 'shadow-md'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
 				} ${className}`}
 			>
 				<div
-					className={`relative h-64 ${lgCard ? 'lg:col-span-5' : ''}`}
+					className={`relative md:h-64 h-48 ${
+						lgCard ? 'lg:col-span-5' : ''
+					}`}
 				>
 					<Link
 						href={
@@ -93,7 +97,7 @@ function RecipeCard({
 						<Img
 							src={main_image}
 							alt={`recipe ${name}`}
-							className="h-64"
+							className="md:h-64 h-48 "
 							cover
 						/>
 					</Link>
@@ -122,38 +126,39 @@ function RecipeCard({
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 pt-3 pb-4 ${
+					className={`md:px-4 px-2 md:pt-3 border border-border pb-4  ${
 						lgCard ? 'lg:col-span-7' : ''
 					}`}
 				>
-					{category && (
-						<span className="tag font-bold text-[0.8rem] mb-1 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
-							<HiOutlineTag />
-							{category}
-						</span>
-					)}
-
-					<Link
-						href={
-							secondary
-								? `/user/recipe/${slug}`
-								: `/recipes/${slug}`
-						}
-						className={`inline font-serif ${
-							smallCard
-								? 'text-2xl'
-								: lgCard
-								? 'text-2xl'
-								: 'text-xl'
-						} text-black line-clamp-2  hover:text-primaryDark transition-all duration-200`}
-					>
-						{name}
-					</Link>
+					<div className="mt-3">
+						{category && (
+							<span className="tag font-bold text-[0.8rem] mb-1 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
+								<HiOutlineTag />
+								{category}
+							</span>
+						)}
+						<Link
+							href={
+								secondary
+									? `/user/recipe/${slug}`
+									: `/recipes/${slug}`
+							}
+							className={`inline font-serif line-clamp-2 ${
+								smallCard
+									? 'md:text-2xl text-xl md:h-14 '
+									: lgCard
+									? 'text-2xl '
+									: 'text-xl'
+							}  text-black   hover:text-primaryDark transition-all duration-200`}
+						>
+							{name}
+						</Link>
+					</div>
 
 					<div
 						className={` ${
 							lgCard ? '' : 'justify-between'
-						}flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
+						} flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
 							secondary || lgCard ? '' : 'border-t mt-4'
 						}`}
 					>
@@ -171,6 +176,7 @@ function RecipeCard({
 							<Rating
 								number={rating}
 								small={smallCard}
+								isAverage={isAverage}
 								count={reviews_count}
 							/>
 						) : null}
@@ -180,7 +186,7 @@ function RecipeCard({
 						<>
 							<div
 								dangerouslySetInnerHTML={summaryMarkup}
-								className="mt-3 line-clamp-4 text-lg"
+								className="mt-1 line-clamp-4 text-lg"
 							/>
 							<Button
 								type="link"
@@ -189,7 +195,7 @@ function RecipeCard({
 										? `/user/recipe/${slug}`
 										: `/recipes/${slug}`
 								}
-								className="mt-6"
+								className="mt-4"
 							>
 								Continue Reading
 							</Button>
