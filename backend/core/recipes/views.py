@@ -29,7 +29,7 @@ class RecipeListViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['search_vector']
     ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__title', 'title')
-
+    
     @method_decorator(cache_page(60*60*4))
     @method_decorator(vary_on_cookie)
     def dispatch(self, request, *args, **kwargs):
@@ -48,7 +48,7 @@ class RecipeDetailViewSet(CreateModelMixin,
     serializer_class = serializers.RecipeDetailWriteSerializer
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
-    ordering_fields = ['created_at', 'rating']
+    ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__title', 'title')
 
     
@@ -78,7 +78,7 @@ class RecipeDetailReadViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.RecipeDetailReadSerializer
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
-    ordering_fields = ['created_at', 'rating']
+    ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__title', 'title')
     permission_classes = [AllowAny]
 
