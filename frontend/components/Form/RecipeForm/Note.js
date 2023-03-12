@@ -21,11 +21,11 @@ function Note({ register, handleUngister, handleRegister, initValue }) {
 
 	return (
 		<>
-			<Label label="Notes" />
+			<Label label="Note" />
 			{show ? (
-				<>
+				<div className='relative'>
 					<button
-						className="float-right ml-2"
+						className="absolute -top-6 right-0"
 						onClick={handleClose}
 					>
 						<AiOutlineMinusCircle />
@@ -35,7 +35,7 @@ function Note({ register, handleUngister, handleRegister, initValue }) {
 						rows="5"
 						register={register}
 					/>
-				</>
+				</div>
 			) : (
 				<Button
 					onClick={handleOpen}

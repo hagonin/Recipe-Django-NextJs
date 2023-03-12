@@ -9,7 +9,9 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 	return (
 		<div className="border-b border-border py-8">
 			<div className="flex justify-between items-center mb-5">
-				<h2 className="capitalize text-4xl font-serif text-black">{name}</h2>
+				<h2 className="capitalize text-4xl font-serif text-black">
+					{name}
+				</h2>
 				<Link
 					href={`recipes/category/${name}`}
 					className="text-lg text-black transition-all flex items-center gap-2 hover:text-primary"
@@ -28,9 +30,11 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 						date={item.updated_at}
 						name={item.title}
 						rating={item.rating}
+						reviews_count={item.reviews_count}
 						main_image={item.main_image}
 						id={item.id}
 						smallCard
+						isAverage
 					/>
 				))}
 			</div>

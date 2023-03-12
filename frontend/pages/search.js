@@ -19,11 +19,12 @@ import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
 import useQuery from 'hook/useQuery';
+import useRecipes from 'hook/useRecipes';
 
 function Search() {
 	const router = useRouter();
 	const { query } = router;
-	const { keywords } = useRecipeContext();
+	const { keywords, topRating } = useRecipeContext();
 
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
@@ -35,8 +36,6 @@ function Search() {
 			});
 		}
 	);
-
-	const { data: recipesTop } = useQuery(5, { ordering: 'rating' });
 
 	useEffect(() => {
 		setQueryParams(query);
@@ -94,7 +93,7 @@ function Search() {
 								Sorry. No result found.
 							</h4>
 
-							<TopRating recipes={recipesTop} />
+							<TopRating recipes={topRating} />
 						</>
 					)}
 				</div>

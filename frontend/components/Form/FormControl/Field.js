@@ -227,6 +227,13 @@ const RichTextField = forwardRef(
 				ref={ref}
 				className="h-[70%]"
 				{...props}
+				modules={{
+					toolbar: [
+						['italic', 'underline'],
+						// [{ list: 'bullet' }, { list: 'ordered' }],
+					],
+				}}
+				formats={['italic', 'underline']}
 			/>
 		</div>
 	)

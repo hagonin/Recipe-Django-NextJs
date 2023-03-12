@@ -47,7 +47,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 				source: initValues?.source || '',
 				notes: initValues?.notes || '',
 				search_vector: initValues?.search_vector || '',
-				main_image: initValues?.image_url || images.spoon,
+				main_image: initValues?.main_image || images.spoon,
 				ingredient: (initValues && {
 					item: initValues.ingredients.item,
 					group: initValues.ingredients.group,
@@ -197,7 +197,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						/>
 						<Image
 							handleChooseImg={handleChooseImg}
-							urlInit={initValues?.image_url || images.spoon}
+							urlInit={initValues?.main_image || images.spoon}
 						/>
 					</div>
 				</div>

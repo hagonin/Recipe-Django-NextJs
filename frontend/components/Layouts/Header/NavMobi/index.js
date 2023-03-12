@@ -93,7 +93,7 @@ function NavMobi() {
 						) : (
 							<NavItem href="/login">
 								<span>
-									<FiLogIn className="inline-block relative -mt-1 mr-2" />
+									<FiLogIn className="text-xl inline-block relative -mt-1 mr-2" />
 									Login
 								</span>
 							</NavItem>

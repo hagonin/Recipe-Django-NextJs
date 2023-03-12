@@ -22,7 +22,7 @@ function NavCategory() {
 				)}
 			</NavItem>
 			<div
-				className={`grid grid-cols-2 ml-16  ${
+				className={`grid md:grid-cols-2 md:ml-16 ml-10  ${
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>

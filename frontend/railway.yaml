@@ -1,0 +1,12 @@
+name: frontend
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    env:
+      - PORT=8080
+    commands:
+      - npm start
+    concurrency:
+      - routes: "/*"
+        connections: 1

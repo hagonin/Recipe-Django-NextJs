@@ -1,6 +1,3 @@
-import api from '@services/axios';
-import { ENDPOINT_RECIPE } from '@utils/constants';
-
 import {
 	HiOutlineChevronDoubleLeft,
 	HiOutlineChevronDoubleRight,
@@ -10,16 +7,19 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import { useRecipeContext } from '@context/recipe-context';
+import usePagination from 'hook/usePagination';
+import Loader from '@components/UI/Loader';
 
 function Recipe() {
 	const { checkBookmarkAct, handleToggleBookmark, recipes } =
 		useRecipeContext();
-
+	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
+		usePagination({ recipes: recipes });
 	return (
 		<div className="container my-14">
-			<div className="grid grid-cols-3 gap-x-6 gap-y-10">
-				{recipes &&
-					recipes.map((item) => {
+			<div className="grid md:grid-cols-3 grid-cols-2 gap-x-6 md:gap-y-10">
+				{currentRecipes ? (
+					currentRecipes.map((item) => {
 						return (
 							<RecipeCard
 								key={item.id}
@@ -37,13 +37,28 @@ function Recipe() {
 								smallCard
 							/>
 						);
-					})}
+					})
+				) : (
+					<>
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+					</>
+				)}
 			</div>
 			<div className="flex justify-between mt-10">
-				<Button icon={{ left: <HiOutlineChevronDoubleLeft /> }}>
+				<Button
+					icon={{ left: <HiOutlineChevronDoubleLeft /> }}
+					onClick={previousPage}
+					disabled={currentPage === 1}
+				>
 					Previous Recipe
 				</Button>
-				<Button icon={{ right: <HiOutlineChevronDoubleRight /> }}>
+				<Button
+					icon={{ right: <HiOutlineChevronDoubleRight /> }}
+					disabled={currentPage >= limit}
+					onClick={nextPage}
+				>
 					Next recipe
 				</Button>
 			</div>

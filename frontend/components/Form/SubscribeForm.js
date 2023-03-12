@@ -33,7 +33,7 @@ function SubscribeForm({ secondary }) {
 			onSubmit={handleSubmit(onSubmit)}
 			className={`flex ${
 				secondary ? '' : '!flex-row lg:w-[450px]'
-			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 `}
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row !flex-col`}
 		>
 			<InputField
 				name="subscribe.email"

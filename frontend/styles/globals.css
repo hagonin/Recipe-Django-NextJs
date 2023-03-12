@@ -39,7 +39,10 @@
     }
     
     ul {
-      @apply list-none;
+      @apply list-decimal ml-6;
+    }
+    ol {
+      @apply list-disc ml-6;
     }
     
 }
@@ -94,6 +97,10 @@
 
     .btn.outline {
       @apply border-primaryDark;
+    }
+
+    .btn:disabled {
+      @apply  bg-white select-none hover:bg-white hover:border-border hover:text-black opacity-80;
     }
 
 
