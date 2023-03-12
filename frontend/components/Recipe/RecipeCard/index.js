@@ -168,7 +168,7 @@ function RecipeCard({
 						{date_format && (
 							<span
 								className={`mt-1 ${
-									lgCard ? 'text-base' : 'text-sm'
+									lgCard ? 'text-base mr-3' : 'text-sm'
 								} flex items-center gap-1`}
 							>
 								<MdDateRange className="text-primary" />

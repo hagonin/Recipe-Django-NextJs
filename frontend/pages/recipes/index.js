@@ -17,7 +17,7 @@ function Recipe() {
 		usePagination({ recipes: recipes });
 	return (
 		<div>
-			<h1 className='mb-10'>Discover all recipes</h1>
+			<h1 className="mb-10">Discover all recipes</h1>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6">
 				{currentRecipes ? (
 					currentRecipes.map((item) => {
@@ -47,22 +47,24 @@ function Recipe() {
 					</>
 				)}
 			</div>
-			<div className="flex justify-between mt-10">
-				<Button
-					icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-					onClick={previousPage}
-					disabled={currentPage === 1}
-				>
-					Previous Recipe
-				</Button>
-				<Button
-					icon={{ right: <HiOutlineChevronDoubleRight /> }}
-					disabled={currentPage >= limit}
-					onClick={nextPage}
-				>
-					Next recipe
-				</Button>
-			</div>
+			{currentRecipes?.length > 0 && (
+				<div className="flex justify-between mt-10">
+					<Button
+						icon={{ left: <HiOutlineChevronDoubleLeft /> }}
+						onClick={previousPage}
+						disabled={currentPage === 1}
+					>
+						Previous Recipe
+					</Button>
+					<Button
+						icon={{ right: <HiOutlineChevronDoubleRight /> }}
+						disabled={currentPage >= limit}
+						onClick={nextPage}
+					>
+						Next recipe
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }

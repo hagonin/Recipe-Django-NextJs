@@ -43,7 +43,7 @@ function CategoryPage() {
 						<p className="mt-3">{category.desc}</p>
 					</div>
 				)}
-				<div className="grid">
+				<div className="flex flex-col gap-y-8 mt-10">
 					{currentRecipes ? (
 						currentRecipes.map((recipe) => (
 							<RecipeCard
@@ -60,7 +60,7 @@ function CategoryPage() {
 								handleToggleBookmark={handleToggleBookmark}
 								actBookmark={checkBookmarkAct(recipe.id)}
 								lgCard
-								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1"
+								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1 pb-8 border-b"
 							/>
 						))
 					) : (
@@ -70,22 +70,24 @@ function CategoryPage() {
 					)}
 				</div>
 
-				<div className="flex justify-between mt-10">
-					<Button
-						icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-						onClick={previousPage}
-						disabled={currentPage === 1}
-					>
-						Previous Recipe
-					</Button>
-					<Button
-						icon={{ right: <HiOutlineChevronDoubleRight /> }}
-						disabled={currentPage >= limit}
-						onClick={nextPage}
-					>
-						Next recipe
-					</Button>
-				</div>
+				{currentRecipes?.length > 0 && (
+					<div className="flex justify-between mt-10">
+						<Button
+							icon={{ left: <HiOutlineChevronDoubleLeft /> }}
+							onClick={previousPage}
+							disabled={currentPage === 1}
+						>
+							Previous Recipe
+						</Button>
+						<Button
+							icon={{ right: <HiOutlineChevronDoubleRight /> }}
+							disabled={currentPage >= limit}
+							onClick={nextPage}
+						>
+							Next recipe
+						</Button>
+					</div>
+				)}
 			</>
 		</>
 	);
