@@ -16,8 +16,9 @@ function Recipe() {
 	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
 		usePagination({ recipes: recipes });
 	return (
-		<div className="container my-14">
-			<div className="grid md:grid-cols-3 grid-cols-2 gap-x-6 md:gap-y-10">
+		<div>
+			<h1 className='mb-10'>Discover all recipes</h1>
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6">
 				{currentRecipes ? (
 					currentRecipes.map((item) => {
 						return (

@@ -44,7 +44,7 @@ function RecipeCard({
 		<div className={`flex grid-cols-3 md:gap-4 gap-2 border-b pb-4`}>
 			<Link
 				href={`/recips/${slug}`}
-				className="md:h-20 md:w-16 lg:w-24 lg:h-24 w-28 h-28"
+				className="md:h-24 md:w-20 lg:w-24 lg:h-24 w-24 h-24"
 			>
 				<Img
 					src={main_image}
