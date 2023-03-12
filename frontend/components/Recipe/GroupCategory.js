@@ -14,7 +14,7 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 				</h2>
 				<Link
 					href={`recipes/category/${name}`}
-					className="text-lg text-black transition-all flex items-center gap-2 hover:text-primary"
+					className="md:text-lg text-base text-black transition-all flex items-center whitespace-nowrap gap-2 hover:text-primary"
 				>
 					View more
 					<AiOutlineDoubleRight />

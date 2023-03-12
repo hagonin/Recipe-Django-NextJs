@@ -21,9 +21,10 @@ function UserSection({ name, bio, avatar }) {
 			>
 				{name}
 			</span>
-			<p className="text-center mt-1 mb-5 ">
-				{bio ||
-					' Sed pellentesque nibh enim, quis euismod enim lacinia nec.Phasellus quam diam, semper in erat eu. Consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec.'}
+			<p className="text-center mt-1 mb-5 line-clamp-3 first-letter:capitalize">
+				{bio || (
+					<span className="italic">You have not added any bio.</span>
+				)}
 			</p>
 			<SocialLink
 				color="second"

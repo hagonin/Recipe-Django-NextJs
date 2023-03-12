@@ -49,7 +49,7 @@
 
 @layer components {
     .container {
-        @apply xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+        @apply xl:max-w-[1110px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
 
     .btn {
@@ -99,9 +99,9 @@
       @apply border-primaryDark;
     }
 
-    .btn:disabled {
+    /* .btn:disabled {
       @apply  bg-white select-none hover:bg-white hover:border-border hover:text-black opacity-80;
-    }
+    } */
 
 
 }

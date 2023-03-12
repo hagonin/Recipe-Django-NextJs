@@ -9,7 +9,7 @@ function LastPost({ isFooter, number = 3 }) {
 		<div
 			className={`${
 				isFooter
-					? 'grid grid-cols-1 lg:gap-6 md:gap-4 gap-2'
+					? 'grid md:grid-cols-2 grid-cols-1 lg:gap-6 md:gap-4 gap-2'
 					: 'flex flex-col gap-4 w-full'
 			}`}
 		>

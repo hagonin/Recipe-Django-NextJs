@@ -31,9 +31,9 @@ function SubscribeForm({ secondary }) {
 	return (
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
-			className={`flex ${
-				secondary ? '' : '!flex-row lg:w-[450px]'
-			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row !flex-col`}
+			className={`flex  ${
+				secondary ? '!flex-col' : 'lg:w-[450px]'
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row`}
 		>
 			<InputField
 				name="subscribe.email"
@@ -44,7 +44,7 @@ function SubscribeForm({ secondary }) {
 				error={errors?.subscribe?.email}
 			/>
 			<Button
-				className={`${secondary ? '' : 'primary'} lg`}
+				className={`lg primary`}
 				type="submit"
 				disabled={isSubmitting}
 			>

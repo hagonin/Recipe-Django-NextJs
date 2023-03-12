@@ -23,7 +23,7 @@ function Slide({ id, image, name, description, slug }) {
 			</Link>
 			<div className="absolute bottom-0 left-0 w-full z-20 bg-primaryTransparent text-center py-3 px-5">
 				<Link
-					className="text-2xl text-white font-serif line-clamp-1"
+					className="text-2xl text-white font-serif line-clamp-1 capitalize"
 					href={`/recipes/${slug}`}
 				>
 					{name}

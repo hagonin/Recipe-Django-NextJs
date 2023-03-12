@@ -11,6 +11,7 @@ const useRecipes = () => {
 	});
 	const [keywords, setKeyWords] = useState([]);
 	const [topRating, setTopRating] = useState(null);
+	const [photos, setPhotos] = useState(null);
 	useEffect(() => {
 		if (data) {
 			// get keyword
@@ -27,9 +28,17 @@ const useRecipes = () => {
 				.filter((item) => item.rating)
 				.sort((a, b) => b.rating - a.rating);
 			setTopRating(ratings);
+
+			// collections pics
+			let arrPhotos = data.slice(0, 11).map((item) => ({
+				id: item.id,
+				src: item.main_image,
+				slug: item.slug,
+			}));
+			setPhotos(arrPhotos);
 		}
 	}, [data]);
-	return { data, topRating, keywords, ...rest };
+	return { data, topRating, keywords,photos, ...rest };
 };
 
 export default useRecipes;

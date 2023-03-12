@@ -41,19 +41,22 @@ function RecipeCard({
 	const summaryMarkup = summary && createMarkup(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastPost ? (
-		<div className={`flex md:gap-4 gap-2 border-b pb-4`}>
-			<Link href={`/recips/${slug}`}>
+		<div className={`flex grid-cols-3 md:gap-4 gap-2 border-b pb-4`}>
+			<Link
+				href={`/recips/${slug}`}
+				className="md:h-20 md:w-16 lg:w-24 lg:h-24 w-28 h-28"
+			>
 				<Img
 					src={main_image}
 					alt={name}
-					className="h-24 w-24"
+					className="w-full h-full"
 					cover
 				/>
 			</Link>
-			<div>
+			<div className="flex-1">
 				<Link
 					href={`/recips/${slug}`}
-					className="text-semibold text-xl font-serif text-black line-clamp-2 capitalize"
+					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize"
 				>
 					{name}
 				</Link>
@@ -96,7 +99,7 @@ function RecipeCard({
 					>
 						<Img
 							src={main_image}
-							alt={`recipe ${name}`}
+							alt={name}
 							className="md:h-64 h-48 "
 							cover
 						/>
@@ -126,13 +129,13 @@ function RecipeCard({
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 md:pt-3 border border-border pb-4  ${
+					className={`md:px-4 px-2 pt-3  pb-4  ${
 						lgCard ? 'lg:col-span-7' : ''
 					}`}
 				>
-					<div className="mt-3">
+					<div>
 						{category && (
-							<span className="tag font-bold text-[0.8rem] mb-1 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
+							<span className="tag font-bold text-[0.8rem] mb-1 mt-3 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
 								<HiOutlineTag />
 								{category}
 							</span>
@@ -143,13 +146,13 @@ function RecipeCard({
 									? `/user/recipe/${slug}`
 									: `/recipes/${slug}`
 							}
-							className={`inline font-serif line-clamp-2 ${
+							className={`inline text-black  font-serif capitalize line-clamp-2 ${
 								smallCard
-									? 'md:text-2xl text-xl md:h-14 '
+									? 'text-2xl'
 									: lgCard
 									? 'text-2xl '
 									: 'text-xl'
-							}  text-black   hover:text-primaryDark transition-all duration-200`}
+							}    hover:text-primaryDark transition-all duration-200`}
 						>
 							{name}
 						</Link>
@@ -158,15 +161,15 @@ function RecipeCard({
 					<div
 						className={` ${
 							lgCard ? '' : 'justify-between'
-						} flex gap-x-3 gap-y-1 flex-row flex-wrap  ${
-							secondary || lgCard ? '' : 'border-t mt-4'
+						} flex flex-row flex-wrap  ${
+							secondary || lgCard ? '' : 'border-t mt-3'
 						}`}
 					>
 						{date_format && (
 							<span
 								className={`mt-1 ${
 									lgCard ? 'text-base' : 'text-sm'
-								} flex items-center gap-2`}
+								} flex items-center gap-1`}
 							>
 								<MdDateRange className="text-primary" />
 								{date_format}
@@ -176,7 +179,6 @@ function RecipeCard({
 							<Rating
 								number={rating}
 								small={smallCard}
-								isAverage={isAverage}
 								count={reviews_count}
 							/>
 						) : null}
@@ -201,23 +203,6 @@ function RecipeCard({
 							</Button>
 						</>
 					)}
-
-					{/* <div className="flex gap-x-4 flex-wrap">
-						{prep_time && (
-							<div className="flex items-center gap-2 text-sm mt-5">
-								<AiFillClockCircle />
-								<span>Prep time:</span>
-								<span>{prep_time}</span>
-							</div>
-						)}
-						{cook_time && (
-							<div className="flex items-center gap-2 text-sm mt-5">
-								<AiFillClockCircle />
-								<span>Cook time:</span>
-								<span>{cook_time}</span>
-							</div>
-						)}
-					</div> */}
 
 					{hasControl && (
 						<div className="flex gap-2 mt-3 justify-end text-lg">
