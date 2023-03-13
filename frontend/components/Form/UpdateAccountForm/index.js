@@ -121,7 +121,7 @@ function UpdateProfileForm({
 					rows={6}
 					error={formError?.account?.bio}
 				/>
-				<div className="flex lg:gap-6 md:gap-4 max-md:flex-col mt-7 justify-end ">
+				<div className="flex lg:gap-6 gap-4 mt-7 justify-end ">
 					<Button
 						className="lg cancle w-36"
 						type="button"

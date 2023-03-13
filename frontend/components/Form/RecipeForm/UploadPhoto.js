@@ -19,6 +19,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 			},
 		},
 	});
+
 	const handleChoosePhoto = (file) => {
 		setValue('upload_photo.image_url', file);
 	};

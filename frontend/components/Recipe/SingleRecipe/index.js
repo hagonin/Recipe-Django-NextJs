@@ -108,7 +108,7 @@ function SingRecipe({
 						<Img
 							src={cover}
 							alt="cover"
-							className="mt-5 mx-auto h-52 w-52"
+							className="mt-5 mx-auto h-52 w-full"
 							cover
 						/>
 					</div>

@@ -83,7 +83,7 @@ function Profile() {
 					<span className="text-lg flex items-center gap-2">
 						<MdEmail /> {user?.email}
 					</span>
-					<div className="flex gap-6 items-center mt-2">
+					<div className="flex lg:gap-6 md:gap-4 gap-2 items-center mt-2 md:flex-row flex-col">
 						<Button
 							type="link"
 							href="/user/updateprofile"

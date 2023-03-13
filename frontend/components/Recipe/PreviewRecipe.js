@@ -220,7 +220,7 @@ function PreviewRecipe({
 				Add more photos to make your recipe fantasy
 			</p>
 			<Button
-				className="w-56"
+				className="w-56 "
 				icon={{ left: <HiPhotograph /> }}
 				onClick={goToUpload}
 			>
@@ -258,7 +258,7 @@ function PreviewRecipe({
 			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">
 				<Button
 					className="primary !h-7 !text-sm "
-					icon={{ right: <FiEdit /> }}
+					icon={{ left: <FiEdit /> }}
 					onClick={goToUpdate}
 				>
 					Update

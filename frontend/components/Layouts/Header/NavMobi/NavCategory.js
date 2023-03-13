@@ -28,7 +28,6 @@ function NavCategory() {
 			>
 				<Link
 					href="/recipes"
-					isSubItem
 					className="block capitalize py-2 px-3 hover:text-primary text-left"
 				>
 					All Recipes
@@ -38,7 +37,6 @@ function NavCategory() {
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
 						className="block capitalize py-2 px-3 hover:text-primary text-left"
-						isSubItem
 					>
 						{category.name}
 					</Link>

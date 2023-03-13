@@ -20,8 +20,8 @@ import TopRating from '@components/Recipe/TopRating';
 
 function Search() {
 	const router = useRouter();
+	const { topRating } = useRecipeContext();
 	const { query } = router;
-	const { keywords, topRating } = useRecipeContext();
 
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
@@ -44,30 +44,13 @@ function Search() {
 				<FaSearch className="relative top-[1px]" /> Search Result:
 				{data?.data?.results.length > 0 && data?.data?.results.length}
 			</h1>
-			<div className="flex gap-2 mt-4 flex-wrap">
-				{keywords.map((item) => (
-					<Button
-						className="tag"
-						onClick={() =>
-							router.push({
-								pathname: '/search',
-								query: {
-									search: item,
-								},
-							})
-						}
-					>
-						{item}
-					</Button>
-				))}
-			</div>
 
 			{isLoading || isValidating ? (
 				<div className="flex justify-center mt-10">
 					<Loader type="searching" />
 				</div>
 			) : (
-				<div className="mt-7">
+				<div className="mt-7 flex flex-col gap-4">
 					{data?.data?.results.length > 0 ? (
 						data?.data?.results.map((item) => (
 							<RecipeCard

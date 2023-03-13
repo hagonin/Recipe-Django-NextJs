@@ -225,11 +225,11 @@ const RichTextField = forwardRef(
 				theme="snow"
 				{...field}
 				ref={ref}
-				className="h-[70%]"
+				className="h-[50%]"
 				{...props}
 				modules={{
 					toolbar: [
-						[{ header: [3, 4, 5, 6, false] }],
+						[{ header: [4, 5, 6, false] }],
 						['bold', 'italic', 'underline', 'clean'],
 						[{ color: [] }],
 						['blockquote', 'code-block'],

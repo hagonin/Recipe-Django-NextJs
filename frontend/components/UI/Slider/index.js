@@ -46,7 +46,6 @@ function Slider({ children }) {
 			window.removeEventListener('keydown', handleKeyPress);
 		};
 	}, [loaded]);
-	console.log(currentSlide);
 
 	return (
 		<section className="container mt-10 relative">
