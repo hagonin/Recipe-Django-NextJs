@@ -15,6 +15,9 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class MultipleImageSerializer(serializers.Serializer):
     images = ImageSerializer()
+    # images = serializers.ListField(
+    #     child = serializers.ImageField()
+    # )
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
