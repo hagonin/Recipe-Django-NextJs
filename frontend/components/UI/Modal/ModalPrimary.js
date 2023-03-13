@@ -19,10 +19,10 @@ function ModalPrimary({ show, handleCloseModal, children, disabled, noClose }) {
 				leaveFrom="opacity-100"
 				leaveTo="opacity-0"
 			>
-				<div className="absolute text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg py-6 px-10">
+				<div className="absolute text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg py-6 pr-12 pl-8">
 					{noClose ? null : (
 						<button
-							className="absolute top-3 right-2 text-5xl"
+							className="absolute top-3 right-3 text-5xl"
 							onClick={handleCloseModal}
 							disabled={disabled}
 						>

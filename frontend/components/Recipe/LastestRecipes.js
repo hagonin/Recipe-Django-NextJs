@@ -20,6 +20,7 @@ function LastPost({ isFooter, number = 3 }) {
 						slug={item.slug}
 						main_image={item.main_image}
 						name={item.title}
+						// reviews_count={item.reviews_count}
 						date={item.created_at || item.updated_at}
 						lastPost
 					/>

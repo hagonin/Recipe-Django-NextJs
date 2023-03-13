@@ -167,3 +167,6 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
 export const EXIST_RECIPE = 3;
+export const NUMBER_OF_RECIPE_RECIPE_PAGE = 6;
+export const NUMBER_OF_RECIPE_CATEGORY_PAGE = 6;
+export const SLIDES_ON_DESKTOP = 3;

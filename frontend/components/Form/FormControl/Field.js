@@ -229,11 +229,31 @@ const RichTextField = forwardRef(
 				{...props}
 				modules={{
 					toolbar: [
-						['italic', 'underline'],
-						// [{ list: 'bullet' }, { list: 'ordered' }],
+						[{ header: [3, 4, 5, 6, false] }],
+						['bold', 'italic', 'underline', 'clean'],
+						[{ color: [] }],
+						['blockquote', 'code-block'],
+						[{ align: [] }],
+						[{ list: 'ordered' }, { list: 'bullet' }],
+						['link'],
+						[{ script: 'sub' }, { script: 'super' }],
 					],
 				}}
-				formats={['italic', 'underline']}
+				formats={[
+					'header',
+					'italic',
+					'underline',
+					'bold',
+					'clean',
+					'list',
+					'ordered',
+					'link',
+					'blockquote',
+					'code-block',
+					'align',
+					'script',
+					'color',
+				]}
 			/>
 		</div>
 	)

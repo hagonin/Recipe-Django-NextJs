@@ -14,16 +14,16 @@ function Navigate() {
 					label="Home"
 				/>
 				<div
-					className={`font-medium text-blackLight uppercase py-4 px-5  cursor-pointer relative group `}
+					className={`font-medium text-blackLight uppercase py-4 cursor-pointer relative group `}
 					onMouseEnter={() => setIsHover(true)}
 					onMouseLeave={() => setIsHover(false)}
 				>
 					<NavItem
 						label="Categories"
 						className="group-hover:text-primary"
+						icon={<MdOutlineKeyboardArrowDown />}
 					/>
 
-					<MdOutlineKeyboardArrowDown className="relative -top-[1px] text-2xl inline-block ml-2 group-hover:text-primary" />
 					{isHover && (
 						<div className="top-full left-0 bg-white  absolute z-10 w-[500px] shadow-md border-t-2 border-primary grid grid-cols-3 p-2">
 							<NavItem
@@ -57,14 +57,15 @@ function Navigate() {
 	);
 }
 
-const NavItem = ({ href, label, className }) => {
-	const Comp = href ? Link : 'span';
+const NavItem = ({ href, label, className, icon }) => {
+	const Comp = href ? Link : 'button';
 	return (
 		<Comp
 			href={href}
-			className={`font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
+			className={`flex items-center gap-2 font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
 		>
 			{label}
+			{icon && <span className="text-3xl">{icon}</span>}
 		</Comp>
 	);
 };

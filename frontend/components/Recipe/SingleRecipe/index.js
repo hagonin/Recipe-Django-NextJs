@@ -123,14 +123,16 @@ function SingRecipe({
 							<span className="w-5 h-5 leading-5 text-sm border rounded-full shrink-0 text-center relative top-1">
 								{index + 1}
 							</span>
-							<span>{content}</span>
+							<span className="first-letter:uppercase">
+								{content}
+							</span>
 						</li>
 					))}
 				</ul>
 				{notes && (
 					<div>
 						<Title title="NOTES" />
-						<p>{notes}</p>
+						<p className="first-letter:uppercase">{notes}</p>
 					</div>
 				)}
 			</div>

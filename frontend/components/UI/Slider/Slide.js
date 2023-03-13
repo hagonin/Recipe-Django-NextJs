@@ -3,8 +3,11 @@ import { images } from '@utils/constants';
 
 import Img from '../Image';
 import createMarkup from '@utils/createMarkup';
+import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
 
 function Slide({ id, image, name, description, slug }) {
+	const summary = getPlainTextFromHtml(description);
+
 	return (
 		<div
 			key={id}
@@ -23,15 +26,14 @@ function Slide({ id, image, name, description, slug }) {
 			</Link>
 			<div className="absolute bottom-0 left-0 w-full z-20 bg-primaryTransparent text-center py-3 px-5">
 				<Link
-					className="text-2xl text-white font-serif line-clamp-1 capitalize"
+					className="text-2xl text-white font-serif line-clamp-1 capitalize hover:text-[rgba(255,255,255,0.8)] transition-all"
 					href={`/recipes/${slug}`}
 				>
 					{name}
 				</Link>
-				<div
-					className="text-lg leading-6 text-white mt-1 line-clamp-2 bg-transparent"
-					dangerouslySetInnerHTML={createMarkup(description)}
-				/>
+				<p className="text-base leading-6  text-white mt-1 h-12 line-clamp-2 bg-transparent [&>*:nth-child(3)]:capitalize">
+					{summary}
+				</p>
 			</div>
 		</div>
 	);

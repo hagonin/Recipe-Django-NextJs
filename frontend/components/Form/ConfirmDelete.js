@@ -24,7 +24,7 @@ function ConfirmDelete({ handleDelete, showConfirm, handleCloseConfirm }) {
 				>
 					<Button
 						type="button"
-						className="cancle"
+						className="outline"
 						onClick={handleCloseConfirm}
 						disabled={isSubmitting}
 					>

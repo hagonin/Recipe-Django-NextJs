@@ -12,14 +12,11 @@ import { FaSearch } from 'react-icons/fa';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
-import LastPost from '@components/Recipe/LastestRecipes';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
-import useQuery from 'hook/useQuery';
-import useRecipes from 'hook/useRecipes';
 
 function Search() {
 	const router = useRouter();
@@ -43,11 +40,11 @@ function Search() {
 
 	return (
 		<div className="container">
-			<h1 className=" flex gap-2">
+			<h1 className=" flex gap-4">
 				<FaSearch className="relative top-[1px]" /> Search Result:
-				{/* <span>{results && results.length}</span> */}
+				{data?.data?.results.length > 0 && data?.data?.results.length}
 			</h1>
-			<div className="flex gap-2 mt-4">
+			<div className="flex gap-2 mt-4 flex-wrap">
 				{keywords.map((item) => (
 					<Button
 						className="tag"

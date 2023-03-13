@@ -1,18 +1,10 @@
 import ConfirmDelete from '@components/Form/ConfirmDelete';
-import { Form } from '@components/Form/FormControl';
 import Rating from '@components/UI/Reviews/Rate';
 import { images } from '@utils/constants';
 import formatDate from '@utils/formatdate';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaRegWindowClose } from 'react-icons/fa';
 import { FiDelete } from 'react-icons/fi';
-import { MdDelete, MdDeleteSweep } from 'react-icons/md';
-import Button from '../Button';
 import Img from '../Image';
-import Loader from '../Loader';
-import ModalPrimary from '../Modal/ModalPrimary';
-import Tooltip from '../Tooltip';
 
 function ReviewCard({
 	id,
@@ -43,7 +35,7 @@ function ReviewCard({
 				<Img
 					src={avatar || images.defaultAvatar}
 					alt="avatar"
-					className="h-16 w-16 rounded-full overflow-hidden "
+					className="h-16 w-16 rounded-full overflow-hidden border border-border"
 					cover
 				/>
 				<div className="flex-1">
@@ -70,7 +62,7 @@ function ReviewCard({
 					<span className="capitalize mt-1 block font-medium text-black">
 						{title}
 					</span>
-					<p>{content}</p>
+					<p className='first-letter:uppercase'>{content}</p>
 				</div>
 			</div>
 		</div>

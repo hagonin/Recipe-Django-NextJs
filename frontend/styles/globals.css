@@ -9,6 +9,17 @@
    p, span {
     @apply text-base;
    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
     
     h1 {
        @apply text-5xl font-medium text-black;
@@ -88,7 +99,7 @@
     }
 
     .btn.cancle {
-      @apply  font-bold hover:bg-transparent hover:text-black decoration-2 decoration-primaryDark hover:underline hover:underline-offset-2 border-none;
+      @apply  font-bold border-2  text-red hover:bg-transparent border-red;
     }
 
     .btn.reset {
@@ -96,12 +107,12 @@
     }
 
     .btn.outline {
-      @apply border-primaryDark;
+      @apply border-2 border-primaryDark text-primaryDark hover:bg-transparent hover:opacity-50;
     }
 
-    /* .btn:disabled {
-      @apply  bg-white select-none hover:bg-white hover:border-border hover:text-black opacity-80;
-    } */
+    .btn.disabled:disabled {
+      @apply bg-transparent hover:bg-transparent hover:text-black hover:border-border;
+    }
 
 
 }

@@ -36,16 +36,18 @@ export default function Home() {
 		<>
 			{randomRecipes && (
 				<Slider>
-					{randomRecipes.map((recipe, index) => (
-						<Slide
-							id={recipe.id}
-							image={recipe.main_image}
-							name={recipe.title}
-							description={recipe.description}
-							slug={recipe.slug}
-							key={index}
-						/>
-					))}
+					{randomRecipes.map((recipe, index) => {
+						return (
+							<Slide
+								id={recipe.id}
+								image={recipe.main_image}
+								name={recipe.title}
+								description={recipe.description}
+								slug={recipe.slug}
+								key={index}
+							/>
+						);
+					})}
 				</Slider>
 			)}
 

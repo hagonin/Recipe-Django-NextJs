@@ -68,7 +68,7 @@ function AddRecipe() {
 				</p>
 				<Button
 					onClick={toggleCancel}
-					className="cancle mr-6"
+					className="outline mr-4"
 				>
 					Stay on Page
 				</Button>

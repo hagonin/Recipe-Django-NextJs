@@ -1,8 +1,4 @@
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
-import { BsListTask } from 'react-icons/bs';
-import { GrGroup } from 'react-icons/gr';
-import { HiOutlineMinusSm } from 'react-icons/hi';
-import { RiStopMiniLine } from 'react-icons/ri';
 import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {
@@ -14,7 +10,7 @@ function Ingredient({ ingredients, isPreview }) {
 					isPreview ? (
 						<span
 							key={index}
-							className="text-base border-b pb-1 capitalize"
+							className="text-base border-b pb-1"
 						>
 							{`${i.quantity} ${i.unit} ${i.title}`}
 						</span>
@@ -29,8 +25,7 @@ function Ingredient({ ingredients, isPreview }) {
 			<div className="flex flex-col gap-2 mt-3">
 				{ingredient?.group.map((item, index) => (
 					<div key={index}>
-						<span className="font-medium text-black  capitalize flex items-center gap-1">
-							<RiStopMiniLine />
+						<span className="font-medium text-black  capitalize">
 							{item.heading}
 						</span>
 						<div className="flex flex-col">

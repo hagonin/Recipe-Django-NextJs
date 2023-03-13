@@ -12,6 +12,7 @@ import Rating from '@components/UI/Reviews/Rate';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useState } from 'react';
 import Tooltip from '@components/UI/Tooltip';
+import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
 
 function RecipeCard({
 	name,
@@ -38,12 +39,12 @@ function RecipeCard({
 	isAverage,
 }) {
 	const date_format = formatDate(date);
-	const summaryMarkup = summary && createMarkup(summary);
+	const summaryMarkup = summary && getPlainTextFromHtml(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastPost ? (
 		<div className={`flex grid-cols-3 md:gap-4 gap-2 border-b pb-4`}>
 			<Link
-				href={`/recips/${slug}`}
+				href={`/recipes/${slug}`}
 				className="md:h-24 md:w-20 lg:w-24 lg:h-24 w-24 h-24"
 			>
 				<Img
@@ -55,18 +56,19 @@ function RecipeCard({
 			</Link>
 			<div className="flex-1">
 				<Link
-					href={`/recips/${slug}`}
+					href={`/recipes/${slug}`}
 					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize"
 				>
 					{name}
 				</Link>
-				<span className="text-sm block">{date_format}</span>
+				<span className="text-sm block whitespace-nowrap">
+					{date_format}
+				</span>
 				{rating && (
 					<Rating
 						number={rating}
 						count={reviews_count}
 						small
-						isAverage={isAverage}
 					/>
 				)}
 			</div>
@@ -102,6 +104,7 @@ function RecipeCard({
 							alt={name}
 							className="md:h-64 h-48 "
 							cover
+							title={name}
 						/>
 					</Link>
 
@@ -135,7 +138,7 @@ function RecipeCard({
 				>
 					<div>
 						{category && (
-							<span className="tag font-bold text-[0.8rem] mb-1 mt-3 uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 items-center">
+							<span className="tag font-bold text-[0.75rem] uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 leading-7 items-center">
 								<HiOutlineTag />
 								{category}
 							</span>
@@ -153,9 +156,27 @@ function RecipeCard({
 									? 'text-2xl '
 									: 'text-xl'
 							}    hover:text-primaryDark transition-all duration-200`}
+							title={name}
 						>
 							{name}
 						</Link>
+						{smallCard && (
+							<>
+								<p className="mt-1  text-lg line-clamp-1">
+									{summaryMarkup}
+								</p>
+								<Link
+									className="underline text-base text-primary hover:text-primaryDark"
+									href={
+										secondary
+											? `/user/recipe/${slug}`
+											: `/recipes/${slug}`
+									}
+								>
+									Read more
+								</Link>
+							</>
+						)}
 					</div>
 
 					<div
@@ -184,23 +205,24 @@ function RecipeCard({
 						) : null}
 					</div>
 
-					{summaryMarkup && (
+					{summaryMarkup && lgCard && (
 						<>
-							<div
-								dangerouslySetInnerHTML={summaryMarkup}
-								className="mt-1 line-clamp-4 text-lg"
-							/>
-							<Button
-								type="link"
-								href={
-									secondary
-										? `/user/recipe/${slug}`
-										: `/recipes/${slug}`
-								}
-								className="mt-4"
-							>
-								Continue Reading
-							</Button>
+							<p className="mt-1  text-lg line-clamp-4">
+								{summaryMarkup}
+							</p>
+							{lgCard && (
+								<Button
+									type="link"
+									href={
+										secondary
+											? `/user/recipe/${slug}`
+											: `/recipes/${slug}`
+									}
+									className="mt-4"
+								>
+									Continue Reading
+								</Button>
+							)}
 						</>
 					)}
 

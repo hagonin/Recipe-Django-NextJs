@@ -217,6 +217,14 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						name="recipe.prep_time"
 						label="Pre-time (minutes)"
 						type="number"
+						min="1"
+						rules={{
+							min: {
+								value: 1,
+								message:
+									'Minimum value of prepare time is 1 minutes',
+							},
+						}}
 						register={register}
 						error={formErr?.recipe?.prep_time}
 						placeholder="e.g. 30 minutes"
@@ -225,7 +233,15 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						name="recipe.cook_time"
 						label="Cook-time (minutes)"
 						type="number"
+						min="1"
 						register={register}
+						rules={{
+							min: {
+								value: 1,
+								message:
+									'Minimum value of cook time is 1 minutes',
+							},
+						}}
 						error={formErr?.recipe?.cook_time}
 						placeholder="e.g. 30 minutes"
 					/>

@@ -105,7 +105,7 @@ function UpdateProfileForm({
 					error={formError?.account?.last_name}
 				/>
 				<InputField
-					label="User name"
+					label="Username"
 					name="account.username"
 					type="text"
 					register={register}
@@ -123,15 +123,15 @@ function UpdateProfileForm({
 				/>
 				<div className="flex lg:gap-6 md:gap-4 max-md:flex-col mt-7 justify-end ">
 					<Button
-						className="lg cancle"
-						type='button'
+						className="lg cancle w-36"
+						type="button"
 						onClick={handleReset}
 					>
 						Reset
 					</Button>
 					<Button
 						type="submit"
-						className="lg primary w-44"
+						className="lg primary w-36"
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Save

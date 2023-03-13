@@ -2,6 +2,7 @@ import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
 import { images } from '@utils/constants';
 import { garamond } from '@utils/fonts';
+import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
 import CommonSection from './CommonSection';
 
 function UserSection({ name, bio, avatar }) {
@@ -21,8 +22,8 @@ function UserSection({ name, bio, avatar }) {
 			>
 				{name}
 			</span>
-			<p className="text-center mt-1 mb-5 line-clamp-3 first-letter:capitalize">
-				{bio || (
+			<p className="text-center mt-1 mb-5 line-clamp-3">
+				{uppercaseFirstLetter(bio) || (
 					<span className="italic">You have not added any bio.</span>
 				)}
 			</p>

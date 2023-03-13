@@ -30,11 +30,11 @@ function GroupCategory({ list = [], name = 'Category name' }) {
 						date={item.updated_at}
 						name={item.title}
 						rating={item.rating}
+						summary={item.description}
 						reviews_count={item.reviews_count}
 						main_image={item.main_image}
 						id={item.id}
 						smallCard
-						isAverage
 					/>
 				))}
 			</div>

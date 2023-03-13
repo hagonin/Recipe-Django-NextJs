@@ -19,10 +19,12 @@ function RelatedRecipe({ categoryName }) {
 								main_image={recipe.main_image}
 								name={recipe.title}
 								slug={recipe.slug}
+								summary={recipe.description}
+								rating={recipe.rating}
+								reviews_count={recipe.reviews_count}
 								smallCard
 								date={recipe.created_at || recipe.updated_at}
 								className="keen-slider__slide mb-10"
-								secondary
 							/>
 						);
 					})}

@@ -4,7 +4,7 @@ import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { categoryList } from '@utils/constants';
+import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
 import usePagination from 'hook/usePagination';
 import Button from '@components/UI/Button';
 import {
@@ -21,7 +21,10 @@ function CategoryPage() {
 		useRecipeContext();
 	const [category, setCategory] = useState(null);
 	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
-		usePagination({ page: 3, recipes: category?.recipes });
+		usePagination({
+			page: NUMBER_OF_RECIPE_RECIPE_PAGE,
+			recipes: category?.recipes,
+		});
 
 	useEffect(() => {
 		if (recipes && name) {
@@ -76,6 +79,7 @@ function CategoryPage() {
 							icon={{ left: <HiOutlineChevronDoubleLeft /> }}
 							onClick={previousPage}
 							disabled={currentPage === 1}
+							className="disabled"
 						>
 							Previous Recipe
 						</Button>
@@ -83,6 +87,7 @@ function CategoryPage() {
 							icon={{ right: <HiOutlineChevronDoubleRight /> }}
 							disabled={currentPage >= limit}
 							onClick={nextPage}
+							className="disabled"
 						>
 							Next recipe
 						</Button>
