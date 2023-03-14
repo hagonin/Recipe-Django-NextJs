@@ -45,6 +45,9 @@ function RecipePreView() {
 	const handleDeleteRecipe = useCallback(async () => {
 		await deleteRecipe(recipe?.slug);
 	});
+	const goToUploadPhoto = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`)
+	);
 
 	useEffect(() => {
 		setLoading(true);
@@ -68,6 +71,7 @@ function RecipePreView() {
 					goToUpdate={goToUpdate}
 					gotoDelete={handleDeleteRecipe}
 					goToRecipeSingle={goToRecipeSingle}
+					goToUploadPhoto={goToUploadPhoto}
 				/>
 			) : null}
 		</div>

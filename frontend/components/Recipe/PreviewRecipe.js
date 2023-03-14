@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import { BsFillTagsFill, BsListTask, BsTrash } from 'react-icons/bs';
+import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
 import { FaClipboardList, FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
 import createMarkup from '@utils/createMarkup';
@@ -15,16 +15,9 @@ import { toast } from 'react-toastify';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 
-import { images as iconImg } from '@utils/constants';
-import { GrNext } from 'react-icons/gr';
-import {
-	AiOutlineDelete,
-	AiOutlineDoubleRight,
-	AiOutlineEye,
-	AiOutlineMinusCircle,
-} from 'react-icons/ai';
 import { FiDelete, FiEdit } from 'react-icons/fi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
+import { MdPhotoAlbum } from 'react-icons/md';
 
 function PreviewRecipe({
 	data,
@@ -33,6 +26,7 @@ function PreviewRecipe({
 	goToUpdate,
 	gotoDelete,
 	goToRecipeSingle,
+	goToUploadPhoto,
 }) {
 	const router = useRouter();
 	const {
@@ -53,22 +47,9 @@ function PreviewRecipe({
 		slug,
 	} = data;
 
-	const [showConfirmDeletePhoto, setShowConfirmDeletePhoto] = useState(false);
 	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
 		useState(false);
 
-	const [idPhotoDelete, setIdPhotoDelete] = useState(null);
-
-	useEffect(() => {
-		idPhotoDelete
-			? setShowConfirmDeletePhoto(true)
-			: setShowConfirmDeletePhoto(false);
-	}, [idPhotoDelete]);
-
-	const onDeletePhoto = useCallback(async () => {
-		await handleDeletePhoto(idPhotoDelete);
-		setIdPhotoDelete(null);
-	});
 
 	const onDeleteRecipe = useCallback(async () => {
 		await gotoDelete(slug);
@@ -219,13 +200,6 @@ function PreviewRecipe({
 			<p className="relative -top-3">
 				Add more photos to make your recipe fantasy
 			</p>
-			<Button
-				className="w-56 "
-				icon={{ left: <HiPhotograph /> }}
-				onClick={goToUpload}
-			>
-				Upload photo
-			</Button>
 			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 my-4">
 				{images?.map((img, index) => {
 					return (
@@ -239,23 +213,21 @@ function PreviewRecipe({
 								className="h-44 w-full"
 								cover
 							/>
-							<button
-								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
-								onClick={() => setIdPhotoDelete(img.id)}
-							>
-								<BsTrash />
-							</button>
+							
 						</div>
 					);
 				})}
-				<ConfirmDelete
-					showConfirm={showConfirmDeletePhoto}
-					handleCloseConfirm={() => setIdPhotoDelete(null)}
-					handleDelete={onDeletePhoto}
-				/>
+				
 			</div>
 
 			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">
+				<Button
+					className="outline !h-7 !text-sm "
+					icon={{ left: <MdPhotoAlbum /> }}
+					onClick={goToUploadPhoto}
+				>
+					Manage Photos
+				</Button>
 				<Button
 					className="primary !h-7 !text-sm "
 					icon={{ left: <FiEdit /> }}
@@ -263,6 +235,7 @@ function PreviewRecipe({
 				>
 					Update
 				</Button>
+
 				<Button
 					className="verify !h-7 !text-sm"
 					icon={{ right: <RiDeleteBack2Line /> }}
