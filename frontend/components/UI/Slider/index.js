@@ -7,7 +7,7 @@ import ArrowBtn from './ArrowBtn';
 import Pagination from './Pagination';
 import { SLIDES_ON_DESKTOP } from '@utils/constants';
 
-function Slider({ children }) {
+function Slider({ children, noBtn }) {
 	const [loaded, setLoaded] = useState(false);
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [sliderRef, instanceRef] = useKeenSlider({
@@ -48,13 +48,13 @@ function Slider({ children }) {
 	}, [loaded]);
 
 	return (
-		<section className="container mt-10 relative">
+		<section className="container mt-3 relative">
 			<div
 				ref={sliderRef}
 				className="keen-slider"
 			>
 				{children}
-				{loaded && children.length > SLIDES_ON_DESKTOP && (
+				{loaded && children.length > SLIDES_ON_DESKTOP && !noBtn && (
 					<>
 						<ArrowBtn
 							onClick={handlePrev}

@@ -14,7 +14,7 @@ function LastPost({ isFooter, number = 3 }) {
 			}`}
 		>
 			{data ? (
-				data.map((item) => (
+				data.map((item, index) => (
 					<RecipeCard
 						key={item.id}
 						slug={item.slug}
@@ -23,6 +23,7 @@ function LastPost({ isFooter, number = 3 }) {
 						// reviews_count={item.reviews_count}
 						date={item.created_at || item.updated_at}
 						lastPost
+						noBorder={index === 0}
 					/>
 				))
 			) : (

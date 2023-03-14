@@ -50,7 +50,13 @@ function number({ number, count, small }) {
 				)}
 			</span>
 			{count && (
-				<span className="text-sm font-medium ml-1">({count})</span>
+				<span
+					className={` font-medium ml-1 ${
+						small ? 'text-[0.7rem]' : 'text-[0.87rem]'
+					}`}
+				>
+					({count})
+				</span>
 			)}
 		</div>
 	);

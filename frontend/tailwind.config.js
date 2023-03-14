@@ -24,7 +24,7 @@ module.exports = {
 				primary: '#96b7ae',
 				primaryLight: '#7ba39617',
 				primaryDark: '#79aa9e',
-				primaryTransparent: 'rgb(150, 183, 174, 0.8)',
+				primaryTransparent: 'rgb(150, 183, 174, 0.85)',
 				second: '#757575',
 				third: '#F9F8F3',
 				grey: '#EEEEEE',

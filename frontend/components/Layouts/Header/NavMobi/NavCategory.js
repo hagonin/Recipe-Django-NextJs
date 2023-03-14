@@ -22,13 +22,13 @@ function NavCategory() {
 				)}
 			</NavItem>
 			<div
-				className={`grid md:grid-cols-2 md:ml-16 ml-10  ${
+				className={`grid md:grid-cols-2  bg-[rgba(0,0,0,0.06)] pl-2  ${
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>
 				<Link
 					href="/recipes"
-					className="block capitalize py-2 px-3 hover:text-primary text-left"
+					className="block capitalize py-2 px-3 hover:text-primary text-left "
 				>
 					All Recipes
 				</Link>

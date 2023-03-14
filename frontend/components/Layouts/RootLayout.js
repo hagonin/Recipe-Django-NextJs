@@ -34,7 +34,7 @@ function RootLayout({ children }) {
 				icon={false}
 			/>
 			{loading || loadingRecipes ? (
-				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex">
+				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex mt-44">
 					<Loader type="handle" />
 				</div>
 			) : null}

@@ -1,3 +1,4 @@
+import CommonSection from '@components/Layouts/SideBar/Widget/CommonSection';
 import Loader from '@components/UI/Loader';
 import Slider from '@components/UI/Slider';
 import useQuery from 'hook/useQuery';
@@ -6,12 +7,13 @@ import RecipeCard from './RecipeCard';
 function RelatedRecipe({ categoryName }) {
 	const { data: recipes } = useQuery(6, { category: categoryName });
 	return (
-		<div className="mt-10">
-			<span className="uppercase border-b border-border">
-				You may also like
-			</span>
+		<div className="mt-6">
+			<CommonSection
+				title="You may also like"
+				noBorder
+			/>
 			{recipes ? (
-				<Slider>
+				<Slider noBtn>
 					{recipes.map((recipe) => {
 						return (
 							<RecipeCard
@@ -19,7 +21,7 @@ function RelatedRecipe({ categoryName }) {
 								main_image={recipe.main_image}
 								name={recipe.title}
 								slug={recipe.slug}
-								summary={recipe.description}
+								// summary={recipe.description}
 								rating={recipe.rating}
 								reviews_count={recipe.reviews_count}
 								smallCard

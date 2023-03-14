@@ -37,12 +37,12 @@ function CollectionPics({ isFooter }) {
 						<Link
 							key={pic.id}
 							href={`/recipes/${pic.slug}`}
-							className="block rounded overflow-hidden"
+							className="block overflow-hidden"
 						>
 							<Img
 								src={pic.src}
 								alt="pic"
-								className="lg:h-32 md:h-20 h-32 w-full"
+								className="lg:h-32 lg:h-20 md:h-36 h-64 w-[90%] mx-auto"
 								cover
 							/>
 						</Link>

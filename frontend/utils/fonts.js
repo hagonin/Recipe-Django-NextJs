@@ -41,7 +41,7 @@ export const nunito = Nunito({
 });
 
 export const lato = Lato({
-	weight: ['400', '700', '900'],
+	weight: ['300'],
 	style: ['normal'],
 	subsets: ['latin'],
 	variable: '--lato',

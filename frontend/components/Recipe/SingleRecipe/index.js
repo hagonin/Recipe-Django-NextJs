@@ -99,10 +99,6 @@ function SingRecipe({
 								serving={serving}
 							/>
 						</div>
-
-						<Title title="Ingredients" />
-
-						<Ingredient ingredients={ingredients} />
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
 						<Img
@@ -113,6 +109,9 @@ function SingRecipe({
 						/>
 					</div>
 				</div>
+				<Title title="Ingredients" />
+
+				<Ingredient ingredients={ingredients} />
 				<Title title="Method" />
 				<ul className="text-base flex flex-col gap-2 p-0 m-0">
 					{instructionsArr.map(({ content }, index) => (
@@ -141,9 +140,9 @@ function SingRecipe({
 }
 
 const Title = ({ title }) => (
-	<h6 className=" text-black uppercase border-b border-primary pb-1 mt-6 mb-3 inline-block">
+	<span className="text-base text-black tracking-widest uppercase border-b border-primary pb-1 mt-6 mb-3 inline-block">
 		{title}
-	</h6>
+	</span>
 );
 
 const Timer = ({ children }) => (

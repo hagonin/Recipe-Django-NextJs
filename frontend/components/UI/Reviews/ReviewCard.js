@@ -31,16 +31,26 @@ function ReviewCard({
 				showConfirm={showConfirmDeleteteReview}
 				handleCloseConfirm={() => setShowConfirmDeleteReview(false)}
 			/>
-			<div className="flex gap-4 ">
-				<Img
-					src={avatar || images.defaultAvatar}
-					alt="avatar"
-					className="h-16 w-16 rounded-full overflow-hidden border border-border"
-					cover
-				/>
+			<div className="flex flex-col gap-4 ">
+				<div className="flex justify-between items-center">
+					<div className="flex items-center gap-2">
+						<Img
+							src={avatar || images.defaultAvatar}
+							alt="avatar"
+							className="h-12 w-12 rounded-full overflow-hidden border border-border"
+							cover
+						/>
+						<div className="">
+							<span className="font-medium text-base">{user}</span>
+							<Rating number={rating} />
+						</div>
+					</div>
+					<span className="text-sm relative top-[1px]">
+						{formatDate(date_added)}
+					</span>
+				</div>
 				<div className="flex-1">
 					<div className="flex items-center justify-between">
-						<h5>{user}</h5>
 						{hasEdit && (
 							<button
 								className="text-xl text-red"
@@ -50,19 +60,11 @@ function ReviewCard({
 							</button>
 						)}
 					</div>
-					<div className="flex items-center gap-4">
-						<Rating
-							number={rating}
-							small
-						/>
-						<span className="text-sm relative top-[1px]">
-							{formatDate(date_added)}
-						</span>
-					</div>
+
 					<span className="capitalize mt-1 block font-medium text-black">
 						{title}
 					</span>
-					<p className='first-letter:uppercase'>{content}</p>
+					<p className="first-letter:uppercase">{content}</p>
 				</div>
 			</div>
 		</div>

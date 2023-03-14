@@ -37,12 +37,17 @@ function RecipeCard({
 	handleToggleBookmark = () => {},
 	lastPost,
 	isAverage,
+	noBorder,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && getPlainTextFromHtml(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastPost ? (
-		<div className={`flex grid-cols-3 md:gap-4 gap-2 border-b pb-4`}>
+		<div
+			className={`flex grid-cols-3 gap-4 ${
+				noBorder ? '' : 'border-t'
+			} pt-4`}
+		>
 			<Link
 				href={`/recipes/${slug}`}
 				className="md:h-24 md:w-20 lg:w-24 lg:h-24 w-24 h-24"
@@ -82,13 +87,13 @@ function RecipeCard({
 			/>
 			<div
 				className={`h-full  rounded overflow-hidden ${
-					smallCard && 'shadow-md'
+					smallCard && 'md:shadow-md border'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
 				} ${className}`}
 			>
 				<div
-					className={`relative md:h-64 h-48 ${
+					className={`relative md:h-56 h-48 ${
 						lgCard ? 'lg:col-span-5' : ''
 					}`}
 				>
@@ -102,7 +107,7 @@ function RecipeCard({
 						<Img
 							src={main_image}
 							alt={name}
-							className="md:h-64 h-48 "
+							className="md:h-56 h-48 "
 							cover
 							title={name}
 						/>
@@ -138,7 +143,7 @@ function RecipeCard({
 				>
 					<div>
 						{category && (
-							<span className="tag font-bold text-[0.75rem] uppercase  !text-red2 inline-flex px-2 rounded-md gap-2 leading-7 items-center">
+							<span className="tag font-bold text-[0.68rem] uppercase  !text-red2 inline-flex  rounded-md gap-2 leading-7 items-center">
 								<HiOutlineTag />
 								{category}
 							</span>
@@ -160,13 +165,13 @@ function RecipeCard({
 						>
 							{name}
 						</Link>
-						{smallCard && (
+						{/* {smallCard && (
 							<>
-								<p className="mt-1  text-lg line-clamp-1">
+								<p className="mt-1  text-lg line-clamp-2">
 									{summaryMarkup}
 								</p>
 								<Link
-									className="underline text-base text-primary hover:text-primaryDark"
+									className="underline text-[14px] text-primary hover:text-primaryDark"
 									href={
 										secondary
 											? `/user/recipe/${slug}`
@@ -176,7 +181,7 @@ function RecipeCard({
 									Read more
 								</Link>
 							</>
-						)}
+						)} */}
 					</div>
 
 					<div
@@ -192,7 +197,6 @@ function RecipeCard({
 									lgCard ? 'text-base mr-3' : 'text-sm'
 								} flex items-center gap-1`}
 							>
-								<MdDateRange className="text-primary" />
 								{date_format}
 							</span>
 						)}
@@ -218,7 +222,7 @@ function RecipeCard({
 											? `/user/recipe/${slug}`
 											: `/recipes/${slug}`
 									}
-									className="mt-4"
+									className="mt-4  !h-9 !text-[0.7rem] tracking-[0.2em]"
 								>
 									Continue Reading
 								</Button>

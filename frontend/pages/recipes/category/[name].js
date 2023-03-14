@@ -41,9 +41,11 @@ function CategoryPage() {
 						<Img
 							src={category.cover}
 							alt={category.name}
+							className="h-[400px] w-full"
+							cover
 						/>
-						<h1 className="mt-6 capitalize">{category.name}</h1>
-						<p className="mt-3">{category.desc}</p>
+						<h1 className="mt-6 capitalize font-serif">{category.name}</h1>
+						<p className="mt-3 text-lg">{category.desc}</p>
 					</div>
 				)}
 				<div className="flex flex-col gap-y-8 mt-10">

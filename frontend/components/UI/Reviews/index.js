@@ -1,4 +1,5 @@
 import ReviewForm from '@components/Form/Reviews';
+import CommonSection from '@components/Layouts/SideBar/Widget/CommonSection';
 
 import ReviewCard from './ReviewCard';
 
@@ -11,26 +12,23 @@ function Reviews({
 }) {
 	return (
 		<div className=" mb-10 mt-5 py-10 px-7 bg-third rounded-md">
-			<h3>Reviews ({reviews.length})</h3>
-			<div className="mt-5">
+			<CommonSection
+				title={`${reviews.length} Comment${
+					reviews.length > 1 ? 's' : ''
+				} `}
+				noBorder
+			/>
+			<div className="mt-3">
 				{currentUserId ? (
 					<ReviewForm onSubmit={onSubmit} />
 				) : (
-					<>
-						<p>
-							What do you think of this recipe? Share your
-							experience to help others.
-						</p>
-						<button
-							className="underline font-semibold"
-							onClick={goToLogin}
-						>
-							Login to add rating and review
-						</button>
-					</>
+					<p>
+						What do you think of this recipe? Share your experience
+						to help others.
+					</p>
 				)}
 			</div>
-			<div className="mt-7">
+			<div className="mt-1">
 				{reviews.map((review, index) => (
 					<ReviewCard
 						{...review}
@@ -43,6 +41,12 @@ function Reviews({
 					/>
 				))}
 			</div>
+			<button
+				className="hover:underline font-medium mt-5 text-base italic hover:text-primary"
+				onClick={goToLogin}
+			>
+				Login to add rating and review
+			</button>
 		</div>
 	);
 }

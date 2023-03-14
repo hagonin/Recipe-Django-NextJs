@@ -45,12 +45,12 @@ function Navigate() {
 					/>
 
 					{isHover && (
-						<div className="top-full left-0 bg-white  absolute z-10 w-[500px] shadow-md border-t-2 border-primary grid grid-cols-3 p-2">
+						<div className="top-full left-0 bg-white  absolute z-10 w-[550px] shadow-md border-t-2 border-primary grid grid-cols-2 p-2">
 							<NavItem
 								href="/recipes"
 								label="All Recipes "
-								className="!text-base 
-									!font-medium block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+								className=" 
+									block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 							/>
 							{categoryList.map((category) => (
 								<NavItem
@@ -58,7 +58,7 @@ function Navigate() {
 									href={`/recipes/category/${category.name}`}
 									label={category.name}
 									className="
-									!font-medium !text-base block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+									 block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 								/>
 							))}
 						</div>
@@ -82,7 +82,7 @@ const NavItem = ({ href, label, className, icon }) => {
 	return (
 		<Comp
 			href={href}
-			className={`${lato.className} flex items-center gap-2 font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
+			className={`${lato.className} tracking-widest flex items-center gap-2 font-semibold text-base uppercase px-5  hover:text-primaryDark ${className}`}
 		>
 			{label}
 			{icon && <span className="text-3xl">{icon}</span>}
