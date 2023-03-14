@@ -64,11 +64,11 @@
     }
 
     .btn {
-      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-sm font-semibold text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
-      @apply text-white border-transparent bg-primary hover:bg-primaryDark
+      @apply text-white  border-transparent bg-primary hover:bg-primaryDark
     }
 
     .btn.secondary {
@@ -80,11 +80,11 @@
     }
 
     .btn.lg {
-      @apply text-base font-medium h-10 px-6;
+      @apply text-base h-10 px-6;
     }
 
      .btn.login {
-      @apply text-base font-medium h-12 px-5;
+      @apply text-base h-12 px-5;
     }
 
     /* .btn.third {
@@ -99,7 +99,7 @@
     }
 
     .btn.cancle {
-      @apply  font-bold border-2  text-red hover:bg-transparent border-red;
+      @apply  border-2  text-red hover:bg-transparent border-red;
     }
 
     .btn.reset {

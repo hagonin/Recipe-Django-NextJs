@@ -46,8 +46,8 @@ function Header() {
 					</div>
 				</div>
 			</div>
-			<div className="relative mt-12">
-				<div className="bg-white container lg:h-logo-bar-pc h-logo-bar-mobile flex items-center lg:justify-center justify-between relative max-lg:border-b max-md:fixed max-md:left-0 max-md:top-12 w-full z-[777] max-md:shadow-sm">
+			<div className="relative lg:mt-12 max-lg:fixed max-lg:left-0 max-lg:top-12 w-full z-[777] max-lg:shadow-sm max-lg:border max-lg:border-b max-lg:border-b-border bg-white">
+				<div className=" container lg:h-logo-bar-pc h-logo-bar-mobile flex items-center lg:justify-center justify-between relative ">
 					<Logo className="mx-auto" />
 					<NavMobi />
 				</div>
