@@ -114,7 +114,7 @@ function SingRecipe({
 					</div>
 				</div>
 				<Title title="Method" />
-				<ul className="text-base flex flex-col gap-2">
+				<ul className="text-base flex flex-col gap-2 p-0 m-0">
 					{instructionsArr.map(({ content }, index) => (
 						<li
 							className="flex gap-2"
