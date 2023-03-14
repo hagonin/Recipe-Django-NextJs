@@ -1,23 +1,23 @@
 from rest_framework import serializers
+from datetime import datetime, timezone
 from .models import Recipe, RecipeReview, Ingredient,RecipeImage
 from users.serializers import UserSerializer
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Ingredient
-        fields = ('id','heading','title','quantity', 'unit','recipe')
+        fields = '__all__'
 
 class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = RecipeImage
-        fields = ('id','image','caption','recipe')
+        fields = '__all__'
 
-class MultipleImageSerializer(serializers.Serializer):
-    images = ImageSerializer()
-    # images = serializers.ListField(
-    #     child = serializers.ImageField()
-    # )
+    def validate_image(self, image):
+        if image.size > 5 * 1024 * 1024:
+                raise serializers.ValidationError("Image size should not exceed 5 MB.")
+        return image
 
 class RecipeSerializer(serializers.ModelSerializer):
     search_rank = serializers.FloatField(read_only=True)
@@ -35,8 +35,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         return obj.get_total_number_of_bookmarks()
     
 class ReviewSerializer(serializers.ModelSerializer):
-    # user = serializers.CharField(source='user.username',read_only=True)
-    # avatar = serializers.CharField(source='user.profile.avatar')
     user = UserSerializer(read_only=True)
 
     class Meta: 
@@ -46,9 +44,21 @@ class ReviewSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'slug': {'read_only': True}
         }
+    
+    def get_date_added(self,obj):
+        now = datetime.now(timezone.utc)
+        diff = now - obj.date_added
+        if diff.days > 0:
+            return f"{diff.days} days ago"
+        elif diff.seconds >= 3600:
+            hours = diff.seconds // 3600
+            return f"{hours} hours ago"
+        else:
+            minutes = diff.seconds // 60
+            return f"{minutes} minutes ago"
 
 class RecipeDetailReadSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username',read_only=True)
+    user = serializers.ReadOnlyField(source='user.username')
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
@@ -62,14 +72,14 @@ class RecipeDetailReadSerializer(serializers.ModelSerializer):
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time','search_vector',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
-        
+
     def get_reviews(self, obj):
         reviews = obj.reviews.all()
         serializer = ReviewSerializer(reviews, many=True)
         return serializer.data
     
 class RecipeDetailWriteSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username',read_only=True)
+    user = serializers.SerializerMethodField(read_only=True)
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
     
@@ -79,7 +89,10 @@ class RecipeDetailWriteSerializer(serializers.ModelSerializer):
         fields = ('id','user','title','slug','category','main_image','ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time',
                 'cook_time','search_vector','created_at','updated_at','source','notes')
-
+    
+    def get_user(self, obj):
+        return obj.user.username
+    
     def _create_ingredients(self, ingredients, recipe):
         for ingredient in ingredients:
             ingr = Ingredient.objects.create(**ingredient)
