@@ -73,7 +73,7 @@ function SingRecipe({
 			</div>
 			<div
 				dangerouslySetInnerHTML={descriptionMarkup}
-				className="my-5 text-justify capitalize"
+				className="my-5 text-justify first-letter:capitalize"
 			/>
 			{images.length > 0 && <Thumbnail images={images} />}
 

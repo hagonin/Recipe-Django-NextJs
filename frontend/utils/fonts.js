@@ -2,6 +2,7 @@ import {
 	Lato,
 	Libre_Baskerville,
 	Montserrat,
+	Noto_Sans_Display,
 	Nunito,
 	Nunito_Sans,
 	Open_Sans,
@@ -44,5 +45,13 @@ export const lato = Lato({
 	style: ['normal'],
 	subsets: ['latin'],
 	variable: '--lato',
+	fallback: ['system-ui', 'arial'],
+});
+
+export const noto_sans_display = Noto_Sans_Display({
+	weight: ['400', '600', '700'],
+	style: ['normal'],
+	subsets: ['latin'],
+	variable: '--noto_sans_display',
 	fallback: ['system-ui', 'arial'],
 });

@@ -143,7 +143,7 @@ function PreviewRecipe({
 							<ul className="list-decimal flex flex-col gap-2 ml-5 text-lg">
 								{arrInstructions.map(({ content }, index) => (
 									<li
-										className="text-justify"
+										className="text-justify first-letter:capitalize"
 										key={index}
 									>
 										{content}
@@ -213,11 +213,9 @@ function PreviewRecipe({
 								className="h-44 w-full"
 								cover
 							/>
-							
 						</div>
 					);
 				})}
-				
 			</div>
 
 			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">

@@ -68,13 +68,13 @@ function NavMobi() {
 								<Img
 									src={user?.avatar || images.defaultAvatar}
 									alt="avatar"
-									className="h-20 w-20 border-border rounded-full ml-5 overflow-hidden"
+									className="h-20 w-20 mt-5 border-border rounded-full ml-5 overflow-hidden"
 									cover
 								/>
-								<span className="text-black font-bold block mt-3 ml-5">
+								<span className="text-2xl text-black font-bold block mt-3 ml-5">
 									{user?.username}
 								</span>
-								<span className="text-sm text-second block mb-10 ml-5">
+								<span className="text-second block mb-5 ml-5">
 									{user?.email}
 								</span>
 								<NavItem href={`/user/profile/`}>
@@ -99,7 +99,7 @@ function NavMobi() {
 							</NavItem>
 						)}
 
-						<div className="border-y py-2 mt-2 mb-5">
+						<div className="border-y py-2 mt-2 mb-2">
 							<NavItem href="/">Home</NavItem>
 							<NavCategory />
 							<NavItem href="/about">About</NavItem>
@@ -107,7 +107,7 @@ function NavMobi() {
 						</div>
 						{isAuthenticated && (
 							<NavItem onClick={logout}>
-								<span>
+								<span className='text-xl'>
 									<FiLogOut className="inline-block relative -mt-1 mr-2" />
 									Log out
 								</span>

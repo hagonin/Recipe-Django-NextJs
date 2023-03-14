@@ -8,7 +8,7 @@ function WebInfo() {
 			<Img
 				src={images.logo}
 				alt="logo"
-				className="h-20 inline-block"
+				className="h-20 w-44"
 			/>
 
 			<p className="mb-5">
