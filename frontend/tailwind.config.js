@@ -48,6 +48,12 @@ module.exports = {
 					to: { transform: 'translate3d(0, 30px, 0)' },
 				},
 			},
+			spacing: {
+				'search-bar': '48px',
+				'logo-bar-pc': '208px',
+				'logo-bar-mobile': '80px',
+				'navigate-height': '60px',
+			},
 		},
 		fontSize: {
 			xsm: '0.625rem', //10px

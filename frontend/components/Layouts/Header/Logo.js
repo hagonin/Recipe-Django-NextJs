@@ -1,14 +1,21 @@
 import Link from 'next/link';
 import { images } from '@utils/constants';
-import Img from '@components/UI/Image';
+import Image from 'next/image';
 
 function Logo() {
 	return (
-		<Link href="/">
-			<Img
+		<Link
+			href="/"
+			className="relative lg:w-80 w-28 h-full"
+		>
+			<Image
 				src={images.logo}
 				alt="logo"
-				className="lg:h-52 lg:w-80 h-20 w-28"
+				fill
+				className=" h-full w-full"
+				sizes="(max-width: 768px) 100vw,
+              (max-width: 1024px) 50vw,
+              33vw"
 			/>
 		</Link>
 	);

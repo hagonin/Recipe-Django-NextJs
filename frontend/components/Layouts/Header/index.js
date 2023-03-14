@@ -19,7 +19,7 @@ function Header() {
 
 	return (
 		<header>
-			<div className="bg-primary sm:h-12 h-14 text-white">
+			<div className="bg-primary h-search-bar text-white fixed top-0 left-0 w-full z-[999]">
 				<div className="container h-full flex items-center">
 					<SearchForm onSubmit={handleSearch} />
 					<div className="md:block hidden ml-auto">
@@ -46,8 +46,8 @@ function Header() {
 					</div>
 				</div>
 			</div>
-			<div className="relative">
-				<div className="container flex items-center lg:justify-center justify-between relative max-lg:border-b">
+			<div className="relative mt-12">
+				<div className="bg-white container lg:h-logo-bar-pc h-logo-bar-mobile flex items-center lg:justify-center justify-between relative max-lg:border-b max-md:fixed max-md:left-0 max-md:top-12 w-full z-[888] max-md:shadow-sm">
 					<Logo className="mx-auto" />
 					<NavMobi />
 				</div>

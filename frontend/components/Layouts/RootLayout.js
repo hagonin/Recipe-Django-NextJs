@@ -18,7 +18,7 @@ function RootLayout({ children }) {
 	return (
 		<>
 			<Header />
-			{children}
+			<div className='max-md:mt-[128px] py-1'>{children}</div>
 			<Footer />
 			<ToastContainer
 				position="top-right"

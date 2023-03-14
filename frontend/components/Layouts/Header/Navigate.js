@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -6,9 +6,28 @@ import { categoryList } from '@utils/constants';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
+	const [stick, setStick] = useState({});
+
+	const stickNav = (e) => {
+		if (window.scrollY > 256) {
+			setStick({
+				box1: 'fixed top-search-bar left-0 w-full shadow-sm',
+				box2: 'border-none',
+			});
+		} else {
+			setStick(null);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', stickNav);
+	}, []);
+
 	return (
-		<nav className="bg-white  max-lg:hidden">
-			<div className="container flex justify-center items-center border-y">
+		<nav className={`bg-white  max-lg:hidden z-[999] ${stick?.box1}`}>
+			<div
+				className={`container flex justify-center items-center border-y ${stick?.box2}`}
+			>
 				<NavItem
 					href="/"
 					label="Home"
