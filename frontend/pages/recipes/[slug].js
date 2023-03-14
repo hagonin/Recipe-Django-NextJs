@@ -69,6 +69,9 @@ function Recipe() {
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>
+					{data?.category && (
+						<RelatedRecipe categoryName={data?.category} />
+					)}
 					<Reviews
 						onSubmit={handleSubmitReview}
 						reviews={data.reviews}
@@ -79,9 +82,7 @@ function Recipe() {
 				</>
 			) : null}
 
-			<SubscribeSection />
-			
-			{data?.category && <RelatedRecipe categoryName={data?.category} />}
+			{/* <SubscribeSection /> */}
 		</>
 	);
 }

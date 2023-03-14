@@ -10,7 +10,7 @@ function Reviews({
 	goToLogin,
 }) {
 	return (
-		<div className=" my-10 py-10 px-7 bg-third rounded-md">
+		<div className=" mb-10 mt-5 py-10 px-7 bg-third rounded-md">
 			<h3>Reviews ({reviews.length})</h3>
 			<div className="mt-5">
 				{currentUserId ? (

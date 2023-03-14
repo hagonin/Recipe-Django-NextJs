@@ -42,7 +42,7 @@ function CollectionPics({ isFooter }) {
 							<Img
 								src={pic.src}
 								alt="pic"
-								className="lg:h-44 md:h-20 h-32 w-full"
+								className="lg:h-32 md:h-20 h-32 w-full"
 								cover
 							/>
 						</Link>
