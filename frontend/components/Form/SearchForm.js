@@ -74,7 +74,7 @@ function SearchForm({ onSubmit, secondary }) {
 					/>
 					<Button
 						type="submit"
-						className="lg"
+						className="lg primary"
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Search

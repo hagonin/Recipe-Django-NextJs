@@ -334,14 +334,14 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			)}
 			<div className="flex gap-4 mt-5 justify-end items-center">
 				<Button
-					className="cancle lg min-w-[200px]"
+					className="cancle lg min-w-[200px] !font-semibold"
 					type="reset"
 					onClick={handleCancel}
 				>
 					Cancel
 				</Button>
 				<Button
-					className="lg primary px-24 min-w-[200px]"
+					className="lg primary px-24 min-w-[200px] !font-semibold"
 					type="submit"
 					disabled={isSubmitting}
 				>
