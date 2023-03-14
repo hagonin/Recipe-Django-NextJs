@@ -59,6 +59,8 @@ function Search() {
 								name={item.title}
 								main_image={item.main_image}
 								date={item.updated_at}
+								reviews_count={item.reviews_count}
+								rating={item.rating}
 								lastPost
 							/>
 						))

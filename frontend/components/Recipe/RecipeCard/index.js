@@ -54,7 +54,7 @@ function RecipeCard({
 					cover
 				/>
 			</Link>
-			<div className="flex-1">
+			<div className="flex-1 flex flex-col justify-center">
 				<Link
 					href={`/recipes/${slug}`}
 					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize"
