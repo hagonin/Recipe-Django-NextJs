@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { categoryList } from '@utils/constants';
+import { lato } from '@utils/fonts';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
@@ -81,7 +82,7 @@ const NavItem = ({ href, label, className, icon }) => {
 	return (
 		<Comp
 			href={href}
-			className={`flex items-center gap-2 font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
+			className={`${lato.className} flex items-center gap-2 font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
 		>
 			{label}
 			{icon && <span className="text-3xl">{icon}</span>}

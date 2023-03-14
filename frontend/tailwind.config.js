@@ -17,7 +17,7 @@ module.exports = {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['var(--open-sans)', ...fontFamily.sans],
+				sans: ['var(--nunito-sans)', ...fontFamily.sans],
 				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
 			},
 			colors: {

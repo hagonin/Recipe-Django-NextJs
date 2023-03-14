@@ -11,9 +11,9 @@ import getRandomRecipes from '@utils/getRandomRecipes';
 import Loader from '@components/UI/Loader';
 
 export default function Home() {
-	const { recipes } = useRecipeContext();
+	const { recipes, topRating } = useRecipeContext();
 	const [categories, setCategories] = useState(null);
-	const [randomRecipes, setRandomRecipes] = useState(null);
+	// const [randomRecipes, setRandomRecipes] = (null);
 
 	useEffect(() => {
 		if (recipes) {
@@ -27,16 +27,16 @@ export default function Home() {
 			}));
 			setCategories(arr);
 
-			const randoms = getRandomRecipes(recipes);
-			setRandomRecipes(randoms);
+			// const randoms = getRandomRecipes(recipes);
+			// setRandomRecipes(randoms);
 		}
 	}, [recipes]);
 
 	return (
 		<>
-			{randomRecipes && (
+			{topRating && (
 				<Slider>
-					{randomRecipes.map((recipe, index) => {
+					{topRating.map((recipe, index) => {
 						return (
 							<Slide
 								id={recipe.id}
