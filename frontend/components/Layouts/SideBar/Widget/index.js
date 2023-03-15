@@ -26,15 +26,12 @@ function Widget() {
 	return (
 		<section className="flex flex-col gap-y-10">
 			<CommonSection title="About Us">
-				<p className="text-justify ">
+				<p className="text-center ">
 					<span className="font-bold text-primary">HomeCook</span> is
 					on a simple premise: home cooks are the best cooks. Special
 					recipes are at the heart of so many of our warmest
 					memories—families gathered around holiday tables or
-					celebrating special occasions with friends. Even
-					neighborhood potlucks, impromptu cookouts and simple
-					weeknight dinners are made better by sharing from-scratch
-					dishes made with love.
+					celebrating special occasions with friends.
 				</p>
 			</CommonSection>
 			<CollectionPics />

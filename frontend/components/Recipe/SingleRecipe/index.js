@@ -39,7 +39,7 @@ function SingRecipe({
 		<div>
 			<h1 className="text-center font-serif capitalize">{title}</h1>
 			<span className="block text-center font-medium mt-2">
-				{updated_at_format} / {author}
+				{`${updated_at_format} / by ${author}`}
 			</span>
 			<Img
 				src={cover}
@@ -65,7 +65,7 @@ function SingRecipe({
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
 						<span className="block mt-1">
-							{updated_at_format} / {author}
+							{`${updated_at_format} / by ${author}`}
 						</span>
 						{rating && (
 							<Rating
@@ -116,7 +116,7 @@ function SingRecipe({
 				<Ingredient ingredients={ingredients} />
 				{instructionsArr && (
 					<Method instructionsArr={instructionsArr} />
-				) }
+				)}
 
 				{notes && (
 					<div>

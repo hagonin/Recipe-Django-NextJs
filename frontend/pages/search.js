@@ -42,10 +42,20 @@ function Search() {
 
 	return (
 		<div className="container">
-			<div className=" flex gap-4">
-				<BsSearch className="relative top-[1px] text-5xl" />
-				<TitlePrimary title=" Search Result:" />
-				{data?.data?.results.length > 0 && data?.data?.results.length}
+			<div className=" flex gap-3">
+				{/* <BsSearch className="relative top-[1px] text-5xl" /> */}
+				{/* <TitlePrimary title=" " /> */}
+
+				{data?.data?.results.length > 0 && (
+					<span className="text-4xl text-black">
+						{`Showing ${data?.data?.results.length} result ${
+							data?.data?.results.length > 1 ? 's' : ''
+						} for `}
+						<span className="text-4xl text-black font-semibold">
+							{query.search}
+						</span>
+					</span>
+				)}
 			</div>
 
 			{isLoading || isValidating ? (

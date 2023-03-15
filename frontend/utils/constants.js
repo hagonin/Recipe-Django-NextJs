@@ -22,6 +22,7 @@ export const images = {
 	tick: '/static/images/tick.png',
 	no_search: '/static/images/no-results.png',
 	ingredient_icon: '/static/images/ingredient_icon.png',
+	toast_success: '/static/images/toast_success.png',
 };
 
 export const categoryList = [

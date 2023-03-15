@@ -18,21 +18,24 @@ function Reviews({
 				} `}
 				center
 			/>
+
+			<div className="mb-10">
+				{reviews.length > 0
+					? reviews.map((review, index) => (
+							<ReviewCard
+								{...review}
+								id={review?.id}
+								user={review?.user?.username}
+								avatar={review?.user?.profile?.avatar}
+								key={index}
+								hasEdit={currentUserId === review?.user?.id}
+								handleDelete={handleDelete}
+							/>
+					  ))
+					: 'There are no reviews yet. Be the first!'}
+			</div>
 			<div className="mt-3">
 				{currentUserId ? <ReviewForm onSubmit={onSubmit} /> : null}
-			</div>
-			<div className="mt-1">
-				{reviews.map((review, index) => (
-					<ReviewCard
-						{...review}
-						id={review?.id}
-						user={review?.user?.username}
-						avatar={review?.user?.profile?.avatar}
-						key={index}
-						hasEdit={currentUserId === review?.user?.id}
-						handleDelete={handleDelete}
-					/>
-				))}
 			</div>
 			{currentUserId ? null : (
 				<div className=" mt-5">
