@@ -62,7 +62,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         else:
             return 'just now'
 
-
 class RecipeDetailReadSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     ingredients = IngredientSerializer(many=True)
