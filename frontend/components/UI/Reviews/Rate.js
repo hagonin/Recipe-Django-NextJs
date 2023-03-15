@@ -2,7 +2,7 @@ import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
 function number({ number, count, small }) {
 	return (
-		<div className="flex gap-[1px] items-center relative top-[1px]">
+		<div className="flex gap-1 items-center relative top-[1px]">
 			<span className={`${small ? 'text-sm' : 'text-xl'} text-yellow`}>
 				{number > 0.5 ? (
 					<BsStarFill />

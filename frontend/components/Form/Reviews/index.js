@@ -29,7 +29,7 @@ function ReviewForm({ onSubmit }) {
 	return (
 		<Form
 			onSubmit={handleSubmit(({ review }) => onSubmit(review))}
-			className="bg-white p-5 rounded-md !gap-1"
+			className="bg-white p-5 max-md:px-4 rounded-md !gap-1"
 		>
 			<InputField
 				label="Title"

@@ -43,7 +43,7 @@ function NavMobi() {
 					leaveTo="opacity-0"
 				>
 					<div
-						className="fixed inset-0 z-10 bg-[rgba(0,0,0,0.15)]"
+						className="fixed inset-0 z-10 bg-[rgba(0,0,0,0.3)]"
 						onClick={toggleNavMobi}
 					></div>
 				</Transition.Child>
@@ -56,7 +56,7 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  w-[60%] py-12  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg">
+					<nav className="fixed top-0 left-0 bottom-0 z-20  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg">
 						<button
 							className="absolute top-3 right-3 text-[2rem]"
 							onClick={toggleNavMobi}
@@ -65,18 +65,14 @@ function NavMobi() {
 						</button>
 
 						{isAuthenticated && (
-							<div className="flex gap-4 items-center my-5">
-								<div>
-									<Img
-										src={
-											user?.avatar || images.defaultAvatar
-										}
-										alt="avatar"
-										className="h-16 w-16 border-border rounded-full ml-5 overflow-hidden"
-										cover
-									/>
-								</div>
-								<div>
+							<div className="flex gap-4 items-center mb-5 mt-3">
+								<Img
+									src={user?.avatar || images.defaultAvatar}
+									alt="avatar"
+									className="h-16 w-16 border-border rounded-full ml-5 overflow-hidden"
+									cover
+								/>
+								<div className='pr-5'>
 									<span className="text-2xl text-black font-bold block">
 										{user?.username}
 									</span>

@@ -11,7 +11,7 @@ function Reviews({
 	goToLogin,
 }) {
 	return (
-		<div className=" pt-2 pb-8 px-7 bg-third rounded-md mt-16">
+		<div className=" pt-2 pb-8 md:px-6 px-4 bg-third rounded-md mt-16">
 			<CommonSection
 				title={`${reviews.length} Comment${
 					reviews.length > 1 ? 's' : ''
@@ -41,12 +41,14 @@ function Reviews({
 					/>
 				))}
 			</div>
-			<button
-				className="hover:underline font-medium mt-5 text-base italic hover:text-primary"
-				onClick={goToLogin}
-			>
-				Login to add rating and review
-			</button>
+			{currentUserId ? null : (
+				<button
+					className="hover:underline font-medium mt-5 text-base italic hover:text-primary"
+					onClick={goToLogin}
+				>
+					Login to add rating and review
+				</button>
+			)}
 		</div>
 	);
 }

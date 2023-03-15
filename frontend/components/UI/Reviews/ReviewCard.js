@@ -33,24 +33,24 @@ function ReviewCard({
 			/>
 			<div className="flex flex-col gap-4 ">
 				<div className="flex justify-between items-center">
-					<div className="flex items-center gap-2">
+					<div className="flex gap-2">
 						<Img
 							src={avatar || images.defaultAvatar}
 							alt="avatar"
 							className="h-12 w-12 rounded-full overflow-hidden border border-border"
 							cover
 						/>
-						<div className="">
-							<span className="font-medium text-base">{user}</span>
+						<div className="relative -top-[3px]">
+							<span className="font-medium text-base leading-0">
+								{user}
+							</span>
 							<Rating number={rating} />
 						</div>
 					</div>
-					<span className="text-sm relative top-[1px]">
-						{formatDate(date_added)}
-					</span>
-				</div>
-				<div className="flex-1">
-					<div className="flex items-center justify-between">
+					<div className="flex flex-col items-end">
+						<span className="text-sm ">
+							{formatDate(date_added)}
+						</span>
 						{hasEdit && (
 							<button
 								className="text-xl text-red"
@@ -60,8 +60,9 @@ function ReviewCard({
 							</button>
 						)}
 					</div>
-
-					<span className="capitalize mt-1 block font-medium text-black">
+				</div>
+				<div className="flex-1">
+					<span className="first-letter:capitalize block font-medium text-black">
 						{title}
 					</span>
 					<p className="first-letter:uppercase">{content}</p>

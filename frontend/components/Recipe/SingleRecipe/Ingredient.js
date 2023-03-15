@@ -4,7 +4,7 @@ import Check from './Check';
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	return (
-		<div className={`flex flex-col ${isPreview ? '' : 'w-[80%]'}`}>
+		<div className={`flex flex-col ${isPreview ? '' : 'md:w-[80%]'}`}>
 			<div className="flex flex-col ">
 				{ingredient?.item.map((i, index) =>
 					isPreview ? (
@@ -22,7 +22,7 @@ function Ingredient({ ingredients, isPreview }) {
 					)
 				)}
 			</div>
-			<div className="flex flex-col gap-2 mt-3">
+			<div className="flex flex-col gap-2 ">
 				{ingredient?.group.map((item, index) => (
 					<div key={index}>
 						<span className="font-medium text-black  capitalize tracking-wider">

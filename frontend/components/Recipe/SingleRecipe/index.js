@@ -76,7 +76,7 @@ function SingRecipe({
 							/>
 						)}
 
-						<div className="grid md:grid-cols-2 grid-cols-1 gap-x-6 mt-3 mb-2">
+						<div className="flex flex-wrap gap-x-6 mt-3 mb-2">
 							<TimerBox
 								prep_time={prep_time}
 								cook_time={cook_time}
@@ -149,7 +149,7 @@ const Title = ({ title }) => (
 );
 
 const Timer = ({ children }) => (
-	<span className="flex items-center gap-2">{children}</span>
+	<span className="flex items-center gap-2 ">{children}</span>
 );
 
 const TimerBox = ({ prep_time, cook_time, serving }) => (

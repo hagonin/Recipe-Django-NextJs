@@ -82,7 +82,7 @@ function Slider({
 	}, []);
 
 	return (
-		<section className="container mt-9 relative">
+		<section className="container mt-5 relative">
 			<div
 				ref={sliderRef}
 				className="keen-slider"
