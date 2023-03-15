@@ -25,7 +25,7 @@ function Search() {
 
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
-		[ENDPOINT_RECIPE_READ, queryParams],
+		[ENDPOINT_RECIPE, queryParams],
 		([url, queryParams = {}]) => {
 			return api.get(url, {
 				params: queryParams,

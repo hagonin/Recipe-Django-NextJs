@@ -13,7 +13,7 @@ function Tags() {
 					onClick={() =>
 						router.push({
 							pathname: '/search',
-							query: { ingredient_title: tag },
+							query: { ingredients__title: tag },
 						})
 					}
 					className="tag"

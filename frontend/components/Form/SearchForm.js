@@ -109,7 +109,9 @@ function SearchForm({ onSubmit, secondary }) {
 										key={index}
 										className="hover:bg-third px-3 py-1 cursor-pointer"
 										onClick={() =>
-											handleBeforeSubmit({ suggest })
+											handleBeforeSubmit({
+												search: suggest,
+											})
 										}
 									>
 										{suggest}
