@@ -6,9 +6,12 @@ import CommonSection from './CommonSection';
 import Tags from './Tags';
 import LastPost from '../../../Recipe/LastestRecipes';
 import { useRouter } from 'next/router';
+import { useRecipeContext } from '@context/recipe-context';
+import Link from 'next/link';
 
 function Widget() {
 	const router = useRouter();
+	const { photoRandom } = useRecipeContext();
 
 	const bannerImg =
 		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
@@ -18,7 +21,7 @@ function Widget() {
 			pathname: '/search',
 			query: data,
 		});
-	console.log(router.pathname);
+	console.log(photoRandom);
 
 	return (
 		<section className="flex flex-col gap-y-10">
@@ -39,12 +42,14 @@ function Widget() {
 				<LastPost />
 			</CommonSection>
 			<CommonSection title="Banner">
-				<Img
-					src={bannerImg}
-					alt="banner"
-					className="h-[300px]"
-					cover
-				/>
+				<Link href={`/recipes/${photoRandom?.slug}`}>
+					<Img
+						src={photoRandom?.src}
+						alt="banner"
+						className="h-[300px]"
+						cover
+					/>
+				</Link>
 			</CommonSection>
 			<CommonSection title="newsletter">
 				<span className="block text-center mb-4">

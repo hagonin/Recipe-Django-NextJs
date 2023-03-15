@@ -25,6 +25,7 @@ const RecipeProvider = ({ children }) => {
 		keywords,
 		photos,
 		topRating,
+		photoRandom,
 	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
@@ -101,6 +102,7 @@ const RecipeProvider = ({ children }) => {
 				keywords,
 				topRating,
 				photos,
+				photoRandom,
 			}}
 		>
 			{children}

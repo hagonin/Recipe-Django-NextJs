@@ -12,6 +12,7 @@ const useRecipes = () => {
 	const [keywords, setKeyWords] = useState([]);
 	const [topRating, setTopRating] = useState(null);
 	const [photos, setPhotos] = useState(null);
+	const [photoRandom, setPhotoRandom] = useState(null);
 	useEffect(() => {
 		if (data) {
 			// get keyword
@@ -36,9 +37,18 @@ const useRecipes = () => {
 				slug: item.slug,
 			}));
 			setPhotos(arrPhotos);
+
+			//random photo
 		}
 	}, [data]);
-	return { data, topRating, keywords,photos, ...rest };
+
+	useEffect(() => {
+		if (photos) {
+			const random = Math.floor(Math.random() * photos.length);
+			setPhotoRandom(photos[random]);
+		}
+	}, [photos]);
+	return { data, topRating, keywords, photos, photoRandom, ...rest };
 };
 
 export default useRecipes;
