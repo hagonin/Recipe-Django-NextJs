@@ -82,7 +82,6 @@ function Recipe() {
 				</>
 			) : null}
 
-			{/* <SubscribeSection /> */}
 		</>
 	);
 }

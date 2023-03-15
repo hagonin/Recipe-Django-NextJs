@@ -13,7 +13,6 @@ import Loader from '@components/UI/Loader';
 export default function Home() {
 	const { recipes, topRating } = useRecipeContext();
 	const [categories, setCategories] = useState(null);
-	// const [randomRecipes, setRandomRecipes] = (null);
 
 	useEffect(() => {
 		if (recipes) {
@@ -26,9 +25,6 @@ export default function Home() {
 					.splice(0, 3),
 			}));
 			setCategories(arr);
-
-			// const randoms = getRandomRecipes(recipes);
-			// setRandomRecipes(randoms);
 		}
 	}, [recipes]);
 

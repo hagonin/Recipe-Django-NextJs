@@ -11,7 +11,7 @@ function Reviews({
 	goToLogin,
 }) {
 	return (
-		<div className=" mb-10 mt-5 py-10 px-7 bg-third rounded-md">
+		<div className=" pt-2 pb-8 px-7 bg-third rounded-md mt-16">
 			<CommonSection
 				title={`${reviews.length} Comment${
 					reviews.length > 1 ? 's' : ''

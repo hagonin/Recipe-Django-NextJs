@@ -11,7 +11,13 @@ function Pagination({ dots, currentSlide, handleGoTo }) {
 			></button>
 		);
 	}
-	return <div className="mt-3 text-center lg:invisible visible mb-5">{el}</div>;
+	return (
+		el.length > 0 && (
+			<div className="mt-3 text-center lg:invisible visible mb-5">
+				{el}
+			</div>
+		)
+	);
 }
 
 export default Pagination;

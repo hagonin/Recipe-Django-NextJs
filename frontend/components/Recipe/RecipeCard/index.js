@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
-import { AiFillClockCircle } from 'react-icons/ai';
+import { AiFillClockCircle, AiFillHeart } from 'react-icons/ai';
 import { BsBookmarksFill } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { HiOutlineTag } from 'react-icons/hi';
@@ -36,8 +36,8 @@ function RecipeCard({
 	actBookmark,
 	handleToggleBookmark = () => {},
 	lastPost,
-	isAverage,
 	noBorder,
+	isSlider,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && getPlainTextFromHtml(summary);
@@ -116,22 +116,18 @@ function RecipeCard({
 					{secondary ? null : (
 						<Tooltip
 							content={
-								actBookmark
-									? 'Remove collection'
-									: 'Add collection'
+								actBookmark ? 'Remove wishlist' : 'Add wishlist'
 							}
 						>
 							<button
 								onClick={() =>
 									handleToggleBookmark(actBookmark, id)
 								}
-								className={`p-2 rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
-									actBookmark
-										? 'bg-white text-primary'
-										: 'bg-primary text-white'
+								className={`p-2 bg-white rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
+									actBookmark ? ' text-red' : ' text-black'
 								} `}
 							>
-								<BsBookmarksFill />
+								<AiFillHeart />
 							</button>
 						</Tooltip>
 					)}
@@ -160,7 +156,9 @@ function RecipeCard({
 									: lgCard
 									? 'text-2xl '
 									: 'text-xl'
-							}    hover:text-primaryDark transition-all duration-200`}
+							}    hover:text-primaryDark transition-all duration-200 ${
+								isSlider ? 'h-12' : ''
+							}`}
 							title={name}
 						>
 							{name}

@@ -11,6 +11,8 @@ import Tippy from '@tippyjs/react';
 import Rating from '@components/UI/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
+import { AiFillHeart } from 'react-icons/ai';
+import Button from '@components/UI/Button';
 function SingRecipe({
 	id,
 	updated_at,
@@ -36,25 +38,7 @@ function SingRecipe({
 	const instructionsArr = getInstructionAsArr(instructions);
 	return (
 		<div>
-			<div className="flex gap-2 justify-center items-start ">
-				<h1 className="text-center font-serif capitalize">{title}</h1>
-				<Tippy
-					content={
-						<span>
-							{actBookmark ? 'Remove bookmark' : 'Add bookmark'}
-						</span>
-					}
-				>
-					<button
-						onClick={() => handleToggleBookmark(actBookmark, id)}
-						className={`text-2xl ml-2  ${
-							actBookmark ? 'text-primary' : 'text-black'
-						}`}
-					>
-						<BsBookmarksFill />
-					</button>
-				</Tippy>
-			</div>
+			<h1 className="text-center font-serif capitalize">{title}</h1>
 			<span className="block text-center font-medium mt-2">
 				{updated_at_format} / {author}
 			</span>
@@ -99,6 +83,25 @@ function SingRecipe({
 								serving={serving}
 							/>
 						</div>
+						<Button
+							className="mt-3 tag"
+							icon={{
+								left: (
+									<AiFillHeart
+										className={`${
+											actBookmark ? 'text-red' : ''
+										}`}
+									/>
+								),
+							}}
+							onClick={() =>
+								handleToggleBookmark(actBookmark, id)
+							}
+						>
+							{actBookmark
+								? 'Remove wishlist'
+								: 'Add to wishlist'}
+						</Button>
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
 						<Img

@@ -45,7 +45,7 @@ function ReviewForm({ onSubmit }) {
 				submitSuccess={isSubmitSuccessful}
 			/>
 			<TextAreaField
-				label="Your reviews (optional)"
+				label="Comment"
 				name={'review.content'}
 				register={register}
 				rows="3"
