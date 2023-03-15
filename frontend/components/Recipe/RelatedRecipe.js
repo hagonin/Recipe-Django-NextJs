@@ -1,12 +1,14 @@
 import CommonSection from '@components/Layouts/SideBar/Widget/CommonSection';
 import Loader from '@components/UI/Loader';
 import Slider from '@components/UI/Slider';
+import { useRecipeContext } from '@context/recipe-context';
 import { SLIDES_ON_DESKTOP } from '@utils/constants';
 import useQuery from 'hook/useQuery';
 import RecipeCard from './RecipeCard';
 
 function RelatedRecipe({ categoryName }) {
 	const { data: recipes } = useQuery(10, { category: categoryName });
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
 		<div className="mt-6">
 			<CommonSection
@@ -21,6 +23,9 @@ function RelatedRecipe({ categoryName }) {
 					{recipes.map((recipe) => {
 						return (
 							<RecipeCard
+								id={recipe.id}
+								actBookmark={checkBookmarkAct(recipe.id)}
+								handleToggleBookmark={handleToggleBookmark}
 								key={recipe.id}
 								main_image={recipe.main_image}
 								name={recipe.title}

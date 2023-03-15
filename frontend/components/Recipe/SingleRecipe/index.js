@@ -1,18 +1,17 @@
 import { BsClockFill } from 'react-icons/bs';
-import { BsBookmarksFill } from 'react-icons/bs';
-
 import { FaUser } from 'react-icons/fa';
 import Img from '@components/UI/Image';
 import formatDate from '@utils/formatdate';
 import createMarkup from '@utils/createMarkup';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
 import Ingredient from './Ingredient';
-import Tippy from '@tippyjs/react';
 import Rating from '@components/UI/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 import { AiFillHeart } from 'react-icons/ai';
 import Button from '@components/UI/Button';
+import Method from './Method';
+
 function SingRecipe({
 	id,
 	updated_at,
@@ -115,22 +114,14 @@ function SingRecipe({
 				<Title title="Ingredients" />
 
 				<Ingredient ingredients={ingredients} />
-				<Title title="Method" />
-				<ul className="text-base flex flex-col gap-2 p-0 m-0">
-					{instructionsArr.map(({ content }, index) => (
-						<li
-							className="flex gap-2"
-							key={index}
-						>
-							<span className="w-5 h-5 leading-5 text-sm border rounded-full shrink-0 text-center relative top-1">
-								{index + 1}
-							</span>
-							<span className="first-letter:uppercase">
-								{content}
-							</span>
-						</li>
-					))}
-				</ul>
+				{instructionsArr ? (
+					<Method instructionsArr={instructionsArr} />
+				) : (
+					<span className="opacity-60 italic">
+						You have not added method.
+					</span>
+				)}
+
 				{notes && (
 					<div>
 						<Title title="NOTES" />
@@ -152,7 +143,7 @@ const Timer = ({ children }) => (
 	<span className="flex items-center gap-2 ">{children}</span>
 );
 
-const TimerBox = ({ prep_time, cook_time, serving }) => (
+export const TimerBox = ({ prep_time, cook_time, serving }) => (
 	<>
 		{prep_time && (
 			<Timer>
