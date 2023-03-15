@@ -355,7 +355,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 
 const Title = ({ title, info }) => (
 	<div className="flex gap-2 items-center border-b border-primary pb-1 mb-2">
-		<h2 className="font-serif">{title}</h2>
+		<h4 className="font-serif tracking-widest">{title}</h4>
 		{info && (
 			<Tippy
 				content={info.content}

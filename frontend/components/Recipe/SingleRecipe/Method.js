@@ -2,7 +2,7 @@ import Title from '@components/UI/Title';
 
 function Method({ instructionsArr }) {
 	return (
-		<>
+		<div className='mt-6'>
 			<Title title="Method" />
 			<ul className="text-base flex flex-col gap-2 p-0 m-0">
 				{instructionsArr.map(({ content }, index) => (
@@ -19,7 +19,7 @@ function Method({ instructionsArr }) {
 					</li>
 				))}
 			</ul>
-		</>
+		</div>
 	);
 }
 

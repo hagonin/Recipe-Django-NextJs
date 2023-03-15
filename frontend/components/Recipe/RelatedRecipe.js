@@ -1,8 +1,7 @@
-import CommonSection from '@components/Layouts/SideBar/Widget/CommonSection';
 import Loader from '@components/UI/Loader';
 import Slider from '@components/UI/Slider';
+import Title from '@components/UI/Title';
 import { useRecipeContext } from '@context/recipe-context';
-import { SLIDES_ON_DESKTOP } from '@utils/constants';
 import useQuery from 'hook/useQuery';
 import RecipeCard from './RecipeCard';
 
@@ -10,10 +9,10 @@ function RelatedRecipe({ categoryName }) {
 	const { data: recipes } = useQuery(10, { category: categoryName });
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
-		<div className="mt-6">
-			<CommonSection
-				title="You may also like"
-				noBorder
+		<div className="mt-8">
+			<Title
+				center
+				title="Related recipe"
 			/>
 			{recipes ? (
 				<Slider

@@ -15,6 +15,7 @@ import { HiOutlineClipboardList } from 'react-icons/hi';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
 import { MdEmail, MdSecurity } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
+import { TitlePrimary } from '@components/UI/Title';
 
 function Profile() {
 	const { user } = useAuthContext();
@@ -56,8 +57,8 @@ function Profile() {
 
 	return (
 		<div className="container my-14">
-			<h1 className="text-center">My Profile</h1>
-			<div className="flex mt-14 items-center gap-6 md:flex-row flex-col">
+			<TitlePrimary title="My Profile" center />
+			<div className="flex mt-8 items-center gap-6 md:flex-row flex-col">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
@@ -115,7 +116,6 @@ function Profile() {
 			<Tabs>
 				<TabPanel
 					tab={{
-						icon: <HiOutlineClipboardList />,
 						title: 'Manage Recipe',
 					}}
 				>
@@ -176,7 +176,6 @@ function Profile() {
 				</TabPanel>
 				<TabPanel
 					tab={{
-						icon: <BsJournalBookmarkFill />,
 						title: 'Collections',
 					}}
 				>

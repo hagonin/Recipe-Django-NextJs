@@ -30,7 +30,7 @@ const useRecipes = () => {
 			setTopRating(ratings);
 
 			// collections pics
-			let arrPhotos = data.slice(0, 11).map((item) => ({
+			let arrPhotos = data.slice(0, 9).map((item) => ({
 				id: item.id,
 				src: item.main_image,
 				slug: item.slug,

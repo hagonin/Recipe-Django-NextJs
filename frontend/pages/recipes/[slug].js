@@ -6,12 +6,14 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RelatedRecipe from '@components/Recipe/RelatedRecipe';
 import SingRecipe from '@components/Recipe/SingleRecipe';
 import SubscribeSection from '@components/SubcribeSection';
-import Reviews from '@components/UI/Reviews';
+import Reviews from '@components/Reviews';
 import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import useRecipeBySlug from 'hook/useRecipeBySlug';
 import { useEffect } from 'react';
 import Loader from '@components/UI/Loader';
+import Author from '@components/Recipe/SingleRecipe/Author';
+import { images } from '@utils/constants';
 
 function Recipe() {
 	const {
@@ -69,6 +71,12 @@ function Recipe() {
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>
+					<SubscribeSection />
+					<Author
+						name={data?.user}
+						avatar={images.defaultAvatar}
+						bio="Sed rhoncus, velit sit amet mollis cursus, velit urna congue orci, in dignissim elit magna eget ante. Mauris sem justo, volutpat in quam quis, vulputate luctus neque. Sed ultricies eget augue quis hendrerit. Nullam quis nisi sit amet velit pharetra lobortis ac eget magna."
+					/>
 					{data?.category && (
 						<RelatedRecipe categoryName={data?.category} />
 					)}
@@ -81,7 +89,6 @@ function Recipe() {
 					/>
 				</>
 			) : null}
-
 		</>
 	);
 }

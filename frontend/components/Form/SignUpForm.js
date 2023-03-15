@@ -9,6 +9,7 @@ import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { TitlePrimary } from '@components/UI/Title';
 
 function SignUpForm({ onSubmit }) {
 	const { errors, setErrors, registerSuccess } = useAuthContext();
@@ -44,18 +45,15 @@ function SignUpForm({ onSubmit }) {
 			});
 	}, [errors]);
 
-	
 	useEffect(() => {
 		setErrors(null);
 		reset();
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
-			
-
+		<div className="bg-white  rounded-xl pt-6 pb-9 md:px-8 px-4 border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center ">
-				<h1 className="text-center">Register</h1>
+				<TitlePrimary title="Register" />
 				<Img
 					alt="login_icon"
 					src="/static/images/login.png"

@@ -1,10 +1,10 @@
 import ConfirmDelete from '@components/Form/ConfirmDelete';
-import Rating from '@components/UI/Reviews/Rate';
+import Rating from '@components/Reviews/Rate';
 import { images } from '@utils/constants';
 import formatDate from '@utils/formatdate';
 import { useState } from 'react';
 import { FiDelete } from 'react-icons/fi';
-import Img from '../Image';
+import Img from '../UI/Image';
 
 function ReviewCard({
 	id,
@@ -31,38 +31,38 @@ function ReviewCard({
 				showConfirm={showConfirmDeleteteReview}
 				handleCloseConfirm={() => setShowConfirmDeleteReview(false)}
 			/>
-			<div className="flex flex-col gap-4 ">
-				<div className="flex justify-between items-center">
-					<div className="flex gap-2">
-						<Img
-							src={avatar || images.defaultAvatar}
-							alt="avatar"
-							className="h-12 w-12 rounded-full overflow-hidden border border-border"
-							cover
-						/>
-						<div className="relative -top-[3px]">
+			<div className="flex gap-2 ">
+				<div>
+					<Img
+						src={avatar || images.defaultAvatar}
+						alt="avatar"
+						className="h-12 w-12 rounded-full overflow-hidden border border-border"
+						cover
+					/>
+				</div>
+				<div className="flex-1">
+					<div className="flex justify-between gap-2">
+						<div>
 							<span className="font-medium text-base leading-0">
 								{user}
 							</span>
 							<Rating number={rating} />
 						</div>
+						<div className="flex flex-col items-end">
+							<span className="text-sm ">{date_added}</span>
+							{hasEdit && (
+								<button
+									className="text-xl text-red"
+									onClick={() =>
+										setShowConfirmDeleteReview(true)
+									}
+								>
+									<FiDelete />
+								</button>
+							)}
+						</div>
 					</div>
-					<div className="flex flex-col items-end">
-						<span className="text-sm ">
-							{formatDate(date_added)}
-						</span>
-						{hasEdit && (
-							<button
-								className="text-xl text-red"
-								onClick={() => setShowConfirmDeleteReview(true)}
-							>
-								<FiDelete />
-							</button>
-						)}
-					</div>
-				</div>
-				<div className="flex-1">
-					<span className="first-letter:capitalize block font-medium text-black">
+					<span className="first-letter:capitalize block font-medium text-black mt-2">
 						{title}
 					</span>
 					<p className="first-letter:uppercase">{content}</p>

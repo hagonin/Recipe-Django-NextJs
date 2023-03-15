@@ -5,7 +5,7 @@ import formatDate from '@utils/formatdate';
 import createMarkup from '@utils/createMarkup';
 import Thumbnail from '@components/UI/Slider/Thumbnail';
 import Ingredient from './Ingredient';
-import Rating from '@components/UI/Reviews/Rate';
+import Rating from '@components/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 import { AiFillHeart } from 'react-icons/ai';
@@ -114,13 +114,9 @@ function SingRecipe({
 				<Title title="Ingredients" />
 
 				<Ingredient ingredients={ingredients} />
-				{instructionsArr ? (
+				{instructionsArr && (
 					<Method instructionsArr={instructionsArr} />
-				) : (
-					<span className="opacity-60 italic">
-						You have not added method.
-					</span>
-				)}
+				) }
 
 				{notes && (
 					<div>

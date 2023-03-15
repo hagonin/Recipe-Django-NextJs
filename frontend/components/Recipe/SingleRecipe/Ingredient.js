@@ -1,4 +1,5 @@
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
+import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
 import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {
@@ -10,7 +11,7 @@ function Ingredient({ ingredients, isPreview }) {
 					isPreview ? (
 						<span
 							key={index}
-							className="text-base border-b pb-1"
+							className="text-base border-b pb-1 capitalize"
 						>
 							{`${i.quantity} ${i.unit} ${i.title}`}
 						</span>
@@ -22,19 +23,21 @@ function Ingredient({ ingredients, isPreview }) {
 					)
 				)}
 			</div>
-			<div className="flex flex-col gap-2 ">
+			<div className="flex flex-col gap-2 mt-3 ">
 				{ingredient?.group.map((item, index) => (
 					<div key={index}>
-						<span className="font-medium text-black  capitalize tracking-wider">
-							{item.heading}
+						<span className="font-medium text-black  tracking-widest  ">
+							{uppercaseFirstLetter(item.heading)}
 						</span>
 						<div className="flex flex-col">
 							{item.items.map((i, index) =>
 								isPreview ? (
 									<span
 										key={index}
-										className="border-b pb-1"
-									>{`${i.quantity} ${i.unit} ${i.title}`}</span>
+										className="border-b pb-1 "
+									>
+										{`${i.quantity} ${i.unit} ${i.title}`}
+									</span>
 								) : (
 									<Check
 										key={index}

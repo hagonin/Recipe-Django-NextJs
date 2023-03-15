@@ -64,7 +64,7 @@ function PreviewRecipe({
 			/>
 			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-8 md:gap-4 gap-6 mb-10">
 				<div className="md:col-span-8">
-					<div className='flex gap-2'>
+					<div className="flex gap-2">
 						<h1 className="capitalize font-serif ">{title}</h1>
 						<span className="flex items-center gap-2 text-sm uppercase font-bold text-yellow">
 							<BsFillTagsFill /> {category}

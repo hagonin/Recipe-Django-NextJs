@@ -14,6 +14,7 @@ import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import Img from '@components/UI/Image';
 import { GrTip } from 'react-icons/gr';
 import { MdOutlineTipsAndUpdates } from 'react-icons/md';
+import { TitlePrimary } from '@components/UI/Title';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -35,7 +36,7 @@ function UploadImagePage() {
 	};
 	return (
 		<div className="container py-14">
-			<h1 className="text-center mb-14">Upload photo</h1>
+			<TitlePrimary title="Manage photo" center/>
 
 			<UploadPhoto
 				onSubmit={onUploadPhoto}

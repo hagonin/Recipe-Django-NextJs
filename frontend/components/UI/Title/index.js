@@ -8,4 +8,12 @@ function Title({ title, center }) {
 	);
 }
 
+function TitlePrimary({ title, center }) {
+	return (
+		<h1 className={`font-serif capitalize ${center ? 'text-center' : ''}`}>
+			{title}
+		</h1>
+	);
+}
 export default Title;
+export { TitlePrimary };

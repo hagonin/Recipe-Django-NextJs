@@ -3,6 +3,7 @@ import sleep from '@utils/sleep';
 import Banner from '@components/Banner';
 import ContactForm from '@components/Form/ContactForm';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
+import { TitlePrimary } from '@components/UI/Title';
 
 function Contact() {
 	const onSubmit = async (data) => {
@@ -13,7 +14,7 @@ function Contact() {
 		<>
 			<Banner />
 			<WidgetLayout>
-				<h1>Contact</h1>
+				<TitlePrimary title="Contact" />
 				<p className="mt-3 mb-10">
 					We are always on the lookout for talented new writers,
 					recipe developers, equipment reviewers, and photographers

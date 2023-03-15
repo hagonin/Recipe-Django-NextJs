@@ -1,5 +1,5 @@
-import ReviewForm from '@components/Form/Reviews';
-import CommonSection from '@components/Layouts/SideBar/Widget/CommonSection';
+import ReviewForm from '@components/Form/ReviewsForm';
+import Title from '@components/UI/Title';
 
 import ReviewCard from './ReviewCard';
 
@@ -11,22 +11,15 @@ function Reviews({
 	goToLogin,
 }) {
 	return (
-		<div className=" pt-2 pb-8 md:px-6 px-4 bg-third rounded-md mt-16">
-			<CommonSection
+		<div className=" pt-4 pb-8 md:px-6 px-4 bg-third rounded-md mt-16">
+			<Title
 				title={`${reviews.length} Comment${
 					reviews.length > 1 ? 's' : ''
 				} `}
-				noBorder
+				center
 			/>
 			<div className="mt-3">
-				{currentUserId ? (
-					<ReviewForm onSubmit={onSubmit} />
-				) : (
-					<p>
-						What do you think of this recipe? Share your experience
-						to help others.
-					</p>
-				)}
+				{currentUserId ? <ReviewForm onSubmit={onSubmit} /> : null}
 			</div>
 			<div className="mt-1">
 				{reviews.map((review, index) => (
@@ -42,12 +35,18 @@ function Reviews({
 				))}
 			</div>
 			{currentUserId ? null : (
-				<button
-					className="hover:underline font-medium mt-5 text-base italic hover:text-primary"
-					onClick={goToLogin}
-				>
-					Login to add rating and review
-				</button>
+				<div className=" mt-5">
+					<p>
+						What do you think of this recipe? Share your experience
+						to help others.
+					</p>
+					<button
+						className="hover:underline font-medium text-base italic hover:text-primary"
+						onClick={goToLogin}
+					>
+						Login to add rating and review
+					</button>
+				</div>
 			)}
 		</div>
 	);

@@ -116,7 +116,7 @@ const AuthProvider = ({ children }) => {
 			} = user.data;
 
 			setUser({ avatar, ..._profile, ...rest });
-			router.push('/');
+			router.push('/user/profile');
 		} catch ({ status, _error }) {
 			setUser((pre) => ({ ...pre, email: email }));
 			if (status === 400) {

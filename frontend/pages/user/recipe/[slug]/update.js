@@ -12,6 +12,7 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 import { getInstructionAsArr } from '@utils/handleInstruction';
+import { TitlePrimary } from '@components/UI/Title';
 
 function Update() {
 	const [initValue, setInitValue] = useState(null);
@@ -79,8 +80,11 @@ function Update() {
 
 	return (
 		<div className="container py-14 lg:w-3/4">
-			<div className="flex items-end justify-center mb-4">
-				<h1 className="ml-4 mb-14">Update Recipe</h1>
+			<div className="flex items-end justify-center mb-10">
+				<TitlePrimary
+					title="Update Recipe"
+					center
+				/>
 			</div>
 
 			{initValue ? (

@@ -9,6 +9,7 @@ import VerifyEmailForm from '@components/Form/VerifyEmaiForm';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import api from '@services/axios';
+import { TitlePrimary } from '@components/UI/Title';
 
 function SignUp() {
 	const router = useRouter();
@@ -78,8 +79,8 @@ function SignUp() {
 						src={images.signup}
 						className="w-full h-[300px] mb-10"
 					/>
-					<h1>Create An Account</h1>
-					<h2>What you will get?</h2>
+					<TitlePrimary title="Create An Account" />
+					<h2 className="font-serif">What you will get?</h2>
 					<ul className="mt-10 text-base">
 						<li className="flex items-center">
 							<GrStatusGood className="mr-2" /> Manage your

@@ -9,7 +9,7 @@ function ReviewForm({ onSubmit }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { isSubmitting, isSubmitSuccessful },
+		formState: { isSubmitting, isSubmitSuccessful, errors },
 		setValue,
 		reset,
 	} = useForm({
@@ -37,6 +37,7 @@ function ReviewForm({ onSubmit }) {
 				register={register}
 				rules={{ required: 'Enter your review title' }}
 				placeholder="Enter your review title"
+				error={errors?.review?.title}
 				required
 			/>
 			<Start

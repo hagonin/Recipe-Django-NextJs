@@ -11,6 +11,7 @@ import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 import { useRecipeContext } from '@context/recipe-context';
+import { TitlePrimary } from '@components/UI/Title';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
@@ -41,13 +42,13 @@ function AddRecipe() {
 
 	return (
 		<div className="container py-14 lg:w-3/4">
-			<div className="flex items-end justify-center mb-4">
+			<div className="flex items-center gap-4 justify-center">
 				<Img
 					src={images.addRecipeImg}
 					alt="add_recipe"
-					className="h-24 w-24"
+					className="h-24 w-24 -top-3"
 				/>
-				<h1 className="ml-4 mb-4">Add Recipe</h1>
+				<TitlePrimary title="Add Recipe" center/>
 			</div>
 			<p className="text-center mb-16">
 				Uploading personal recipes is easy! Add yours to your favorites,

@@ -18,7 +18,7 @@ function handleIngredientFromArr(ingredients) {
 			}
 			exits_recipe = ingredient.recipe;
 		});
-		
+
 		const group = Object.keys(obj).map((key) => ({
 			heading: key,
 			items: obj[key],

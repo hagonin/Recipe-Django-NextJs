@@ -28,7 +28,7 @@ function Image({ handleChooseImg, urlInit }) {
 	};
 
 	return (
-		<div className="mx-auto relative w-56 h-56 max-md:mx-auto rounded-md overflow-hidden">
+		<div className="mx-auto relative w-56 h-56 max-md:mx-auto overflow-hidden">
 			<Img
 				src={preview || images.photoDefault}
 				alt="preview"

@@ -1,9 +1,4 @@
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
-import { BsInstagram } from 'react-icons/bs';
-
-import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import CommonSection from './CommonSection';
 import { useRecipeContext } from '@context/recipe-context';

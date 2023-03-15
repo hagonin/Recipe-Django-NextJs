@@ -13,6 +13,7 @@ import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
+import { TitlePrimary } from '@components/UI/Title';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -44,16 +45,16 @@ function LoginForm({ onSubmit }) {
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
+		<div className="bg-white  rounded-xl pt-6 pb-9 md:px-8 px-4  border my-10 md:shadow-xl">
 			<div className="flex justify-center items-center mb-10">
-				<h1 className="text-center">Login</h1>
+				<TitlePrimary title="Login" />
 				<Img
 					alt="login_icon"
 					src={images.icon1}
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
-			<VerifyEmail/>
+			<VerifyEmail />
 
 			<Form onSubmit={handleSubmit(({ login }) => onSubmit(login))}>
 				<InputField
@@ -76,7 +77,7 @@ function LoginForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 				/>
 
-				<div className="flex justify-between items-center  mb-5 mt-5 max-sm:flex-col">
+				<div className="flex justify-between items-center  mb-5 mt-5 ">
 					<CheckboxField
 						name="login.remember"
 						isSingle={{ label: 'Remember me' }}
@@ -85,7 +86,7 @@ function LoginForm({ onSubmit }) {
 					/>
 					<Link
 						href="/resetpassword"
-						className="text-lg font-semibold hover:text-primary max-sm:mt-2"
+						className="md:text-lg text-base font-semibold hover:text-primary relative -top-[3px]"
 					>
 						Forgot Password?
 					</Link>

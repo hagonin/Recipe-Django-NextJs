@@ -93,7 +93,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 	}, [data]);
 
 	return (
-		<div>
+		<div className='mt-6'>
 			<input
 				type="file"
 				id="files"
@@ -154,7 +154,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 				<Button
 					type="submit"
 					disabled={isSubmitting}
-					className="mt-5 primary w-full"
+					className="mt-5 primary "
 				>
 					{isSubmitting && <Loader type="submitting" />}
 					Upload Photo

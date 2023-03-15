@@ -3,13 +3,14 @@ import Link from 'next/link';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
+import { TitlePrimary } from '@components/UI/Title';
 
 function About(props) {
 	const { isAuthenticated } = useAuthContext();
 	return (
 		<div>
-			<h1>About</h1>
-			<h2 className="mt-7">Who we are ?</h2>
+			<TitlePrimary title="About" />
+			<SubTitle title="Who we are ?" />
 			<p className="mt-3">
 				Home cooks are our heroes—it's as simple as that.{' '}
 				<span className="text-primaryDark">HomeCook</span> is a
@@ -31,7 +32,8 @@ function About(props) {
 				alt="about"
 				className="my-5"
 			/>
-			<h2 className="mt-7">Above all, we are:</h2>
+			<SubTitle title="Above all, we are:" />
+
 			<ul className="mt-3">
 				<li>
 					<span className="font-bold">Friendly</span> We love trading
@@ -58,7 +60,7 @@ function About(props) {
 					friends, family, cooking, and having a good laugh.
 				</li>
 			</ul>
-			<h2 className="mt-7">Work with us</h2>
+			<SubTitle title="Work with us" />
 			<p className="mt-3">
 				Join our team of enthusiastic editors, designers, programmers,
 				recipe developers, and more as we build out the world's largest
@@ -75,6 +77,8 @@ function About(props) {
 		</div>
 	);
 }
+
+const SubTitle = ({ title }) => <h3 className="mt-7 font-serif">{title}</h3>;
 
 export default About;
 About.getLayout = (page) => <WidgetLayout>{page}</WidgetLayout>;

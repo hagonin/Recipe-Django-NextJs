@@ -1,17 +1,10 @@
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 
 import ArrowBtn from './ArrowBtn';
 import Pagination from './Pagination';
-import { SLIDES_ON_DESKTOP } from '@utils/constants';
 
 function Slider({
 	children,
@@ -89,7 +82,7 @@ function Slider({
 			>
 				{children}
 				{/* button on pc */}
-				{loaded && children.length > SLIDES_ON_DESKTOP && (
+				{loaded && children.length > slideOnPc && (
 					<>
 						<ArrowBtn
 							onClick={handlePrev}
@@ -101,8 +94,7 @@ function Slider({
 							smallBtn={smallBtn}
 							onClick={handleNext}
 							disabled={
-								currentSlide ===
-								children.length - SLIDES_ON_DESKTOP
+								currentSlide === children.length - slideOnPc
 							}
 						/>
 					</>

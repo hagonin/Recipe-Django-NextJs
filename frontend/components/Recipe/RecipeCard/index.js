@@ -8,7 +8,7 @@ import { HiOutlineTag } from 'react-icons/hi';
 import { MdDateRange, MdAddPhotoAlternate, MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import Rating from '@components/UI/Reviews/Rate';
+import Rating from '@components/Reviews/Rate';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useState } from 'react';
 import Tooltip from '@components/UI/Tooltip';
@@ -45,8 +45,8 @@ function RecipeCard({
 	return lastPost ? (
 		<div
 			className={`flex grid-cols-3 gap-4 ${
-				noBorder ? '' : 'border-t'
-			} pt-4`}
+				noBorder ? '' : 'border-t pt-4'
+			} `}
 		>
 			<Link
 				href={`/recipes/${slug}`}
@@ -62,11 +62,11 @@ function RecipeCard({
 			<div className="flex-1 flex flex-col justify-center">
 				<Link
 					href={`/recipes/${slug}`}
-					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize"
+					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize "
 				>
 					{name}
 				</Link>
-				<span className="text-sm block whitespace-nowrap">
+				<span className="text-sm block whitespace-nowrap leading-none mt-1">
 					{date_format}
 				</span>
 				{rating && (

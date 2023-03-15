@@ -17,6 +17,8 @@ import { useRecipeContext } from '@context/recipe-context';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
+import { TitlePrimary } from '@components/UI/Title';
+import { BsSearch } from 'react-icons/bs';
 
 function Search() {
 	const router = useRouter();
@@ -40,10 +42,11 @@ function Search() {
 
 	return (
 		<div className="container">
-			<h1 className=" flex gap-4">
-				<FaSearch className="relative top-[1px]" /> Search Result:
+			<div className=" flex gap-4">
+				<BsSearch className="relative top-[1px] text-5xl" />
+				<TitlePrimary title=" Search Result:" />
 				{data?.data?.results.length > 0 && data?.data?.results.length}
-			</h1>
+			</div>
 
 			{isLoading || isValidating ? (
 				<div className="flex justify-center mt-10">

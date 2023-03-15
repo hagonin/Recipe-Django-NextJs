@@ -12,6 +12,7 @@ import {
 	HiOutlineChevronDoubleRight,
 } from 'react-icons/hi';
 import Loader from '@components/UI/Loader';
+import { TitlePrimary } from '@components/UI/Title';
 
 function CategoryPage() {
 	const {
@@ -41,10 +42,10 @@ function CategoryPage() {
 						<Img
 							src={category.cover}
 							alt={category.name}
-							className="h-[400px] w-full"
+							className="h-[400px] w-full mb-6"
 							cover
 						/>
-						<h1 className="mt-6 capitalize font-serif">{category.name}</h1>
+						<TitlePrimary title={category.name} />
 						<p className="mt-3 text-lg">{category.desc}</p>
 					</div>
 				)}
