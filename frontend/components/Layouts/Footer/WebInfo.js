@@ -8,10 +8,10 @@ function WebInfo() {
 			<Img
 				src={images.logo}
 				alt="logo"
-				className="h-20 inline-block"
+				className="h-20 w-44"
 			/>
 
-			<p className="mb-5">
+			<p className="mb-5 text-justify w-[95%]">
 				We all love convenience food, but one of the simplest ways to
 				improve your health is by preparing more home-cooked meals.
 				HomeCook will help you how to get started.

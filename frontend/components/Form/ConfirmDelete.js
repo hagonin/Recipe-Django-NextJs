@@ -16,7 +16,7 @@ function ConfirmDelete({ handleDelete, showConfirm, handleCloseConfirm }) {
 			handleCloseModal={handleCloseConfirm}
 			disabled={isSubmitting}
 		>
-			<div className=" pt-4 flex flex-col gap-2">
+			<div className=" pt-2 flex flex-col">
 				<h4>Are you sure you want to delete ?</h4>
 				<Form
 					onSubmit={handleSubmit(handleDelete)}
@@ -24,7 +24,7 @@ function ConfirmDelete({ handleDelete, showConfirm, handleCloseConfirm }) {
 				>
 					<Button
 						type="button"
-						className="cancle"
+						className="outline"
 						onClick={handleCloseConfirm}
 						disabled={isSubmitting}
 					>

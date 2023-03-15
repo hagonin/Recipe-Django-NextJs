@@ -83,7 +83,7 @@ function Profile() {
 					<span className="text-lg flex items-center gap-2">
 						<MdEmail /> {user?.email}
 					</span>
-					<div className="flex gap-6 items-center mt-2">
+					<div className="flex lg:gap-6 md:gap-4 gap-2 items-center mt-2 md:flex-row flex-col">
 						<Button
 							type="link"
 							href="/user/updateprofile"
@@ -186,7 +186,7 @@ function Profile() {
 						<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
 							{bookmarks.map((bookmark) => (
 								<RecipeCard
-									image={bookmark.image_url}
+									main_image={bookmark.main_image}
 									name={bookmark.title}
 									date={
 										bookmark.updated_at ||

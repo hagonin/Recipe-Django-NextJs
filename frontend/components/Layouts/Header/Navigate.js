@@ -1,36 +1,56 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { categoryList } from '@utils/constants';
+import { lato } from '@utils/fonts';
 
 function Navigate() {
 	const [isHover, setIsHover] = useState(false);
+	const [stick, setStick] = useState({});
+
+	const stickNav = (e) => {
+		if (window.scrollY > 256) {
+			setStick({
+				box1: 'fixed top-search-bar left-0 w-full shadow-sm',
+				box2: 'border-none',
+			});
+		} else {
+			setStick(null);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', stickNav);
+	}, []);
+
 	return (
-		<nav className="bg-white  max-lg:hidden">
-			<div className="container flex justify-center items-center border-y">
+		<nav className={`bg-white  max-lg:hidden z-[888] ${stick?.box1}`}>
+			<div
+				className={`container flex justify-center items-center border-y ${stick?.box2}`}
+			>
 				<NavItem
 					href="/"
 					label="Home"
 				/>
 				<div
-					className={`font-medium text-blackLight uppercase py-4 px-5  cursor-pointer relative group `}
+					className={`font-medium text-blackLight uppercase py-4 cursor-pointer relative group `}
 					onMouseEnter={() => setIsHover(true)}
 					onMouseLeave={() => setIsHover(false)}
 				>
 					<NavItem
 						label="Categories"
 						className="group-hover:text-primary"
+						icon={<MdOutlineKeyboardArrowDown />}
 					/>
 
-					<MdOutlineKeyboardArrowDown className="relative -top-[1px] text-2xl inline-block ml-2 group-hover:text-primary" />
 					{isHover && (
-						<div className="top-full left-0 bg-white  absolute z-10 w-[500px] shadow-md border-t-2 border-primary grid grid-cols-3 p-2">
+						<div className="top-full left-0 bg-white  absolute z-10 w-[550px] shadow-md border-t-2 border-primary grid grid-cols-2 p-2">
 							<NavItem
 								href="/recipes"
 								label="All Recipes "
-								className="!text-base 
-									!font-medium block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+								className=" 
+									block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 							/>
 							{categoryList.map((category) => (
 								<NavItem
@@ -38,7 +58,7 @@ function Navigate() {
 									href={`/recipes/category/${category.name}`}
 									label={category.name}
 									className="
-									!font-medium !text-base block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
+									 block py-2 px-5  border-[rgba(0,0,0,0.04)] hover:bg-[rgba(0,0,0,0.02)]"
 								/>
 							))}
 						</div>
@@ -57,14 +77,15 @@ function Navigate() {
 	);
 }
 
-const NavItem = ({ href, label, className }) => {
-	const Comp = href ? Link : 'span';
+const NavItem = ({ href, label, className, icon }) => {
+	const Comp = href ? Link : 'button';
 	return (
 		<Comp
 			href={href}
-			className={`font-semibold text-lg uppercase px-5  hover:text-primaryDark ${className}`}
+			className={`${lato.className} tracking-widest flex items-center gap-2 font-semibold text-base uppercase px-5  hover:text-primaryDark ${className}`}
 		>
 			{label}
+			{icon && <span className="text-3xl">{icon}</span>}
 		</Comp>
 	);
 };

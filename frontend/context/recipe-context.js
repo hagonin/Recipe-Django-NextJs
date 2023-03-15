@@ -23,6 +23,8 @@ const RecipeProvider = ({ children }) => {
 		mutate: mutateRecipes,
 		isValidating: validatingRecipes,
 		keywords,
+		photos,
+		topRating,
 	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
@@ -96,6 +98,8 @@ const RecipeProvider = ({ children }) => {
 				setSlugUpdate,
 				slugUpdate,
 				keywords,
+				topRating,
+				photos,
 			}}
 		>
 			{children}

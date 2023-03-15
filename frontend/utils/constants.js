@@ -21,6 +21,7 @@ export const images = {
 	notfound: '/static/images/404-error.png',
 	tick: '/static/images/tick.png',
 	no_search: '/static/images/no-results.png',
+	ingredient_icon: '/static/images/ingredient_icon.png',
 };
 
 export const categoryList = [
@@ -73,15 +74,15 @@ export const categoryList = [
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
-		id: 9,
-		cover: '/static/images/categories/soups_stew_and_chill.jpg',
-		name: 'soups, stew and chill',
-		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
-	},
-	{
 		id: 10,
 		cover: '/static/images/categories/side_dish.jpg',
 		name: 'side dish',
+		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
+	},
+	{
+		id: 9,
+		cover: '/static/images/categories/soups_stew_and_chill.jpg',
+		name: 'soups, stew and chill',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
@@ -104,17 +105,17 @@ export const tags = [
 	'dinner',
 ];
 export const unit = [
-	{ id: 1, name: 'pound(s)' },
-	{ id: 2, name: 'ml' },
-	{ id: 3, name: 'lbs' },
-	{ id: 4, name: 'oz' },
-	{ id: 5, name: 'g' },
-	{ id: 6, name: 'kg' },
-	{ id: 7, name: 'cup' },
-	{ id: 8, name: 'teaspoon(s)' },
-	{ id: 9, name: 'tablespoon(s)' },
-	{ id: 10, name: 'pcs' },
-	{ id: 11, name: 'l' },
+	{ id: 1, name: 'cup(s)' },
+	{ id: 2, name: 'g' },
+	{ id: 3, name: 'ml' },
+	{ id: 4, name: 'l' },
+	{ id: 5, name: 'teaspoon(s)' },
+	{ id: 6, name: 'tablespoon(s)' },
+	{ id: 7, name: 'pound(s)' },
+	{ id: 8, name: 'pcs' },
+	{ id: 9, name: 'kg' },
+	{ id: 10, name: 'oz' },
+	{ id: 11, name: 'lbs' },
 ];
 
 export const ratingScale = [
@@ -165,4 +166,7 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 1;
+export const EXIST_RECIPE = 3;
+export const NUMBER_OF_RECIPE_RECIPE_PAGE = 6;
+export const NUMBER_OF_RECIPE_CATEGORY_PAGE = 6;
+export const SLIDES_ON_DESKTOP = 3;

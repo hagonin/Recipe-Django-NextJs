@@ -1,9 +1,8 @@
 import { Error } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
-import { EXIST_RECIPE, unit } from '@utils/constants';
+import { unit } from '@utils/constants';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 function IngredientItem({ register, control, name, error, exist_recipe }) {
 	const { fields, append, remove } = useFieldArray({
@@ -18,8 +17,8 @@ function IngredientItem({ register, control, name, error, exist_recipe }) {
 						className="flex gap-2"
 						key={field.id}
 					>
-						<div className="flex gap-2 flex-1">
-							<div className="flex flex-col basis-1/2">
+						<div className="grid grid-cols-12 gap-2 flex-1">
+							<div className="md:col-span-8 col-span-12">
 								<input
 									className={`text-base px-3 border rounded-md w-full outline-none focus:border-primary h-10 ${
 										error?.[index]?.title?.message
@@ -37,7 +36,7 @@ function IngredientItem({ register, control, name, error, exist_recipe }) {
 									className="mt-[1px] ml-0 text-sm"
 								/>
 							</div>
-							<div className="flex flex-col  basis-1/4">
+							<div className="md:col-span-2 col-span-6">
 								<input
 									className={`text-base px-3 border rounded-md w-full outline-none focus:border-primary h-10`}
 									type="text"
@@ -49,7 +48,7 @@ function IngredientItem({ register, control, name, error, exist_recipe }) {
 									className="mt-[1px] ml-0 text-sm"
 								/>
 							</div>
-							<div className="flex flex-col basis-1/4">
+							<div className="md:col-span-2 col-span-6">
 								<select
 									className={`text-base px-3 border rounded-md w-full outline-none focus:border-primary h-10`}
 									placeholder="unit"

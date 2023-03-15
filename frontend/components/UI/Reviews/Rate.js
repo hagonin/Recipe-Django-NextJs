@@ -1,8 +1,8 @@
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
-function number({ number, count, small, isAverage }) {
+function number({ number, count, small }) {
 	return (
-		<div className="flex gap-[1px] items-center relative top-[2px]">
+		<div className="flex gap-[1px] items-center relative top-[1px]">
 			<span className={`${small ? 'text-sm' : 'text-xl'} text-yellow`}>
 				{number > 0.5 ? (
 					<BsStarFill />
@@ -49,7 +49,15 @@ function number({ number, count, small, isAverage }) {
 					<BsStar />
 				)}
 			</span>
-			{isAverage && <span className="font-semibold ml-2">({count})</span>}
+			{count && (
+				<span
+					className={` font-medium ml-1 ${
+						small ? 'text-[0.7rem]' : 'text-[0.87rem]'
+					}`}
+				>
+					({count})
+				</span>
+			)}
 		</div>
 	);
 }

@@ -12,18 +12,16 @@ import { FaSearch } from 'react-icons/fa';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
-import LastPost from '@components/Recipe/LastestRecipes';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
-import useQuery from 'hook/useQuery';
 
 function Search() {
 	const router = useRouter();
+	const { topRating } = useRecipeContext();
 	const { query } = router;
-	const { keywords } = useRecipeContext();
 
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
@@ -36,42 +34,23 @@ function Search() {
 		}
 	);
 
-	const { data: recipesTop } = useQuery(5, { ordering: 'rating' });
-
 	useEffect(() => {
 		setQueryParams(query);
 	}, [query]);
 
 	return (
 		<div className="container">
-			<h1 className=" flex gap-2">
+			<h1 className=" flex gap-4">
 				<FaSearch className="relative top-[1px]" /> Search Result:
-				{/* <span>{results && results.length}</span> */}
+				{data?.data?.results.length > 0 && data?.data?.results.length}
 			</h1>
-			<div className="flex gap-2 mt-4">
-				{keywords.map((item) => (
-					<Button
-						className="tag"
-						onClick={() =>
-							router.push({
-								pathname: '/search',
-								query: {
-									search: item,
-								},
-							})
-						}
-					>
-						{item}
-					</Button>
-				))}
-			</div>
 
 			{isLoading || isValidating ? (
 				<div className="flex justify-center mt-10">
 					<Loader type="searching" />
 				</div>
 			) : (
-				<div className="mt-7">
+				<div className="mt-7 flex flex-col gap-4">
 					{data?.data?.results.length > 0 ? (
 						data?.data?.results.map((item) => (
 							<RecipeCard
@@ -80,6 +59,8 @@ function Search() {
 								name={item.title}
 								main_image={item.main_image}
 								date={item.updated_at}
+								reviews_count={item.reviews_count}
+								rating={item.rating}
 								lastPost
 							/>
 						))
@@ -94,7 +75,7 @@ function Search() {
 								Sorry. No result found.
 							</h4>
 
-							<TopRating recipes={recipesTop} />
+							<TopRating recipes={topRating} />
 						</>
 					)}
 				</div>

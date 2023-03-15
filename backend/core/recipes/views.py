@@ -3,8 +3,7 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated,AllowAny  
 from rest_framework.filters import OrderingFilter
@@ -109,23 +108,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = RecipeImage.objects.all()
     serializer_class = serializers.ImageSerializer
     permission_classes = [IsOwner]
-
-    @action(detail=False, methods=["POST"])
-    def multiple_upload(self, request, *args, **kwargs):
-        """Upload multiple images and create objects"""
-        serializer = serializers.MultipleImageSerializer(data=request.data or None)
-        serializer.is_valid(raise_exception=True)
-        images = serializer.validated_data.get("images")
-
-        images_list = []
-        for image in images:
-            images_list.append(
-                RecipeImage(images=image)
-            )
-        if images_list:
-            RecipeImage.objects.bulk_create(images_list)
-
-        return Response("Success")
+    parser_classes = (MultiPartParser, FormParser,)
     
 class RecipeReviewViewset(CreateModelMixin,
                         DestroyModelMixin,

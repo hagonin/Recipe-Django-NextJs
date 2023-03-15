@@ -5,18 +5,18 @@ import 'keen-slider/keen-slider.min.css';
 
 import ArrowBtn from './ArrowBtn';
 import Pagination from './Pagination';
+import { SLIDES_ON_DESKTOP } from '@utils/constants';
 
-function Slider({ children }) {
+function Slider({ children, noBtn }) {
 	const [loaded, setLoaded] = useState(false);
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [sliderRef, instanceRef] = useKeenSlider({
-		loop: true,
 		breakpoints: {
 			'(min-width: 768px)': {
 				slides: { perView: 2, spacing: 16 },
 			},
 			'(min-width: 1024px)': {
-				slides: { perView: 3, spacing: 24 },
+				slides: { perView: SLIDES_ON_DESKTOP, spacing: 24 },
 			},
 		},
 		slides: { perView: 1 },
@@ -28,15 +28,13 @@ function Slider({ children }) {
 		},
 	});
 
-	const handleNext = useCallback(instanceRef.current?.next, [
-		loaded,
-		instanceRef,
-	]);
+	const handleNext = useCallback(() => {
+		instanceRef.current?.next();
+	}, [loaded, instanceRef]);
 
-	const handlePrev = useCallback(instanceRef.current?.prev, [
-		loaded,
-		instanceRef,
-	]);
+	const handlePrev = useCallback(() => {
+		instanceRef.current?.prev();
+	}, [loaded, instanceRef]);
 
 	useEffect(() => {
 		const handleKeyPress = (e) => {
@@ -50,18 +48,25 @@ function Slider({ children }) {
 	}, [loaded]);
 
 	return (
-		<section className="container mt-10 relative">
+		<section className="container mt-3 relative">
 			<div
 				ref={sliderRef}
 				className="keen-slider"
 			>
 				{children}
-				{loaded && (
+				{loaded && children.length > SLIDES_ON_DESKTOP && !noBtn && (
 					<>
-						<ArrowBtn onClick={handlePrev} />
+						<ArrowBtn
+							onClick={handlePrev}
+							disabled={currentSlide === 0}
+						/>
 						<ArrowBtn
 							right
 							onClick={handleNext}
+							disabled={
+								currentSlide ===
+								children.length - SLIDES_ON_DESKTOP
+							}
 						/>
 					</>
 				)}

@@ -22,14 +22,13 @@ function NavCategory() {
 				)}
 			</NavItem>
 			<div
-				className={`grid grid-cols-2 ml-16  ${
+				className={`grid md:grid-cols-2  bg-[rgba(0,0,0,0.06)] pl-2  ${
 					openCategory ? 'block' : 'hidden'
 				}`}
 			>
 				<Link
 					href="/recipes"
-					isSubItem
-					className="block capitalize py-2 px-3 hover:text-primary text-left"
+					className="block capitalize py-2 px-3 hover:text-primary text-left "
 				>
 					All Recipes
 				</Link>
@@ -38,7 +37,6 @@ function NavCategory() {
 						key={category.id}
 						href={`/recipes/category/${category.name}`}
 						className="block capitalize py-2 px-3 hover:text-primary text-left"
-						isSubItem
 					>
 						{category.name}
 					</Link>

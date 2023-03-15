@@ -37,16 +37,23 @@ function RecipePreView() {
 	const goToUpdate = useCallback(() =>
 		router.push(`/user/recipe/${recipe?.slug}/update`)
 	);
-	const handleDeleteRecipe = useCallback(async (slug) => {
-		await deleteRecipe(slug);
-		await mutateRecipes();
+
+	const goToRecipeSingle = useCallback(() =>
+		router.push(`/recipes/${recipe?.slug}`)
+	);
+
+	const handleDeleteRecipe = useCallback(async () => {
+		await deleteRecipe(recipe?.slug);
 	});
+	const goToUploadPhoto = useCallback(() =>
+		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`)
+	);
 
 	useEffect(() => {
 		setLoading(true);
 		getRecipeBySlug(slug)
 			.then(({ data }) => {
-				setRecipe({...data});
+				setRecipe({ ...data });
 			})
 			.catch()
 			.then(() => {
@@ -63,6 +70,8 @@ function RecipePreView() {
 					goToUpload={goToUploadPhotos}
 					goToUpdate={goToUpdate}
 					gotoDelete={handleDeleteRecipe}
+					goToRecipeSingle={goToRecipeSingle}
+					goToUploadPhoto={goToUploadPhoto}
 				/>
 			) : null}
 		</div>

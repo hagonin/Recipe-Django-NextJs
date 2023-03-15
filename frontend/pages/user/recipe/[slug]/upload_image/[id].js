@@ -3,7 +3,11 @@ import { toast } from 'react-toastify';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE_IMAGE, images } from '@utils/constants';
+import {
+	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_IMAGE,
+	images,
+} from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
@@ -20,7 +24,11 @@ function UploadImagePage() {
 
 	const onUploadPhoto = async (form) => {
 		try {
-			await api.post(ENDPOINT_RECIPE_IMAGE, form, configAuth());
+			await api.patch(
+				`${ENDPOINT_RECIPE_DETAIL}${slug}/`,
+				form,
+				configAuth()
+			);
 			toast.success('Upload new photo success');
 			router.push(`/user/recipe/${slug}`);
 		} catch {}

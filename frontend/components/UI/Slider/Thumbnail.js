@@ -29,7 +29,7 @@ function ThumbnailPlugin(mainRef) {
 				removeActive();
 				const next = main.animator.targetIdx || 0;
 				addActive(main.track.absToRel(next));
-				slider.moveToIdx(Math.min(slider.track.details.maxIdx, next));
+				// slider.moveToIdx(Math.min(slider.track.details.maxIdx, next));
 			});
 		});
 	};
@@ -44,7 +44,7 @@ function Thumbnail({ images }) {
 		{
 			initial: 0,
 			slides: {
-				perView: 3,
+				perView: 2,
 				spacing: 10,
 			},
 			breakpoints: {
@@ -72,7 +72,8 @@ function Thumbnail({ images }) {
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="md:w-1/2  h-60 mx-auto"
+							className="h-72 w-72 mx-auto "
+							cover
 						/>
 					</div>
 				))}
@@ -80,7 +81,7 @@ function Thumbnail({ images }) {
 
 			<div
 				ref={thumbnailRef}
-				className="keen-slider thumbnail mt-6 justify-center"
+				className="keen-slider thumbnail mt-6 justify-center border-y py-2 bg-third"
 			>
 				{images.map((img) => (
 					<div
@@ -90,7 +91,7 @@ function Thumbnail({ images }) {
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-24"
+							className="h-20 rounded-md"
 							cover
 						/>
 					</div>

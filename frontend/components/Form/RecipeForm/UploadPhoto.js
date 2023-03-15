@@ -1,64 +1,164 @@
 import Button from '@components/UI/Button';
+import Img from '@components/UI/Image';
 import Loader from '@components/UI/Loader';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { useRecipeContext } from '@context/recipe-context';
+import { ENDPOINT_RECIPE_DETAIL, ENDPOINT_RECIPE_READ } from '@utils/constants';
+import { getFileFromUrl } from '@utils/getFileFromUrl';
+import useQuery from 'hook/useQuery';
+import useRecipeBySlug from 'hook/useRecipeBySlug';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { FaLine } from 'react-icons/fa';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { MdAddToPhotos, MdDelete, MdPhotoAlbum } from 'react-icons/md';
 import { Form, InputField } from '../FormControl';
-import Image from './Image';
 
 function UploadPhoto({ onSubmit, recipe }) {
 	const {
 		register,
+		control,
 		handleSubmit,
 		formState: { isSubmitting },
 		setValue,
-	} = useForm({
-		defaultValues: {
-			upload_photo: {
-				image_url: null,
-				caption: null,
-			},
-		},
+		getValues,
+	} = useForm();
+
+	const { fields, remove } = useFieldArray({
+		control,
+		name: 'upload_photo',
 	});
-	const handleChoosePhoto = (file) => {
-		setValue('upload_photo.image_url', file);
-	};
 
-	const createFormData = ({ upload_photo }) => {
-		const { image_url, caption } = upload_photo;
-		if (image_url) {
-			const form = new FormData();
+	const router = useRouter();
+	const inputFileRef = useRef();
 
-			form.append('image', image_url, image_url.name);
-			form.append('caption', caption);
-			form.append('recipe', recipe);
-			return onSubmit(form);
-		} else {
-			toast.error('Choose photo to upload.');
+	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
+
+	const [listPhotos, setListPhotos] = useState([]);
+
+	const createFormData = useCallback(async ({ upload_photo }) => {
+		const formData = new FormData();
+		for (let i = 0; i < upload_photo.length; i++) {
+			Object.keys(upload_photo[i]).map((key) => {
+				if (key === 'image') {
+					formData.append(
+						`images[${i}]${key}`,
+						upload_photo[i][key],
+						upload_photo[i][key].name
+					);
+				} else {
+					formData.append(`images[${i}]${key}`, upload_photo[i][key]);
+				}
+			});
 		}
-	};
+		await onSubmit(formData);
+		mutate();
+	});
+
+	const onSelectPhotos = useCallback((e) => {
+		const files = [...e.target.files].map((file) => {
+			const url = URL.createObjectURL(file);
+			return {
+				image: file,
+				caption: '',
+				recipe,
+				url,
+			};
+		});
+		setListPhotos((pre) => [...pre, ...files]);
+	});
+
+	useEffect(() => {
+		setValue('upload_photo', listPhotos);
+	}, [listPhotos]);
+
+	const handleDelete = useCallback((index) => {
+		remove(index);
+		setListPhotos((preList) => {
+			const list = [...preList];
+			URL.revokeObjectURL(list[index].url);
+			list.splice(index, 1);
+			return list;
+		});
+	});
+
+	useEffect(() => {
+		if (data) {
+			const images = data.images.map(async (img) => {
+				const file = await getFileFromUrl(img.image, 'recipe.png');
+				return { ...img, image: file, url: img.image };
+			});
+			Promise.all(images).then((res) => setListPhotos(res));
+		}
+	}, [data]);
+
 	return (
 		<div>
+			<input
+				type="file"
+				id="files"
+				name="files"
+				multiple
+				onChange={onSelectPhotos}
+				className="hidden"
+				ref={inputFileRef}
+			/>
+			<Button
+				icon={{ left: <MdAddToPhotos /> }}
+				onClick={() => inputFileRef.current.click()}
+				className="mb-7"
+			>
+				Add Photo
+			</Button>
+
+			{isLoading && <Loader type="searching" />}
 			<Form
 				onSubmit={handleSubmit(createFormData)}
-				className="w-1/3 mx-auto"
+				className="!flex-row gap-4 flex-wrap"
 			>
-				<Image handleChooseImg={handleChoosePhoto} />
-				<div className="flex flex-col items-center">
-					<InputField
-						type="text"
-						name="upload_photo.caption"
-						register={register}
-						label="Caption (optional)"
-					/>
-					<Button
-						type="submit"
-						disabled={isSubmitting}
-						className="mt-5 primary w-full"
-					>
-						{isSubmitting && <Loader type="submitting" />}
-						Upload Photo
-					</Button>
+				<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-6">
+					{fields.map((field, index) => (
+						<div
+							className="flex flex-col items-center relative"
+							key={field.id}
+						>
+							{listPhotos[index].url && (
+								<div className="relative group rounded-md overflow-hidden w-full">
+									<Img
+										alt="recipe photo"
+										src={listPhotos[index]?.url}
+										className="h-44 w-full  rounded-md"
+										cover
+									/>
+									<div className="opacity-0 group-hover:opacity-100 absolute top-0 left-0 w-full h-full bg-[rgba(255,255,255,0.3)] flex transition-all">
+										<button
+											type="button"
+											onClick={() => handleDelete(index)}
+											className="m-auto rounded-md px-2 bg-red text-white font-bold text-sm shadow-md"
+										>
+											Delete
+										</button>
+									</div>
+								</div>
+							)}
+							<InputField
+								type="text"
+								name={`upload_photo.${index}.caption`}
+								register={register}
+								label="Caption (optional)"
+							/>
+						</div>
+					))}
 				</div>
+
+				<Button
+					type="submit"
+					disabled={isSubmitting}
+					className="mt-5 primary w-full"
+				>
+					{isSubmitting && <Loader type="submitting" />}
+					Upload Photo
+				</Button>
 			</Form>
 		</div>
 	);

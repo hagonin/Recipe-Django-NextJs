@@ -5,7 +5,7 @@ function Check({ label }) {
 
 	return (
 		<label
-			className={`text-base capitalize select-none cursor-pointer block border-b border-border py-1 ${
+			className={`text-base select-none cursor-pointer block border-b border-border py-1 ${
 				check ? 'line-through' : ''
 			}`}
 		>

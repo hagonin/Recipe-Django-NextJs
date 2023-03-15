@@ -17,14 +17,14 @@ module.exports = {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['var(--open-sans)', ...fontFamily.sans],
+				sans: ['var(--nunito-sans)', ...fontFamily.sans],
 				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
 			},
 			colors: {
 				primary: '#96b7ae',
 				primaryLight: '#7ba39617',
 				primaryDark: '#79aa9e',
-				primaryTransparent: 'rgb(150, 183, 174, 0.8)',
+				primaryTransparent: 'rgb(150, 183, 174, 0.85)',
 				second: '#757575',
 				third: '#F9F8F3',
 				grey: '#EEEEEE',
@@ -47,6 +47,12 @@ module.exports = {
 					from: { transform: 'translate3d(0, 0, 0)' },
 					to: { transform: 'translate3d(0, 30px, 0)' },
 				},
+			},
+			spacing: {
+				'search-bar': '48px',
+				'logo-bar-pc': '208px',
+				'logo-bar-mobile': '80px',
+				'navigate-height': '60px',
 			},
 		},
 		fontSize: {

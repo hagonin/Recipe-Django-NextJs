@@ -7,9 +7,7 @@ function Img({ alt, src, cover, className, ...props }) {
 				fill
 				src={src}
 				alt={alt}
-				className={`!relative ${
-					cover ? 'object-cover' : 'object-contain'
-				}`}
+				className={`${cover ? 'object-cover' : 'object-contain'}`}
 				sizes="(max-width: 768px) 100vw,
               (max-width: 1024px) 50vw,
               33vw"

@@ -9,6 +9,17 @@
    p, span {
     @apply text-base;
    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
     
     h1 {
        @apply text-5xl font-medium text-black;
@@ -39,22 +50,25 @@
     }
     
     ul {
-      @apply list-none;
+      @apply list-decimal ml-6;
+    }
+    ol {
+      @apply list-disc ml-6;
     }
     
 }
 
 @layer components {
     .container {
-        @apply xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+        @apply xl:max-w-[1110px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
 
     .btn {
-      @apply text-sm font-normal text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-sm font-medium text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
-      @apply text-white border-transparent bg-primary hover:bg-primaryDark
+      @apply text-white  border-transparent bg-primary hover:bg-primaryDark
     }
 
     .btn.secondary {
@@ -66,11 +80,11 @@
     }
 
     .btn.lg {
-      @apply text-base font-medium h-10 px-6;
+      @apply text-base h-10 px-6 tracking-[0.2em] !text-sm;
     }
 
      .btn.login {
-      @apply text-base font-medium h-12 px-5;
+      @apply text-base h-12 px-5;
     }
 
     /* .btn.third {
@@ -85,7 +99,7 @@
     }
 
     .btn.cancle {
-      @apply  font-bold hover:bg-transparent hover:text-black decoration-2 decoration-primaryDark hover:underline hover:underline-offset-2 border-none;
+      @apply  border-2  text-red hover:bg-transparent border-red;
     }
 
     .btn.reset {
@@ -93,7 +107,11 @@
     }
 
     .btn.outline {
-      @apply border-primaryDark;
+      @apply border-2 border-primaryDark text-primaryDark hover:bg-transparent hover:opacity-50;
+    }
+
+    .btn.disabled:disabled {
+      @apply bg-transparent hover:bg-transparent hover:text-black hover:border-border;
     }
 
 

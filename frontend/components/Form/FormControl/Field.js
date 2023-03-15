@@ -225,8 +225,35 @@ const RichTextField = forwardRef(
 				theme="snow"
 				{...field}
 				ref={ref}
-				className="h-[70%]"
+				className="lg:h-[55%] md:h-[60%] h-[70%]"
 				{...props}
+				modules={{
+					toolbar: [
+						[{ header: [4, 5, 6, false] }],
+						['bold', 'italic', 'underline', 'clean'],
+						[{ color: [] }],
+						['blockquote', 'code-block'],
+						[{ align: [] }],
+						[{ list: 'ordered' }, { list: 'bullet' }],
+						['link'],
+						[{ script: 'sub' }, { script: 'super' }],
+					],
+				}}
+				formats={[
+					'header',
+					'italic',
+					'underline',
+					'bold',
+					'clean',
+					'list',
+					'ordered',
+					'link',
+					'blockquote',
+					'code-block',
+					'align',
+					'script',
+					'color',
+				]}
 			/>
 		</div>
 	)

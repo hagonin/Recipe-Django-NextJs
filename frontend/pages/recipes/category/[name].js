@@ -4,7 +4,14 @@ import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { categoryList } from '@utils/constants';
+import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
+import usePagination from 'hook/usePagination';
+import Button from '@components/UI/Button';
+import {
+	HiOutlineChevronDoubleLeft,
+	HiOutlineChevronDoubleRight,
+} from 'react-icons/hi';
+import Loader from '@components/UI/Loader';
 
 function CategoryPage() {
 	const {
@@ -12,8 +19,12 @@ function CategoryPage() {
 	} = useRouter();
 	const { handleToggleBookmark, checkBookmarkAct, recipes } =
 		useRecipeContext();
-
 	const [category, setCategory] = useState(null);
+	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
+		usePagination({
+			page: NUMBER_OF_RECIPE_RECIPE_PAGE,
+			recipes: category?.recipes,
+		});
 
 	useEffect(() => {
 		if (recipes && name) {
@@ -24,18 +35,22 @@ function CategoryPage() {
 	}, [name, recipes]);
 	return (
 		<>
-			{category && (
-				<>
+			<>
+				{category && (
 					<div className="border-b border-border pb-5">
 						<Img
 							src={category.cover}
 							alt={category.name}
+							className="h-[400px] w-full"
+							cover
 						/>
-						<h1 className="mt-6 capitalize">{category.name}</h1>
-						<p className="mt-3">{category.desc}</p>
+						<h1 className="mt-6 capitalize font-serif">{category.name}</h1>
+						<p className="mt-3 text-lg">{category.desc}</p>
 					</div>
-					<div className="grid">
-						{category.recipes.map((recipe) => (
+				)}
+				<div className="flex flex-col gap-y-8 mt-10">
+					{currentRecipes ? (
+						currentRecipes.map((recipe) => (
 							<RecipeCard
 								key={recipe.id}
 								id={recipe.id}
@@ -50,13 +65,37 @@ function CategoryPage() {
 								handleToggleBookmark={handleToggleBookmark}
 								actBookmark={checkBookmarkAct(recipe.id)}
 								lgCard
-								border
-								className="grid lg:grid-cols-12 gap-6 grid-cols-1"
+								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1 pb-8 border-b"
 							/>
-						))}
+						))
+					) : (
+						<>
+							<Loader type="recipe-lg-card" />
+						</>
+					)}
+				</div>
+
+				{currentRecipes?.length > 0 && (
+					<div className="flex justify-between mt-10">
+						<Button
+							icon={{ left: <HiOutlineChevronDoubleLeft /> }}
+							onClick={previousPage}
+							disabled={currentPage === 1}
+							className="disabled"
+						>
+							Previous Recipe
+						</Button>
+						<Button
+							icon={{ right: <HiOutlineChevronDoubleRight /> }}
+							disabled={currentPage >= limit}
+							onClick={nextPage}
+							className="disabled"
+						>
+							Next recipe
+						</Button>
 					</div>
-				</>
-			)}
+				)}
+			</>
 		</>
 	);
 }

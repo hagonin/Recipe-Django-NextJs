@@ -11,7 +11,7 @@ function Footer() {
 			<div className="bg-third">
 				<div className="container grid md:grid-cols-12 gap-10 py-10">
 					<WebInfo />
-					<div className="col-span-8">
+					<div className="md:col-span-8">
 						<LastPost
 							isFooter
 							number={4}

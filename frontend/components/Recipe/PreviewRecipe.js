@@ -1,15 +1,12 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { BsFillTagsFill, BsTrash } from 'react-icons/bs';
-import { FaRegClock } from 'react-icons/fa';
+import { FaClipboardList, FaRegClock } from 'react-icons/fa';
 import { HiPhotograph, HiUserGroup } from 'react-icons/hi';
-import { MdDelete } from 'react-icons/md';
-import { FiEdit } from 'react-icons/fi';
 import createMarkup from '@utils/createMarkup';
 
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import Tippy from '@tippyjs/react';
 import formatDate from '@utils/formatdate';
 import Ingredient from './SingleRecipe/Ingredient';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
@@ -18,12 +15,18 @@ import { toast } from 'react-toastify';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 
+import { FiDelete, FiEdit } from 'react-icons/fi';
+import { RiDeleteBack2Line } from 'react-icons/ri';
+import { MdPhotoAlbum } from 'react-icons/md';
+
 function PreviewRecipe({
 	data,
 	handleDeletePhoto,
 	goToUpload,
 	goToUpdate,
 	gotoDelete,
+	goToRecipeSingle,
+	goToUploadPhoto,
 }) {
 	const router = useRouter();
 	const {
@@ -44,22 +47,9 @@ function PreviewRecipe({
 		slug,
 	} = data;
 
-	const [showConfirmDeletePhoto, setShowConfirmDeletePhoto] = useState(false);
 	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
 		useState(false);
 
-	const [idPhotoDelete, setIdPhotoDelete] = useState(null);
-
-	useEffect(() => {
-		idPhotoDelete
-			? setShowConfirmDeletePhoto(true)
-			: setShowConfirmDeletePhoto(false);
-	}, [idPhotoDelete]);
-
-	const onDeletePhoto = useCallback(async () => {
-		await handleDeletePhoto(idPhotoDelete);
-		setIdPhotoDelete(null);
-	});
 
 	const onDeleteRecipe = useCallback(async () => {
 		await gotoDelete(slug);
@@ -132,31 +122,57 @@ function PreviewRecipe({
 
 					<div className="my-7">
 						<Title label="Description" />
-						<div
-							className="text-justify text-lg pl-6 border-l-2 border-primary"
-							dangerouslySetInnerHTML={createMarkup(description)}
-						/>
+						{description ? (
+							<div
+								className="text-justify text-lg pl-6 border-l-2 border-primary capitalize"
+								dangerouslySetInnerHTML={createMarkup(
+									description
+								)}
+							/>
+						) : (
+							<span className="opacity-60 italic">
+								You have not added instructions
+							</span>
+						)}
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
 					<div className="my-7">
-						<Title label="Instructions" />
+						<Title label="Method" />
 
-						<ul className="list-decimal flex flex-col gap-2 ml-5 text-lg">
-							{arrInstructions.map(({ content }, index) => (
-								<li className="text-justify">{content}</li>
-							))}
-						</ul>
+						{arrInstructions.length > 0 ? (
+							<ul className="list-decimal flex flex-col gap-2 ml-5 text-lg">
+								{arrInstructions.map(({ content }, index) => (
+									<li
+										className="text-justify first-letter:capitalize"
+										key={index}
+									>
+										{content}
+									</li>
+								))}
+							</ul>
+						) : (
+							<span className="opacity-60 italic">
+								You have not added method.
+							</span>
+						)}
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
-					{!notes || notes === 'null' ? null : (
+					{notes ? (
 						<div className="mt-10 bg-third rounded-md px-5 py-3">
 							<Title label="Notes" />
-							<p className='relative -top-2'>{notes}</p>
+							<p className="relative -top-2">{notes}</p>
 						</div>
+					) : (
+						<span className="opacity-60 italic">
+							No notes displayed
+						</span>
 					)}
 					{source && (
 						<div className="mt-5">
-							<span className="underline">Source</span>: {source}
+							<h5 className="text-lg underline inline-block">
+								Source
+							</h5>
+							<span className="ml-2">{source}</span>
 						</div>
 					)}
 				</div>
@@ -168,7 +184,10 @@ function PreviewRecipe({
 						cover
 					/>
 					<div className="px-5 py-6 bg-[#F9F9F9]  border">
-						<Title label="Ingredients" />
+						<div className="flex items-center gap-1 h-12 mt-4">
+							<FaClipboardList className="mb-4" />
+							<Title label="Ingredients" />
+						</div>
 						<Ingredient
 							ingredients={ingredients}
 							isPreview
@@ -181,19 +200,12 @@ function PreviewRecipe({
 			<p className="relative -top-3">
 				Add more photos to make your recipe fantasy
 			</p>
-			<Button
-				className="w-56"
-				icon={{ left: <HiPhotograph /> }}
-				onClick={goToUpload}
-			>
-				Upload photo
-			</Button>
-			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 my-5">
-				{images?.map((img) => {
+			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 my-4">
+				{images?.map((img, index) => {
 					return (
 						<div
 							className="relative"
-							key={img.id}
+							key={index}
 						>
 							<Img
 								src={img.image}
@@ -201,25 +213,41 @@ function PreviewRecipe({
 								className="h-44 w-full"
 								cover
 							/>
-							<button
-								className="lg:text-xl text-2xl hover:text-red bg-white p-2 rounded-full absolute bottom-2 right-2"
-								onClick={() => setIdPhotoDelete(img.id)}
-							>
-								<BsTrash />
-							</button>
 						</div>
 					);
 				})}
-				<ConfirmDelete
-					showConfirm={showConfirmDeletePhoto}
-					handleCloseConfirm={() => setIdPhotoDelete(null)}
-					handleDelete={onDeletePhoto}
-				/>
 			</div>
 
-			{/* <button className="rounded-full underline text-lg hover:text-primary">
-				Load More
-			</button> */}
+			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">
+				<Button
+					className="outline !h-7 !text-sm "
+					icon={{ left: <MdPhotoAlbum /> }}
+					onClick={goToUploadPhoto}
+				>
+					Manage Photos
+				</Button>
+				<Button
+					className="primary !h-7 !text-sm "
+					icon={{ left: <FiEdit /> }}
+					onClick={goToUpdate}
+				>
+					Update
+				</Button>
+
+				<Button
+					className="verify !h-7 !text-sm"
+					icon={{ right: <RiDeleteBack2Line /> }}
+					onClick={() => setShowConfirmDeleteRecipe(true)}
+				>
+					Delete
+				</Button>
+				<Button
+					className="secondary !h-7 !text-sm "
+					onClick={goToRecipeSingle}
+				>
+					Go to your publish recipe
+				</Button>
+			</div>
 		</>
 	);
 }
