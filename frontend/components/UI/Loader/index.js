@@ -124,7 +124,7 @@ function Loader({ type }) {
 			);
 		case 'handle':
 			return (
-				<div className="rounded-full animate-smoothbounceball m-auto  p-4 rounded-full">
+				<div className="animate-smoothbounceball m-auto  p-4 rounded-full">
 					<Img
 						src={images.cooking}
 						alt="loader"
