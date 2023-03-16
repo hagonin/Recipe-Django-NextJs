@@ -9,7 +9,7 @@ function CollectionPics({ isFooter }) {
 	return isFooter ? (
 		<div className="flex flex-wrap lg:h-40 md:48 h-52 overflow-hidden">
 			{photos &&
-				photos.map((pic) => (
+				photos.slice(0, 6).map((pic) => (
 					<Link
 						key={pic.id}
 						href={`/recipes/${pic.slug}`}
@@ -37,7 +37,7 @@ function CollectionPics({ isFooter }) {
 							<Img
 								src={pic.src}
 								alt="pic"
-								className="lg:h-32 lg:h-20 md:h-36 h-64 max-md:w-[90%] mx-auto"
+								className="lg:h-24  md:h-36 h-64 max-md:w-[90%] mx-auto"
 								cover
 							/>
 						</Link>

@@ -12,16 +12,11 @@ import Link from 'next/link';
 function Widget() {
 	const router = useRouter();
 	const { photoRandom } = useRecipeContext();
-
-	const bannerImg =
-		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
-
 	const onSubmitSearch = (data) =>
 		router.push({
 			pathname: '/search',
 			query: data,
 		});
-	console.log(photoRandom);
 
 	return (
 		<section className="flex flex-col gap-y-10">
