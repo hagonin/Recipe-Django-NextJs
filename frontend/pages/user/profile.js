@@ -1,20 +1,19 @@
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
 import { images } from '@utils/constants';
+import toastMessage from '@utils/toastMessage';
+
+import { MdEmail, MdSecurity } from 'react-icons/md';
+import { AiFillEdit } from 'react-icons/ai';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
-import { HiOutlineClipboardList } from 'react-icons/hi';
-import { BsJournalBookmarkFill } from 'react-icons/bs';
-import { MdEmail, MdSecurity } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai';
 import { TitlePrimary } from '@components/UI/Title';
 
 function Profile() {
@@ -40,9 +39,14 @@ function Profile() {
 			await deleteRecipe(slug);
 			await mutateOwnRecipe();
 			mutateRecipes();
-			toast.success('Delete recipe success');
+			toastMessage({
+				message: 'Successfully deleted recipe',
+			});
 		} catch (err) {
-			toast.error('Delete recipe failed');
+			toastMessage({
+				message: 'Delete recipe failed',
+				type: 'error',
+			});
 		}
 	};
 

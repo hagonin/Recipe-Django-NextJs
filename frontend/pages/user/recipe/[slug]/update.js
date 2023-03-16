@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import { useCallback, useEffect, useState } from 'react';
 import { ENDPOINT_RECIPE_DETAIL, ENDPOINT_RECIPE_READ } from '@utils/constants';
 
@@ -13,6 +12,7 @@ import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 import { TitlePrimary } from '@components/UI/Title';
+import toastMessage from '@utils/toastMessage';
 
 function Update() {
 	const [initValue, setInitValue] = useState(null);
@@ -27,13 +27,18 @@ function Update() {
 			.put(`${ENDPOINT_RECIPE_DETAIL}${slug}/`, form, configAuth())
 			.then(async (res) => {
 				await mutateRecipes();
-				toast.success('Update recipe success');
+				toastMessage({
+					message: 'Recipe successfully updated',
+				});
 				router.push(`/user/recipe/${res?.data?.slug}`);
 				setSlugUpdate(res?.data?.slug);
 			})
 			.catch(({ _error }) => {
 				if (_error.ingredients) {
-					toast.error('Ingredient title must be unique set.');
+					toastMessage({
+						message: 'Ingredient title must make a unique set.',
+						type: 'error',
+					});
 				}
 			});
 	});

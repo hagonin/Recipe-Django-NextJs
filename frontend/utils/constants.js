@@ -23,6 +23,7 @@ export const images = {
 	no_search: '/static/images/no-results.png',
 	ingredient_icon: '/static/images/ingredient_icon.png',
 	toast_success: '/static/images/toast_success.png',
+	toast_error: '/static/images/toast_error.png',
 };
 
 export const categoryList = [

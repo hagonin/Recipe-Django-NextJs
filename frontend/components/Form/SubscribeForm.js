@@ -1,9 +1,11 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
-import sleep from '@utils/sleep';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+
+import sleep from '@utils/sleep';
+
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
+import toastMessage from '@utils/toastMessage';
 import { Form, InputField } from './FormControl';
 import { email } from './FormControl/validate';
 
@@ -18,8 +20,9 @@ function SubscribeForm({ secondary }) {
 	const onSubmit = (data) => {
 		return sleep(2000, data)
 			.then((data) => {
-				console.log(data);
-				toast.success('Thank you for subscribing');
+				toastMessage({
+					message: 'Thank you for subscribing',
+				});
 			})
 			.catch();
 	};

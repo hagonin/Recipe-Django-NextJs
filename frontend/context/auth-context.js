@@ -7,7 +7,7 @@ import {
 	getRefreshTokenFromCookie,
 	setCookie,
 } from '@utils/cookies';
-import { toast } from 'react-toastify';
+
 import {
 	ENDPOINT_LOGIN,
 	ENDPOINT_LOGOUT,
@@ -17,6 +17,7 @@ import {
 	ENDPOINT_USER,
 	ENDPOINT_USER_PROFILE,
 } from '@utils/constants';
+import toastMessage from '@utils/toastMessage';
 
 const AuthContext = createContext();
 
@@ -124,8 +125,8 @@ const AuthProvider = ({ children }) => {
 			if (checkProfile) {
 				router.push('/');
 			} else {
-				toast.warning('your profile is incomplete.');
 				router.push('/user/updateprofile');
+				toastMessage({message:'your profile is incomplete.', type:'error'})
 			}
 		} catch ({ status, _error }) {
 			setUser((pre) => ({ ...pre, email: email }));
@@ -139,7 +140,10 @@ const AuthProvider = ({ children }) => {
 						},
 					});
 				} else {
-					toast.error(_error.detail);
+					toastMessage({
+						message: _error.detail,
+						type: 'error',
+					});
 				}
 			}
 		}
@@ -153,10 +157,17 @@ const AuthProvider = ({ children }) => {
 			.then((res) => {
 				setErrors(null);
 				if (res.data.msg === 'No such user, register first') {
-					toast.error('Resend failed!');
+					toastMessage({
+						message: 'Resend failed!',
+						type: 'error',
+					});
 					return 400;
 				} else {
-					toast.success('We have sent the new verify email.');
+					toastMessage({
+						message: 'We have sent the new verify email.',
+						type: 'success',
+					});
+					
 				}
 			})
 			.catch();

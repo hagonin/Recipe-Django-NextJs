@@ -1,6 +1,5 @@
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
-import { toast } from 'react-toastify';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RelatedRecipe from '@components/Recipe/RelatedRecipe';
@@ -14,6 +13,7 @@ import { useEffect } from 'react';
 import Loader from '@components/UI/Loader';
 import Author from '@components/Recipe/SingleRecipe/Author';
 import { images } from '@utils/constants';
+import toastMessage from '@utils/toastMessage';
 
 function Recipe() {
 	const {
@@ -39,7 +39,9 @@ function Recipe() {
 			);
 			await mutate();
 			mutateRecipes();
-			toast.success('Your review has been submitted successfully.');
+			toastMessage({
+				message: 'Your review has been submitted successfully.',
+			});
 		} catch {}
 	};
 
@@ -47,7 +49,9 @@ function Recipe() {
 		await api.delete(`recipe/${slug}/reviews${review_slug}/`, configAuth());
 		await mutate();
 		mutateRecipes();
-		toast.success('Delete review success');
+		toastMessage({
+			message: 'Review successfully deleted.',
+		});
 	};
 
 	const goToLogin = () => router.push('/login');
@@ -59,7 +63,7 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
-	
+
 	return (
 		<>
 			{isLoading ? (

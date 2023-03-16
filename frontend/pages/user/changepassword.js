@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ENDPOINT_CHANGE_PASSWORD, images } from '@utils/constants';
-import { toast } from 'react-toastify';
 import api from '@services/axios';
+import toastMessage from '@utils/toastMessage';
 import { useAuthContext } from '@context/auth-context';
 
 import ChangePasswordForm from '@components/Form/ChangePasswordForm';
@@ -21,7 +21,9 @@ function Changepassword() {
 				},
 				configAuth()
 			);
-			toast.success('Password successfully changed');
+			toastMessage({
+				message: 'Password successfully changed',
+			});
 			router.push('/user/profile');
 		} catch ({ status, _error }) {
 			if (status === 400) {

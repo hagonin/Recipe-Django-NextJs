@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
@@ -11,10 +10,9 @@ import {
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
-import Img from '@components/UI/Image';
-import { GrTip } from 'react-icons/gr';
 import { MdOutlineTipsAndUpdates } from 'react-icons/md';
 import { TitlePrimary } from '@components/UI/Title';
+import toastMessage from '@utils/toastMessage';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -30,13 +28,18 @@ function UploadImagePage() {
 				form,
 				configAuth()
 			);
-			toast.success('Upload new photo success');
+			toastMessage({
+				message: 'Photos successfully added',
+			});
 			router.push(`/user/recipe/${slug}`);
 		} catch {}
 	};
 	return (
 		<div className="container py-14">
-			<TitlePrimary title="Manage photo" center/>
+			<TitlePrimary
+				title="Manage photo"
+				center
+			/>
 
 			<UploadPhoto
 				onSubmit={onUploadPhoto}

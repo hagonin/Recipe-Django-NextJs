@@ -1,12 +1,13 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
 import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { Form, InputField, TextAreaField } from './FormControl';
 
-import { toast } from 'react-toastify';
+import { Form, InputField, TextAreaField } from './FormControl';
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
+
 import { email } from './FormControl/validate';
 
 function ContactForm({ onSubmit }) {
@@ -20,7 +21,6 @@ function ContactForm({ onSubmit }) {
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset();
-			toast.success('Message has been sent successfully');
 		}
 	}, [isSubmitSuccessful]);
 
@@ -56,7 +56,7 @@ function ContactForm({ onSubmit }) {
 			/>
 			<Button
 				type="submit"
-				className="lg primary md:max-w-[200px]"
+				className="lg primary md:max-w-[230px]"
 				disabled={isSubmitting}
 			>
 				{isSubmitting ? <Loader type="submitting" /> : null} Send

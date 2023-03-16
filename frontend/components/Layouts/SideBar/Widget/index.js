@@ -10,6 +10,7 @@ import { useRecipeContext } from '@context/recipe-context';
 import Link from 'next/link';
 import Loader from '@components/UI/Loader';
 
+
 function Widget() {
 	const router = useRouter();
 	const { photoRandom } = useRecipeContext();

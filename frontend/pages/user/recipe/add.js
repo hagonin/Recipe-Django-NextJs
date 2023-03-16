@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { ENDPOINT_RECIPE_DETAIL, images } from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
-import { toast } from 'react-toastify';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
@@ -26,12 +25,17 @@ function AddRecipe() {
 				configAuth()
 			);
 			await mutateRecipes();
-			toast.success('Add recipe success');
+			toastMessage({
+				message: 'Recipe successfully added',
+			});
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
 		} catch ({ _error }) {
-			if (_error.ingredients) {
-				toast.error('Ingredient title must make a unique set.');
+			if (_error?.ingredients) {
+				toastMessage({
+					message: 'Ingredient title must make a unique set.',
+					type: 'error',
+				});
 			}
 		}
 	});
@@ -48,7 +52,10 @@ function AddRecipe() {
 					alt="add_recipe"
 					className="h-24 w-24 -top-3"
 				/>
-				<TitlePrimary title="Add Recipe" center/>
+				<TitlePrimary
+					title="Add Recipe"
+					center
+				/>
 			</div>
 			<p className="text-center mb-16">
 				Uploading personal recipes is easy! Add yours to your favorites,

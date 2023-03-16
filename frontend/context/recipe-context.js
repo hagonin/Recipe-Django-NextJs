@@ -5,8 +5,9 @@ import {
 	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
 import noCache from '@utils/noCache';
+import toastMessage from '@utils/toastMessage';
 import useRecipes from 'hook/useRecipes';
-import { toast } from 'react-toastify';
+
 import { useAuthContext } from './auth-context';
 
 const { createContext, useContext, useState, useEffect } = require('react');
@@ -35,7 +36,11 @@ const RecipeProvider = ({ children }) => {
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
 
 	const handleToggleBookmark = async (act, id) => {
-		if (!isAuthenticated) return toast.error('Please login first');
+		if (!isAuthenticated)
+			return toastMessage({
+				message: 'Please login first',
+				type: 'error',
+			});
 		if (!act) {
 			setLoading(true);
 			api.post(
@@ -50,7 +55,10 @@ const RecipeProvider = ({ children }) => {
 					return { ...pre, bookmarks: newBookmarks };
 				});
 				setLoading(false);
-				toast.success('Add bookmark success');
+				toastMessage({
+					message: 'Recipe added to wishlist successfully',
+					type: 'success',
+				});
 			});
 		} else {
 			api.delete(`user/profile/${user?.id}/bookmarks`, {
@@ -65,7 +73,10 @@ const RecipeProvider = ({ children }) => {
 					);
 					return { ...pre, bookmarks: newBookmarks };
 				});
-				toast.success('Remove bookmark success');
+				toastMessage({
+					message: 'Recipe removed from wishlist successfully',
+					type: 'success',
+				});
 				setLoading(false);
 			});
 		}

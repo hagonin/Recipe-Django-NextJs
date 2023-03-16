@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 
 import { BsFillTagsFill } from 'react-icons/bs';
 import createMarkup from '@utils/createMarkup';
@@ -8,18 +8,16 @@ import formatDate from '@utils/formatdate';
 import Ingredient from './SingleRecipe/Ingredient';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 
 import Title from '@components/UI/Title';
 import DropDown, { Child } from '@components/UI/Dropdown';
 import { TimerBox } from './SingleRecipe';
 import Method from './SingleRecipe/Method';
+import { MdPhoto, MdUpdate } from 'react-icons/md';
 
 function PreviewRecipe({
 	data,
-	handleDeletePhoto,
-	goToUpload,
 	goToUpdate,
 	gotoDelete,
 	goToRecipeSingle,
@@ -47,12 +45,6 @@ function PreviewRecipe({
 	const [showConfirmDeleteRecipe, setShowConfirmDeleteRecipe] =
 		useState(false);
 
-	const onDeleteRecipe = useCallback(async () => {
-		await gotoDelete(slug);
-		toast.success('Delete success');
-		router.push('/user/profile');
-	});
-
 	const arrInstructions = getInstructionAsArr(instructions);
 
 	return (
@@ -60,7 +52,7 @@ function PreviewRecipe({
 			<ConfirmDelete
 				showConfirm={showConfirmDeleteRecipe}
 				handleCloseConfirm={() => setShowConfirmDeleteRecipe(false)}
-				handleDelete={onDeleteRecipe}
+				handleDelete={gotoDelete}
 			/>
 			<div className="grid md:grid-cols-12 grid-cols-1 lg:gap-8 md:gap-4 gap-6 mb-10">
 				<div className="md:col-span-8">
@@ -190,18 +182,18 @@ function PreviewRecipe({
 					</Child>
 					<Child>
 						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9"
+							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9 flex items-center gap-2"
 							onClick={goToUpdate}
 						>
-							Update Recipe
+							<MdUpdate /> Update Recipe
 						</button>
 					</Child>
 					<Child>
 						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9"
+							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9 flex items-center gap-2"
 							onClick={goToUploadPhoto}
 						>
-							Manage Photos
+							<MdPhoto /> Manage Photos
 						</button>
 					</Child>
 					<Child>
@@ -209,7 +201,7 @@ function PreviewRecipe({
 							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9"
 							onClick={() => setShowConfirmDeleteRecipe(true)}
 						>
-							Delete Recpe
+							Delete Recipe
 						</button>
 					</Child>
 				</DropDown>
