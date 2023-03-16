@@ -4,8 +4,6 @@ import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import {
 	ENDPOINT_RECIPE_DETAIL,
-	ENDPOINT_RECIPE_IMAGE,
-	images,
 } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
