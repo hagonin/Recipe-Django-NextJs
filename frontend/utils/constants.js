@@ -1,29 +1,39 @@
 export const images = {
-	logo: '/static/images/logo.png',
-	logoIcon: '/static/images/logo_icon.png',
-	login: '/static/images/girl-cooking-1.png',
-	signup: '/static/images/girl-cooking-2.png',
-	defaultAvatar: '/static/images/user.png',
-	icon1: '/static/images/icon1.png',
-	icon2: '/static/images/icon1.png',
-	addRecipeImg: '/static/images/addrecipe.png',
-	recipe1: '/static/images/recipe1.jpg',
-	recipe2: '/static/images/recipe2.jpg',
-	bio: '/static/images/bio.png',
-	resetpassword: '/static/images/reset-password.png',
-	resetpassword1: '/static/images/reset-password-1.png',
-	recipe_default: '/static/images/recipe_default.png',
-	not_verify_email: '/static/images/not_verify_email.png',
-	verify_email: '/static/images/verify_email.png',
-	photoDefault: '/static/images/photoDefault.png',
-	spoon: '/static/images/spoon.jpeg',
-	cooking: '/static/images/cooking.png',
-	notfound: '/static/images/404-error.png',
-	tick: '/static/images/tick.png',
-	no_search: '/static/images/no-results.png',
-	ingredient_icon: '/static/images/ingredient_icon.png',
-	toast_success: '/static/images/toast_success.png',
-	toast_error: '/static/images/toast_error.png',
+	logo: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983419/static/logo_okwub8.png',
+	logoIcon:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983419/static/logo_icon_k14oqd.png',
+	login: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983419/static/girl-cooking-1_s1iiyl.png',
+	signup: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983419/static/girl-cooking-2_vz1osz.png',
+	defaultAvatar:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/user_ugynzl.png',
+	icon1: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983419/static/icon1_r3hxkw.png',
+	addRecipeImg:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/addrecipe_azcg1p.png',
+	bio: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/bio_xoj9lr.png',
+	resetpassword:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/reset-password_fkdafr.png',
+	resetpassword1:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/reset-password-1_ra5fe2.png',
+	recipe_default:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/recipe_default_jfeejf.png',
+	not_verify_email:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/photoDefault_ek0wzl.png',
+	verify_email:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/verify_email_ze8jvs.png',
+	photoDefault:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/photoDefault_ek0wzl.png',
+	spoon: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983421/static/toast_error_bysik0.png',
+	cooking:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/cooking_hs8bhk.png',
+	notfound:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/404-error_nb20ch.png',
+	tick: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/tick_v0jvtt.png',
+	no_search:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/no-results_o90ppo.png',
+	toast_success:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983417/static/toast_success_pi8cc6.png',
+	toast_error:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983421/static/toast_error_bysik0.png',
 };
 
 export const categoryList = [

@@ -125,7 +125,7 @@ function RecipeCard({
 									handleToggleBookmark(actBookmark, id)
 								}
 								className={`p-2 bg-whiteTransparent rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
-									actBookmark ? ' text-red' : ' text-black'
+									actBookmark ? ' text-red' : ' text-primary'
 								} `}
 							>
 								<AiFillHeart />
