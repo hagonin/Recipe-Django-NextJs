@@ -35,18 +35,19 @@ function RecipeCard({
 	secondary,
 	actBookmark,
 	handleToggleBookmark = () => {},
-	lastPost,
-	noBorder,
+	lastestRecipe,
+	firstPost,
+	secondPost,
 	isSlider,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && getPlainTextFromHtml(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-	return lastPost ? (
+	return lastestRecipe ? (
 		<div
-			className={`flex grid-cols-3 gap-4 ${
-				noBorder ? '' : 'border-t pt-4'
-			} `}
+			className={`flex md:gap-4 gap-2 border-t md:pt-4 pt-2 
+			${firstPost ? 'border-t-transparent' : ''} 
+			${secondPost ? 'md:border-t-transparent' : ''}`}
 		>
 			<Link
 				href={`/recipes/${slug}`}

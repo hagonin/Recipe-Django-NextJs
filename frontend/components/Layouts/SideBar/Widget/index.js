@@ -8,6 +8,7 @@ import LastPost from '../../../Recipe/LastestRecipes';
 import { useRouter } from 'next/router';
 import { useRecipeContext } from '@context/recipe-context';
 import Link from 'next/link';
+import Loader from '@components/UI/Loader';
 
 function Widget() {
 	const router = useRouter();
@@ -34,14 +35,18 @@ function Widget() {
 				<LastPost />
 			</CommonSection>
 			<CommonSection title="Banner">
-				<Link href={`/recipes/${photoRandom?.slug}`}>
-					<Img
-						src={photoRandom?.src}
-						alt="banner"
-						className="h-[300px]"
-						cover
-					/>
-				</Link>
+				{photoRandom ? (
+					<Link href={`/recipes/${photoRandom?.slug}`}>
+						<Img
+							src={photoRandom?.src}
+							alt="banner"
+							className="h-[300px]"
+							cover
+						/>
+					</Link>
+				) : (
+					<Loader type="square" />
+				)}
 			</CommonSection>
 			<CommonSection title="newsletter">
 				<span className="block text-center mb-4">

@@ -9,9 +9,9 @@ function LastPost({ isFooter, number = 3 }) {
 		<div
 			className={`${
 				isFooter
-					? 'grid md:grid-cols-2 grid-cols-1 lg:gap-4 md:gap-4 gap-2'
-					: 'flex flex-col gap-4 w-full'
-			}`}
+					? 'grid md:grid-cols-2 grid-cols-1  mt-3'
+					: 'flex flex-col w-full'
+			} md:gap-4 gap-2`}
 		>
 			{data ? (
 				data.map((item, index) => (
@@ -23,8 +23,10 @@ function LastPost({ isFooter, number = 3 }) {
 						reviews_count={item.reviews_count}
 						rating={item.rating}
 						date={item.created_at || item.updated_at}
-						lastPost
-						noBorder={index === 0 || (isFooter && index === 1)}
+						firstPost={index === 0}
+						secondPost={index === 1 && isFooter}
+						lastestRecipe
+						// noBorder={index === 0 || (isFooter && index === 1)}
 					/>
 				))
 			) : (

@@ -2,14 +2,34 @@ import Link from 'next/link';
 import Img from '@components/UI/Image';
 import CommonSection from './CommonSection';
 import { useRecipeContext } from '@context/recipe-context';
+import { useEffect, useState } from 'react';
 
 function CollectionPics({ isFooter }) {
 	const { photos } = useRecipeContext();
+	const [photosSelect, setPhotosSelect] = useState(null);
+
+	const onSizeChange = () => {
+		const size = window.innerWidth;
+		photos && isFooter && setPhotosSelect(() => [...photos].slice(0, 6));
+
+		if (!isFooter && photos) {
+			size < 1024 && setPhotosSelect(() => [...photos].slice(6, 9));
+			size >= 1024 && setPhotosSelect(photos);
+		}
+	};
+
+	useEffect(() => {
+		onSizeChange();
+		window.addEventListener('resize', onSizeChange);
+		return () => {
+			window.removeEventListener('resize', onSizeChange);
+		};
+	}, [photos]);
 
 	return isFooter ? (
 		<div className="flex flex-wrap lg:h-40 md:48 h-52 overflow-hidden">
-			{photos &&
-				photos.slice(0, 6).map((pic) => (
+			{photosSelect &&
+				photosSelect.map((pic) => (
 					<Link
 						key={pic.id}
 						href={`/recipes/${pic.slug}`}
@@ -27,8 +47,8 @@ function CollectionPics({ isFooter }) {
 	) : (
 		<CommonSection title="Collection pictures">
 			<div className="grid lg:grid-cols-3 gap-2">
-				{photos &&
-					photos.map((pic) => (
+				{photosSelect &&
+					photosSelect.map((pic) => (
 						<Link
 							key={pic.id}
 							href={`/recipes/${pic.slug}`}

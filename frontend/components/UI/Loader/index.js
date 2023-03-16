@@ -124,13 +124,17 @@ function Loader({ type }) {
 			);
 		case 'handle':
 			return (
-				<div className="rounded-full animate-smoothbounceball m-auto  p-4 rounded-full">
+				<div className="animate-smoothbounceball m-auto  p-4 rounded-full">
 					<Img
 						src={images.cooking}
 						alt="loader"
 						className="h-20 w-20"
 					/>
 				</div>
+			);
+		case 'square':
+			return (
+				<div className="animate-pulse  h-48 w-full border bg-gray-200 shadow-md rounded-md"></div>
 			);
 		default:
 			return (
