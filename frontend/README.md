@@ -1,6 +1,4 @@
 # Homecook website
-
-## Demo link:
 Access my site at [homecook](https://homecook.up.railway.app/)
 
 ## Table of Content:
@@ -19,8 +17,8 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 
 ## Screenshots
 
-![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/homepage-1_etowig.jpg)
-![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/profile_ywfkq5.jpg)
+<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/homepage-1_etowig.jpg" alt="homepage" style="width:50%;">
+<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/profile_ywfkq5.jpg" alt="profile" style="width:50%;"
 ![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965387/screenshots/category-page_bntmep.jpg)
 ![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965448/screenshots/single-page_hzkcw4.jpg)
 
@@ -29,7 +27,7 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 - Next.js 13.1.2
 - Js-cookie 3.0.1
 - TailwindCSS 3.2.4
-- Backend using Django, DRF https://github.com/hagonin/Recipe-api
+- Backend using Django, DRF [find here](https://github.com/hagonin/Recipe-api)
 
 ## Setup
 - Clone this repository
@@ -39,7 +37,7 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 
 ## Features
 * 🔍 Powerful search bar for recipes by name, ingredients
-*  Recipe categories: easily browse and explore recipes by breakfast, lunch, dinner, etc...
+* 🧾 Recipe categories: easily browse and explore recipes by breakfast, lunch, dinner, etc...
 * 🙎 Personalized User Profiles : create profile, save favorite recipes
 * 🔑 Secure email and password authentication
 * 🔓 Password reset and email verification functionality
@@ -47,7 +45,7 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 * 📗Backend is built using Django REST framework and can be found [here](https://recipe-api.up.railway.app/)
 
 ## Status
-[name of project] is still in progress.
+Project is: _in progress_ 
 
 ## Credits
 List of contriubutors:
