@@ -1,38 +1,29 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 
-function usePagination({ page = 4, recipes }) {
+function usePagination({ limitPerPage = 4, recipes, total }) {
 	const [currentRecipes, setCurrentRecipes] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const recipePerPage = useRef(page);
+	const pages = useMemo(() => {
+		return Math.ceil(total / limitPerPage);
+	});
 
-	const limit = useMemo(() => {
-		if (recipes) {
-			return (recipes?.length / recipePerPage.current).toFixed(0) * 1;
-		}
-	}, [recipes]);
-
-	const nextPage = () => {
-		setCurrentPage(currentPage + 1);
-	};
-
-	const previousPage = () => {
-		setCurrentPage(currentPage - 1);
+	const goToPage = () => {
+		const firstIndex = currentPage * limitPerPage - limitPerPage;
+		const lastIndex = currentPage * limitPerPage;
+		const newRecipes = [...recipes].slice(firstIndex, lastIndex);
+		setCurrentRecipes(newRecipes);
 	};
 
 	useEffect(() => {
 		if (recipes) {
-			const lastIndex = recipePerPage.current * currentPage;
-			const firstIndex = lastIndex - recipePerPage.current;
-			const results = [...recipes].slice(firstIndex, lastIndex);
-			setCurrentRecipes(results);
+			goToPage();
 		}
-	}, [recipes, currentPage]);
+	}, [currentPage, recipes]);
 	return {
-		nextPage,
-		previousPage,
 		currentRecipes,
 		currentPage,
-		limit,
+		pages,
+		setCurrentPage,
 	};
 }
 

@@ -15,6 +15,9 @@ import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { TitlePrimary } from '@components/UI/Title';
+import usePagination from 'hook/usePagination';
+import Pagination from '@components/UI/Pagination';
+import Loader from '@components/UI/Loader';
 
 function Profile() {
 	const { user } = useAuthContext();
@@ -25,6 +28,13 @@ function Profile() {
 		isLoading: loading1,
 		mutate: mutateOwnRecipe,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
+
+	const { currentRecipes, currentPage, pages, setCurrentPage } =
+		usePagination({
+			limitPerPage: 6,
+			recipes: recipes,
+			total: recipes?.length,
+		});
 
 	const {
 		data: bookmarks,
@@ -128,7 +138,7 @@ function Profile() {
 				>
 					<>
 						{loading1 ? (
-							'Loading...'
+							<Loader type="handle" />
 						) : recipes.length > 0 ? (
 							<>
 								<div className="mb-5 flex gap-4">
@@ -145,7 +155,7 @@ function Profile() {
 									</button>
 								</div>
 								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
-									{recipes?.map((recipe) => (
+									{currentRecipes?.map((recipe) => (
 										<div key={recipe.id}>
 											<RecipeCard
 												main_image={recipe.main_image}
@@ -165,6 +175,11 @@ function Profile() {
 										</div>
 									))}
 								</div>
+								<Pagination
+									pages={pages}
+									currentPage={currentPage}
+									setCurrentPage={setCurrentPage}
+								/>
 							</>
 						) : (
 							<div className="flex gap-6 items-center">

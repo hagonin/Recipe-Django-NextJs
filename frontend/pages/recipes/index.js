@@ -1,24 +1,23 @@
-import {
-	HiOutlineChevronDoubleLeft,
-	HiOutlineChevronDoubleRight,
-} from 'react-icons/hi';
-
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
-import Button from '@components/UI/Button';
 import { useRecipeContext } from '@context/recipe-context';
 import usePagination from 'hook/usePagination';
 import Loader from '@components/UI/Loader';
 import { NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
 import { TitlePrimary } from '@components/UI/Title';
+import Pagination from '@components/UI/Pagination';
 
 function Recipe() {
 	const { checkBookmarkAct, handleToggleBookmark, recipes } =
 		useRecipeContext();
-	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
-		usePagination({ recipes: recipes, page: NUMBER_OF_RECIPE_RECIPE_PAGE });
+	const { currentRecipes, currentPage, pages, setCurrentPage } =
+		usePagination({
+			recipes: recipes,
+			limitPerPage: NUMBER_OF_RECIPE_RECIPE_PAGE,
+			total: recipes?.length,
+		});
 	return (
-		<div>
+		<div className="">
 			<TitlePrimary title="Discover all recipes" />
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6 mt-10">
 				{currentRecipes ? (
@@ -51,26 +50,11 @@ function Recipe() {
 					</>
 				)}
 			</div>
-			{currentRecipes?.length > 0 && (
-				<div className="flex justify-between mt-10">
-					<Button
-						className="disabled"
-						icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-						onClick={previousPage}
-						disabled={currentPage === 1}
-					>
-						Previous Recipe
-					</Button>
-					<Button
-						className="disabled"
-						icon={{ right: <HiOutlineChevronDoubleRight /> }}
-						disabled={currentPage >= limit}
-						onClick={nextPage}
-					>
-						Next recipe
-					</Button>
-				</div>
-			)}
+			<Pagination
+				pages={pages}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+			/>
 		</div>
 	);
 }
