@@ -38,7 +38,7 @@ function ThumbnailPlugin(mainRef) {
 
 function Thumbnail({
 	images,
-	slideOnMobile = 2,
+	slideOnMobile = 3,
 	slideOnTablet = 4,
 	slideOnPc = 6,
 }) {
@@ -94,7 +94,7 @@ function Thumbnail({
 			>
 				{images.map((img, index) => (
 					<div
-						className={`keen-slider__slide rounded border-2 h-14 cursor-pointer ${
+						className={`keen-slider__slide rounded border-2 md:h-20 h-24 cursor-pointer ${
 							indexCurrent === index ? 'border-primary' : ''
 						}`}
 						key={index}
@@ -102,7 +102,7 @@ function Thumbnail({
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-20 rounded-md"
+							className="h-full rounded-md"
 							cover
 						/>
 					</div>

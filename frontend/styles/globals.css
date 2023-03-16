@@ -4,8 +4,10 @@
 
 @layer base {
    html {
-      @apply  text-second leading-7 ;
+      @apply  text-second leading-7;
    }
+
+   
    p, span {
     @apply text-base;
    }

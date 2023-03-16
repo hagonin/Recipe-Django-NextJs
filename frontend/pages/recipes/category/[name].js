@@ -78,22 +78,7 @@ function CategoryPage() {
 
 				{currentRecipes?.length > 0 && (
 					<div className="flex justify-between mt-10">
-						<Button
-							icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-							onClick={previousPage}
-							disabled={currentPage === 1}
-							className="disabled"
-						>
-							Previous Recipe
-						</Button>
-						<Button
-							icon={{ right: <HiOutlineChevronDoubleRight /> }}
-							disabled={currentPage >= limit}
-							onClick={nextPage}
-							className="disabled"
-						>
-							Next recipe
-						</Button>
+						{/* pagination here */}
 					</div>
 				)}
 			</>

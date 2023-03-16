@@ -56,7 +56,7 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg">
+					<nav className="fixed top-0 left-0 bottom-0 z-20  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
 						<button
 							className="absolute top-3 right-3 text-[2rem]"
 							onClick={toggleNavMobi}
@@ -72,7 +72,7 @@ function NavMobi() {
 									className="h-16 w-16 border-border rounded-full ml-5 overflow-hidden"
 									cover
 								/>
-								<div className='pr-5'>
+								<div className="pr-5">
 									<span className="text-2xl text-black font-bold block">
 										{user?.username}
 									</span>

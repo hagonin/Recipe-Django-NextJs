@@ -63,7 +63,6 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
-	console.log(data);
 
 	return (
 		<>
@@ -78,7 +77,6 @@ function Recipe() {
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>
-					<SubscribeSection />
 					<Author
 						name={data?.user?.username}
 						avatar={
@@ -86,6 +84,8 @@ function Recipe() {
 						}
 						bio={data?.user?.profile?.bio}
 					/>
+					<SubscribeSection />
+
 					{data?.category && (
 						<RelatedRecipe categoryName={data?.category} />
 					)}
