@@ -138,7 +138,7 @@ function Profile() {
 				>
 					<>
 						{loading1 ? (
-							<Loader type="handle" />
+							<Loader type="searching" />
 						) : recipes.length > 0 ? (
 							<>
 								<div className="mb-5 flex gap-4">

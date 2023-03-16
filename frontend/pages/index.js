@@ -7,7 +7,6 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
-import getRandomRecipes from '@utils/getRandomRecipes';
 import Loader from '@components/UI/Loader';
 
 export default function Home() {

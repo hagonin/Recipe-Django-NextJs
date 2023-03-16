@@ -1,14 +1,11 @@
 import { useRecipeContext } from '@context/recipe-context';
-
 import { Toaster } from 'react-hot-toast';
-
 import Footer from './Footer';
 import Header from './Header';
 import Loader from '@components/UI/Loader';
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();
-	// const { loading: loadAuth } = useAuthContext();
 	return (
 		<>
 			<Header />

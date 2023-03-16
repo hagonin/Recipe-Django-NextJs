@@ -1,19 +1,24 @@
 import Link from 'next/link';
 import { FiChevronsLeft } from 'react-icons/fi';
-import { toast } from 'react-toastify';
+
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
-import { ENDPOINT_PASSWORD_RESET_COMPLETE, ENDPOINT_REQUEST_RESET_EMAIL, images } from '@utils/constants';
+import {
+	ENDPOINT_PASSWORD_RESET_COMPLETE,
+	ENDPOINT_REQUEST_RESET_EMAIL,
+	images,
+} from '@utils/constants';
 import api from '@services/axios';
 
 import RequiredEmail from '@components/Form/ResetPasswordForm/RequiredEmail';
 import Img from '@components/UI/Image';
 import ResetPassword from '@components/Form/ResetPasswordForm/ResetPassword';
+import toastMessage from '@utils/toastMessage';
 
 function RequestResetPassword(props) {
 	const router = useRouter();
 	const { setErrors } = useAuthContext();
-	
+
 	const handleSendRequest = ({ email }) => {
 		return api
 			.post(ENDPOINT_REQUEST_RESET_EMAIL, {
@@ -21,7 +26,7 @@ function RequestResetPassword(props) {
 				redirect_url: process.env.NEXT_PUBLIC_REQUEST_EMAIL,
 			})
 			.then((res) => {
-				toast.success(res.data.success);
+				toastMessage({ message: res.data.success });
 			})
 			.catch();
 	};
@@ -34,20 +39,21 @@ function RequestResetPassword(props) {
 				uidb64: props?.uidb64,
 			})
 			.then((res) => {
-				toast.success('Password reset success.');
+				toastMessage({ message: 'Password reset success.' });
 				router.push('/login');
 			})
 			.catch(({ status, _error }) => {
 				if (status === 400) {
 					setErrors({ reset: { ..._error } });
 				} else if (status === 401) {
-					toast.error(
-						'This required link has expired. Please try new request'
-					);
+					toastMessage({
+						message:
+							'This required link has expired. Please try new request',
+					});
 				}
 			});
 	};
-	
+
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 ">

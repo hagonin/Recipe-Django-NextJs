@@ -63,7 +63,7 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
-
+	
 	return (
 		<>
 			{isLoading ? (
