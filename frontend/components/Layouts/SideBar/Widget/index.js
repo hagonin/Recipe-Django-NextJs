@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useRecipeContext } from '@context/recipe-context';
 import Link from 'next/link';
 import Loader from '@components/UI/Loader';
-
+import { meta } from '@utils/constants';
 
 function Widget() {
 	const router = useRouter();
@@ -24,11 +24,8 @@ function Widget() {
 		<section className="flex flex-col gap-y-10">
 			<CommonSection title="About Us">
 				<p className="text-center ">
-					<span className="font-bold text-primary">HomeCook</span> is
-					on a simple premise: home cooks are the best cooks. Special
-					recipes are at the heart of so many of our warmest
-					memories—families gathered around holiday tables or
-					celebrating special occasions with friends.
+					<span className="font-bold text-primary">HomeCook</span>
+					{meta.introWeb}
 				</p>
 			</CommonSection>
 			<CollectionPics />

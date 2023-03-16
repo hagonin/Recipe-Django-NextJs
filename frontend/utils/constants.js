@@ -171,3 +171,8 @@ export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 export const EXIST_RECIPE = 3;
 export const NUMBER_OF_RECIPE_RECIPE_PAGE = 6;
 export const NUMBER_OF_RECIPE_CATEGORY_PAGE = 6;
+
+export const meta = {
+	introWeb:
+		" celebrates the idea that the best cooks are the ones who cook at home. We believe that special recipes hold a special place in our hearts and memories, whether it's a family gathering around a holiday table or friends celebrating a special occasion together.",
+};

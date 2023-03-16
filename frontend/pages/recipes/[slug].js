@@ -63,6 +63,7 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
+	console.log(data);
 
 	return (
 		<>
@@ -72,15 +73,18 @@ function Recipe() {
 				<>
 					<SingRecipe
 						{...data}
+						user={data?.user?.username}
 						cover={data.main_image}
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
 					/>
 					<SubscribeSection />
 					<Author
-						name={data?.user}
-						avatar={data?.avatar || images.defaultAvatar}
-						bio={data?.bio}
+						name={data?.user?.username}
+						avatar={
+							data?.user?.profile?.avatar || images.defaultAvatar
+						}
+						bio={data?.user?.profile?.bio}
 					/>
 					{data?.category && (
 						<RelatedRecipe categoryName={data?.category} />
