@@ -9,7 +9,7 @@ Access my site at [homecook](https://homecook.up.railway.app/)
 - [Screenshots](#screenshots)
 - [Technologies](#technologies)
 - [Setup](#setup)
-- [Approach](#approach)
+- [Features](#features)
 - [Status](#status)
 - [Credits](#credits)
 - [License](#license)
@@ -19,7 +19,10 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 
 ## Screenshots
 
-`![Writing](https://unsplash.com/photos/VBPzRgd7gfc)`
+![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/homepage-1_etowig.jpg)
+![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/profile_ywfkq5.jpg)
+![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965387/screenshots/category-page_bntmep.jpg)
+![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965448/screenshots/single-page_hzkcw4.jpg)
 
 
 ## Technologies
@@ -35,12 +38,13 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 - Open http://localhost:3000 with your browser to see the result
 
 ## Features
-* 🔍 Powerful search engine with support for full-text search and Trigram Similarity
-* 🙎 Custom User model with email and password authentication
-* 🔓 Password reset & email verification functionality
-* 📗 Interactive UI and flexible customization options for generating documentation using Swagger and ReDoc
-* 🔑 Permission classes and throttling management 
-* ✨ Frontend is built using Next.js and can be found [here](https://homecook.up.railway.app/)
+* 🔍 Powerful search bar for recipes by name, ingredients
+*  Recipe categories: easily browse and explore recipes by breakfast, lunch, dinner, etc...
+* 🙎 Personalized User Profiles : create profile, save favorite recipes
+* 🔑 Secure email and password authentication
+* 🔓 Password reset and email verification functionality
+* ✨ Rating and review recipes
+* 📗Backend is built using Django REST framework and can be found [here](https://recipe-api.up.railway.app/)
 
 ## Status
 [name of project] is still in progress.
