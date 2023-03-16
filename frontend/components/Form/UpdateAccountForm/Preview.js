@@ -13,9 +13,11 @@ function PreviewImg({ avatar, handleOnChangeImg }) {
 
 	const handleChange = (e) => {
 		const [file] = e.target.files;
-		const url = URL.createObjectURL(file);
-		setPreview(url);
-		handleOnChangeImg(e);
+		if (file) {
+			const url = URL.createObjectURL(file);
+			setPreview(url);
+			handleOnChangeImg(e);
+		}
 	};
 
 	return (

@@ -57,7 +57,10 @@ function Profile() {
 
 	return (
 		<div className="container my-14">
-			<TitlePrimary title="My Profile" center />
+			<TitlePrimary
+				title="My Profile"
+				center
+			/>
 			<div className="flex mt-8 items-center gap-6 md:flex-row flex-col">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
@@ -185,6 +188,7 @@ function Profile() {
 						<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
 							{bookmarks.map((bookmark) => (
 								<RecipeCard
+									key={bookmark.id}
 									main_image={bookmark.main_image}
 									name={bookmark.title}
 									date={

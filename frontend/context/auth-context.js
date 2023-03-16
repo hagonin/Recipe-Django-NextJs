@@ -110,13 +110,23 @@ const AuthProvider = ({ children }) => {
 			remember && setCookie(access, refresh);
 
 			const user = await getUser(access);
-			const {
-				profile: { image_url: avatar, ..._profile },
-				...rest
-			} = user.data;
+			const { profile, ...rest } = user.data;
 
-			setUser({ avatar, ..._profile, ...rest });
-			router.push('/user/profile');
+			setUser({ ...profile, ...rest });
+
+			const checkProfile = updatedProfile({
+				avatar: profile.avatar,
+				bio: profile.bio,
+				last: rest.last_name,
+				first: rest.first_name,
+			});
+
+			if (checkProfile) {
+				router.push('/');
+			} else {
+				toast.warning('your profile is incomplete.');
+				router.push('/user/updateprofile');
+			}
 		} catch ({ status, _error }) {
 			setUser((pre) => ({ ...pre, email: email }));
 			if (status === 400) {
@@ -168,6 +178,10 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const updatedProfile = (profile) => {
+		const check = Object.keys(profile).every((key) => profile[key]);
+		return check;
+	};
 	const getUser = (access = token.access) =>
 		api.get(ENDPOINT_USER, configAuth(access));
 
