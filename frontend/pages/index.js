@@ -34,7 +34,7 @@ export default function Home() {
 	return (
 		<>
 			{topRating && (
-				<Slider>
+				<Slider className='mt-8'>
 					{topRating.map((recipe, index) => {
 						return (
 							<Slide

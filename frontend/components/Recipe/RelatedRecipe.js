@@ -9,7 +9,7 @@ function RelatedRecipe({ categoryName }) {
 	const { data: recipes } = useQuery(10, { category: categoryName });
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
-		<div className="mt-8">
+		<div className="mt-9">
 			<Title
 				center
 				title="Related recipe"
@@ -18,6 +18,7 @@ function RelatedRecipe({ categoryName }) {
 				<Slider
 					slideOnMobile={2}
 					smallBtn
+					className='mt-3'
 				>
 					{recipes.map((recipe) => {
 						return (

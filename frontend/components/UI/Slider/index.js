@@ -12,6 +12,7 @@ function Slider({
 	slideOnMobile = 1,
 	slideOnTablet = 2,
 	slideOnPc = 3,
+	className,
 }) {
 	const [loaded, setLoaded] = useState(false);
 	const [currentSlide, setCurrentSlide] = useState(0);
@@ -75,7 +76,7 @@ function Slider({
 	}, []);
 
 	return (
-		<section className="container mt-5 relative">
+		<section className={`container relative ${className}`}>
 			<div
 				ref={sliderRef}
 				className="keen-slider"

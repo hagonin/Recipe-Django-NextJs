@@ -19,6 +19,7 @@ function ReviewCard({
 	avatar,
 	hasEdit,
 	handleDelete,
+	isFirstCard,
 }) {
 	const [showConfirmDeleteteReview, setShowConfirmDeleteReview] =
 		useState(false);
@@ -27,7 +28,7 @@ function ReviewCard({
 		setShowConfirmDeleteReview(false);
 	};
 	return (
-		<div className="py-5 border-b">
+		<div className={` border-b ${isFirstCard ? 'pb-5 pt-3' : 'py-5'}`}>
 			<ConfirmDelete
 				handleDelete={onDelete}
 				showConfirm={showConfirmDeleteteReview}

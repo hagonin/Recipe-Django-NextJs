@@ -23,13 +23,14 @@ function Reviews({
 				{reviews.length > 0
 					? reviews.map((review, index) => (
 							<ReviewCard
+								key={index}
 								{...review}
 								id={review?.id}
 								user={review?.user?.username}
 								avatar={review?.user?.profile?.avatar}
-								key={index}
 								hasEdit={currentUserId === review?.user?.id}
 								handleDelete={handleDelete}
+								isFirstCard={index === 0}
 							/>
 					  ))
 					: 'There are no reviews yet. Be the first!'}
