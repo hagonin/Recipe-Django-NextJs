@@ -123,7 +123,7 @@ function RecipeCard({
 								onClick={() =>
 									handleToggleBookmark(actBookmark, id)
 								}
-								className={`p-2 bg-white rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
+								className={`p-2 bg-whiteTransparent rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
 									actBookmark ? ' text-red' : ' text-black'
 								} `}
 							>
@@ -163,23 +163,6 @@ function RecipeCard({
 						>
 							{name}
 						</Link>
-						{/* {smallCard && (
-							<>
-								<p className="mt-1  text-lg line-clamp-2">
-									{summaryMarkup}
-								</p>
-								<Link
-									className="underline text-[14px] text-primary hover:text-primaryDark"
-									href={
-										secondary
-											? `/user/recipe/${slug}`
-											: `/recipes/${slug}`
-									}
-								>
-									Read more
-								</Link>
-							</>
-						)} */}
 					</div>
 
 					<div

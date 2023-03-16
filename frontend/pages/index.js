@@ -16,7 +16,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (recipes) {
-			const arr = categoryList.map(({ id, name, desc }) => ({
+			let arr = categoryList.map(({ id, name, desc }) => ({
 				id,
 				name,
 				desc,
@@ -24,6 +24,9 @@ export default function Home() {
 					.filter((recipe) => recipe.category === name)
 					.splice(0, 3),
 			}));
+			arr = [...arr]
+				.sort((a, b) => b.recipes.length - a.recipes.length)
+				.splice(0, 6);
 			setCategories(arr);
 		}
 	}, [recipes]);
@@ -52,12 +55,13 @@ export default function Home() {
 			<WidgetLayout>
 				{categories ? (
 					categories.map(
-						(category) =>
+						(category, index) =>
 							category.recipes.length > 0 && (
 								<GroupCategory
 									key={category.id}
 									list={category.recipes}
 									name={category.name}
+									hasBorder={index !== 0}
 								/>
 							)
 					)

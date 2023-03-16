@@ -36,6 +36,7 @@ module.exports = {
 				redLight: 'rgba(243, 58, 89, 0.15)',
 				yellow: '#FFC438',
 				yellowDark: '#f0b62d',
+				whiteTransparent: 'rgba(255, 255, 255, 0.8)'
 			},
 			animation: {
 				'spin-slow': 'spin 2s linear infinite',

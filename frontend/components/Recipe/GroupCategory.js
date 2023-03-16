@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { AiOutlineDoubleRight } from 'react-icons/ai';
 import RecipeCard from './RecipeCard';
 
-function GroupCategory({ list = [], name = 'Category name' }) {
+function GroupCategory({ list = [], name = 'Category name', hasBorder }) {
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
-		<div className="border-b border-border py-8">
+		<div className={`border-border pb-10 pt-7 ${hasBorder ? 'border-t' : ''}`}>
 			<div className="flex justify-between items-center mb-5">
 				<h2 className="capitalize text-4xl font-serif text-black">
 					{name}
