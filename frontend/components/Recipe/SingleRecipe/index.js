@@ -30,6 +30,7 @@ function SingRecipe({
 	images = [],
 	checkBookmarkAct,
 	handleToggleBookmark,
+	source,
 }) {
 	const actBookmark = checkBookmarkAct(id);
 	const updated_at_format = formatDate(updated_at);
@@ -56,7 +57,7 @@ function SingRecipe({
 			</div>
 			<div
 				dangerouslySetInnerHTML={descriptionMarkup}
-				className="my-5 text-justify first-letter:capitalize"
+				className="my-5 text-justify markupBox"
 			/>
 			{images.length > 0 && <Thumbnail images={images} />}
 
@@ -123,6 +124,13 @@ function SingRecipe({
 						<Title title="NOTES" />
 						<p className="first-letter:uppercase">{notes}</p>
 					</div>
+				)}
+
+				{source && (
+					<>
+						<Title title="Source" />
+						<p >{source}</p>
+					</>
 				)}
 			</div>
 		</div>

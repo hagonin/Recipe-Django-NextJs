@@ -59,6 +59,7 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
+	
 	return (
 		<>
 			{isLoading ? (
@@ -74,8 +75,8 @@ function Recipe() {
 					<SubscribeSection />
 					<Author
 						name={data?.user}
-						avatar={images.defaultAvatar}
-						bio="Sed rhoncus, velit sit amet mollis cursus, velit urna congue orci, in dignissim elit magna eget ante. Mauris sem justo, volutpat in quam quis, vulputate luctus neque. Sed ultricies eget augue quis hendrerit. Nullam quis nisi sit amet velit pharetra lobortis ac eget magna."
+						avatar={data?.avatar || images.defaultAvatar}
+						bio={data?.bio}
 					/>
 					{data?.category && (
 						<RelatedRecipe categoryName={data?.category} />
