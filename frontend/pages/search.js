@@ -3,22 +3,17 @@ import { useRouter } from 'next/router';
 import api from '@services/axios';
 import {
 	ENDPOINT_RECIPE,
-	ENDPOINT_RECIPE_READ,
 	images,
 } from '@utils/constants';
-import Link from 'next/link';
-import { FaSearch } from 'react-icons/fa';
+
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
-import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
-import { TitlePrimary } from '@components/UI/Title';
-import { BsSearch } from 'react-icons/bs';
 
 function Search() {
 	const router = useRouter();
@@ -43,12 +38,13 @@ function Search() {
 	return (
 		<div className="container">
 			<div className=" flex gap-3">
-				{/* <BsSearch className="relative top-[1px] text-5xl" /> */}
-				{/* <TitlePrimary title=" " /> */}
-
 				{data?.data?.results.length > 0 && (
 					<span className="text-4xl text-black">
-						{`Showing ${data?.data?.results.length} result ${
+						{`Showing ${(
+							<span className="text-4xl text-black font-semibold">
+								${data?.data?.results.length}
+							</span>
+						)} result${
 							data?.data?.results.length > 1 ? 's' : ''
 						} for `}
 						<span className="text-4xl text-black font-semibold">
@@ -74,7 +70,7 @@ function Search() {
 								date={item.updated_at}
 								reviews_count={item.reviews_count}
 								rating={item.rating}
-								lastPost
+								lastestRecipe
 							/>
 						))
 					) : (

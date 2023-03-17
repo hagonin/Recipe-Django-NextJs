@@ -16,6 +16,7 @@ import NavCategory from './NavCategory';
 import { BsMenuApp, BsMenuButton } from 'react-icons/bs';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
+import Logo from '../Logo';
 
 function NavMobi() {
 	const { isAuthenticated, user, logout } = useAuthContext();
@@ -25,13 +26,19 @@ function NavMobi() {
 	};
 
 	return (
-		<div className="lg:hidden ">
-			<button
-				className="cursor-pointer"
-				onClick={toggleNavMobi}
-			>
-				<AiOutlineMenu className="text-[2rem]" />
-			</button>
+		<>
+			<div className="bg-white max-lg:shadow-sm   lg:h-logo-bar-pc h-logo-bar-mobile lg:mt-search-bar max-lg:fixed top-search-bar left-0 w-full max-lg:z-[333]">
+				<div className="container flex lg:justify-center justify-between h-full">
+					<Logo className="mx-auto " />
+					<button
+						className="cursor-pointer lg:hidden"
+						onClick={toggleNavMobi}
+					>
+						<AiOutlineMenu className="text-[2rem]" />
+					</button>
+				</div>
+			</div>
+
 			<Transition.Root show={showNavMobi}>
 				<Transition.Child
 					as={Fragment}
@@ -43,7 +50,7 @@ function NavMobi() {
 					leaveTo="opacity-0"
 				>
 					<div
-						className="fixed inset-0 z-10 bg-[rgba(0,0,0,0.3)]"
+						className="fixed inset-0 z-[555] bg-[rgba(0,0,0,0.3)]"
 						onClick={toggleNavMobi}
 					></div>
 				</Transition.Child>
@@ -56,14 +63,13 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
+					<nav className="fixed top-0 left-0 bottom-0 z-[666]  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
 						<button
 							className="absolute top-3 right-3 text-[2rem]"
 							onClick={toggleNavMobi}
 						>
 							<GrClose />
 						</button>
-
 						{isAuthenticated && (
 							<div className="flex gap-4 items-center mb-5 mt-3">
 								<Img
@@ -136,7 +142,7 @@ function NavMobi() {
 					</nav>
 				</Transition.Child>
 			</Transition.Root>
-		</div>
+		</>
 	);
 }
 

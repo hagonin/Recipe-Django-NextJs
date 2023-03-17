@@ -102,7 +102,7 @@ function SearchForm({ onSubmit, secondary }) {
 						})}
 					/>
 					{listSuggest.length > 0 && (
-						<div className="absolute z-[999] top-full left-8 w-full bg-white shadow-md py-2 rounded-b-md max-h-[50vh] overflow-y-auto scrollbar">
+						<div className="absolute top-full left-8 w-full bg-white shadow-md py-2 rounded-b-md max-h-[50vh] overflow-y-auto scrollbar">
 							<ul className="text-black text-base list-none p-0 m-0 ">
 								{listSuggest.map((suggest, index) => (
 									<li

@@ -6,7 +6,7 @@ function Logo() {
 	return (
 		<Link
 			href="/"
-			className="relative lg:w-80 w-28 h-full"
+			className="relative lg:w-80 w-28 h-full block"
 		>
 			<Image
 				src={images.logo}

@@ -25,7 +25,7 @@ function Navigate() {
 	}, []);
 
 	return (
-		<nav className={`bg-white  max-lg:hidden z-[888] ${stick?.box1}`}>
+		<nav className={`bg-white  max-lg:hidden z-[333] ${stick?.box1}`}>
 			<div
 				className={`container flex justify-center items-center border-y ${stick?.box2}`}
 			>

@@ -19,7 +19,7 @@ function Header() {
 
 	return (
 		<header>
-			<div className="bg-primary h-search-bar text-white fixed top-0 left-0 w-full lg:z-[666] z-[444]">
+			<div className="bg-primary h-search-bar text-white fixed top-0 left-0 w-full z-[444]">
 				<div className="container h-full flex items-center">
 					<SearchForm onSubmit={handleSearch} />
 					<div className="md:block hidden ml-auto">
@@ -46,13 +46,8 @@ function Header() {
 					</div>
 				</div>
 			</div>
-			<div className="relative lg:mt-12 max-lg:fixed max-lg:left-0 max-lg:top-12 w-full z-[555] max-lg:shadow-sm max-lg:border max-lg:border-b max-lg:border-b-border bg-white">
-				<div className=" container lg:h-logo-bar-pc h-logo-bar-mobile flex items-center lg:justify-center justify-between relative ">
-					<Logo className="mx-auto" />
-					<NavMobi />
-				</div>
-				<Navigate />
-			</div>
+			<NavMobi />
+			<Navigate />
 		</header>
 	);
 }
