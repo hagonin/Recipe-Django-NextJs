@@ -3,25 +3,28 @@ import { images } from '@utils/constants';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
+import { TitlePrimary } from '@components/UI/Title';
 
 function Login() {
 	const { login } = useAuthContext();
 
 	return (
-		<div className="bg-primaryLight">
-			<div className="container py-14 grid md:grid-cols-2 grid-cols-1 gap-8">
-				<LoginForm onSubmit={login} />
+		<div className="bg-primaryLight w-full min-h-screen flex">
+			<div className="container m-auto flex md:flex-row flex-col items-center justify-center  lg:gap-12 gap-6 py-10">
+				<div className=" bg-white md:w-[500px] w-full  rounded-xl pt-6 pb-9 md:px-8 px-4  border md:shadow-xl ">
+					<LoginForm onSubmit={login} />
+				</div>
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
-					<h1>Welcome back</h1>
-					<p className="text-center">
-						It's nice to see you again. Log in to continue to your
-						account.
-					</p>
 					<Img
 						alt="login"
 						src={images.login}
-						className="w-full h-72 mt-10"
+						className="w-full md:h-72 h-36 md:mb-10 mb-3"
 					/>
+					<TitlePrimary title="Welcome back" />
+					<p className="text-center mt-2">
+						It's nice to see you again. Log in to continue to your
+						account.
+					</p>
 				</div>
 			</div>
 		</div>

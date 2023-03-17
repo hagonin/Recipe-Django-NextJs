@@ -45,7 +45,7 @@ function LoginForm({ onSubmit }) {
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 md:px-8 px-4  border my-10 md:shadow-xl">
+		<>
 			<div className="flex justify-center items-center mb-10">
 				<TitlePrimary title="Login" />
 				<Img
@@ -58,6 +58,7 @@ function LoginForm({ onSubmit }) {
 
 			<Form onSubmit={handleSubmit(({ login }) => onSubmit(login))}>
 				<InputField
+					label="Email"
 					name="login.email"
 					type="email"
 					placeholder="Enter your email"
@@ -68,6 +69,7 @@ function LoginForm({ onSubmit }) {
 				/>
 
 				<InputField
+					label="Password"
 					name="login.password"
 					type="password"
 					placeholder="Enter your password"
@@ -77,7 +79,7 @@ function LoginForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 				/>
 
-				<div className="flex justify-between items-center  mb-5 mt-5 ">
+				<div className="flex justify-between items-center  mb-4 mt2 ">
 					<CheckboxField
 						name="login.remember"
 						isSingle={{ label: 'Remember me' }}
@@ -86,7 +88,7 @@ function LoginForm({ onSubmit }) {
 					/>
 					<Link
 						href="/resetpassword"
-						className="md:text-lg text-base font-semibold hover:text-primary relative -top-[3px]"
+						className="text-base font-medium text-primaryDark relative -top-[3px]"
 					>
 						Forgot Password?
 					</Link>
@@ -102,15 +104,15 @@ function LoginForm({ onSubmit }) {
 			</Form>
 
 			<p className="text-center mt-5">
-				Create an account?
+				New cuisinier?
 				<Link
 					href="/signup"
-					className="ml-2 underline font-semibold hover:text-primary "
+					className="ml-2 underline font-medium text-primaryDark"
 				>
-					Register
+					Create an account
 				</Link>
 			</p>
-		</div>
+		</>
 	);
 }
 

@@ -17,28 +17,24 @@ function SignUp() {
 	const [showVerifyModal, setShowVerifyModal] = useState(false);
 	const handleSignup = useCallback(async (data) => {
 		try {
-			await api.post(ENDPOINT_REGISTER, data);
+			const res = await api.post(ENDPOINT_REGISTER, data);
 			setUser((pre) => ({ ...pre, email: data.email }));
 			setShowVerifyModal(true);
-		} catch ({ status, _error }) {
-			const { errors } = _error;
-			if (status === 400) {
-				if (errors?.error) {
-					setErrors({
-						register: { confirm_password: errors?.error },
-					});
-				} else {
-					setErrors({ register: { ...errors } });
-				}
+		} catch ({ status, _error, error }) {
+			const errors = _error?.errors;
+			if (status === 400 && errors) {
+				setErrors({
+					register: { confirm_password: errors?.error, ...errors },
+				});
 			}
 		}
 	});
 	const handleEffectAfterResend = useCallback(() => router.push('/login'));
 
 	return (
-		<div className="bg-primaryLight select-none">
+		<div className="bg-[#ffdff10f] select-none py-14 flex min-h-screen">
 			<ModalPrimary
-				show={showVerifyModal}
+				show={true}
 				handleCloseModal={() => setShowVerifyModal(false)}
 				noClose={true}
 			>
@@ -72,12 +68,12 @@ function SignUp() {
 					</div>
 				</div>
 			</ModalPrimary>
-			<div className="container py-14 grid md:grid-cols-2 grid-cols-1  md:gap-8 ">
+			<div className="container flex md:flex-row flex-col lg:gap-12 gap-6  m-auto">
 				<div className="flex flex-col items-center justify-center">
 					<Img
 						alt="login"
 						src={images.signup}
-						className="w-full h-[300px] mb-10"
+						className="w-full md:h-72 h-44 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Create An Account" />
 					<h2 className="font-serif">What you will get?</h2>
@@ -102,7 +98,9 @@ function SignUp() {
 						</li>
 					</ul>
 				</div>
-				<SignUpForm onSubmit={handleSignup} />
+				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border my-10 md:shadow-xl">
+					<SignUpForm onSubmit={handleSignup} />
+				</div>
 			</div>
 		</div>
 	);

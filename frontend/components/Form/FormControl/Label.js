@@ -9,7 +9,7 @@ const Label = ({ label, name, info, required }) => {
 			<div className="flex gap-1">
 				{label && (
 					<label
-						className="block text-black text-lg font-medium mb-1"
+						className="block text-black text-base font-medium mb-[2px] tracking-wider"
 						htmlFor={name}
 					>
 						{label}

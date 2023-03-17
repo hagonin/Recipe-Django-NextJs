@@ -51,7 +51,7 @@ function SignUpForm({ onSubmit }) {
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 md:px-8 px-4 border my-10 md:shadow-xl">
+		<>
 			<div className="flex justify-center items-center ">
 				<TitlePrimary title="Register" />
 				<Img
@@ -64,7 +64,28 @@ function SignUpForm({ onSubmit }) {
 				Welcome. We are glad you are here.
 			</p>
 			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
+				<div className="flex gap-4">
+					<InputField
+						label="First name"
+						name="register.first_name"
+						type="text"
+						placeholder="Enter your first name"
+						register={register}
+						error={formError?.register?.first_name}
+					/>
+
+					<InputField
+						label="Last name"
+						name="register.last_name"
+						type="text"
+						placeholder="Enter your last name"
+						register={register}
+						error={formError?.register?.last_name}
+					/>
+				</div>
+
 				<InputField
+					label="Username"
 					name="register.username"
 					type="text"
 					placeholder="Enter your name"
@@ -74,22 +95,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<InputField
-					name="register.first_name"
-					type="text"
-					placeholder="Enter your first name"
-					register={register}
-					error={formError?.register?.first_name}
-				/>
-
-				<InputField
-					name="register.last_name"
-					type="text"
-					placeholder="Enter your last name"
-					register={register}
-					error={formError?.register?.last_name}
-				/>
-
-				<InputField
+					label="Email"
 					name="register.email"
 					type="email"
 					placeholder="Enter your email"
@@ -100,6 +106,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<InputField
+					label="Password"
 					name="register.password"
 					type="password"
 					placeholder="Enter your password"
@@ -110,6 +117,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 
 				<InputField
+					label="Confirm password"
 					name="register.confirm_password"
 					type="password"
 					placeholder="Confirm password"
@@ -132,7 +140,7 @@ function SignUpForm({ onSubmit }) {
 					Have an account?
 					<Link
 						href="/login"
-						className="ml-2 underline font-semibold text-primary "
+						className="ml-2 underline font-medium text-primaryDark "
 					>
 						Login
 					</Link>
@@ -155,7 +163,7 @@ function SignUpForm({ onSubmit }) {
 					.
 				</span>
 			</Form>
-		</div>
+		</>
 	);
 }
 

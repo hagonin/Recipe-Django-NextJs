@@ -4,9 +4,9 @@ import { MdClose } from 'react-icons/md';
 import Img from './Image';
 
 function ToastMessage({ message, type, id, visible }) {
+	console.log(message);
 	return (
 		<>
-			
 			<div
 				className={`flex items-center gap-4 border rounded-md py-2 px-4 bg-white shadow-lg ${
 					type === 'error'
@@ -18,14 +18,14 @@ function ToastMessage({ message, type, id, visible }) {
 					visible ? 'opacity-100' : 'opacity-0'
 				}`}
 			>
-				{type === 'success' ? (
+				{/* {type === 'success' ? (
 					<Img
 						src={images.toast_success}
 						className="h-8 w-8"
 						alt="success"
 						cover
 					/>
-				) : 'error' ? (
+				) : type === 'error' ? (
 					<Img
 						src={images.toast_error}
 						className="h-8 w-8"
@@ -34,7 +34,7 @@ function ToastMessage({ message, type, id, visible }) {
 					/>
 				) : (
 					'null'
-				)}
+				)} */}
 				<span>{message}</span>
 				<button
 					onClick={() => toast.dismiss(id)}
