@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import {
-	ENDPOINT_RECIPE,
-	images,
-} from '@utils/constants';
-
+import { ENDPOINT_RECIPE, images } from '@utils/constants';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
@@ -39,15 +35,15 @@ function Search() {
 		<div className="container">
 			<div className=" flex gap-3">
 				{data?.data?.results.length > 0 && (
-					<span className="text-4xl text-black">
-						{`Showing ${(
-							<span className="text-4xl text-black font-semibold">
-								${data?.data?.results.length}
-							</span>
-						)} result${
+					<span className="text-2xl text-black">
+						Showing
+						<span className="mx-2 text-2xl text-black font-semibold">
+							{data?.data?.results.length}
+						</span>
+						{`result${
 							data?.data?.results.length > 1 ? 's' : ''
 						} for `}
-						<span className="text-4xl text-black font-semibold">
+						<span className="text-2xl text-black font-semibold">
 							{query.search}
 						</span>
 					</span>
@@ -55,13 +51,13 @@ function Search() {
 			</div>
 
 			{isLoading || isValidating ? (
-				<div className="flex justify-center mt-10">
+				<div className="flex justify-center my-10">
 					<Loader type="searching" />
 				</div>
 			) : (
-				<div className="mt-7 flex flex-col gap-4">
+				<div className="md:mt-5 my-4 flex flex-col gap-4">
 					{data?.data?.results.length > 0 ? (
-						data?.data?.results.map((item) => (
+						data?.data?.results.map((item, index) => (
 							<RecipeCard
 								key={item.id}
 								slug={item.slug}
@@ -71,18 +67,27 @@ function Search() {
 								reviews_count={item.reviews_count}
 								rating={item.rating}
 								lastestRecipe
+								firstPost={index === 0}
 							/>
 						))
 					) : (
 						<>
-							<Img
-								src={images.no_search}
-								alt="no result"
-								className="h-24 w-24 mx-auto my-10"
-							/>
-							<h4 className="text-center mb-16">
-								Sorry. No result found.
-							</h4>
+							<div className="flex justify-center items-center mb-10 gap-2">
+								<div>
+									<Img
+										src={images.no_search}
+										alt="no result"
+										className="h-20 w-20"
+									/>
+								</div>
+								<span className="text-center text-lg md:w-1/3 ">
+									Sorry, we couldn’t find any matches for
+									<span className="text-lg font-semibold mx-2 text-black">
+										{query.search}
+									</span>{' '}
+									recipes
+								</span>
+							</div>
 
 							<TopRating recipes={topRating} />
 						</>

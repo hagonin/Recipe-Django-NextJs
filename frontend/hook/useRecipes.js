@@ -19,10 +19,12 @@ const useRecipes = () => {
 			const keys = data
 				.map((item) => {
 					let key = item?.search_vector?.replace(/'/g, '').split(' ');
+
 					return key;
 				})
 				.flat();
-			setKeyWords(keys);
+			const newArr = new Set(keys);
+			setKeyWords([...newArr]);
 
 			//toprating
 			const ratings = data

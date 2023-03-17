@@ -29,7 +29,7 @@ export const images = {
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/404-error_nb20ch.png',
 	tick: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/tick_v0jvtt.png',
 	no_search:
-		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/no-results_o90ppo.png',
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679024983/static/no_result_xiy5ma.png',
 	toast_success:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983417/static/toast_success_pi8cc6.png',
 	toast_error:

@@ -5,7 +5,7 @@ import RecipeCard from './RecipeCard';
 function TopRating({ recipes }) {
 	return recipes ? (
 		<>
-			<h3 className="mb-4 font-serif">Discover Top Rate</h3>
+			<h3 className=" font-serif">Discover Top Rate</h3>
 			<div className="flex flex-col md:gap-y-4 gap-y-2 md:w-1/2">
 				{recipes.map((item, index) => (
 					<RecipeCard

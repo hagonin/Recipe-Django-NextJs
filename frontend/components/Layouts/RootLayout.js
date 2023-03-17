@@ -9,7 +9,7 @@ function RootLayout({ children }) {
 	return (
 		<>
 			<Header />
-			<div className="max-lg:py-40 max-lg:pb-8">
+			<div className="max-lg:py-28 max-lg:pb-8">
 				{children}
 			</div>
 			<Footer />
