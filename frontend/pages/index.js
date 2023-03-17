@@ -32,8 +32,8 @@ export default function Home() {
 
 	return (
 		<>
-			{topRating && (
-				<Slider className='mt-8'>
+			{topRating ? (
+				<Slider className="mt-8">
 					{topRating.map((recipe, index) => {
 						return (
 							<Slide
@@ -47,6 +47,10 @@ export default function Home() {
 						);
 					})}
 				</Slider>
+			) : (
+				<div className='container pt-10'>
+					<Loader type="slider" />
+				</div>
 			)}
 
 			<SubscribeSection />

@@ -24,6 +24,7 @@ function TopRating({ recipes }) {
 		</>
 	) : (
 		<div className="w-1/2">
+			<h3 className=" font-serif mb-6">Discover Top Rate</h3>
 			<Loader type="recipe-small-card" />
 		</div>
 	);

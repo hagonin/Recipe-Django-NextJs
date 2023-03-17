@@ -85,7 +85,7 @@ function NavMobi() {
 									cover
 								/>
 								<div className="pr-5">
-									<span className="text-2xl text-black font-bold block">
+									<span className="md:text-2xl text-xl text-black font-bold block">
 										{user?.username}
 									</span>
 									<span className="text-second block ">

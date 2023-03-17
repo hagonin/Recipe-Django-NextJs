@@ -75,11 +75,11 @@ function Profile() {
 				title="My Profile"
 				center
 			/>
-			<div className="flex mt-8 items-center gap-6 md:flex-row flex-col">
+			<div className="flex mt-8 items-center lg:gap-6 md:gap-4 gap-2 flex-row">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
-					className="h-52 w-52 border border-border rounded-full overflow-hidden"
+					className="md:h-52 md:w-52 h-32 w-32 border border-border rounded-full overflow-hidden"
 					cover
 				/>
 				<div className="flex flex-col gap-1 max-md:items-center">

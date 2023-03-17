@@ -136,6 +136,14 @@ function Loader({ type }) {
 			return (
 				<div className="animate-pulse  h-48 w-full border bg-gray-200 shadow-md rounded-md"></div>
 			);
+		case 'slider':
+			return (
+				<div className="flex lg:gap-6 md:gap4 gap-2">
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md"></div>
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md hidden md:block"></div>
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md hidden lg:block"></div>
+				</div>
+			);
 		default:
 			return (
 				<div className="animate-pulse ">

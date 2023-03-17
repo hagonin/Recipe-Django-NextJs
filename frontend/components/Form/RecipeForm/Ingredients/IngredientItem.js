@@ -19,18 +19,21 @@ function IngredientItem({ register, control, name, error, exist_recipe }) {
 					>
 						<div className="grid grid-cols-12 gap-2 flex-1">
 							<div className="md:col-span-8 col-span-12">
-								<input
-									className={`text-base px-3 border rounded-md w-full outline-none focus:border-primary h-10 ${
-										error?.[index]?.title?.message
-											? 'border-red'
-											: ''
-									}`}
-									type="text"
-									{...register(`${name}.${index}.title`, {
-										required: 'Enter title',
-									})}
-									placeholder="E.g. deseeded and finely chopped"
-								/>
+								<div className="flex gap-4">
+									{/* {index === 0 && <label>Title</label>} */}
+									<input
+										className={`text-base px-3 border rounded-md w-full outline-none focus:border-primary h-10 flex-1 ${
+											error?.[index]?.title?.message
+												? 'border-red'
+												: ''
+										}`}
+										type="text"
+										{...register(`${name}.${index}.title`, {
+											required: 'Enter title',
+										})}
+										placeholder="E.g. deseeded and finely chopped"
+									/>
+								</div>
 								<Error
 									error={error?.[index]?.title?.message}
 									className="mt-[1px] ml-0 text-sm"

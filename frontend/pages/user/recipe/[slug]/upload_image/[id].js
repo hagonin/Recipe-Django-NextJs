@@ -43,18 +43,6 @@ function UploadImagePage() {
 				onSubmit={onUploadPhoto}
 				recipe={id}
 			/>
-			<div className="mt-5 font-medium text-base w-[400px]  mx-auto bg-third p-3 rounded-md text-center">
-				<div className="flex justify-center">
-					<span>
-						<MdOutlineTipsAndUpdates className="text-yellow text-3xl relative top-1 mr-2" />
-					</span>
-					<b>Tips for snapping the perfect recipe photo:</b>
-				</div>
-				<p>
-					(1) Getting the lighting right. (2) Picking the right angle.
-					(3)Styling to set the scene. (4) Editing your recipe photos
-				</p>
-			</div>
 		</div>
 	);
 }

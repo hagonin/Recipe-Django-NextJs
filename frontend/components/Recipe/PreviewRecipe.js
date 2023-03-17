@@ -15,6 +15,7 @@ import DropDown, { Child } from '@components/UI/Dropdown';
 import { TimerBox } from './SingleRecipe';
 import Method from './SingleRecipe/Method';
 import { MdPhoto, MdUpdate } from 'react-icons/md';
+import Button from '@components/UI/Button';
 
 function PreviewRecipe({
 	data,
@@ -96,7 +97,7 @@ function PreviewRecipe({
 						<Title title="Description" />
 						{description ? (
 							<div
-								className="text-justify text-lg pl-6 border-l-2 border-primary capitalize"
+								className="text-justify text-lg pl-6 border-l-2 border-primary markupBox"
 								dangerouslySetInnerHTML={createMarkup(
 									description
 								)}
@@ -170,42 +171,40 @@ function PreviewRecipe({
 				})}
 			</div>
 
-			<div className="flex md:gap-4 gap-2 md:flex-row flex-col mt-8">
-				<DropDown>
-					<Child>
-						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9"
-							onClick={goToRecipeSingle}
-						>
-							Go to this publish recipe
-						</button>
-					</Child>
-					<Child>
-						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9 flex items-center gap-2"
-							onClick={goToUpdate}
-						>
-							<MdUpdate /> Update Recipe
-						</button>
-					</Child>
-					<Child>
-						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9 flex items-center gap-2"
-							onClick={goToUploadPhoto}
-						>
-							<MdPhoto /> Manage Photos
-						</button>
-					</Child>
-					<Child>
-						<button
-							className="px-3 hover:bg-grey rounded-md border hover:text-primary whitespace-nowrap h-9"
-							onClick={() => setShowConfirmDeleteRecipe(true)}
-						>
-							Delete Recipe
-						</button>
-					</Child>
-				</DropDown>
-			</div>
+			<DropDown>
+				<Child>
+					<Button
+						onClick={goToRecipeSingle}
+						className="lg"
+					>
+						Go to this publish recipe
+					</Button>
+				</Child>
+				<Child>
+					<Button
+						onClick={goToUpdate}
+						className="lg"
+					>
+						<MdUpdate /> Update Recipe
+					</Button>
+				</Child>
+				<Child>
+					<Button
+						onClick={goToUploadPhoto}
+						className="lg"
+					>
+						<MdPhoto /> Manage Photos
+					</Button>
+				</Child>
+				<Child>
+					<Button
+						onClick={() => setShowConfirmDeleteRecipe(true)}
+						className="lg"
+					>
+						Delete Recipe
+					</Button>
+				</Child>
+			</DropDown>
 		</>
 	);
 }

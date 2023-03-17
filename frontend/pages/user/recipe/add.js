@@ -30,13 +30,14 @@ function AddRecipe() {
 			});
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
-		} catch ({ _error }) {
-			if (_error?.ingredients) {
-				toastMessage({
-					message: 'Ingredient title must make a unique set.',
-					type: 'error',
-				});
-			}
+		} catch (err) {
+			console.log(err);
+			// if (_error?.ingredients) {
+			// 	toastMessage({
+			// 		message: 'Ingredient title must make a unique set.',
+			// 		type: 'error',
+			// 	});
+			// }
 		}
 	});
 

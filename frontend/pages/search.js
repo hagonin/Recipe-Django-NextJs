@@ -44,7 +44,7 @@ function Search() {
 							data?.data?.results.length > 1 ? 's' : ''
 						} for `}
 						<span className="text-2xl text-black font-semibold">
-							{query.search}
+							{query.search || query.ingredients__title}
 						</span>
 					</span>
 				)}
@@ -82,8 +82,8 @@ function Search() {
 								</div>
 								<span className="text-center text-lg md:w-1/3 ">
 									Sorry, we couldn’t find any matches for
-									<span className="text-lg font-semibold mx-2 text-black">
-										{query.search}
+									<span className="text-lg font-semibold mx-1 text-black">
+										{query.search || query.ingredients__title}
 									</span>{' '}
 									recipes
 								</span>
