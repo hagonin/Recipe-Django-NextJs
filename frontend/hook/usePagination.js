@@ -12,18 +12,25 @@ function usePagination({ limitPerPage = 4, recipes, total }) {
 		const lastIndex = currentPage * limitPerPage;
 		const newRecipes = [...recipes].slice(firstIndex, lastIndex);
 		setCurrentRecipes(newRecipes);
+		window.scrollTo({ top: 0 });
 	};
 
+	const next = () => currentPage < pages && setCurrentPage(currentPage + 1);
+
+	const previous = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 	useEffect(() => {
 		if (recipes) {
 			goToPage();
 		}
 	}, [currentPage, recipes]);
+
 	return {
 		currentRecipes,
 		currentPage,
 		pages,
 		setCurrentPage,
+		next,
+		previous,
 	};
 }
 

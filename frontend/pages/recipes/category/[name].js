@@ -1,18 +1,16 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
+
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
 import usePagination from 'hook/usePagination';
-import Button from '@components/UI/Button';
-import {
-	HiOutlineChevronDoubleLeft,
-	HiOutlineChevronDoubleRight,
-} from 'react-icons/hi';
 import Loader from '@components/UI/Loader';
 import { TitlePrimary } from '@components/UI/Title';
+import Pagination from '@components/UI/Pagination';
+import ShowPages from '@components/UI/Pagination/ShowPages';
 
 function CategoryPage() {
 	const {
@@ -21,11 +19,18 @@ function CategoryPage() {
 	const { handleToggleBookmark, checkBookmarkAct, recipes } =
 		useRecipeContext();
 	const [category, setCategory] = useState(null);
-	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
-		usePagination({
-			page: NUMBER_OF_RECIPE_RECIPE_PAGE,
-			recipes: category?.recipes,
-		});
+	const {
+		next,
+		previous,
+		currentRecipes,
+		currentPage,
+		pages,
+		setCurrentPage,
+	} = usePagination({
+		limitPerPage: NUMBER_OF_RECIPE_RECIPE_PAGE,
+		recipes: category?.recipes,
+		total: category?.recipes?.length,
+	});
 
 	useEffect(() => {
 		if (recipes && name) {
@@ -50,6 +55,12 @@ function CategoryPage() {
 					</div>
 				)}
 				<div className="flex flex-col gap-y-8 mt-10">
+					{currentRecipes?.length > 0 && (
+						<ShowPages
+							currentPage={currentPage}
+							pages={pages}
+						/>
+					)}
 					{currentRecipes ? (
 						currentRecipes.map((recipe) => (
 							<RecipeCard
@@ -77,9 +88,13 @@ function CategoryPage() {
 				</div>
 
 				{currentRecipes?.length > 0 && (
-					<div className="flex justify-between mt-10">
-						{/* pagination here */}
-					</div>
+					<Pagination
+						next={next}
+						previous={previous}
+						currentPage={currentPage}
+						pages={pages}
+						setCurrentPage={setCurrentPage}
+					/>
 				)}
 			</>
 		</>
