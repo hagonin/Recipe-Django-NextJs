@@ -83,8 +83,9 @@ function Recipe() {
 							data?.user?.profile?.avatar || images.defaultAvatar
 						}
 						bio={data?.user?.profile?.bio}
+						slug={slug}
 					/>
-					<SubscribeSection />
+					<SubscribeSection className='max-lg:flex-wrap max-lg:justify-center'/>
 
 					{data?.category && (
 						<RelatedRecipe categoryName={data?.category} />

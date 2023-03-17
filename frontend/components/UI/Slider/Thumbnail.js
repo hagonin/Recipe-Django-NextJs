@@ -71,7 +71,7 @@ function Thumbnail({
 		<>
 			<div
 				ref={sliderRef}
-				className="keen-slider"
+				className="keen-slider mt-10"
 			>
 				{images.map((img, index) => (
 					<div

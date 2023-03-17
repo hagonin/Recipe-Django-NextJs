@@ -34,29 +34,29 @@ function About(props) {
 			/>
 			<SubTitle title="Above all, we are:" />
 
-			<ul className="mt-3">
+			<ul className="mt-3 text-base">
 				<li>
-					<span className="font-bold">Friendly</span> We love trading
+					<span className="font-bold text-[#DF7857] ">Friendly</span> We love trading
 					ideas and hanging out with fellow home cooks.
 				</li>
 				<li>
-					<span className="font-bold">Supportive</span> Struggling
+					<span className="font-bold text-[#DF7857] ">Supportive</span> Struggling
 					with dinner inspo? We’re here to help!.
 				</li>
 				<li>
-					<span className="font-bold">Creative</span> Cooking is an
+					<span className="font-bold text-[#DF7857] ">Creative</span> Cooking is an
 					art. We like to experiment and express ourselves.{' '}
 				</li>
 				<li>
-					<span className="font-bold">Approachable</span> We don't
+					<span className="font-bold text-[#DF7857] ">Approachable</span> We don't
 					judge—all cooking levels and recipes are welcome.
 				</li>
 				<li>
-					<span className="font-bold">Down-to-Earth</span> We love
+					<span className="font-bold text-[#DF7857] ">Down-to-Earth</span> We love
 					good food, period. It doesn’t need to be fussy to be great.
 				</li>
 				<li>
-					<span className="font-bold">Fun Like you</span> , we enjoy
+					<span className="font-bold text-[#DF7857] ">Fun Like you</span> , we enjoy
 					friends, family, cooking, and having a good laugh.
 				</li>
 			</ul>

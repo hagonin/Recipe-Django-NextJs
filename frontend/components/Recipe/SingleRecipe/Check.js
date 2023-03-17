@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Check({ label }) {
+function Check({ children }) {
 	const [check, setCheck] = useState(false);
 
 	return (
@@ -15,7 +15,7 @@ function Check({ label }) {
 				value={check}
 				className="mr-3 text-base relative top-[1px]"
 			/>
-			{label}
+			{children}
 		</label>
 	);
 }

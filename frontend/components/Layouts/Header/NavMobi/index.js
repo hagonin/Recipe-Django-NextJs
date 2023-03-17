@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { useAuthContext } from '@context/auth-context';
 
@@ -17,13 +17,19 @@ import { BsMenuApp, BsMenuButton } from 'react-icons/bs';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
 import Logo from '../Logo';
+import { useRouter } from 'next/router';
 
 function NavMobi() {
+	const router = useRouter();
 	const { isAuthenticated, user, logout } = useAuthContext();
 	const [showNavMobi, setShowNavMobi] = useState(false);
 	const toggleNavMobi = () => {
 		setShowNavMobi(!showNavMobi);
 	};
+
+	useEffect(() => {
+		setShowNavMobi(false);
+	}, [router]);
 
 	return (
 		<>
@@ -65,7 +71,7 @@ function NavMobi() {
 				>
 					<nav className="fixed top-0 left-0 bottom-0 z-[666]  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
 						<button
-							className="absolute top-3 right-3 text-[2rem]"
+							className="absolute top-3 right-3 text-[1.6rem]"
 							onClick={toggleNavMobi}
 						>
 							<GrClose />
@@ -114,13 +120,13 @@ function NavMobi() {
 						) : (
 							<>
 								<NavItem href="/login">
-									<span>
-										<FiLogIn className="text-xl inline-block relative -mt-1 mr-2" />
+									<span className=" text-xl ">
+										<FiLogIn className="inline-block relative -mt-1 mr-2" />
 										Login
 									</span>
 								</NavItem>
 								<NavItem href="/signup">
-									<span>
+									<span className=" text-xl ">
 										<FiUserPlus className="text-xl inline-block relative -mt-1 mr-2" />
 										Signup
 									</span>

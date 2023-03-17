@@ -1,7 +1,9 @@
-function Title({ title, center }) {
+function Title({ title, center, bottom = 'mb-5' }) {
 	return (
 		<div className={`${center ? 'text-center' : ''}`}>
-			<h6 className="text-sm inline-block text-blackLight leading-6 uppercase mb-5 font-medium pb-1 border-b  border-b-primary tracking-widest">
+			<h6
+				className={`text-sm inline-block text-blackLight leading-6 uppercase  font-medium pb-1 border-b  border-b-primary tracking-widest ${bottom}`}
+			>
 				{title}
 			</h6>
 		</div>

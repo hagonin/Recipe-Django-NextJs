@@ -11,6 +11,10 @@ import { getInstructionAsArr } from '@utils/handleInstruction';
 import { AiFillHeart } from 'react-icons/ai';
 import Button from '@components/UI/Button';
 import Method from './Method';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import Title from '@components/UI/Title';
+import Notes from './Notes';
+import Source from './Source';
 
 function SingRecipe({
 	id,
@@ -35,6 +39,7 @@ function SingRecipe({
 	const actBookmark = checkBookmarkAct(id);
 	const updated_at_format = formatDate(updated_at);
 	const descriptionMarkup = createMarkup(description);
+
 	const instructionsArr = getInstructionAsArr(instructions);
 	return (
 		<div>
@@ -55,13 +60,11 @@ function SingRecipe({
 					serving={serving}
 				/>
 			</div>
-			<div
-				dangerouslySetInnerHTML={descriptionMarkup}
-				className="my-5 text-justify markupBox"
-			/>
+			<div dangerouslySetInnerHTML={descriptionMarkup} />
+			{/* <ReactMarkdown>{description}</ReactMarkdown> */}
 			{images.length > 0 && <Thumbnail images={images} />}
 
-			<div className="border border-border rounded-md p-6 mt-8">
+			<div className="border border-border rounded-md lg:p-6 p-4 mt-8">
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
@@ -76,7 +79,7 @@ function SingRecipe({
 							/>
 						)}
 
-						<div className="flex flex-wrap gap-x-6 mt-3 mb-2">
+						<div className="flex flex-wrap gap-x-6 mt-3 mb-3">
 							<TimerBox
 								prep_time={prep_time}
 								cook_time={cook_time}
@@ -84,7 +87,7 @@ function SingRecipe({
 							/>
 						</div>
 						<Button
-							className="mt-3 tag"
+							className="tag max-lg:mb-5"
 							icon={{
 								left: (
 									<AiFillHeart
@@ -112,36 +115,16 @@ function SingRecipe({
 						/>
 					</div>
 				</div>
-				<Title title="Ingredients" />
-
-				<Ingredient ingredients={ingredients} />
-				{instructionsArr && (
+				<div className='flex flex-col gap-y-6'>
+					<Ingredient ingredients={ingredients} />
 					<Method instructionsArr={instructionsArr} />
-				)}
-
-				{notes && (
-					<div>
-						<Title title="NOTES" />
-						<p className="first-letter:uppercase">{notes}</p>
-					</div>
-				)}
-
-				{source && (
-					<>
-						<Title title="Source" />
-						<p >{source}</p>
-					</>
-				)}
+					<Notes notes={notes} />
+				</div>
+					<Source source={source} />
 			</div>
 		</div>
 	);
 }
-
-const Title = ({ title }) => (
-	<span className="text-base text-black tracking-widest uppercase border-b border-primary pb-1 mt-6 mb-3 inline-block">
-		{title}
-	</span>
-);
 
 const Timer = ({ children }) => (
 	<span className="flex items-center gap-2 ">{children}</span>
