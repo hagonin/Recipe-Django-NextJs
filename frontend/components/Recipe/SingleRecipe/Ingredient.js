@@ -5,6 +5,18 @@ import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
+	const handleUnit = (unit, quantity) => {
+		switch (true) {
+			case unit === 'teaspoon(s)' && quantity < 2:
+				return 'teaspoon';
+			case unit === 'teaspoon(s)' && quantity >= 2:
+				return unit;
+			case unit === 'tablespoon(s)' && quantity < 2:
+				return 'tablespoon';
+			case unit === 'tablespoon(s)' && quantity >= 2:
+				return unit;
+		}
+	};
 	return (
 		<div>
 			<Title
@@ -22,14 +34,14 @@ function Ingredient({ ingredients, isPreview }) {
 								<span className="mr-1 text-sm">
 									{i.quantity}
 								</span>
-								{`${i.unit} ${i.title}`}
+								{`${handleUnit(i.unit, i.quantity)} ${i.title}`}
 							</span>
 						) : (
 							<Check key={index}>
 								<span className="mr-1 text-sm">
 									{i.quantity}
 								</span>
-								{`${i.unit} ${i.title}`}
+								{`${handleUnit(i.unit, i.quantity)} ${i.title}`}
 							</Check>
 						)
 					)}
@@ -50,14 +62,20 @@ function Ingredient({ ingredients, isPreview }) {
 											<span className="mr-1 text-sm">
 												{i.quantity}
 											</span>
-											{`${i.unit} ${i.title}`}
+											{`${handleUnit(
+												i.unit,
+												i.quantity
+											)} ${i.title}`}
 										</span>
 									) : (
 										<Check key={index}>
 											<span className="mr-1 text-sm">
 												{i.quantity}
 											</span>
-											{`${i.unit} ${i.title}`}
+											{`${handleUnit(
+												i.unit,
+												i.quantity
+											)} ${i.title}`}
 										</Check>
 									)
 								)}

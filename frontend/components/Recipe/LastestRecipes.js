@@ -33,6 +33,8 @@ function LastPost({ isFooter, number = 3 }) {
 				<>
 					<Loader type="recipe-small-card" />
 					<Loader type="recipe-small-card" />
+					<Loader type="recipe-small-card" />
+					<Loader type="recipe-small-card" />
 				</>
 			)}
 		</div>
