@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import api from '@services/axios';
 import { TitlePrimary } from '@components/UI/Title';
+import Button from '@components/UI/Button';
 
 function SignUp() {
 	const router = useRouter();
@@ -34,31 +35,32 @@ function SignUp() {
 	return (
 		<div className="bg-[#ffdff10f] select-none py-14 flex min-h-screen">
 			<ModalPrimary
-				show={true}
+				show={showVerifyModal}
 				handleCloseModal={() => setShowVerifyModal(false)}
 				noClose={true}
 			>
-				<div className="flex flex-col items-center justify-center py-10 px-10 container">
+				<div className="md:w-[350px] flex flex-col items-center justify-center py-2 container">
 					<Img
 						src={images.tick}
 						alt="tick"
-						className="lg:h-32 lg:w-32  md:h-28 md:w-28 h-24 w-24"
+						className="lg:h-28 lg:w-28  md:h-24 md:w-24 h-20 w-20"
 					/>
-					<h2 className="mt-6">You are registered</h2>
+					<h3 className="mt-4 ">You are registered</h3>
 					<p className="mt-2 text-center">
-						We have sent an email verify to activate your account. .
-						The link in the email will
+						We have sent an email verify to activate your account.
+						<br />
+						The link will
 						<b> expire in 3 hours.</b>
 						<br />
 						Please check it and
-						<button
-							className="underline text-primary ml-2"
+						<Button
+							className="tag text-primary ml-2"
 							onClick={() => router.push('/login')}
 						>
 							Login
-						</button>
+						</Button>
 					</p>
-					<div className="flex flex-col mt-4">
+					<div className="flex flex-col mt-3">
 						<p className="text-base">
 							If you don't see any verify email.
 						</p>

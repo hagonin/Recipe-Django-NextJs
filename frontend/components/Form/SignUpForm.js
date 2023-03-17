@@ -64,7 +64,7 @@ function SignUpForm({ onSubmit }) {
 				Welcome. We are glad you are here.
 			</p>
 			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
-				<div className="flex gap-4">
+				<div className="flex gap-4 flex-col md:flex-row">
 					<InputField
 						label="First name"
 						name="register.first_name"
@@ -136,7 +136,7 @@ function SignUpForm({ onSubmit }) {
 					create account
 				</Button>
 
-				<p className="text-center mt-4">
+				<p className="text-center">
 					Have an account?
 					<Link
 						href="/login"
@@ -145,15 +145,15 @@ function SignUpForm({ onSubmit }) {
 						Login
 					</Link>
 				</p>
-				<span className="text-base text-center px-12">
+				<span className="text-sm text-center md:px-12">
 					By clicking "Create Account", I consent to
 					<Link
 						href="/"
 						className="underline text-primary ml-1"
 					>
 						the Terms of Services
-					</Link>{' '}
-					and{' '}
+					</Link>
+					and
 					<Link
 						href="/"
 						className="underline text-primary"

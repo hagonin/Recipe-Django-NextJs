@@ -93,7 +93,7 @@
       @apply bg-
     } */
     .btn.verify {
-      @apply text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
+      @apply tracking-[0.2em] !text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
     }
 
     .btn.wFull {
