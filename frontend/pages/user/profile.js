@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import { images } from '@utils/constants';
+import { images, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
 
 import { MdEmail, MdSecurity } from 'react-icons/md';
@@ -28,19 +28,29 @@ function Profile() {
 		isLoading: loading1,
 		mutate: mutateOwnRecipe,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
-
-	const { currentRecipes, currentPage, pages, setCurrentPage } =
-		usePagination({
-			limitPerPage: 6,
-			recipes: recipes,
-			total: recipes?.length,
-		});
-
 	const {
 		data: bookmarks,
 		isLoading: loading2,
 		mutate: mutateBookMark,
 	} = useSWR(`/user/profile/${user.id}/bookmarks`, fetcher);
+
+	const { currentRecipes, currentPage, pages, setCurrentPage } =
+		usePagination({
+			limitPerPage: NUMBER_OF_RECIPE_RENDER,
+			recipes: recipes,
+			total: recipes?.length,
+		});
+
+	const {
+		currentRecipes: currentBmks,
+		currentPage: currentPageBmk,
+		pages: pagesBmk,
+		setCurrentPage: setCurrentPageBmk,
+	} = usePagination({
+		limitPerPage: NUMBER_OF_RECIPE_RENDER,
+		recipes: bookmarks,
+		total: bookmarks?.length,
+	});
 
 	const router = useRouter();
 
@@ -75,11 +85,11 @@ function Profile() {
 				title="My Profile"
 				center
 			/>
-			<div className="flex mt-8 items-center lg:gap-6 md:gap-4 gap-2 flex-row">
+			<div className="flex mt-8 items-center lg:gap-6 md:gap-4 gap-2 md:flex-row flex-col">
 				<Img
 					src={user?.avatar || images.defaultAvatar}
 					alt="avatar"
-					className="md:h-52 md:w-52 h-32 w-32 border border-border rounded-full overflow-hidden"
+					className="md:h-52 md:w-52 h-40 w-40 border border-border rounded-full overflow-hidden"
 					cover
 				/>
 				<div className="flex flex-col gap-1 max-md:items-center">
@@ -203,27 +213,34 @@ function Profile() {
 				>
 					{loading2 ? (
 						'Loading...'
-					) : bookmarks.length > 0 ? (
-						<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
-							{bookmarks.map((bookmark) => (
-								<RecipeCard
-									key={bookmark.id}
-									main_image={bookmark.main_image}
-									name={bookmark.title}
-									date={
-										bookmark.updated_at ||
-										bookmark.created_at
-									}
-									category={bookmark.category}
-									smallCard
-									slug={bookmark.slug}
-									id={bookmark.id}
-									actBookmark
-									handleToggleBookmark={onDeleteBookmark}
-									noBookmark
-								/>
-							))}
-						</div>
+					) : currentBmks?.length > 0 ? (
+						<>
+							<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
+								{currentBmks.map((bookmark) => (
+									<RecipeCard
+										key={bookmark.id}
+										main_image={bookmark.main_image}
+										name={bookmark.title}
+										date={
+											bookmark.updated_at ||
+											bookmark.created_at
+										}
+										category={bookmark.category}
+										smallCard
+										slug={bookmark.slug}
+										id={bookmark.id}
+										actBookmark
+										handleToggleBookmark={onDeleteBookmark}
+										noBookmark
+									/>
+								))}
+							</div>
+							<Pagination
+								pages={pagesBmk}
+								currentPage={currentPageBmk}
+								setCurrentPage={setCurrentPageBmk}
+							/>
+						</>
 					) : (
 						<p>You have not saved any bookmarks yet.</p>
 					)}

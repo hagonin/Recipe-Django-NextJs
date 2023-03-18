@@ -196,7 +196,7 @@ function RecipeCard({
 							<p className="mt-1  text-lg line-clamp-4">
 								{summaryMarkup}
 							</p>
-							(
+
 							<Button
 								type="link"
 								href={
@@ -208,7 +208,6 @@ function RecipeCard({
 							>
 								Continue Reading
 							</Button>
-							)
 						</>
 					)}
 

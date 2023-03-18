@@ -1,36 +1,45 @@
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import { useRecipeContext } from '@context/recipe-context';
-import usePagination from 'hook/usePagination';
+import { usePaginationByApi } from 'hook/usePagination';
 import Loader from '@components/UI/Loader';
-import { NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
+
 import { TitlePrimary } from '@components/UI/Title';
 import Pagination from '@components/UI/Pagination';
 import ShowPages from '@components/UI/Pagination/ShowPages';
+import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
 function Recipe() {
-	const { checkBookmarkAct, handleToggleBookmark, recipes } =
-		useRecipeContext();
+	const { checkBookmarkAct, handleToggleBookmark } = useRecipeContext();
+
 	const {
-		currentRecipes,
 		currentPage,
-		pages,
 		setCurrentPage,
+		pages,
 		next,
 		previous,
-	} = usePagination({
-		recipes: recipes,
-		limitPerPage: NUMBER_OF_RECIPE_RECIPE_PAGE,
-		total: recipes?.length,
-	});
+		currentRecipes,
+		isLoading,
+	} = usePaginationByApi({ limit: NUMBER_OF_RECIPE_RENDER });
+
 	return (
 		<div className="">
 			<div className="flex justify-between">
 				<TitlePrimary title="Discover all recipes" />
-				<ShowPages currentPage={currentPage} pages={pages}/>
+				<ShowPages
+					currentPage={currentPage}
+					pages={pages}
+				/>
 			</div>
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6 mt-10">
-				{currentRecipes ? (
+				{isLoading ? (
+					<>
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+					</>
+				) : (
+					currentRecipes &&
 					currentRecipes.map((item) => {
 						return (
 							<RecipeCard
@@ -52,12 +61,6 @@ function Recipe() {
 							/>
 						);
 					})
-				) : (
-					<>
-						<Loader type="recipe-card" />
-						<Loader type="recipe-card" />
-						<Loader type="recipe-card" />
-					</>
 				)}
 			</div>
 			<Pagination

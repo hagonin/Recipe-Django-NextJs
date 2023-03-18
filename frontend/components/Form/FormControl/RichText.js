@@ -13,7 +13,7 @@ const ReactQuill = dynamic(
 const RichTextField = forwardRef(
 	({ field, label, required, info, ...props }, ref) => {
 		return (
-			<div className="flex flex-col h-[250px] !text-base">
+			<div className="flex flex-col !text-base">
 				<Label
 					label={label}
 					info={info}
@@ -22,7 +22,7 @@ const RichTextField = forwardRef(
 					theme="snow"
 					{...field}
 					ref={ref}
-					className="lg:h-[55%] md:h-[60%] h-[70%]"
+					// className="lg:h-[80%] md:h-[70%] h-[80%]"
 					{...props}
 					modules={{
 						toolbar: [

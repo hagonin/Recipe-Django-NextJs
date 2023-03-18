@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
    html {
       @apply  text-second leading-7;
@@ -61,6 +62,7 @@
 }
 
 @layer components {
+  
     .container {
         @apply xl:max-w-[1280px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
@@ -121,6 +123,9 @@
 
 
 @layer utilities  {
+  
+
+
   .scrollbar::-webkit-scrollbar {
     width: 5px;
   }
@@ -141,4 +146,8 @@
   .markupBox p {
     @apply first-letter:capitalize;
   }
+}
+
+.ql-container.ql-snow {
+  height: 350px
 }

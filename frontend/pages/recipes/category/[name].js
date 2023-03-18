@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
+import { categoryList, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
-import usePagination from 'hook/usePagination';
+import { usePaginationByApi } from 'hook/usePagination';
 import Loader from '@components/UI/Loader';
 import { TitlePrimary } from '@components/UI/Title';
 import Pagination from '@components/UI/Pagination';
@@ -16,29 +16,29 @@ function CategoryPage() {
 	const {
 		query: { name },
 	} = useRouter();
-	const { handleToggleBookmark, checkBookmarkAct, recipes } =
-		useRecipeContext();
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	const [category, setCategory] = useState(null);
 	const {
+		currentPage,
+		setCurrentPage,
+		pages,
 		next,
 		previous,
 		currentRecipes,
-		currentPage,
-		pages,
-		setCurrentPage,
-	} = usePagination({
-		limitPerPage: NUMBER_OF_RECIPE_RECIPE_PAGE,
-		recipes: category?.recipes,
-		total: category?.recipes?.length,
+		isLoading,
+		mutate,
+	} = usePaginationByApi({
+		limit: NUMBER_OF_RECIPE_RENDER,
+		category: name,
 	});
 
 	useEffect(() => {
-		if (recipes && name) {
-			const arr = recipes.filter((recipe) => recipe.category === name);
+		if (name) {
 			const [info] = categoryList.filter((item) => item.name === name);
-			return setCategory({ recipes: arr, ...info });
+			setCategory({ ...info });
+			mutate();
 		}
-	}, [name, recipes]);
+	}, [name]);
 	return (
 		<>
 			<>
@@ -55,12 +55,10 @@ function CategoryPage() {
 					</div>
 				)}
 				<div className="flex flex-col gap-y-8 mt-10">
-					{currentRecipes?.length > 0 && (
-						<ShowPages
-							currentPage={currentPage}
-							pages={pages}
-						/>
-					)}
+					<ShowPages
+						currentPage={currentPage}
+						pages={pages}
+					/>
 					{currentRecipes ? (
 						currentRecipes.map((recipe) => (
 							<RecipeCard
@@ -87,15 +85,13 @@ function CategoryPage() {
 					)}
 				</div>
 
-				{currentRecipes?.length > 0 && (
-					<Pagination
-						next={next}
-						previous={previous}
-						currentPage={currentPage}
-						pages={pages}
-						setCurrentPage={setCurrentPage}
-					/>
-				)}
+				<Pagination
+					next={next}
+					previous={previous}
+					currentPage={currentPage}
+					pages={pages}
+					setCurrentPage={setCurrentPage}
+				/>
 			</>
 		</>
 	);

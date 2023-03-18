@@ -76,32 +76,30 @@ function SingRecipe({
 							/>
 						)}
 
-						<div className="flex flex-wrap gap-x-6 mt-3 mb-3">
+						<div className="flex flex-wrap gap-x-6 my-3 ">
 							<TimerBox
 								prep_time={prep_time}
 								cook_time={cook_time}
 								serving={serving}
 							/>
 						</div>
-						<Button
-							className="tag max-lg:mb-5"
-							icon={{
-								left: (
-									<AiFillHeart
-										className={`${
-											actBookmark ? 'text-red' : ''
-										}`}
-									/>
-								),
-							}}
+						<button
+							className="flex gap-2 items-center text-base h-6 bg-grey rounded border-primary px-2 font-medium hover:bg-yellow transition-all hover:text-white group"
 							onClick={() =>
 								handleToggleBookmark(actBookmark, id)
 							}
 						>
+							<AiFillHeart
+								className={`${
+									actBookmark
+										? 'text-red'
+										: 'text-primary group-hover:text-white transition-all'
+								}`}
+							/>
 							{actBookmark
 								? 'Remove wishlist'
 								: 'Add to wishlist'}
-						</Button>
+						</button>
 					</div>
 					<div className="lg:col-span-4 flex flex-col gap-6 max-lg:row-start-1">
 						<Img

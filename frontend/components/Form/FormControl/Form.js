@@ -3,7 +3,7 @@ function Form({ onSubmit, children, className }) {
 		<form
 			noValidate={true}
 			onSubmit={onSubmit}
-			className={`flex flex-col gap-2 ${className}`}
+			className={`flex flex-col gap-3 ${className}`}
 		>
 			{children}
 		</form>

@@ -16,6 +16,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { FaLine } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { MdAddToPhotos, MdDelete, MdPhotoAlbum } from 'react-icons/md';
+import ConfirmDelete from '../ConfirmDelete';
 import { Form, InputField } from '../FormControl';
 
 function UploadPhoto({ onSubmit, recipe }) {
@@ -37,7 +38,8 @@ function UploadPhoto({ onSubmit, recipe }) {
 	const inputFileRef = useRef();
 
 	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
-
+	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+	const [idDelete, setIdDelete] = useState(null);
 	const [listPhotos, setListPhotos] = useState([]);
 
 	const createFormData = useCallback(async ({ upload_photo }) => {
@@ -76,14 +78,20 @@ function UploadPhoto({ onSubmit, recipe }) {
 		setValue('upload_photo', listPhotos);
 	}, [listPhotos]);
 
-	const handleDelete = useCallback((index) => {
-		remove(index);
+	const handleDelete = useCallback(() => {
+		remove(idDelete);
 		setListPhotos((preList) => {
 			const list = [...preList];
-			URL.revokeObjectURL(list[index].url);
-			list.splice(index, 1);
+			URL.revokeObjectURL(list[idDelete].url);
+			list.splice(idDelete, 1);
 			return list;
 		});
+		setShowConfirmDelete(false);
+	});
+
+	const confirmDelete = useCallback((id) => {
+		setIdDelete(id);
+		setShowConfirmDelete(true);
 	});
 
 	useEffect(() => {
@@ -98,6 +106,11 @@ function UploadPhoto({ onSubmit, recipe }) {
 
 	return (
 		<div className="mt-6">
+			<ConfirmDelete
+				handleDelete={handleDelete}
+				showConfirm={showConfirmDelete}
+				handleCloseConfirm={() => setShowConfirmDelete(false)}
+			/>
 			<input
 				type="file"
 				id="files"
@@ -139,7 +152,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 											<button
 												type="button"
 												onClick={() =>
-													handleDelete(index)
+													confirmDelete(index)
 												}
 												className="m-auto rounded-md px-2 bg-red text-white font-bold text-sm shadow-md"
 											>

@@ -47,7 +47,7 @@ function LoginForm({ onSubmit }) {
 
 	return (
 		<>
-			<div className="flex justify-center items-center mb-10">
+			<div className="flex justify-center items-center md:mb-10 mb-7">
 				<TitlePrimary title="Login" />
 				<Img
 					alt="login_icon"
@@ -91,7 +91,7 @@ function LoginForm({ onSubmit }) {
 					}}
 				/>
 
-				<div className="flex justify-between items-center  mb-4 mt2 ">
+				<div className="flex justify-between items-center  mb-8 mt-1 ">
 					<CheckboxField
 						name="login.remember"
 						isSingle={{ label: 'Remember me' }}
