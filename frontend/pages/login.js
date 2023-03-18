@@ -1,5 +1,5 @@
 import { useAuthContext } from '@context/auth-context';
-import { images } from '@utils/constants';
+import { images, meta } from '@utils/constants';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
@@ -21,10 +21,7 @@ function Login() {
 						className="w-full md:h-72 h-36 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Welcome back" />
-					<p className="text-center mt-2">
-						It's nice to see you again. Log in to continue to your
-						account.
-					</p>
+					<p className="text-center mt-2">{meta.login}</p>
 				</div>
 			</div>
 		</div>

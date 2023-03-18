@@ -185,4 +185,26 @@ export const NUMBER_OF_RECIPE_CATEGORY_PAGE = 6;
 export const meta = {
 	introWeb:
 		" celebrates the idea that the best cooks are the ones who cook at home. We believe that special recipes hold a special place in our hearts and memories, whether it's a family gathering around a holiday table or friends celebrating a special occasion together.",
+	signup_content: [
+		{
+			id: 1,
+			content: 'Manage your recipes by the easy way',
+		},
+		{
+			id: 2,
+			content: 'Discover a lot of others recipes and get new ones',
+		},
+		{
+			id: 3,
+			content:
+				'Interact with other users and discuss about their recipes',
+		},
+		{
+			id: 4,
+			content:
+				'Help others get recipes to serve their daily lives, improve nutrition and health',
+		},
+	],
+	login: 'It\'s nice to see you again. Log in to continue to your account.'
+	
 };

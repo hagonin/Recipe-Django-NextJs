@@ -1,5 +1,5 @@
 import { GrStatusGood } from 'react-icons/gr';
-import { ENDPOINT_REGISTER, images } from '@utils/constants';
+import { ENDPOINT_REGISTER, images, meta } from '@utils/constants';
 
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
@@ -11,6 +11,7 @@ import { useCallback, useState } from 'react';
 import api from '@services/axios';
 import { TitlePrimary } from '@components/UI/Title';
 import Button from '@components/UI/Button';
+import { BsCheck2Circle } from 'react-icons/bs';
 
 function SignUp() {
 	const router = useRouter();
@@ -33,7 +34,7 @@ function SignUp() {
 	const handleEffectAfterResend = useCallback(() => router.push('/login'));
 
 	return (
-		<div className="bg-[#ffdff10f] select-none py-14 flex min-h-screen">
+		<div className="bg-[#ffdff10f] select-none py-8 flex min-h-screen">
 			<ModalPrimary
 				show={showVerifyModal}
 				handleCloseModal={() => setShowVerifyModal(false)}
@@ -70,7 +71,7 @@ function SignUp() {
 					</div>
 				</div>
 			</ModalPrimary>
-			<div className="container flex md:flex-row flex-col lg:gap-12 gap-6  m-auto">
+			<div className="container m-auto flex justify-center md:flex-row flex-col lg:gap-12 gap-6  ">
 				<div className="flex flex-col items-center justify-center">
 					<Img
 						alt="login"
@@ -79,28 +80,21 @@ function SignUp() {
 					/>
 					<TitlePrimary title="Create An Account" />
 					<h2 className="font-serif">What you will get?</h2>
-					<ul className="mt-10 text-base">
-						<li className="flex items-center">
-							<GrStatusGood className="mr-2" /> Manage your
-							recipes by the easy way
-						</li>
-						<li className="flex items-center">
-							<GrStatusGood className="mr-2" />
-							Discover a lot of others recipes and get new ones
-						</li>
-						<li className="flex items-center">
-							<GrStatusGood className="mr-2" />
-							Interact with other users and discuss about their
-							recipes
-						</li>
-						<li className="flex items-center">
-							<GrStatusGood className="mr-2" />
-							Help others get recipes to serve their daily lives,
-							improve nutrition and health
-						</li>
+					<ul className="text-base p-0 m-0 md:mt-10 mt-3">
+						{meta.signup_content.map((item) => (
+							<li
+								className="flex"
+								key={item.id}
+							>
+								<span className="mr-2 relative top-[6px] text-primary">
+									<BsCheck2Circle />
+								</span>
+								{item.content}
+							</li>
+						))}
 					</ul>
 				</div>
-				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border my-10 md:shadow-xl">
+				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
 					<SignUpForm onSubmit={handleSignup} />
 				</div>
 			</div>

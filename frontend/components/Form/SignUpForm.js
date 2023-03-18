@@ -145,7 +145,7 @@ function SignUpForm({ onSubmit }) {
 						Login
 					</Link>
 				</p>
-				<span className="text-sm text-center md:px-12">
+				<span className="lg:text-base text-sm text-center md:px-12">
 					By clicking "Create Account", I consent to
 					<Link
 						href="/"

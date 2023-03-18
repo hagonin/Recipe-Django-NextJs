@@ -12,7 +12,7 @@ function Author() {
 	return (
 		<div className="lg:w-2/3 md:w-4/5 mx-auto">
 			<div className=""></div>
-			<div className="top-full bottom-full bg-[#E8F0EF] rounded-md py-8 px-8 flex flex-col items-center gap-4">
+			<div className="top-full bottom-full rounded-md py-8 px-8 flex flex-col items-center gap-4">
 				<Img
 					src={data?.user?.profile?.avatar}
 					alt={data?.user?.username}
