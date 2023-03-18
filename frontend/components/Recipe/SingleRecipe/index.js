@@ -84,7 +84,7 @@ function SingRecipe({
 							/>
 						</div>
 						<button
-							className="flex gap-2 items-center text-base h-6 bg-grey rounded border-primary px-2 font-medium hover:bg-yellow transition-all hover:text-white group"
+							className="flex gap-2 items-center text-base h-6 bg-grey rounded border-primary px-2 font-medium hover:bg-yellow transition-all hover:text-white group mb-3"
 							onClick={() =>
 								handleToggleBookmark(actBookmark, id)
 							}

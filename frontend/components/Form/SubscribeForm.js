@@ -9,7 +9,7 @@ import toastMessage from '@utils/toastMessage';
 import { Form, InputField } from './FormControl';
 import { email } from './FormControl/validate';
 
-function SubscribeForm({ secondary }) {
+function SubscribeForm({ secondary, third }) {
 	const {
 		register,
 		handleSubmit,
@@ -35,8 +35,10 @@ function SubscribeForm({ secondary }) {
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
 			className={`flex  ${
-				secondary ? '' : 'lg:w-[450px]'
-			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row`}
+				secondary || third ? '' : 'lg:w-[450px]'
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row ${
+				third ? '!flex-col' : ''
+			}`}
 		>
 			<InputField
 				name="subscribe.email"

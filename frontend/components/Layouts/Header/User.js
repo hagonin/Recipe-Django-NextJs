@@ -60,6 +60,10 @@ function User({ username, email, avatar = images.defaultAvatar }) {
 							label="Add recipe"
 							href="/user/recipe/add"
 						/>
+						<Item
+							label="Wishlist"
+							href="/user/profile"
+						/>
 						<Separate />
 						<Item
 							label="Log out"

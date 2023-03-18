@@ -105,16 +105,16 @@ export const categoryList = [
 	},
 ];
 export const tags = [
-	'lemon',
-	'fresh food',
-	'healthy',
-	'vegetarian',
-	'chicken breast',
-	'easy pastas',
-	'side dishes',
-	'snacks',
-	'healthy breakfast',
-	'dinner',
+	'cooked potatoes',
+	'good tequila',
+	'dry white wine',
+	'walnuts',
+	'smoked paprika',
+	'tamari',
+	'large eggs',
+	'sriracha',
+	'grand marnier',
+	'buttermilk',
 ];
 export const unit = [
 	{ id: 1, name: 'cup(s)' },

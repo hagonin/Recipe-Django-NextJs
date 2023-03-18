@@ -6,6 +6,7 @@ import Img from '@components/UI/Image';
 import { TitlePrimary } from '@components/UI/Title';
 import Button from '@components/UI/Button';
 import { useRouter } from 'next/router';
+import { FaHome } from 'react-icons/fa';
 
 function Login() {
 	const router = useRouter();
@@ -26,12 +27,13 @@ function Login() {
 					/>
 					<TitlePrimary title="Welcome back" />
 					<p className="text-center mt-2">{meta.login}</p>
-					<Button
+					<button
 						onClick={() => router.push('/')}
-						className="mt-3"
+						className="mt-3 font-serif flex items-center gap-2 hover:text-primary"
 					>
+						<FaHome />
 						Go home
-					</Button>
+					</button>
 				</div>
 			</div>
 		</div>

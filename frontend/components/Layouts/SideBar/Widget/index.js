@@ -50,7 +50,7 @@ function Widget() {
 				<span className="block text-center mb-4">
 					Subscribe to receive new recipes straight to your inbox!
 				</span>
-				<SubscribeForm secondary />
+				<SubscribeForm third />
 			</CommonSection>
 			<CommonSection title="tags">
 				<Tags />

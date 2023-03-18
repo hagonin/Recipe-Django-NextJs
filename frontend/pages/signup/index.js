@@ -12,6 +12,7 @@ import api from '@services/axios';
 import { TitlePrimary } from '@components/UI/Title';
 import Button from '@components/UI/Button';
 import { BsCheck2Circle } from 'react-icons/bs';
+import { FaHome } from 'react-icons/fa';
 
 function SignUp() {
 	const router = useRouter();
@@ -93,12 +94,13 @@ function SignUp() {
 							</li>
 						))}
 					</ul>
-					<Button
+					<button
 						onClick={() => router.push('/')}
-						className="mt-3"
+						className="mt-3 font-serif flex items-center gap-2 hover:text-primary"
 					>
-						Go home
-					</Button>
+						<FaHome />
+						 Go home
+					</button>
 				</div>
 				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
 					<SignUpForm onSubmit={handleSignup} />

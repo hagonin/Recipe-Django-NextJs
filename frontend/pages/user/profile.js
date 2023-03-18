@@ -164,7 +164,7 @@ function Profile() {
 										+ Add recipe
 									</button>
 								</div>
-								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-4 gap-2">
+								<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6 gap-x-2">
 									{currentRecipes?.map((recipe) => (
 										<div key={recipe.id}>
 											<RecipeCard
@@ -215,7 +215,7 @@ function Profile() {
 						'Loading...'
 					) : currentBmks?.length > 0 ? (
 						<>
-							<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6">
+							<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-y-6 gap-x-2">
 								{currentBmks.map((bookmark) => (
 									<RecipeCard
 										key={bookmark.id}
