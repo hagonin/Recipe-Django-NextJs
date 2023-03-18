@@ -26,7 +26,7 @@ export const images = {
 	cooking:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/cooking_hs8bhk.png',
 	notfound:
-		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/404-error_nb20ch.png',
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679164601/static/404_img_x2xb89.png',
 	tick: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/tick_v0jvtt.png',
 	no_search:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1679024983/static/no_result_xiy5ma.png',
