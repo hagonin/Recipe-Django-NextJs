@@ -9,15 +9,13 @@ function RootLayout({ children }) {
 	return (
 		<>
 			<Header />
-			<div className="max-lg:py-28 max-lg:pb-8">
-				{children}
-			</div>
+			<div className="max-lg:py-28 max-lg:pb-8">{children}</div>
 			<Footer />
 			<Toaster
-				position="top-center"
+				position="top-right"
 				reverseOrder={false}
 				toastOptions={{
-					duration: 1500,
+					duration: 2200,
 				}}
 			/>
 

@@ -8,6 +8,7 @@ function toastMessage({ message, type = 'success' }) {
 			type={type}
 			id={t.id}
 			visible={t.visible}
+			
 		/>
 	));
 }
