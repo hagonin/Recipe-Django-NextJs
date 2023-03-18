@@ -205,6 +205,47 @@ export const meta = {
 				'Help others get recipes to serve their daily lives, improve nutrition and health',
 		},
 	],
-	login: 'It\'s nice to see you again. Log in to continue to your account.'
-	
+	login: "It's nice to see you again. Log in to continue to your account.",
+	about: {
+		title: "Home cooks are our heroes—it's as simple as that. HomeCook is a community built by and for kitchen experts: The cooks who will dedicate the weekend to a perfect beef bourguignon but love the simplicity of a slow-cooker rendition, too. The bakers who labor over a showstopping 9-layer cake but will just as happily doctor boxed brownies for a decadent weeknight dessert. The entertainers who just want a solid snack spread, without tons of dirty dishes at the end of the night. Most importantly, HomeCook connects home cooks with their greatest sources of inspiration — other home cooks. We're the world's leading digital food brand, and that inspires us to do everything possible to keep our community connected. Sixty-million home cooks deserve no less.",
+		list: [
+			{
+				key: 'Friendly',
+				content:
+					'We love trading ideas and hanging out with fellow home cooks.',
+			},
+			{
+				key: 'Supportive',
+				content: 'Struggling with dinner inspo? We’re here to help!.',
+			},
+			{
+				key: 'Creative',
+				content:
+					'Cooking is an art. We like to experiment and express ourselves.',
+			},
+			{
+				key: 'Approachable',
+				content:
+					"We don't judge—all cooking levels and recipes are welcome.",
+			},
+			{
+				key: 'Down-to-Earth',
+				content:
+					'We love good food, period. It doesn’t need to be fussy to be great.',
+			},
+			{
+				key: 'Fun Like you',
+				content:
+					'We enjoy friends, family, cooking, and having a good laugh.',
+			},
+		],
+		message:
+			"Join our team of enthusiastic editors, designers, programmers, recipe developers, and more as we build out the world's largest food site.",
+	},
+	contact:
+		'We are always on the lookout for talented new writers, recipe developers, equipment reviewers, and photographers who love cooking to join our team of contributors. Please contact with us via email.',
+};
+
+export const toast_message = {
+	contact: "We've received your message and will reply as soon as possible.",
 };

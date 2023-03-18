@@ -28,16 +28,18 @@ function ContactForm({ onSubmit }) {
 		<Form onSubmit={handleSubmit(onSubmit)}>
 			<div className="grid md:grid-cols-2 gap-4 grid-cols-1">
 				<InputField
+					label="Name"
 					name="contact.name"
 					type="text"
 					register={register}
-					placeholder="Name"
+					placeholder="Enter your name"
 					icon={<FaUserAlt />}
 				/>
 				<InputField
+					label="Email"
 					name="contact.email"
 					type="email"
-					placeholder="Email"
+					placeholder="Enter your email"
 					register={register}
 					rules={{
 						required: 'Please provide your email',
@@ -49,10 +51,11 @@ function ContactForm({ onSubmit }) {
 				/>
 			</div>
 			<TextAreaField
+				label="Message"
 				name="contact.message"
 				register={register}
 				rows="6"
-				placeholder="Message"
+				placeholder="Enter your message or any question to us."
 			/>
 			<Button
 				type="submit"

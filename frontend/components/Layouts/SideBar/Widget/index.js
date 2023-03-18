@@ -21,7 +21,7 @@ function Widget() {
 		});
 
 	return (
-		<section className="flex flex-col gap-y-10">
+		<section className="flex flex-col lg:gap-y-8 md:gap-y-6 gap-y-4">
 			<CommonSection title="About Us">
 				<p className="text-center ">
 					<span className="font-bold text-primary">HomeCook</span>

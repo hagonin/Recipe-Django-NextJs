@@ -33,6 +33,7 @@ module.exports = {
 				border: '#e6e6e6',
 				red: '#e3304e',
 				red2: '#d85734',
+				red3: '#DF7857',
 				redLight: 'rgba(243, 58, 89, 0.15)',
 				yellow: '#FFC438',
 				yellowDark: '#f0b62d',
