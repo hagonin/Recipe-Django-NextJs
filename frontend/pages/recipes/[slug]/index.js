@@ -63,7 +63,7 @@ function Recipe() {
 			setSlugUpdate(null);
 		}
 	}, [slugUpdate]);
-	
+
 	return (
 		<>
 			{isLoading ? (
@@ -85,10 +85,16 @@ function Recipe() {
 						bio={data?.user?.profile?.bio}
 						slug={slug}
 					/>
-					<SubscribeSection className='max-lg:flex-wrap max-lg:justify-center'/>
+					<SubscribeSection
+						className="!flex-col !items-start"
+						secondary
+					/>
 
 					{data?.category && (
-						<RelatedRecipe categoryName={data?.category} />
+						<RelatedRecipe
+							categoryName={data?.category}
+							except={data?.id}
+						/>
 					)}
 					<Reviews
 						onSubmit={handleSubmitReview}

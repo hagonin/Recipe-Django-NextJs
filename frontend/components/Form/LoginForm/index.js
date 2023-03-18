@@ -14,6 +14,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
 import { TitlePrimary } from '@components/UI/Title';
+import { email, password } from '../FormControl/validate';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -63,6 +64,7 @@ function LoginForm({ onSubmit }) {
 					type="email"
 					placeholder="Enter your email"
 					register={register}
+					rules={email}
 					error={formError?.login?.email}
 					required
 					icon={<MdEmail />}
@@ -76,7 +78,17 @@ function LoginForm({ onSubmit }) {
 					register={register}
 					error={formError?.login?.password}
 					required
+					rules={password}
 					icon={<RiLockPasswordFill />}
+					info={{
+						content: (
+							<ul className="list-disc">
+								<li>Password must be more than 8 characters</li>
+								<li>Least one number</li>
+								<li>At least one special character</li>
+							</ul>
+						),
+					}}
 				/>
 
 				<div className="flex justify-between items-center  mb-4 mt2 ">
@@ -103,7 +115,7 @@ function LoginForm({ onSubmit }) {
 				</Button>
 			</Form>
 
-			<p className="text-center mt-5">
+			<p className="text-center mt-5 text-lg">
 				New cuisinier?
 				<Link
 					href="/signup"

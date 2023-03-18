@@ -71,7 +71,7 @@ function NavMobi() {
 				>
 					<nav className="fixed top-0 left-0 bottom-0 z-[666]  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
 						<button
-							className="absolute top-3 right-3 text-[1.6rem]"
+							className="absolute top-[10px] right-3 text-[1.6rem]"
 							onClick={toggleNavMobi}
 						>
 							<GrClose />

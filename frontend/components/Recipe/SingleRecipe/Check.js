@@ -7,7 +7,7 @@ function Check({ children }) {
 		<label
 			className={`text-base select-none cursor-pointer block border-b border-border py-1 ${
 				check ? 'line-through' : ''
-			} `}
+			} first-letter:capitalize `}
 		>
 			<input
 				type="checkbox"

@@ -11,6 +11,7 @@ import Button from '@components/UI/Button';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 import { useRecipeContext } from '@context/recipe-context';
 import { TitlePrimary } from '@components/UI/Title';
+import toastMessage from '@utils/toastMessage';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
@@ -30,14 +31,13 @@ function AddRecipe() {
 			});
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
-		} catch (err) {
-			console.log(err);
-			// if (_error?.ingredients) {
-			// 	toastMessage({
-			// 		message: 'Ingredient title must make a unique set.',
-			// 		type: 'error',
-			// 	});
-			// }
+		} catch ({ _error, status, error }) {
+			if (_error?.ingredients) {
+				toastMessage({
+					message: 'Ingredient title must make a unique set.',
+					type: 'error',
+				});
+			}
 		}
 	});
 

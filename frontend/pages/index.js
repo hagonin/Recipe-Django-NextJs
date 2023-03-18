@@ -33,7 +33,10 @@ export default function Home() {
 	return (
 		<>
 			{topRating ? (
-				<Slider className="mt-8">
+				<Slider
+					className="mt-8"
+					loop={true}
+				>
 					{topRating.map((recipe, index) => {
 						return (
 							<Slide
@@ -48,7 +51,7 @@ export default function Home() {
 					})}
 				</Slider>
 			) : (
-				<div className='container pt-10'>
+				<div className="container pt-10">
 					<Loader type="slider" />
 				</div>
 			)}

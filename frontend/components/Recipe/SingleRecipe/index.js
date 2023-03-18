@@ -11,8 +11,6 @@ import { getInstructionAsArr } from '@utils/handleInstruction';
 import { AiFillHeart } from 'react-icons/ai';
 import Button from '@components/UI/Button';
 import Method from './Method';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import Title from '@components/UI/Title';
 import Notes from './Notes';
 import Source from './Source';
 
@@ -53,7 +51,7 @@ function SingRecipe({
 				className="mt-4 w-full h-[600px] mx-auto "
 				cover
 			/>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm gap-4">
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm gap-4 mb-5">
 				<TimerBox
 					prep_time={prep_time}
 					cook_time={cook_time}
@@ -61,7 +59,6 @@ function SingRecipe({
 				/>
 			</div>
 			<div dangerouslySetInnerHTML={descriptionMarkup} />
-			{/* <ReactMarkdown>{description}</ReactMarkdown> */}
 			{images.length > 0 && <Thumbnail images={images} />}
 
 			<div className="border border-border rounded-md lg:p-6 p-4 mt-8">
@@ -115,12 +112,12 @@ function SingRecipe({
 						/>
 					</div>
 				</div>
-				<div className='flex flex-col gap-y-6'>
+				<div className="flex flex-col gap-y-6">
 					<Ingredient ingredients={ingredients} />
 					<Method instructionsArr={instructionsArr} />
 					<Notes notes={notes} />
 				</div>
-					<Source source={source} />
+				<Source source={source} />
 			</div>
 		</div>
 	);

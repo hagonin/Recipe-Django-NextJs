@@ -6,14 +6,26 @@ import Check from './Check';
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	const handleUnit = (unit, quantity) => {
+		const quan = quantity && quantity * 1;
+		console.log(quan);
 		switch (true) {
-			case unit === 'teaspoon(s)' && quantity < 2:
+			case unit === 'teaspoon(s)' && quan < 2:
 				return 'teaspoon';
-			case unit === 'teaspoon(s)' && quantity >= 2:
+			case unit === 'teaspoon(s)' && quan >= 2:
 				return unit;
-			case unit === 'tablespoon(s)' && quantity < 2:
+			case unit === 'tablespoon(s)' && quan < 2:
 				return 'tablespoon';
-			case unit === 'tablespoon(s)' && quantity >= 2:
+			case unit === 'tablespoon(s)' && quan >= 2:
+				return unit;
+			case unit === 'pound(s)' && quan >= 2:
+				return unit;
+			case unit === 'pound(s)' && quan < 2:
+				return 'pound';
+			case unit === 'cup(s)' && quan >= 2:
+				return unit;
+			case unit === 'cup(s)' && quan < 2:
+				return 'cup';
+			default:
 				return unit;
 		}
 	};
@@ -29,19 +41,19 @@ function Ingredient({ ingredients, isPreview }) {
 						isPreview ? (
 							<span
 								key={index}
-								className="text-base border-b pb-1 capitalize"
+								className="text-base border-b pb-1 first-letter:capitalize"
 							>
-								<span className="mr-1 text-sm">
-									{i.quantity}
-								</span>
-								{`${handleUnit(i.unit, i.quantity)} ${i.title}`}
+								<Quantity quantity={i.quantity} />
+								{` ${handleUnit(i.unit, i.quantity)} ${
+									i.title
+								}`}
 							</span>
 						) : (
 							<Check key={index}>
-								<span className="mr-1 text-sm">
-									{i.quantity}
-								</span>
-								{`${handleUnit(i.unit, i.quantity)} ${i.title}`}
+								<Quantity quantity={i.quantity} />
+								{` ${handleUnit(i.unit, i.quantity)} ${
+									i.title
+								}`}
 							</Check>
 						)
 					)}
@@ -57,22 +69,18 @@ function Ingredient({ ingredients, isPreview }) {
 									isPreview ? (
 										<span
 											key={index}
-											className="border-b pb-1 "
+											className="border-b pb-1 first-letter:capitalize"
 										>
-											<span className="mr-1 text-sm">
-												{i.quantity}
-											</span>
-											{`${handleUnit(
+											<Quantity quantity={i.quantity} />
+											{` ${handleUnit(
 												i.unit,
 												i.quantity
 											)} ${i.title}`}
 										</span>
 									) : (
 										<Check key={index}>
-											<span className="mr-1 text-sm">
-												{i.quantity}
-											</span>
-											{`${handleUnit(
+											<Quantity quantity={i.quantity} />
+											{` ${handleUnit(
 												i.unit,
 												i.quantity
 											)} ${i.title}`}
@@ -88,4 +96,7 @@ function Ingredient({ ingredients, isPreview }) {
 	);
 }
 
+const Quantity = ({ quantity }) => (
+	<span className="text-[14px]">{quantity}</span>
+);
 export default Ingredient;

@@ -16,6 +16,8 @@ import { TimerBox } from './SingleRecipe';
 import Method from './SingleRecipe/Method';
 import { MdPhoto, MdUpdate } from 'react-icons/md';
 import Button from '@components/UI/Button';
+import Notes from './SingleRecipe/Notes';
+import Source from './SingleRecipe/Source';
 
 function PreviewRecipe({
 	data,
@@ -94,17 +96,19 @@ function PreviewRecipe({
 					</div>
 
 					<div className="my-7">
-						<Title title="Description" />
+						<Title
+							title="Description"
+							bottom="mb-3"
+						/>
 						{description ? (
 							<div
-								className="text-justify text-lg pl-6 border-l-2 border-primary markupBox"
 								dangerouslySetInnerHTML={createMarkup(
 									description
 								)}
 							/>
 						) : (
 							<span className="opacity-60 italic">
-								You have not added instructions
+								You have not added description.
 							</span>
 						)}
 					</div>
@@ -113,24 +117,8 @@ function PreviewRecipe({
 						<Method instructionsArr={arrInstructions} />
 					</div>
 					<span className="border-b w-4/5 mx-auto block"></span>
-					{notes ? (
-						<div className="mt-10 bg-third rounded-md px-5 py-3">
-							<Title title="Notes" />
-							<p className="relative -top-2 first-letter:capitalize">
-								{notes}
-							</p>
-						</div>
-					) : (
-						<span className="opacity-60 italic">
-							No notes displayed
-						</span>
-					)}
-					{source && (
-						<div className="mt-5">
-							<Title title="source" />
-							<span>{source}</span>
-						</div>
-					)}
+					<Notes notes={notes} />
+					<Source source={source} />
 				</div>
 				<div className="md:col-span-4 ">
 					<Img
@@ -140,7 +128,6 @@ function PreviewRecipe({
 						cover
 					/>
 					<div className="px-5 py-6 bg-[#F9F9F9]  border">
-						<Title title="Ingredients" />
 						<Ingredient
 							ingredients={ingredients}
 							isPreview
@@ -173,34 +160,28 @@ function PreviewRecipe({
 
 			<DropDown>
 				<Child>
-					<Button
-						onClick={goToRecipeSingle}
-						className="lg"
-					>
+					<Button onClick={goToRecipeSingle}>
 						Go to this publish recipe
 					</Button>
 				</Child>
 				<Child>
 					<Button
 						onClick={goToUpdate}
-						className="lg"
+						icon={{ left: <MdUpdate /> }}
 					>
-						<MdUpdate /> Update Recipe
+						Update Recipe
 					</Button>
 				</Child>
 				<Child>
 					<Button
 						onClick={goToUploadPhoto}
-						className="lg"
+						icon={{ left: <MdPhoto /> }}
 					>
-						<MdPhoto /> Manage Photos
+						Manage Photos
 					</Button>
 				</Child>
 				<Child>
-					<Button
-						onClick={() => setShowConfirmDeleteRecipe(true)}
-						className="lg"
-					>
+					<Button onClick={() => setShowConfirmDeleteRecipe(true)}>
 						Delete Recipe
 					</Button>
 				</Child>

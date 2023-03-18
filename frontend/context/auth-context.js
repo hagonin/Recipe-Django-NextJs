@@ -12,7 +12,6 @@ import {
 	ENDPOINT_LOGIN,
 	ENDPOINT_LOGOUT,
 	ENDPOINT_REFRESH_TOKEN,
-	ENDPOINT_REGISTER,
 	ENDPOINT_RESEND_VERIFY,
 	ENDPOINT_USER,
 	ENDPOINT_USER_PROFILE,
@@ -117,7 +116,6 @@ const AuthProvider = ({ children }) => {
 
 			const checkProfile = updatedProfile({
 				avatar: profile.avatar,
-				bio: profile.bio,
 				last: rest.last_name,
 				first: rest.first_name,
 			});
@@ -126,9 +124,10 @@ const AuthProvider = ({ children }) => {
 				router.push('/');
 			} else {
 				router.push('/user/updateprofile');
-				toastMessage({message:'your profile is incomplete.', type:'error'})
+				// toastMessage({message:'Your profile is incomplete', type:'error'})
 			}
-		} catch ({ status, _error }) {
+		} catch ({ status, _error, error }) {
+
 			setUser((pre) => ({ ...pre, email: email }));
 			if (status === 400) {
 				setErrors({ login: { ..._error } });

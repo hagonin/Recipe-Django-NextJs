@@ -16,9 +16,9 @@ function NavCategory() {
 			<NavItem onClick={toggleCategory}>
 				Categories
 				{openCategory ? (
-					<MdOutlineKeyboardArrowUp className="text-2xl inline-block ml-2" />
+					<MdOutlineKeyboardArrowUp className="text-3xl inline-block ml-2 relative top-[2px]" />
 				) : (
-					<MdOutlineKeyboardArrowDown className="text-2xl inline-block ml-2" />
+					<MdOutlineKeyboardArrowDown className="text-3xl inline-block ml-2 relative top-[2px]" />
 				)}
 			</NavItem>
 			<div

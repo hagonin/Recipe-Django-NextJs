@@ -19,8 +19,10 @@ function ThumbnailPlugin(mainRef) {
 				slide.addEventListener('click', () => {
 					if (mainRef.current) mainRef.current.moveToIdx(idx);
 				});
+				
 			});
 		}
+		
 
 		slider.on('created', () => {
 			if (!mainRef.current) return;
@@ -81,8 +83,7 @@ function Thumbnail({
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-72 w-72 mx-auto "
-							cover
+							className="h-72 w-full mx-auto "
 						/>
 					</div>
 				))}

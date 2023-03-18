@@ -13,10 +13,12 @@ function Slider({
 	slideOnTablet = 2,
 	slideOnPc = 3,
 	className,
+	loop,
 }) {
 	const [loaded, setLoaded] = useState(false);
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [sliderRef, instanceRef] = useKeenSlider({
+		loop: loop,
 		breakpoints: {
 			'(max-width: 768px)': {
 				slides: { perView: slideOnMobile, spacing: 8 },

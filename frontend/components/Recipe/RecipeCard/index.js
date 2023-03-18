@@ -45,7 +45,7 @@ function RecipeCard({
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastestRecipe ? (
 		<div
-			className={`flex md:gap-4 gap-2 border-t md:pt-4 pt-2 
+			className={` flex md:gap-4 gap-2 border-t md:pt-4 pt-2 
 			${firstPost ? 'border-t-transparent' : ''} 
 			${secondPost ? 'md:border-t-transparent' : ''}`}
 		>
@@ -87,8 +87,8 @@ function RecipeCard({
 				handleCloseConfirm={() => setShowConfirmDelete(false)}
 			/>
 			<div
-				className={`h-full  rounded overflow-hidden ${
-					smallCard && 'md:shadow-md border'
+				className={`h-full  rounded overflow-hidden transition-all duration-300  ${
+					smallCard && 'md:shadow md:hover:shadow-lg border'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
 				} ${className}`}
@@ -151,14 +151,14 @@ function RecipeCard({
 									? `/user/recipe/${slug}`
 									: `/recipes/${slug}`
 							}
-							className={`inline text-black  font-serif capitalize line-clamp-2 ${
+							className={`inline text-black  font-serif capitalize ${
 								smallCard
 									? 'text-2xl'
 									: lgCard
 									? 'text-2xl '
 									: 'text-xl'
 							}    hover:text-primaryDark transition-all duration-200 ${
-								isSlider ? 'h-12' : ''
+								isSlider ? ' line-clamp-1' : ' line-clamp-2'
 							}`}
 							title={name}
 						>
@@ -196,19 +196,19 @@ function RecipeCard({
 							<p className="mt-1  text-lg line-clamp-4">
 								{summaryMarkup}
 							</p>
-							{lgCard && (
-								<Button
-									type="link"
-									href={
-										secondary
-											? `/user/recipe/${slug}`
-											: `/recipes/${slug}`
-									}
-									className="mt-4  !h-9 !text-[0.7rem] tracking-[0.2em]"
-								>
-									Continue Reading
-								</Button>
-							)}
+							(
+							<Button
+								type="link"
+								href={
+									secondary
+										? `/user/recipe/${slug}`
+										: `/recipes/${slug}`
+								}
+								className="mt-4  !h-9 !text-[0.7rem] tracking-[0.2em]"
+							>
+								Continue Reading
+							</Button>
+							)
 						</>
 					)}
 

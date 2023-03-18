@@ -10,15 +10,24 @@ import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { TitlePrimary } from '@components/UI/Title';
+import {
+	email,
+	first_name,
+	last_name,
+	name,
+	password,
+	user_name,
+} from './FormControl/validate';
 
 function SignUpForm({ onSubmit }) {
-	const { errors, setErrors, registerSuccess } = useAuthContext();
+	const { errors, setErrors } = useAuthContext();
 	const {
 		handleSubmit,
 		register,
-		formState: { errors: formError, isSubmitting, isSubmitSuccessful },
+		formState: { errors: formError, isSubmitting },
 		setError,
 		reset,
+		watch,
 	} = useForm();
 	useEffect(() => {
 		errors?.register?.username &&
@@ -72,6 +81,7 @@ function SignUpForm({ onSubmit }) {
 						placeholder="Enter your first name"
 						register={register}
 						error={formError?.register?.first_name}
+						rules={first_name}
 					/>
 
 					<InputField
@@ -81,6 +91,7 @@ function SignUpForm({ onSubmit }) {
 						placeholder="Enter your last name"
 						register={register}
 						error={formError?.register?.last_name}
+						rules={last_name}
 					/>
 				</div>
 
@@ -92,6 +103,7 @@ function SignUpForm({ onSubmit }) {
 					register={register}
 					error={formError?.register?.username}
 					required
+					rules={user_name}
 				/>
 
 				<InputField
@@ -103,6 +115,7 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.email}
 					required
 					icon={<MdEmail />}
+					rules={email}
 				/>
 
 				<InputField
@@ -114,6 +127,16 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.password}
 					required
 					icon={<RiLockPasswordFill />}
+					rules={password}
+					info={{
+						content: (
+							<ul className="list-disc">
+								<li>Password must be more than 8 characters</li>
+								<li>Least one number</li>
+								<li>At least one special character</li>
+							</ul>
+						),
+					}}
 				/>
 
 				<InputField
@@ -125,6 +148,14 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.confirm_password}
 					required
 					icon={<RiLockPasswordFill />}
+					rules={{
+						required: 'Please enter your confirm password',
+						validate: (val) => {
+							if (watch('register.password') != val) {
+								return 'Your passwords do no match';
+							}
+						},
+					}}
 				/>
 
 				<Button
@@ -136,7 +167,7 @@ function SignUpForm({ onSubmit }) {
 					create account
 				</Button>
 
-				<p className="text-center">
+				<p className="text-center text-lg">
 					Have an account?
 					<Link
 						href="/login"
@@ -145,7 +176,7 @@ function SignUpForm({ onSubmit }) {
 						Login
 					</Link>
 				</p>
-				<span className="lg:text-base text-sm text-center md:px-12">
+				<span className="lg:text-base text-base text-center md:px-12">
 					By clicking "Create Account", I consent to
 					<Link
 						href="/"

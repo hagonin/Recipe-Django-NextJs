@@ -38,7 +38,7 @@ function Widget() {
 						<Img
 							src={photoRandom?.src}
 							alt="banner"
-							className="h-[300px]"
+							className="lg:h-[300px] md:h-44 h-[300px]"
 							cover
 						/>
 					</Link>

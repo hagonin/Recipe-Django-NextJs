@@ -35,7 +35,7 @@ function SubscribeForm({ secondary }) {
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
 			className={`flex  ${
-				secondary ? '!flex-col' : 'lg:w-[450px]'
+				secondary ? '' : 'lg:w-[450px]'
 			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row`}
 		>
 			<InputField

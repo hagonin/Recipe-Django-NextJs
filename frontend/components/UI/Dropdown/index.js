@@ -5,20 +5,16 @@ import Button from '../Button';
 function DropDown({ children }) {
 	const [show, setShow] = useState(true);
 	return (
-		<div
-			className="relative"
-			onMouseEnter={() => setShow(true)}
-			onMouseLeave={() => setShow(false)}
-		>
+		<div className="relative inline-block">
 			<Button
-				icon={{ right: <BsArrowRight /> }}
 				className="primary"
+				onClick={() => setShow(!show)}
 			>
 				Select an action
 			</Button>
 
 			{show && (
-				<div className="pl-5 absolute left-full top-1/2 -translate-y-1/2  z-[222] bg-white flex gap-4 ">
+				<div className="flex relative flex-wrap flex-col md:flex-row gap-4 mt-4 before:content-[''] before:absolute before:-top-4 before:h-6 before:w-full before:bg-transparent">
 					{children.map((child) => child)}
 				</div>
 			)}

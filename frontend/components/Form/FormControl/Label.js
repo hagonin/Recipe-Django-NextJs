@@ -13,7 +13,9 @@ const Label = ({ label, name, info, required }) => {
 						htmlFor={name}
 					>
 						{label}
-						{required && <span className="text-red ml-1 font-bold">*</span>}
+						{required && (
+							<span className="text-red ml-1 font-bold">*</span>
+						)}
 					</label>
 				)}
 			</div>
@@ -22,7 +24,10 @@ const Label = ({ label, name, info, required }) => {
 					content={info.content}
 					placement={info.placement || 'right'}
 				>
-					<button className="relative -top-1 text-primaryDark">
+					<button
+						className="relative -top-1 text-primaryDark"
+						type="button"
+					>
 						<HiInformationCircle />
 					</button>
 				</Tippy>

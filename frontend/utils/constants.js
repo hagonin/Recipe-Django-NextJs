@@ -22,7 +22,7 @@ export const images = {
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/verify_email_ze8jvs.png',
 	photoDefault:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983420/static/photoDefault_ek0wzl.png',
-	spoon: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983421/static/toast_error_bysik0.png',
+	spoon: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983421/static/spoon_dsf5cu.jpg',
 	cooking:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983418/static/cooking_hs8bhk.png',
 	notfound:

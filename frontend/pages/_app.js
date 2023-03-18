@@ -10,11 +10,7 @@ import { Fragment } from 'react';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);
-	const router = useRouter();
-	const Layout =
-		router.pathname === '/login' || router.pathname === '/signup'
-			? Fragment
-			: RootLayout;
+	
 	return (
 		<>
 			<Head>
@@ -38,7 +34,9 @@ function MyApp({ Component, pageProps }) {
 			>
 				<AuthProvider>
 					<RecipeProvider>
-						<Layout>{render(<Component {...pageProps} />)}</Layout>
+						<RootLayout>
+							{render(<Component {...pageProps} />)}
+						</RootLayout>
 					</RecipeProvider>
 				</AuthProvider>
 			</main>

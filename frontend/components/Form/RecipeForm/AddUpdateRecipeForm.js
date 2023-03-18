@@ -2,12 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
-import {
-	InputField,
-	SelectField,
-	RichTextField,
-	Label,
-} from '@components/Form/FormControl';
+import { InputField, SelectField, Label } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
 import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
@@ -26,6 +21,7 @@ import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
 import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
+import RichTextField from '../FormControl/RichText';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -89,7 +85,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		// add ...rest to form
 		Object.keys(rest).forEach((key) => {
 			const value =
-				typeof rest[key] === 'string'
+				typeof rest[key] === 'string' && key !== 'description'
 					? rest[key].toLowerCase()
 					: rest[key];
 			form.append(key, value);
@@ -332,16 +328,16 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					generally sort higher than those without.
 				</p>
 			)}
-			<div className="flex gap-4 mt-5 justify-end items-center">
+			<div className="flex gap-4 mt-5 justify-end items-center md:flex-row flex-col">
 				<Button
-					className="cancle lg min-w-[200px]"
+					className="cancle lg md:min-w-[200px] w-full"
 					type="reset"
 					onClick={handleCancel}
 				>
 					Cancel
 				</Button>
 				<Button
-					className="lg primary px-24 min-w-[200px]"
+					className="lg primary px-24 md:min-w-[200px] w-full"
 					type="submit"
 					disabled={isSubmitting}
 				>
