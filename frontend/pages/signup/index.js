@@ -93,6 +93,12 @@ function SignUp() {
 							</li>
 						))}
 					</ul>
+					<Button
+						onClick={() => router.push('/')}
+						className="mt-3"
+					>
+						Go home
+					</Button>
 				</div>
 				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
 					<SignUpForm onSubmit={handleSignup} />

@@ -177,7 +177,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 						className="mt-5 primary "
 					>
 						{isSubmitting && <Loader type="submitting" />}
-						Upload Photo
+						Save change
 					</Button>
 				</Form>
 			) : (

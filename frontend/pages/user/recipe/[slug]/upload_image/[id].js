@@ -2,13 +2,10 @@ import { useRouter } from 'next/router';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
-import {
-	ENDPOINT_RECIPE_DETAIL,
-} from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
-import { MdOutlineTipsAndUpdates } from 'react-icons/md';
 import { TitlePrimary } from '@components/UI/Title';
 import toastMessage from '@utils/toastMessage';
 
@@ -27,7 +24,7 @@ function UploadImagePage() {
 				configAuth()
 			);
 			toastMessage({
-				message: 'Photos successfully added',
+				message: 'Photos successfully changed',
 			});
 			router.push(`/user/recipe/${slug}`);
 		} catch {}

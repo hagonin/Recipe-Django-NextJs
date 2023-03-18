@@ -4,8 +4,12 @@ import { images, meta } from '@utils/constants';
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 import { TitlePrimary } from '@components/UI/Title';
+import Button from '@components/UI/Button';
+import { useRouter } from 'next/router';
 
 function Login() {
+	const router = useRouter();
+
 	const { login } = useAuthContext();
 
 	return (
@@ -22,6 +26,12 @@ function Login() {
 					/>
 					<TitlePrimary title="Welcome back" />
 					<p className="text-center mt-2">{meta.login}</p>
+					<Button
+						onClick={() => router.push('/')}
+						className="mt-3"
+					>
+						Go home
+					</Button>
 				</div>
 			</div>
 		</div>

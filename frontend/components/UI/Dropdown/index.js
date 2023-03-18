@@ -3,7 +3,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import Button from '../Button';
 
 function DropDown({ children }) {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	return (
 		<div className="relative inline-block">
 			<Button

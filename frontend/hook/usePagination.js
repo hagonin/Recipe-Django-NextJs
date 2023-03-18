@@ -3,11 +3,11 @@ import useSWR from 'swr';
 import api from '@services/axios';
 import { ENDPOINT_RECIPE } from '@utils/constants';
 
-function usePagination({ limitPerPage = 4, recipes, total, initPages }) {
+function usePagination({ limitPerPage = 4, recipes, total, noScroll }) {
 	const [currentRecipes, setCurrentRecipes] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const pages = useMemo(() => {
-		return initPages || Math.ceil(total / limitPerPage);
+		return Math.ceil(total / limitPerPage);
 	});
 
 	const goToPage = () => {
@@ -15,7 +15,7 @@ function usePagination({ limitPerPage = 4, recipes, total, initPages }) {
 		const lastIndex = currentPage * limitPerPage;
 		const newRecipes = [...recipes].slice(firstIndex, lastIndex);
 		setCurrentRecipes(newRecipes);
-		window.scrollTo({ top: 0 });
+		!noScroll && window.scrollTo({ top: 0 });
 	};
 
 	const next = () => currentPage < pages && setCurrentPage(currentPage + 1);

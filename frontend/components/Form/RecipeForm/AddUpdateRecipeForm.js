@@ -308,9 +308,10 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.source}
 						placeholder="e.g. recipe.example.com"
 						info={{
-							content: 'Where did this recipe come from ?',
+							content: 'Where did this recipe come from ?. If it is your own',
 							placement: 'right',
 						}}
+						rules={{required: 'Please enter your recipe source.'}}
 					/>
 				</div>
 			</div>

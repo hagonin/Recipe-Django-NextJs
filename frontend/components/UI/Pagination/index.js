@@ -1,22 +1,51 @@
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-function Pagination({ pages, currentPage, setCurrentPage, next, previous }) {
+function Pagination({
+	pages,
+	currentPage,
+	setCurrentPage,
+	next,
+	previous,
+	small,
+}) {
 	return (
-		<div className="flex justify-center mt-10 gap-2 flex-wrap">
+		<div className="flex justify-center mt-10 gap-2 flex-wrap ">
 			{pages ? (
 				<>
-					<Button
-						iconLeft={<BsChevronLeft />}
-						label="PREVIOUS"
-						disabled={currentPage === 1}
-						onClick={previous}
-					/>
+					{small ? (
+						<button
+							onClick={previous}
+							disabled={currentPage === 1}
+							className={`border rounded-md p-1 text-black bg-third border-border hover:bg-red3 hover:text-white transition-all disabled:hover:bg-third disabled:hover:text-black`}
+						>
+							<BsChevronLeft />
+						</button>
+					) : (
+						<Button
+							iconLeft={<BsChevronLeft />}
+							label="PREVIOUS"
+							disabled={currentPage === 1}
+							onClick={previous}
+						/>
+					)}
 					{[...Array(pages)].map((item, index) => {
 						index++;
-						return (
+						return small ? (
 							<button
 								key={index}
-								className={`py-1 px-3 rounded-md border-2  ${
+								className={`mx-1 ${
+									currentPage === index
+										? 'underline text-red3'
+										: ''
+								} `}
+								onClick={() => setCurrentPage(index)}
+							>
+								{index}
+							</button>
+						) : (
+							<button
+								key={index}
+								className={`py-1 px-3 rounded-md ${
 									currentPage === index
 										? 'bg-primary text-white border-primary'
 										: 'hover:bg-primaryLight'
@@ -27,12 +56,22 @@ function Pagination({ pages, currentPage, setCurrentPage, next, previous }) {
 							</button>
 						);
 					})}
-					<Button
-						onClick={next}
-						iconRight={<BsChevronRight />}
-						label="NEXT"
-						disabled={currentPage === pages}
-					/>
+					{small ? (
+						<button
+							onClick={next}
+							disabled={currentPage === pages}
+							className={`border rounded-md p-1 text-black bg-third border-border hover:bg-red3 hover:text-white transition-all disabled:hover:bg-third disabled:hover:text-black`}
+						>
+							<BsChevronRight />
+						</button>
+					) : (
+						<Button
+							onClick={next}
+							iconRight={<BsChevronRight />}
+							label="NEXT"
+							disabled={currentPage === pages}
+						/>
+					)}
 				</>
 			) : (
 				''
