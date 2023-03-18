@@ -22,6 +22,7 @@ import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
 import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 import RichTextField from '../FormControl/RichText';
+import { info } from 'autoprefixer';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -308,10 +309,9 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.source}
 						placeholder="e.g. recipe.example.com"
 						info={{
-							content: 'Where did this recipe come from ?. If it is your own',
-							placement: 'right',
+							content: info.source,
 						}}
-						rules={{required: 'Please enter your recipe source.'}}
+						rules={{ required: 'Please enter your recipe source.' }}
 					/>
 				</div>
 			</div>
