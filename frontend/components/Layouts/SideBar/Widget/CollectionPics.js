@@ -3,6 +3,7 @@ import Img from '@components/UI/Image';
 import CommonSection from './CommonSection';
 import { useRecipeContext } from '@context/recipe-context';
 import { useEffect, useState } from 'react';
+import Loader from '@components/UI/Loader';
 
 function CollectionPics({ isFooter }) {
 	const { photos } = useRecipeContext();
@@ -28,7 +29,7 @@ function CollectionPics({ isFooter }) {
 
 	return isFooter ? (
 		<div className="flex flex-wrap lg:h-40 md:48 h-52 overflow-hidden">
-			{photosSelect &&
+			{photosSelect ? (
 				photosSelect.map((pic) => (
 					<Link
 						key={pic.id}
@@ -42,12 +43,15 @@ function CollectionPics({ isFooter }) {
 							cover
 						/>
 					</Link>
-				))}
+				))
+			) : (
+				<Loader type="square" />
+			)}
 		</div>
 	) : (
 		<CommonSection title="Collection pictures">
 			<div className="grid lg:grid-cols-3 gap-2">
-				{photosSelect &&
+				{photosSelect ? (
 					photosSelect.map((pic) => (
 						<Link
 							key={pic.id}
@@ -61,7 +65,14 @@ function CollectionPics({ isFooter }) {
 								cover
 							/>
 						</Link>
-					))}
+					))
+				) : (
+					<>
+						<Loader type="square-small" />
+						<Loader type="square-small" />
+						<Loader type="square-small" />
+					</>
+				)}
 			</div>
 		</CommonSection>
 	);
