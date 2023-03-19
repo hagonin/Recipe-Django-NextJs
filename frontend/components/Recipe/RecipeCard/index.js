@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Tooltip from '@components/UI/Tooltip';
 import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
 import { FaTags } from 'react-icons/fa';
+import Category from '../SingleRecipe/Category';
 
 function RecipeCard({
 	name,
@@ -141,12 +142,7 @@ function RecipeCard({
 					}`}
 				>
 					<div>
-						{category && (
-							<span className="tag font-bold text-[0.68rem] uppercase  !text-red2 inline-flex  rounded-md gap-2 leading-7 items-center">
-								<FaTags />
-								{category}
-							</span>
-						)}
+						<Category category={category} />
 						<Link
 							href={
 								secondary

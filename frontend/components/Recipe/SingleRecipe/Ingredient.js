@@ -7,7 +7,6 @@ function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	const handleUnit = (unit, quantity) => {
 		const quan = quantity && quantity * 1;
-		console.log(quan);
 		switch (true) {
 			case unit === 'teaspoon(s)' && quan < 2:
 				return 'teaspoon';
@@ -97,6 +96,6 @@ function Ingredient({ ingredients, isPreview }) {
 }
 
 const Quantity = ({ quantity }) => (
-	<span className="text-[14px]">{quantity}</span>
+	<span className="text-[12px]">{quantity}</span>
 );
 export default Ingredient;

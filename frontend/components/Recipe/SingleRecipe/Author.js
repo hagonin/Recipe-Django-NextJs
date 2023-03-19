@@ -10,7 +10,7 @@ function Author({ name, avatar, bio, slug }) {
 				<Img
 					src={avatar}
 					alt="avatar"
-					className="h-24 w-24 rounded-full overflow-hidden"
+					className="h-24 w-24 rounded-full overflow-hidden border"
 					cover
 				/>
 			</Link>

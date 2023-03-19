@@ -126,12 +126,14 @@ function UpdateProfileForm({
 						className="lg cancle w-36"
 						type="button"
 						onClick={handleReset}
+						disabled={isSubmitting}
 					>
 						Reset
 					</Button>
 					<Button
 						type="submit"
 						className="lg primary w-36"
+						disabled={isSubmitting}
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Save

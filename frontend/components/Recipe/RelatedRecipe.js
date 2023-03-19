@@ -3,26 +3,42 @@ import Slider from '@components/UI/Slider';
 import Title from '@components/UI/Title';
 import { useRecipeContext } from '@context/recipe-context';
 import useQuery from 'hook/useQuery';
+import { useEffect, useState } from 'react';
 import RecipeCard from './RecipeCard';
 
 function RelatedRecipe({ categoryName, except }) {
-	const { data: recipes } = useQuery(null, { category: categoryName });
+	const { data: recipes, isLoading } = useQuery(null, {
+		category: categoryName,
+	});
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
-	return (
+	const [recipeRelated, setRecipeRelated] = useState(null);
+	useEffect(() => {
+		if (recipes) {
+			const arr = recipes.filter((item) => item.id !== except);
+			setRecipeRelated(arr);
+		}
+	}, [recipes]);
+
+	return isLoading ? (
+		<div className="grid grid-cols-3 md:gap-6 gap-2 mt-5">
+			<Loader type="recipe-card" />
+			<Loader type="recipe-card" />
+			<Loader type="recipe-card" />
+		</div>
+	) : (
 		<div className="mt-9">
-			<Title
-				center
-				title="Related recipe"
-			/>
-			{recipes ? (
-				<Slider
-					slideOnMobile={2}
-					smallBtn
-					className="mt-3"
-				>
-					{recipes
-						.filter((item) => item.id !== except)
-						.map((recipe) => {
+			{recipeRelated?.length > 0 ? (
+				<>
+					<Title
+						center
+						title="Related recipe"
+					/>
+					<Slider
+						slideOnMobile={2}
+						smallBtn
+						className="mt-3"
+					>
+						{recipeRelated.map((recipe) => {
 							return (
 								<RecipeCard
 									id={recipe.id}
@@ -43,14 +59,9 @@ function RelatedRecipe({ categoryName, except }) {
 								/>
 							);
 						})}
-				</Slider>
-			) : (
-				<div className="grid grid-cols-3 md:gap-6 gap-2 mt-5">
-					<Loader type="recipe-card" />
-					<Loader type="recipe-card" />
-					<Loader type="recipe-card" />
-				</div>
-			)}
+					</Slider>
+				</>
+			) : null}
 		</div>
 	);
 }

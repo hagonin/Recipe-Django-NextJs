@@ -7,7 +7,7 @@ function Notes({ notes }) {
 				title="NOTES"
 				bottom="mb-3"
 			/>
-			<p className="first-letter:uppercase">{notes}</p>
+			<p className="first-letter:uppercase text-base">{notes}</p>
 		</div>
 	) : (
 		<></>

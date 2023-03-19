@@ -18,6 +18,7 @@ import { MdPhoto, MdUpdate } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import Notes from './SingleRecipe/Notes';
 import Source from './SingleRecipe/Source';
+import Category from './SingleRecipe/Category';
 
 function PreviewRecipe({
 	data,
@@ -61,16 +62,14 @@ function PreviewRecipe({
 				<div className="md:col-span-8">
 					<div className="flex gap-2">
 						<h1 className="capitalize font-serif ">{title}</h1>
-						<span className="flex items-center gap-2 text-sm uppercase font-bold text-yellow">
-							<BsFillTagsFill /> {category}
-						</span>
+						<Category category={category} />
 					</div>
 					<div className="flex flex-col mt-5">
 						<div className="flex flex-wrap items-center gap-x-6 gap-y-4">
 							{created_at && (
 								<div className="flex gap-2">
 									<span className="text-lg flex">
-										Create at:
+										Created at:
 									</span>
 									<span className="text-base text-semibold text-black relative top-[1px]">
 										{formatDate(created_at)}
@@ -79,7 +78,7 @@ function PreviewRecipe({
 							)}
 							{updated_at && (
 								<div className="flex gap-2">
-									<span className="text-lg">Update at:</span>
+									<span className="text-lg">Updated at:</span>
 									<span className="text-base text-semibold text-black relative top-[1px]">
 										{formatDate(updated_at)}
 									</span>

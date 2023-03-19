@@ -22,7 +22,6 @@ import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
 import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 import RichTextField from '../FormControl/RichText';
-import { info } from 'autoprefixer';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -309,7 +308,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.source}
 						placeholder="e.g. recipe.example.com"
 						info={{
-							content: info.source,
+							content: info_recipeform.source,
 						}}
 						rules={{ required: 'Please enter your recipe source.' }}
 					/>
@@ -323,7 +322,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			/>
 			{!isUpdate && (
 				<p className="mx-auto mt-5">
-					<FaRegLightbulb className="inline text-yellow relative -top-[2px]" />{' '}
+					<FaRegLightbulb className="inline text-yellow relative -top-[2px]" />
 					You can add more photos after you add the recipe. We all
 					love photos recipes with good finished-product photos
 					generally sort higher than those without.
@@ -334,6 +333,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					className="cancle lg md:w-[200px] w-full"
 					type="reset"
 					onClick={handleCancel}
+					disabled={isSubmitting}
 				>
 					Cancel
 				</Button>
@@ -356,9 +356,12 @@ const Title = ({ title, info }) => (
 		{info && (
 			<Tippy
 				content={info.content}
-				placement={info.placement || 'top'}
+				placement={info.placement || 'auto'}
 			>
-				<button className="relative -top-1 text-primaryDark">
+				<button
+					className="relative -top-1 text-primaryDark"
+					type="button"
+				>
 					<HiInformationCircle />
 				</button>
 			</Tippy>

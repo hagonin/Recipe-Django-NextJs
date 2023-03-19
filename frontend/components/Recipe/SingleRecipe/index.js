@@ -13,6 +13,8 @@ import Button from '@components/UI/Button';
 import Method from './Method';
 import Notes from './Notes';
 import Source from './Source';
+import { MdCategory } from 'react-icons/md';
+import Category from './Category';
 
 function SingRecipe({
 	id,
@@ -32,6 +34,7 @@ function SingRecipe({
 	images = [],
 	checkBookmarkAct,
 	handleToggleBookmark,
+	category,
 	source,
 }) {
 	const actBookmark = checkBookmarkAct(id);
@@ -65,8 +68,12 @@ function SingRecipe({
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
-						<span className="block mt-1">
+						<span className="block mt-1 flex gap-2">
 							{`${updated_at_format} / by ${author}`}
+							<Category
+								category={category}
+								lg
+							/>
 						</span>
 						{rating && (
 							<Rating
@@ -84,7 +91,7 @@ function SingRecipe({
 							/>
 						</div>
 						<button
-							className="flex gap-2 items-center text-base h-6 bg-grey rounded border-primary px-2 font-medium hover:bg-yellow transition-all hover:text-white group mb-3"
+							className="flex gap-2 items-center text-base h-6 bg-grey rounded border-primary px-2 font-medium hover:bg-yellow transition-all hover:text-white group mb-4"
 							onClick={() =>
 								handleToggleBookmark(actBookmark, id)
 							}
@@ -110,7 +117,7 @@ function SingRecipe({
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col gap-y-6">
+				<div className="flex flex-col md:gap-y-6 gap-y-2">
 					<Ingredient ingredients={ingredients} />
 					<Method instructionsArr={instructionsArr} />
 					<Notes notes={notes} />

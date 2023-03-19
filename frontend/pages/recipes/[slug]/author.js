@@ -18,11 +18,11 @@ function Author() {
 				<Img
 					src={data?.user?.profile?.avatar}
 					alt={data?.user?.username}
-					className="h-[200px] w-[200px] rounded-full mx-auto overflow-hidden "
+					className="h-[200px] w-[200px] rounded-full mx-auto overflow-hidden border "
 					cover
 				/>
 				<span
-					className={`${satisfy.className} text-[3rem] relative -top-1 mb-4`}
+					className={`${satisfy.className} text-[2rem] relative -top-1 mb-4`}
 				>
 					{data?.user?.username}
 				</span>
