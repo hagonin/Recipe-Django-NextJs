@@ -308,7 +308,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.source}
 						placeholder="e.g. recipe.example.com"
 						info={{
-							content: info_recipeform.source,
+							content: info_recipeform.source.info,
 						}}
 						rules={{ required: 'Please enter your recipe source.' }}
 					/>

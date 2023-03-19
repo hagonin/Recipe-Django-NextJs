@@ -48,8 +48,6 @@ function RelatedRecipe({ categoryName, except }) {
 									main_image={recipe.main_image}
 									name={recipe.title}
 									slug={recipe.slug}
-									rating={recipe.rating}
-									reviews_count={recipe.reviews_count}
 									smallCard
 									date={
 										recipe.created_at || recipe.updated_at

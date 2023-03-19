@@ -86,11 +86,13 @@ function RecipeCard({
 				handleCloseConfirm={() => setShowConfirmDelete(false)}
 			/>
 			<div
-				className={`h-full  rounded overflow-hidden transition-all duration-300  ${
+				className={`h-full  rounded overflow-hidden   ${
 					smallCard && 'md:shadow md:hover:shadow-lg border'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
-				} ${className}`}
+				} ${className} ${
+					isSlider ? '' : 'transition-all duration-300'
+				}`}
 			>
 				<div
 					className={`relative  ${
