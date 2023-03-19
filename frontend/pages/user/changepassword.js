@@ -34,7 +34,7 @@ function Changepassword() {
 	return (
 		<div className="bg-primaryLight">
 			<div className="container py-14 ">
-				<div className=" md:max-w-[480px] mx-auto bg-white border-border rounded-md py-10 px-10">
+				<div className=" md:max-w-[480px] mx-auto bg-white border-border rounded-md md:py-10 md:px-10 py-6 px-4">
 					<div className="mb-10 flex gap-4 justify-center items-center">
 						
 						<TitlePrimary title='Change Password'/>

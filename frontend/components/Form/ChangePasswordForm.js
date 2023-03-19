@@ -4,7 +4,7 @@ import { useAuthContext } from '@context/auth-context';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import { Form, InputField } from './FormControl';
+import { Form, InputField, password } from './FormControl';
 
 function ChangePasswordForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -13,7 +13,7 @@ function ChangePasswordForm({ onSubmit }) {
 		handleSubmit,
 		setError,
 		reset,
-		formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+		formState: { errors: formErrors, isSubmitting },
 	} = useForm();
 
 	useEffect(() => {
@@ -48,6 +48,7 @@ function ChangePasswordForm({ onSubmit }) {
 				register={register}
 				error={formErrors?.change_password?.old_password}
 				required
+				rules={{ required: 'Please enter your password' }}
 			/>
 			<InputField
 				name="change_password.new_password"
@@ -56,6 +57,7 @@ function ChangePasswordForm({ onSubmit }) {
 				icon={<RiLockPasswordLine />}
 				register={register}
 				error={formErrors?.change_password?.new_password}
+				rules={password}
 				required
 			/>
 			<Button

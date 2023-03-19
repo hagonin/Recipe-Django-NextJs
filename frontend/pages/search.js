@@ -83,7 +83,8 @@ function Search() {
 								<span className="text-center text-lg md:w-1/3 ">
 									Sorry, we couldn’t find any matches for
 									<span className="text-lg font-semibold mx-1 text-black">
-										{query.search || query.ingredients__title}
+										{query.search ||
+											query.ingredients__title}
 									</span>{' '}
 									recipes
 								</span>

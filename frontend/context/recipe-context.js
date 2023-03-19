@@ -90,7 +90,7 @@ const RecipeProvider = ({ children }) => {
 		0;
 	const fetcher = async (url) =>
 		await api
-			.get(url, configAuth())
+			.get(`${url}${noCache()}`, configAuth())
 			.then((res) => res?.data?.results || res?.data);
 
 	return (

@@ -44,7 +44,7 @@ const InputField = ({
 						...rules,
 					})}
 					{...props}
-					className={`text-base w-full border-none outline-none flex-1 bg-transparent pr-3 `}
+					className={`text-base w-full border-none outline-none flex-1 bg-transparent pr-3 text-black`}
 				/>
 				{icon && (
 					<span className="text-primary flex items-center justify-center">

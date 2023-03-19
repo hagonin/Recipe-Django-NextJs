@@ -11,7 +11,7 @@ function RootLayout({ children }) {
 
 	return (
 		<>
-			{pathname === '/login' || pathname === '/signup' || pathname === '/404' ? (
+			{pathname === '/login' || pathname === '/signup' || pathname === '/404' ||pathname=== '/resetpassword'? (
 				children
 			) : (
 				<>

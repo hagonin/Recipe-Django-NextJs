@@ -41,65 +41,65 @@ export const categoryList = [
 		id: 1,
 		name: 'appetizers',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
-		cover: '/static/images/categories/appetizers.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983479/categories/appetizers_fc5wu1.jpg',
 	},
 	{
 		id: 2,
-		cover: '/static/images/categories/bread.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983478/categories/bread_u5dtu1.jpg',
 		name: 'bread',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 3,
-		cover: '/static/images/categories/breakfast.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983479/categories/breakfast_yf6a2a.jpg',
 		name: 'breakfast',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 4,
-		cover: '/static/images/categories/desserts.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983476/categories/desserts_a8qf5y.jpg',
 		name: 'desserts',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 5,
-		cover: '/static/images/categories/vegan.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983477/categories/vegan_gq2qsr.jpg',
 		name: 'vegan',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 6,
-		cover: '/static/images/categories/drink.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679225078/categories/drink2_mcy9nb.jpg',
 		name: 'drink',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 7,
-		cover: '/static/images/categories/main_dish.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983478/categories/main_dish_y7tujq.jpg',
 		name: 'main dish',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 8,
-		cover: '/static/images/categories/salad.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983477/categories/salad_b1vezi.jpg',
 		name: 'salad',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 10,
-		cover: '/static/images/categories/side_dish.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983477/categories/side_dish_lk78hg.jpg',
 		name: 'side dish',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 9,
-		cover: '/static/images/categories/soups_stew_and_chill.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983486/categories/soups_stew_and_chill_u6bwhn.jpg',
 		name: 'soups, stew and chill',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
 	{
 		id: 11,
-		cover: '/static/images/categories/marinades_and_sauces.jpg',
+		cover: 'https://res.cloudinary.com/dui608qtq/image/upload/v1678983477/categories/marinades_and_sauces_dyquil.jpg',
 		name: 'marinades and sauces',
 		desc: 'Cras id consequat sem. Suspendisse efficitur pellentesque nulla, et placerat arcu pulvinar volutpat. Nunc cursus libero nec ipsum lacinia pellentesque. Integer placerat scelerisque neque. Donec commodo ligula viverra augue convallis, vitae feugiat nibh fringilla. Donec pulvinar odio rhoncus, pretium est et, volutpat lacus.',
 	},
@@ -204,7 +204,11 @@ export const meta = {
 				'Help others get recipes to serve their daily lives, improve nutrition and health',
 		},
 	],
-	login: "It's nice to see you again. Log in to continue to your account.",
+	login: (
+		<span>
+			It's nice to see you again.<br className="block md:hidden"/> Log in to continue to your account.
+		</span>
+	),
 	about: {
 		title: "Home cooks are our heroes—it's as simple as that. HomeCook is a community built by and for kitchen experts: The cooks who will dedicate the weekend to a perfect beef bourguignon but love the simplicity of a slow-cooker rendition, too. The bakers who labor over a showstopping 9-layer cake but will just as happily doctor boxed brownies for a decadent weeknight dessert. The entertainers who just want a solid snack spread, without tons of dirty dishes at the end of the night. Most importantly, HomeCook connects home cooks with their greatest sources of inspiration — other home cooks. We're the world's leading digital food brand, and that inspires us to do everything possible to keep our community connected. Sixty-million home cooks deserve no less.",
 		list: [

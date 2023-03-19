@@ -22,7 +22,7 @@ const Label = ({ label, name, info, required }) => {
 			{info && (
 				<Tippy
 					content={info.content}
-					placement={info.placement || 'right'}
+					placement={info.placement || 'auto'}
 				>
 					<button
 						className="relative -top-1 text-primaryDark"

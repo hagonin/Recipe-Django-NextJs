@@ -15,8 +15,6 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
 import { TitlePrimary } from '@components/UI/Title';
 import { email, password } from '../FormControl/validate';
-import { useRouter } from 'next/router';
-import { BsChevronDoubleLeft } from 'react-icons/bs';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();

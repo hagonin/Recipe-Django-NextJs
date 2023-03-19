@@ -52,7 +52,7 @@ function number({ number, count, small }) {
 			{count && (
 				<span
 					className={` font-medium ml-1 ${
-						small ? 'text-[0.7rem]' : 'text-[0.87rem]'
+						small ? 'md:text-[0.73rem] text-sm' : 'text-[0.87rem]'
 					}`}
 				>
 					({count})

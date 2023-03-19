@@ -51,10 +51,10 @@ function CategoryPage() {
 							cover
 						/>
 						<TitlePrimary title={category.name} />
-						<p className="mt-3 text-lg">{category.desc}</p>
+						<p className="mt-3 text-base max-md:text-justify">{category.desc}</p>
 					</div>
 				)}
-				<div className="flex flex-col gap-y-8 mt-10">
+				<div className="flex flex-col lg:gap-y-8 gap-y-6 mt-10">
 					<ShowPages
 						currentPage={currentPage}
 						pages={pages}
@@ -75,7 +75,7 @@ function CategoryPage() {
 								handleToggleBookmark={handleToggleBookmark}
 								actBookmark={checkBookmarkAct(recipe.id)}
 								lgCard
-								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1 pb-8 border-b"
+								className="grid lg:grid-cols-12 lg:gap-6 md:gap-4   grid-cols-1 lg:pb-8  pb-2 border-b items-center"
 							/>
 						))
 					) : (

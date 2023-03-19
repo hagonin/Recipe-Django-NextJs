@@ -29,7 +29,7 @@ function Login() {
 					<p className="text-center mt-2">{meta.login}</p>
 					<button
 						onClick={() => router.push('/')}
-						className="mt-3 font-serif flex items-center gap-2 hover:text-primary"
+						className="mt-3 font-serif flex items-center gap-2 hover:text-primary underline"
 					>
 						<FaHome />
 						Go home

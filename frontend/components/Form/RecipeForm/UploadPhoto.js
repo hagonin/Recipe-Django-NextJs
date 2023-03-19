@@ -105,7 +105,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 	}, [data]);
 
 	return (
-		<div className="mt-6">
+		<div className="mt-6 ">
 			<ConfirmDelete
 				handleDelete={handleDelete}
 				showConfirm={showConfirmDelete}
@@ -128,8 +128,12 @@ function UploadPhoto({ onSubmit, recipe }) {
 				Add Photo
 			</Button>
 
-			{isLoading && <Loader type="searching" />}
-			{listPhotos.length > 0 ? (
+			{}
+			{isLoading ? (
+				<div className='flex items-center justify-center'>
+					<Loader type="searching" />
+				</div>
+			) : listPhotos.length > 0 ? (
 				<Form
 					onSubmit={handleSubmit(createFormData)}
 					className="!flex-row gap-4 flex-wrap"

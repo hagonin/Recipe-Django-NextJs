@@ -1,9 +1,12 @@
-import Title from "@components/UI/Title";
+import Title from '@components/UI/Title';
 
 function Notes({ notes }) {
 	return notes ? (
 		<div>
-			<Title title="NOTES" />
+			<Title
+				title="NOTES"
+				bottom="mb-3"
+			/>
 			<p className="first-letter:uppercase">{notes}</p>
 		</div>
 	) : (

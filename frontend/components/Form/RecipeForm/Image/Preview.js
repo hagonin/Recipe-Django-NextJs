@@ -37,6 +37,7 @@ function Preview({ name, handleChangeImage, handleDelete }) {
 		<div className="relative px-3 py-5 mt-5 h-44 w-full group">
 			<input
 				type="file"
+				accept="image/*"
 				onChange={handleChange}
 				ref={inputRef}
 				className="hidden"

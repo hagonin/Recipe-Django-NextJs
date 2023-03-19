@@ -23,7 +23,7 @@ function Pagination({
 					) : (
 						<Button
 							iconLeft={<BsChevronLeft />}
-							label="PREVIOUS"
+							label="PRE"
 							disabled={currentPage === 1}
 							onClick={previous}
 						/>
@@ -45,7 +45,7 @@ function Pagination({
 						) : (
 							<button
 								key={index}
-								className={`py-1 px-3 rounded-md ${
+								className={`py-1 px-4 rounded-md ${
 									currentPage === index
 										? 'bg-primary text-white border-primary'
 										: 'hover:bg-primaryLight'

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import formatDate from '@utils/formatdate';
 import { AiFillHeart } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
-import { MdAddPhotoAlternate, MdDelete } from 'react-icons/md';
+import { MdAddPhotoAlternate, MdDateRange, MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Rating from '@components/Reviews/Rate';
@@ -92,21 +92,25 @@ function RecipeCard({
 				} ${className}`}
 			>
 				<div
-					className={`relative md:h-56 h-48 ${
-						lgCard ? 'lg:col-span-5' : ''
+					className={`relative  ${
+						lgCard ? 'lg:col-span-5 h-full w-full' : 'md:h-56 h-48'
 					}`}
 				>
 					<Link
-						href={
+						href={`${
 							secondary
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
-						}
+						} ${lgCard ? ' w-full' : ''}`}
 					>
 						<Img
 							src={main_image}
 							alt={name}
-							className="md:h-56 h-48 "
+							className={`${
+								lgCard
+									? 'lg:h-full w-full h-56'
+									: 'md:h-56 h-48'
+							}`}
 							cover
 							title={name}
 						/>
@@ -132,8 +136,8 @@ function RecipeCard({
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 pt-3  pb-4  ${
-						lgCard ? 'lg:col-span-7' : ''
+					className={` pt-3  pb-4  ${
+						lgCard ? 'lg:col-span-7' : 'md:px-4 px-2'
 					}`}
 				>
 					<div>
@@ -177,13 +181,14 @@ function RecipeCard({
 									lgCard ? 'text-base mr-3' : 'text-sm'
 								} flex items-center gap-1`}
 							>
+								{lgCard && <MdDateRange />}
 								{date_format}
 							</span>
 						)}
 						{rating ? (
 							<Rating
 								number={rating}
-								small={smallCard}
+								small={smallCard || lgCard}
 								count={reviews_count}
 							/>
 						) : null}
@@ -191,7 +196,7 @@ function RecipeCard({
 
 					{summaryMarkup && lgCard && (
 						<>
-							<p className="mt-1  text-lg line-clamp-4">
+							<p className="mt-2 text-base line-clamp-4">
 								{summaryMarkup}
 							</p>
 
@@ -202,7 +207,7 @@ function RecipeCard({
 										? `/user/recipe/${slug}`
 										: `/recipes/${slug}`
 								}
-								className="mt-4  !h-9 !text-[0.7rem] tracking-[0.2em]"
+								className="md:mt-4 mt-2  !h-9 !text-[0.7rem] tracking-[0.2em]"
 							>
 								Continue Reading
 							</Button>

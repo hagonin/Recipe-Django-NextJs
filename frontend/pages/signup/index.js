@@ -45,14 +45,17 @@ function SignUp() {
 					<Img
 						src={images.tick}
 						alt="tick"
-						className="lg:h-28 lg:w-28  md:h-24 md:w-24 h-20 w-20"
+						className="lg:h-28 lg:w-28  md:h-24 md:w-24 h-16 w-16"
 					/>
-					<h3 className="mt-4 ">You are registered</h3>
+					<h3 className="mt-4 font-serif">You are registered</h3>
 					<p className="mt-2 text-center">
 						We have sent an email verify to activate your account.
 						<br />
 						The link will
-						<b> expire in 3 hours.</b>
+						<span className="text-red2 font-semibold">
+							{' '}
+							expire in 3 hours.
+						</span>
 						<br />
 						Please check it and
 						<Button
@@ -62,9 +65,9 @@ function SignUp() {
 							Login
 						</Button>
 					</p>
-					<div className="flex flex-col mt-3">
+					<div className="flex flex-col mt-3 bg-third pt-1 pb-3 px-8 rounded-md">
 						<p className="text-base">
-							If you don't see any verify email.
+							Don't you see any verify email ?
 						</p>
 						<VerifyEmailForm
 							handleEffectAfterResend={handleEffectAfterResend}
@@ -80,7 +83,7 @@ function SignUp() {
 						className="w-full md:h-72 h-44 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Create An Account" />
-					<h2 className="font-serif">What you will get?</h2>
+					<h2 className="font-serif mt-2">What you will get?</h2>
 					<ul className="text-base p-0 m-0 md:mt-10 mt-3">
 						{meta.signup_content.map((item) => (
 							<li
@@ -96,13 +99,13 @@ function SignUp() {
 					</ul>
 					<button
 						onClick={() => router.push('/')}
-						className="mt-3 font-serif flex items-center gap-2 hover:text-primary"
+						className="mt-2 font-serif flex items-center gap-2 hover:text-primary underline"
 					>
 						<FaHome />
-						 Go home
+						Go home
 					</button>
 				</div>
-				<div className="bg-white lg:w-[500px]  rounded-xl pt-6 pb-9 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
+				<div className="bg-white lg:w-[500px]  rounded-xl md:pt-6 md:pb-9 py-4 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
 					<SignUpForm onSubmit={handleSignup} />
 				</div>
 			</div>

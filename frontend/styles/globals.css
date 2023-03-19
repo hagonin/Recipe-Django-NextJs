@@ -9,7 +9,7 @@
    }
 
    
-   p, span {
+   p, span, ul, li, ol {
     @apply text-base;
    }
 
