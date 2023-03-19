@@ -16,6 +16,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			// backgroundImage: {
+			// 	hero: `url('${images}')`,
+			// },
 			fontFamily: {
 				sans: ['var(--nunito-sans)', ...fontFamily.sans],
 				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
