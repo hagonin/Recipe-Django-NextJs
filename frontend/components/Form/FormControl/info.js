@@ -36,4 +36,15 @@ export const info_recipeform = {
 	source: {
 		info: "If your recipe is inspired by or derived from another source, kindly honor the original author's copyright by including a reference to the source on your website.",
 	},
+	password: (
+		<>
+			<span>Password must use a combination of these:</span>
+			<ul className="list-disc">
+				<li>Least at 8 characters</li>
+				<li>At least 1 lowercase and 1 uppercase letter</li>
+				<li>At least 1 numeric character</li>
+				<li>At least 1 special character</li>
+			</ul>
+		</>
+	),
 };

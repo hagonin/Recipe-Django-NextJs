@@ -15,6 +15,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
 import { TitlePrimary } from '@components/UI/Title';
 import { email, password } from '../FormControl/validate';
+import { info_recipeform } from '../FormControl/info';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -81,13 +82,7 @@ function LoginForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 					rules={password}
 					info={{
-						content: (
-							<ul className="list-disc">
-								<li>Password must be more than 8 characters</li>
-								<li>Least one number</li>
-								<li>At least one special character</li>
-							</ul>
-						),
+						content: info_recipeform.password,
 					}}
 				/>
 
@@ -124,7 +119,6 @@ function LoginForm({ onSubmit }) {
 					Create an account
 				</Link>
 			</p>
-			
 		</>
 	);
 }

@@ -18,6 +18,7 @@ import {
 	password,
 	user_name,
 } from './FormControl/validate';
+import { info_recipeform } from './FormControl/info';
 
 function SignUpForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -129,13 +130,7 @@ function SignUpForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 					rules={password}
 					info={{
-						content: (
-							<ul className="list-disc">
-								<li>Password must be more than 8 characters</li>
-								<li>Least one number</li>
-								<li>At least one special character</li>
-							</ul>
-						),
+						content: info_recipeform.password,
 					}}
 				/>
 
