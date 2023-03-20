@@ -3,7 +3,6 @@ import { useAuthContext } from '@context/auth-context';
 import Navigate from './Navigate';
 import NavMobi from './NavMobi';
 import SocialLink from '@components/UI/SocialLink';
-import Logo from '@components/Layouts/Header/Logo';
 import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
@@ -38,7 +37,7 @@ function Header() {
 							<Button
 								type="link"
 								href="/login"
-								className="rounded-full hover:border-white"
+								className="rounded-full hover:border-white  h-8 !tracking-wider !text-[11px]"
 							>
 								Login
 							</Button>

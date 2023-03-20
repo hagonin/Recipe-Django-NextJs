@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Form, InputField, password } from './FormControl';
+import { info_recipeform } from './FormControl/info';
 
 function ChangePasswordForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -62,13 +63,7 @@ function ChangePasswordForm({ onSubmit }) {
 				required
 				rules={password}
 				info={{
-					content: (
-						<ul className="list-disc">
-							<li>Password must be more than 8 characters</li>
-							<li>Least one number</li>
-							<li>At least one special character</li>
-						</ul>
-					),
+					content: info_recipeform.password,
 				}}
 			/>
 			<Button

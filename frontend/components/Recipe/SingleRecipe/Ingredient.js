@@ -1,4 +1,5 @@
 import Title from '@components/UI/Title';
+import { convertFractiontoUnicode } from '@utils/convertFractionToUnicode';
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
 import Check from './Check';
@@ -6,23 +7,24 @@ import Check from './Check';
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
 	const handleUnit = (unit, quantity) => {
-		const quan = quantity && quantity * 1;
+		let total = 0;
+		const indexFraction = quantity?.indexOf('/');
+		console.log(indexFraction);
+		if (indexFraction > -1) {
+			total += quantity[indexFraction - 1] / quantity[indexFraction + 1];
+			total += quantity.slice(0, indexFraction - 1).trim() * 1;
+		} else {
+			total += quantity * 1;
+		}
+
 		switch (true) {
-			case unit === 'teaspoon(s)' && quan < 2:
+			case unit === 'teaspoon(s)' && total <= 1:
 				return 'teaspoon';
-			case unit === 'teaspoon(s)' && quan >= 2:
-				return unit;
-			case unit === 'tablespoon(s)' && quan < 2:
+			case unit === 'tablespoon(s)' && total <= 1:
 				return 'tablespoon';
-			case unit === 'tablespoon(s)' && quan >= 2:
-				return unit;
-			case unit === 'pound(s)' && quan >= 2:
-				return unit;
-			case unit === 'pound(s)' && quan < 2:
+			case unit === 'pound(s)' && total <= 1:
 				return 'pound';
-			case unit === 'cup(s)' && quan >= 2:
-				return unit;
-			case unit === 'cup(s)' && quan < 2:
+			case unit === 'cup(s)' && total <= 1:
 				return 'cup';
 			default:
 				return unit;
@@ -71,7 +73,7 @@ function Ingredient({ ingredients, isPreview }) {
 						)
 					)}
 				</div>
-				<div className="flex flex-col gap-2 mt-3 ">
+				<div className="flex flex-col gap-2 ">
 					{ingredient?.group.map((item, index) => (
 						<div key={index}>
 							<span className="text-base font-medium text-black  tracking-widest  ">
@@ -82,7 +84,7 @@ function Ingredient({ ingredients, isPreview }) {
 									isPreview ? (
 										<span
 											key={index}
-											className="border-b pb-1 first-letter:capitalize"
+											className="border-b pb-1 first-letter:capitalize text-base"
 										>
 											<Quantity quantity={i.quantity} />
 											{i.quantity
@@ -123,8 +125,21 @@ function Ingredient({ ingredients, isPreview }) {
 	);
 }
 
-const Quantity = ({ quantity }) => (
-	<span className="text-xbase">{quantity}</span>
-);
+const Quantity = ({ quantity }) => {
+	const indexFraction = quantity.indexOf('/');
+	if (indexFraction > -1) {
+		const fraction = quantity.slice(indexFraction - 1);
+		const fractionFromCharCode = convertFractiontoUnicode(fraction);
+		const number = quantity.slice(0, indexFraction - 1);
+		return (
+			<>
+				<span className="text-base">{number}</span>
+				<span className="text-[17px]">{fractionFromCharCode}</span>
+			</>
+		);
+	} else {
+		return <span className="text-base">{quantity}</span>;
+	}
+};
 
 export default Ingredient;

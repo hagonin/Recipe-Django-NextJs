@@ -18,7 +18,7 @@ import Instructions from './Instructions';
 import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
-import { info_recipeform } from './info';
+import { info_recipeform } from '../FormControl/info';
 import { keyword } from '../FormControl/validate';
 import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 import RichTextField from '../FormControl/RichText';

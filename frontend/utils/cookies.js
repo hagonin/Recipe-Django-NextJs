@@ -2,14 +2,13 @@ import Cookies from 'js-cookie';
 
 const ACCESS = 'access';
 const REFRESH = 'refresh';
-const HALF_HOUR = 1 / 2;
-const A_MONTH = 30;
+const A_DAY = 12;
+const THREE_MONTH = 90;
 
 export const setCookie = (accessVal, refreshVal) => {
-	accessVal &&
-		Cookies.set(ACCESS, accessVal, { expires: HALF_HOUR, path: '/' });
+	accessVal && Cookies.set(ACCESS, accessVal, { expires: A_DAY, path: '/' });
 	refreshVal &&
-		Cookies.set(REFRESH, refreshVal, { expires: A_MONTH, path: '/' });
+		Cookies.set(REFRESH, refreshVal, { expires: THREE_MONTH, path: '/' });
 };
 
 export const clearCookie = () => {

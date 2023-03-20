@@ -85,7 +85,7 @@ function Search() {
 									<span className="text-lg font-semibold mx-1 text-black">
 										{query.search ||
 											query.ingredients__title}
-									</span>{' '}
+									</span>
 									recipes
 								</span>
 							</div>

@@ -44,9 +44,11 @@ function RecipeCard({
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	return lastestRecipe ? (
 		<div
-			className={` flex md:gap-4 gap-2 border-t md:pt-4 pt-2 
+			className={` flex md:gap-4 gap-2 border-t   
 			${firstPost ? 'border-t-transparent' : ''} 
-			${secondPost ? 'md:border-t-transparent' : ''}`}
+			${secondPost ? 'md:border-t-transparent' : ''}
+			${firstPost || secondPost ? '' : 'md:pt-4 pt-2'}
+			`}
 		>
 			<Link
 				href={`/recipes/${slug}`}
@@ -104,7 +106,8 @@ function RecipeCard({
 							secondary
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
-						} ${lgCard ? ' w-full' : ''}`}
+						}`}
+						className={`${lgCard ? ' w-full' : ''}`}
 					>
 						<Img
 							src={main_image}

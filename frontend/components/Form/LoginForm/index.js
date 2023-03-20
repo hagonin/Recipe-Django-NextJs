@@ -15,6 +15,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
 import { TitlePrimary } from '@components/UI/Title';
 import { email, password } from '../FormControl/validate';
+import { info_recipeform } from '../FormControl/info';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -47,7 +48,7 @@ function LoginForm({ onSubmit }) {
 
 	return (
 		<>
-			<div className="flex justify-center items-center md:mb-10 mb-7">
+			<div className="flex justify-center items-center md:mb-5 mb-7">
 				<TitlePrimary title="Login" />
 				<Img
 					alt="login_icon"
@@ -81,30 +82,16 @@ function LoginForm({ onSubmit }) {
 					icon={<RiLockPasswordFill />}
 					rules={password}
 					info={{
-						content: (
-							<ul className="list-disc">
-								<li>Password must be more than 8 characters</li>
-								<li>Least one number</li>
-								<li>At least one special character</li>
-							</ul>
-						),
+						content: info_recipeform.password,
 					}}
 				/>
 
-				<div className="flex justify-between items-center  mb-8 mt-1 ">
-					<CheckboxField
-						name="login.remember"
-						isSingle={{ label: 'Remember me' }}
-						register={register}
-						error={formError?.login?.remember}
-					/>
-					<Link
-						href="/resetpassword"
-						className="text-base font-medium text-primaryDark relative -top-[3px]"
-					>
-						Forgot Password?
-					</Link>
-				</div>
+				<Link
+					href="/resetpassword"
+					className="text-[12px] font-medium text-black transition-all duration-300 hover:text-primaryDark relative -top-[3px] mb-8 mt-1 hover:underline hover:italic"
+				>
+					Forgotten your password?
+				</Link>
 				<Button
 					className="primary lg w-full"
 					type="submit"
@@ -124,7 +111,6 @@ function LoginForm({ onSubmit }) {
 					Create an account
 				</Link>
 			</p>
-			
 		</>
 	);
 }

@@ -9,11 +9,9 @@ import Rating from '@components/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 import { AiFillHeart } from 'react-icons/ai';
-import Button from '@components/UI/Button';
 import Method from './Method';
 import Notes from './Notes';
 import Source from './Source';
-import { MdCategory } from 'react-icons/md';
 import Category from './Category';
 
 function SingRecipe({

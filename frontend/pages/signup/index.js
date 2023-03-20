@@ -1,4 +1,3 @@
-import { GrStatusGood } from 'react-icons/gr';
 import { ENDPOINT_REGISTER, images, meta } from '@utils/constants';
 
 import SignUpForm from '@components/Form/SignUpForm';
@@ -12,7 +11,6 @@ import api from '@services/axios';
 import { TitlePrimary } from '@components/UI/Title';
 import Button from '@components/UI/Button';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { FaHome } from 'react-icons/fa';
 
 function SignUp() {
 	const router = useRouter();
@@ -97,13 +95,6 @@ function SignUp() {
 							</li>
 						))}
 					</ul>
-					<button
-						onClick={() => router.push('/')}
-						className="mt-2 font-serif flex items-center gap-2 hover:text-primary underline"
-					>
-						<FaHome />
-						Go home
-					</button>
 				</div>
 				<div className="bg-white lg:w-[500px]  rounded-xl md:pt-6 md:pb-9 py-4 md:px-8 px-4 border md:my-10 my-2 md:shadow-xl">
 					<SignUpForm onSubmit={handleSignup} />
