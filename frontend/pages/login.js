@@ -26,7 +26,11 @@ function Login() {
 						className="w-full md:h-72 h-36 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Welcome back" />
-					<p className="text-center mt-2">{meta.login}</p>
+					<p className='text-base text-center'>
+						It's nice to see you again.
+						<br className="block md:hidden" /> Log in to continue to
+						your account.
+					</p>
 					<button
 						onClick={() => router.push('/')}
 						className="mt-3 font-serif flex items-center gap-2 hover:text-primary underline"

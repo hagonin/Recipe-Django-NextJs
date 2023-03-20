@@ -33,7 +33,7 @@
     }
     
     h1 {
-       @apply text-5xl font-medium text-black;
+       @apply text-5xl font-medium text-black leading-8;
     }
 
     h2 {
@@ -61,10 +61,10 @@
     }
     
     ul {
-      @apply list-decimal ml-6;
+      @apply list-decimal ml-6 text-base;
     }
     ol {
-      @apply list-disc ml-6;
+      @apply list-disc ml-6 text-base;
     }
     
 }

@@ -84,10 +84,10 @@ function SignUp() {
 					/>
 					<TitlePrimary title="Create An Account" />
 					<h2 className="font-serif mt-2">What you will get?</h2>
-					<ul className="text-base p-0 m-0 md:mt-10 mt-3">
+					<ul className="p-0 m-0 md:mt-5 mt-3">
 						{meta.signup_content.map((item) => (
 							<li
-								className="flex"
+								className="flex text-base"
 								key={item.id}
 							>
 								<span className="mr-2 relative top-[6px] text-primary">

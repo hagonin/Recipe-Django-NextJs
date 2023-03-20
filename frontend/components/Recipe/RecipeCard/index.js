@@ -62,11 +62,11 @@ function RecipeCard({
 			<div className="flex-1 flex flex-col justify-center">
 				<Link
 					href={`/recipes/${slug}`}
-					className="text-semibold text-xl font-serif text-black line-clamp-2 capitalize "
+					className="text-semibold leading-6 text-xl font-serif text-black line-clamp-2 capitalize hover:text-primary"
 				>
 					{name}
 				</Link>
-				<span className="text-sm block whitespace-nowrap leading-none mt-1">
+				<span className="text-sm block whitespace-nowrap leading-none mt-2">
 					{date_format}
 				</span>
 				{rating && (
@@ -91,7 +91,7 @@ function RecipeCard({
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
 				} ${className} ${
-					isSlider ? '' : 'transition-all duration-300'
+					isSlider ? 'mb-5 ' : 'transition-all duration-300'
 				}`}
 			>
 				<div

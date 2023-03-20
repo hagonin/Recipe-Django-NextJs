@@ -43,16 +43,30 @@ function Ingredient({ ingredients, isPreview }) {
 								className="text-base border-b pb-1 first-letter:capitalize"
 							>
 								<Quantity quantity={i.quantity} />
-								{` ${handleUnit(i.unit, i.quantity)} ${
-									i.title
-								}`}
+								{i.quantity
+									? ` ${handleUnit(i.unit, i.quantity)} ${
+											i.title
+									  }`
+									: uppercaseFirstLetter(
+											`${handleUnit(
+												i.unit,
+												i.quantity
+											)} ${i.title}`
+									  )}
 							</span>
 						) : (
 							<Check key={index}>
 								<Quantity quantity={i.quantity} />
-								{` ${handleUnit(i.unit, i.quantity)} ${
-									i.title
-								}`}
+								{i.quantity
+									? ` ${handleUnit(i.unit, i.quantity)} ${
+											i.title
+									  }`
+									: uppercaseFirstLetter(
+											`${handleUnit(
+												i.unit,
+												i.quantity
+											)} ${i.title}`
+									  )}
 							</Check>
 						)
 					)}
@@ -60,7 +74,7 @@ function Ingredient({ ingredients, isPreview }) {
 				<div className="flex flex-col gap-2 mt-3 ">
 					{ingredient?.group.map((item, index) => (
 						<div key={index}>
-							<span className="font-medium text-black  tracking-widest  ">
+							<span className="text-base font-medium text-black  tracking-widest  ">
 								{uppercaseFirstLetter(item.heading)}
 							</span>
 							<div className="flex flex-col">
@@ -71,18 +85,32 @@ function Ingredient({ ingredients, isPreview }) {
 											className="border-b pb-1 first-letter:capitalize"
 										>
 											<Quantity quantity={i.quantity} />
-											{` ${handleUnit(
-												i.unit,
-												i.quantity
-											)} ${i.title}`}
+											{i.quantity
+												? ` ${handleUnit(
+														i.unit,
+														i.quantity
+												  )} ${i.title}`
+												: uppercaseFirstLetter(
+														`${handleUnit(
+															i.unit,
+															i.quantity
+														)} ${i.title}`
+												  )}
 										</span>
 									) : (
 										<Check key={index}>
 											<Quantity quantity={i.quantity} />
-											{` ${handleUnit(
-												i.unit,
-												i.quantity
-											)} ${i.title}`}
+											{i.quantity
+												? ` ${handleUnit(
+														i.unit,
+														i.quantity
+												  )} ${i.title}`
+												: uppercaseFirstLetter(
+														`${handleUnit(
+															i.unit,
+															i.quantity
+														)} ${i.title}`
+												  )}
 										</Check>
 									)
 								)}
@@ -96,6 +124,7 @@ function Ingredient({ ingredients, isPreview }) {
 }
 
 const Quantity = ({ quantity }) => (
-	<span className="text-[12px]">{quantity}</span>
+	<span className="text-xbase">{quantity}</span>
 );
+
 export default Ingredient;

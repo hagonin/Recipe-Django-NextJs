@@ -1,11 +1,11 @@
 function Title({ title, center, bottom = 'mb-5' }) {
 	return (
 		<div className={`${center ? 'text-center' : ''}`}>
-			<h6
-				className={`text-sm inline-block text-blackLight leading-6 uppercase  font-medium pb-1 border-b  border-b-primary tracking-widest ${bottom}`}
+			<span
+				className={`md:text-sm text-base inline-block text-blackLight leading-6 uppercase  font-medium pb-1 border-b  border-b-primary tracking-widest ${bottom}`}
 			>
 				{title}
-			</h6>
+			</span>
 		</div>
 	);
 }

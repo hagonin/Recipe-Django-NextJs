@@ -22,7 +22,7 @@ function ModalPrimary({ show, handleCloseModal, children, disabled, noClose }) {
 				<div className="absolute max-md:w-[90%] text-center z-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-lg py-6 md:px-12 px-4">
 					{noClose ? null : (
 						<button
-							className="absolute top-3 right-3 md:text-3xl text-4xl"
+							className="absolute top-2 right-2 md:text-3xl text-4xl"
 							onClick={handleCloseModal}
 							disabled={disabled}
 						>

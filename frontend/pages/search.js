@@ -35,7 +35,7 @@ function Search() {
 		<div className="container">
 			<div className=" flex gap-3">
 				{data?.data?.results.length > 0 && (
-					<span className="text-2xl text-black">
+					<span className="text-xl text-black">
 						Showing
 						<span className="mx-2 text-2xl text-black font-semibold">
 							{data?.data?.results.length}
@@ -43,7 +43,7 @@ function Search() {
 						{`result${
 							data?.data?.results.length > 1 ? 's' : ''
 						} for `}
-						<span className="text-2xl text-black font-semibold">
+						<span className="text-xl text-black font-semibold">
 							{query.search || query.ingredients__title}
 						</span>
 					</span>

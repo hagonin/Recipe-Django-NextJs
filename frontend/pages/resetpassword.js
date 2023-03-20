@@ -14,6 +14,7 @@ import RequiredEmail from '@components/Form/ResetPasswordForm/RequiredEmail';
 import Img from '@components/UI/Image';
 import ResetPassword from '@components/Form/ResetPasswordForm/ResetPassword';
 import toastMessage from '@utils/toastMessage';
+import { TitlePrimary } from '@components/UI/Title';
 
 function RequestResetPassword(props) {
 	const router = useRouter();
@@ -55,24 +56,32 @@ function RequestResetPassword(props) {
 	};
 
 	return (
-		<div className="bg-primaryLight min-h-screen flex">
+		<div
+			className="bg-primaryLight min-h-screen flex "
+			// style={{
+			// 	backgroundImage: `url(${images.bgHero})`,
+			// 	backgroundPosition: 'center',
+			// 	backgroundSize: 'contain',
+			// 	backgroundRepeat: 'no-repeat',
+			// }}
+		>
 			<div className="container py-14 m-auto">
-				<div className="md:max-w-[480px] mx-auto bg-white border-border rounded-md py-10 lg:px-10 md:px-8 px-4">
-					<h2 className="text-center mb-10 flex gap-3 justify-center items-center">
-						Reset Password
+				<div className="md:max-w-[480px] shadow-lg mx-auto bg-white border-border rounded-md py-10 lg:px-10 md:px-8 px-4">
+					<div className="text-center mb-10 flex gap-3 justify-center items-center">
+						<TitlePrimary title="Reset Password" />
 						<Img
 							src={images.resetpassword1}
 							alt="resetpassword"
 							className="h-8 w-8 -top-1"
 						/>
-					</h2>
+					</div>
 					{props?.token_valid ? (
 						<ResetPassword onSubmit={handleChangePassword} />
 					) : (
 						<RequiredEmail onSubmit={handleSendRequest} />
 					)}
 
-					<span className="mt-5 text-center flex items-center justify-center">
+					<div className="mt-5 text-center flex flex-col  items-center justify-center">
 						{props?.token_valid && (
 							<button
 								onClick={() => router.push('/resetpassword')}
@@ -86,9 +95,9 @@ function RequestResetPassword(props) {
 							href="/login"
 							className="ml-2 underline font-semibold hover:text-primary flex items-center gap-2 "
 						>
-							<FiLogIn /> Login
+							Login
 						</Link>
-					</span>
+					</div>
 				</div>
 			</div>
 		</div>

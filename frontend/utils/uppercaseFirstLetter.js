@@ -1,5 +1,8 @@
 function uppercaseFirstLetter(str) {
-	const result = str.replace(str[0], str[0]?.toUpperCase());
+	const x = str.trim();
+	console.log(x);
+	const result = x.replace(x[0], x[0]?.toUpperCase());
+	console.log(result);
 	return result;
 }
 

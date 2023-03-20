@@ -45,7 +45,7 @@ function SingRecipe({
 	return (
 		<div>
 			<h1 className="text-center font-serif capitalize">{title}</h1>
-			<span className="block text-center font-medium mt-2">
+			<span className="block text-center font-medium mt-2 text-base">
 				{`${updated_at_format} / by ${author}`}
 			</span>
 			<Img
@@ -54,7 +54,7 @@ function SingRecipe({
 				className="mt-4 w-full h-[600px] mx-auto "
 				cover
 			/>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm gap-4 mb-5">
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm md:gap-4 gap-2 mb-5">
 				<TimerBox
 					prep_time={prep_time}
 					cook_time={cook_time}
@@ -68,7 +68,7 @@ function SingRecipe({
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
-						<span className="block mt-1 flex gap-2">
+						<span className="block mt-1 flex gap-2 text-base">
 							{`${updated_at_format} / by ${author}`}
 							<Category
 								category={category}
@@ -129,14 +129,14 @@ function SingRecipe({
 }
 
 const Timer = ({ children }) => (
-	<span className="flex items-center gap-2 ">{children}</span>
+	<span className="flex items-center gap-2 text-base">{children}</span>
 );
 
 export const TimerBox = ({ prep_time, cook_time, serving }) => (
 	<>
 		{prep_time && (
 			<Timer>
-				<BsClockFill />
+				<BsClockFill/>
 				Prepare time: {formatTime(prep_time)}
 			</Timer>
 		)}

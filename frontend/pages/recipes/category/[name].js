@@ -51,7 +51,7 @@ function CategoryPage() {
 							cover
 						/>
 						<TitlePrimary title={category.name} />
-						<p className="mt-3 text-base max-md:text-justify">{category.desc}</p>
+						<p className="mt-3">{category.desc}</p>
 					</div>
 				)}
 				<div className="flex flex-col lg:gap-y-8 gap-y-6 mt-10">

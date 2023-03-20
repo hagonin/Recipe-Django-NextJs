@@ -78,8 +78,8 @@ function LoginForm({ onSubmit }) {
 					register={register}
 					error={formError?.login?.password}
 					required
-					rules={password}
 					icon={<RiLockPasswordFill />}
+					rules={password}
 					info={{
 						content: (
 							<ul className="list-disc">

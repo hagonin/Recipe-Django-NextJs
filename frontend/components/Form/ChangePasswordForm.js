@@ -41,6 +41,7 @@ function ChangePasswordForm({ onSubmit }) {
 			)}
 		>
 			<InputField
+				label="Old password"
 				name="change_password.old_password"
 				type="password"
 				placeholder="Enter old password"
@@ -51,14 +52,24 @@ function ChangePasswordForm({ onSubmit }) {
 				rules={{ required: 'Please enter your password' }}
 			/>
 			<InputField
+				label="New password"
 				name="change_password.new_password"
 				type="password"
 				placeholder="Enter new password"
 				icon={<RiLockPasswordLine />}
 				register={register}
 				error={formErrors?.change_password?.new_password}
-				rules={password}
 				required
+				rules={password}
+				info={{
+					content: (
+						<ul className="list-disc">
+							<li>Password must be more than 8 characters</li>
+							<li>Least one number</li>
+							<li>At least one special character</li>
+						</ul>
+					),
+				}}
 			/>
 			<Button
 				className="lg w-full primary"

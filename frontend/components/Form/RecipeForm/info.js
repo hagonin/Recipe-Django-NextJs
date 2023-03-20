@@ -34,6 +34,6 @@ export const info_recipeform = {
 		info: <div>You can put number of people or group of people</div>,
 	},
 	source: {
-		info: "If your recipe is an external source, respect the author's by provide reference their.",
+		info: "If your recipe is inspired by or derived from another source, kindly honor the original author's copyright by including a reference to the source on your website.",
 	},
 };

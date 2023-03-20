@@ -24,7 +24,7 @@ function Recipe() {
 
 	return (
 		<div className="">
-			<div className="flex justify-between">
+			<div className="flex justify-between items-center">
 				<TitlePrimary title="Discover all recipes" />
 				<ShowPages
 					currentPage={currentPage}

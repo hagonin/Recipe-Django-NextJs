@@ -16,7 +16,7 @@ function RootLayout({ children }) {
 			) : (
 				<>
 					<Header />
-					<div className="max-lg:py-28 max-lg:pb-8">{children}</div>
+					<div className="max-lg:pt-32 max-lg:mb-10">{children}</div>
 					<Footer />
 				</>
 			)}

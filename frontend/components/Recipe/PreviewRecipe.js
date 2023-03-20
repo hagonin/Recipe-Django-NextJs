@@ -1,6 +1,5 @@
 import { memo, useState } from 'react';
 
-import { BsFillTagsFill } from 'react-icons/bs';
 import createMarkup from '@utils/createMarkup';
 
 import Img from '@components/UI/Image';
@@ -68,7 +67,7 @@ function PreviewRecipe({
 						<div className="flex flex-wrap items-center gap-x-6 gap-y-4">
 							{created_at && (
 								<div className="flex gap-2">
-									<span className="text-lg flex">
+									<span className="text-base flex">
 										Created at:
 									</span>
 									<span className="text-base text-semibold text-black relative top-[1px]">
@@ -78,7 +77,7 @@ function PreviewRecipe({
 							)}
 							{updated_at && (
 								<div className="flex gap-2">
-									<span className="text-lg">Updated at:</span>
+									<span className="text-base">Updated at:</span>
 									<span className="text-base text-semibold text-black relative top-[1px]">
 										{formatDate(updated_at)}
 									</span>

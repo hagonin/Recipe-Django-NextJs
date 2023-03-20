@@ -5,7 +5,7 @@ import { useAuthContext } from '@context/auth-context';
 
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import { InputField } from '../FormControl';
+import { InputField, password } from '../FormControl';
 import Form from '../FormControl/Form';
 
 function ResetPassword({ onSubmit }) {
@@ -28,6 +28,7 @@ function ResetPassword({ onSubmit }) {
 	return (
 		<Form onSubmit={handleSubmit(({ reset }) => onSubmit(reset))}>
 			<InputField
+			label='New password'
 				name="reset.password"
 				type="password"
 				placeholder="Enter new password"
@@ -35,11 +36,15 @@ function ResetPassword({ onSubmit }) {
 				register={register}
 				error={formErrors?.reset?.password}
 				required
-				rules={{
-					minLength: {
-						value: 8,
-						message: 'Ensure this field has at least 8 characters.',
-					},
+				rules={password}
+				info={{
+					content: (
+						<ul className="list-disc">
+							<li>Password must be more than 8 characters</li>
+							<li>Least one number</li>
+							<li>At least one special character</li>
+						</ul>
+					),
 				}}
 			/>
 

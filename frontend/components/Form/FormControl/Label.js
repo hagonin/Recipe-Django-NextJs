@@ -5,7 +5,7 @@ import { HiInformationCircle } from 'react-icons/hi';
 
 const Label = ({ label, name, info, required }) => {
 	return (
-		<div className="flex gap-2 items-center">
+		<div className="flex gap-1 items-center">
 			<div className="flex gap-1">
 				{label && (
 					<label
@@ -25,7 +25,7 @@ const Label = ({ label, name, info, required }) => {
 					placement={info.placement || 'auto'}
 				>
 					<button
-						className="relative -top-1 text-primaryDark"
+						className="relative -top-[1px] text-primaryDark "
 						type="button"
 					>
 						<HiInformationCircle />

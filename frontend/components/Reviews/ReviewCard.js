@@ -1,11 +1,8 @@
+import { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import Rating from '@components/Reviews/Rate';
 import { images } from '@utils/constants';
-import formatDate from '@utils/formatdate';
-import { useState } from 'react';
-import { FiDelete } from 'react-icons/fi';
-import { GrClose } from 'react-icons/gr';
-import { MdClose } from 'react-icons/md';
 import Img from '../UI/Image';
 
 function ReviewCard({
@@ -49,7 +46,7 @@ function ReviewCard({
 							<span className="font-medium text-base leading-0">
 								{user}
 							</span>
-							<Rating number={rating} />
+							<Rating number={rating} small/>
 						</div>
 						<div className="flex flex-col items-end">
 							<span className="text-sm ">{date_added}</span>
@@ -65,7 +62,7 @@ function ReviewCard({
 							)}
 						</div>
 					</div>
-					<span className="first-letter:capitalize block font-medium text-black">
+					<span className="first-letter:capitalize block font-medium text-black mt-2 text-base">
 						{title}
 					</span>
 					<p className="first-letter:uppercase">{content}</p>

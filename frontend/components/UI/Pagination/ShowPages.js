@@ -1,8 +1,8 @@
 function ShowPages({ pages, currentPage, isSearch }) {
 	return pages ? (
-		<span className="md:text-lg text-[0.85rem] text-black text-right">
+		<span className="md:text-lg text-base text-black text-right leading-5">
 			Showing
-			<span className="text-lg font-bold mx-1">{currentPage}</span>
+			<span className="md:text-lg text-base font-bold mx-1">{currentPage}</span>
 			{`of ${pages} page${pages > 1 ? 's' : ''}`}
 		</span>
 	) : (

@@ -13,7 +13,7 @@ function Check({ children }) {
 				type="checkbox"
 				onChange={() => setCheck(!check)}
 				value={check}
-				className="mr-3 text-base relative top-[1px]"
+				className="mr-3 text-base relative md:top-[1px] top-[3px]"
 			/>
 			{children}
 		</label>

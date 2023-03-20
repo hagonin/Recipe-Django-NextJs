@@ -1,7 +1,7 @@
-import { useAuthContext } from '@context/auth-context';
-import { useRecipeContext } from '@context/recipe-context';
 import Link from 'next/link';
+import { useRecipeContext } from '@context/recipe-context';
 import { AiOutlineDoubleRight } from 'react-icons/ai';
+
 import RecipeCard from './RecipeCard';
 
 function GroupCategory({ list = [], name = 'Category name', hasBorder }) {
@@ -20,7 +20,7 @@ function GroupCategory({ list = [], name = 'Category name', hasBorder }) {
 					<AiOutlineDoubleRight />
 				</Link>
 			</div>
-			<div className="grid lg:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-x-4 md:gap-y-8  gap-x-2 gap-y-10">
+			<div className="grid lg:grid-cols-3 grid-cols-2 lg:gap-x-6 lg:gap-y-10 md:gap-x-4 md:gap-y-8  gap-x-2 gap-y-2">
 				{list.map((item) => (
 					<RecipeCard
 						actBookmark={checkBookmarkAct(item.id)}

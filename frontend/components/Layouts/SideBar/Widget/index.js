@@ -47,7 +47,7 @@ function Widget() {
 				)}
 			</CommonSection>
 			<CommonSection title="newsletter">
-				<span className="block text-center mb-4">
+				<span className="block md:text-base text-xbase text-center mb-3">
 					Subscribe to receive new recipes straight to your inbox!
 				</span>
 				<SubscribeForm third />

@@ -5,6 +5,7 @@ import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
 import { images, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
+import usePagination from 'hook/usePagination';
 
 import { MdEmail, MdSecurity } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
@@ -15,7 +16,6 @@ import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { TitlePrimary } from '@components/UI/Title';
-import usePagination from 'hook/usePagination';
 import Pagination from '@components/UI/Pagination';
 import Loader from '@components/UI/Loader';
 
@@ -28,7 +28,7 @@ function Profile() {
 		isLoading: loading1,
 		mutate: mutateOwnRecipe,
 	} = useSWR(`/user/${user.username}/recipes`, fetcher);
-	
+
 	const {
 		data: bookmarks,
 		isLoading: loading2,
@@ -153,11 +153,11 @@ function Profile() {
 						) : recipes.length > 0 ? (
 							<>
 								<div className="mb-5 flex gap-4">
-									<span className="inline-block">
+									<span className="inline-block text-base">
 										You have <b>{recipes.length}</b> recipes
 									</span>
 									<button
-										className="font-bold text-yellow text-lg block underline"
+										className="font-semibold text-yellow text-base block underline"
 										onClick={() =>
 											router.push('/user/recipe/add')
 										}

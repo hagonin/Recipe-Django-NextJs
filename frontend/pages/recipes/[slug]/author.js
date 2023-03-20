@@ -13,8 +13,8 @@ function Author() {
 
 	return (
 		<div className="lg:w-2/3 md:w-4/5 mx-auto">
-			<div className=""></div>
-			<div className="bg-third top-full bottom-full rounded-md md:py-8 md:px-8 px-4 py-6 flex flex-col items-center gap-4">
+			<TitlePrimary title="About author" center />
+			<div className="bg-third top-full bottom-full rounded-md mt-5 md:py-8 md:px-8 px-4 py-6 flex flex-col items-center gap-4">
 				<Img
 					src={data?.user?.profile?.avatar}
 					alt={data?.user?.username}
@@ -22,11 +22,10 @@ function Author() {
 					cover
 				/>
 				<span
-					className={`${satisfy.className} text-[2rem] relative -top-1 mb-4`}
+					className={`${satisfy.className} text-[2rem] `}
 				>
 					{data?.user?.username}
 				</span>
-				<TitlePrimary title="About" />
 				<p>{data?.user?.profile?.bio}</p>
 				<SocialLink color="grey" />
 			</div>
