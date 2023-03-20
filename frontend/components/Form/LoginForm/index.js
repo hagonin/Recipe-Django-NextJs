@@ -48,7 +48,7 @@ function LoginForm({ onSubmit }) {
 
 	return (
 		<>
-			<div className="flex justify-center items-center md:mb-10 mb-7">
+			<div className="flex justify-center items-center md:mb-5 mb-7">
 				<TitlePrimary title="Login" />
 				<Img
 					alt="login_icon"
@@ -86,20 +86,12 @@ function LoginForm({ onSubmit }) {
 					}}
 				/>
 
-				<div className="flex justify-between items-center  mb-8 mt-1 ">
-					<CheckboxField
-						name="login.remember"
-						isSingle={{ label: 'Remember me' }}
-						register={register}
-						error={formError?.login?.remember}
-					/>
-					<Link
-						href="/resetpassword"
-						className="text-base font-medium text-primaryDark relative -top-[3px]"
-					>
-						Forgot Password?
-					</Link>
-				</div>
+				<Link
+					href="/resetpassword"
+					className="text-[12px] font-medium text-black transition-all duration-300 hover:text-primaryDark relative -top-[3px] mb-8 mt-1 hover:underline hover:italic"
+				>
+					Forgotten your password?
+				</Link>
 				<Button
 					className="primary lg w-full"
 					type="submit"

@@ -1,12 +1,10 @@
 import { useAuthContext } from '@context/auth-context';
-import { images, meta } from '@utils/constants';
+import { images } from '@utils/constants';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 import { TitlePrimary } from '@components/UI/Title';
-import Button from '@components/UI/Button';
 import { useRouter } from 'next/router';
-import { FaHome } from 'react-icons/fa';
 
 function Login() {
 	const router = useRouter();
@@ -31,13 +29,6 @@ function Login() {
 						<br className="block md:hidden" /> Log in to continue to
 						your account.
 					</p>
-					<button
-						onClick={() => router.push('/')}
-						className="mt-3 font-serif flex items-center gap-2 hover:text-primary underline"
-					>
-						<FaHome />
-						Go home
-					</button>
 				</div>
 			</div>
 		</div>

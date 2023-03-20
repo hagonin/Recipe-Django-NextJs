@@ -99,7 +99,7 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const login = async ({ email, password, remember }) => {
+	const login = async ({ email, password }) => {
 		try {
 			const loginRes = await api.post(ENDPOINT_LOGIN, {
 				email,
@@ -107,7 +107,7 @@ const AuthProvider = ({ children }) => {
 			});
 			const { refresh, access } = loginRes.data.tokens;
 			setToken({ access: access, refresh: refresh });
-			remember && setCookie(access, refresh);
+			setCookie(access, refresh);
 
 			const user = await getUser(access);
 			const { profile, ...rest } = user.data;
@@ -127,7 +127,6 @@ const AuthProvider = ({ children }) => {
 				// toastMessage({message:'Your profile is incomplete', type:'error'})
 			}
 		} catch ({ status, _error, error }) {
-
 			setUser((pre) => ({ ...pre, email: email }));
 			if (status === 400) {
 				setErrors({ login: { ..._error } });
@@ -166,7 +165,6 @@ const AuthProvider = ({ children }) => {
 						message: 'We have sent the new verify email.',
 						type: 'success',
 					});
-					
 				}
 			})
 			.catch();

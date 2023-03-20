@@ -138,7 +138,7 @@ function SignUpForm({ onSubmit }) {
 					label="Confirm password"
 					name="register.confirm_password"
 					type="password"
-					placeholder="Confirm password"
+					placeholder="Enter confirm password"
 					register={register}
 					error={formError?.register?.confirm_password}
 					required
@@ -175,14 +175,14 @@ function SignUpForm({ onSubmit }) {
 					By clicking "Create Account", I consent to
 					<Link
 						href="/"
-						className="underline text-primary ml-1"
+						className="underline text-primary mx-1"
 					>
 						the Terms of Services
 					</Link>
 					and
 					<Link
 						href="/"
-						className="underline text-primary"
+						className="underline text-primary mx-1"
 					>
 						Privacy Policy
 					</Link>
