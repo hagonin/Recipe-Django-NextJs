@@ -25,7 +25,7 @@ function VerifyEmailForm({ handleEffectAfterResend }) {
 		>
 			<Button
 				onClick={handleSubmit(onSubmit)}
-				className="mt-2 verify"
+				className="mt-2 verify whitespace-nowrap"
 				disabled={isSubmitting}
 			>
 				{isSubmitting && <Loader type="submitting" />}

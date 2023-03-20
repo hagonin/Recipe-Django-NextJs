@@ -1,18 +1,17 @@
 import Link from 'next/link';
-import createMarkup from '@utils/createMarkup';
 import formatDate from '@utils/formatdate';
-import { AiFillClockCircle } from 'react-icons/ai';
-import { BsBookmarksFill } from 'react-icons/bs';
+import { AiFillHeart } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
-import { HiOutlineTag } from 'react-icons/hi';
-import { MdDateRange, MdAddPhotoAlternate, MdDelete } from 'react-icons/md';
+import { MdAddPhotoAlternate, MdDateRange, MdDelete } from 'react-icons/md';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import Rating from '@components/UI/Reviews/Rate';
+import Rating from '@components/Reviews/Rate';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import { useState } from 'react';
 import Tooltip from '@components/UI/Tooltip';
 import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
+import { FaTags } from 'react-icons/fa';
+import Category from '../SingleRecipe/Category';
 
 function RecipeCard({
 	name,
@@ -35,18 +34,19 @@ function RecipeCard({
 	secondary,
 	actBookmark,
 	handleToggleBookmark = () => {},
-	lastPost,
-	isAverage,
-	noBorder,
+	lastestRecipe,
+	firstPost,
+	secondPost,
+	isSlider,
 }) {
 	const date_format = formatDate(date);
 	const summaryMarkup = summary && getPlainTextFromHtml(summary);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-	return lastPost ? (
+	return lastestRecipe ? (
 		<div
-			className={`flex grid-cols-3 gap-4 ${
-				noBorder ? '' : 'border-t'
-			} pt-4`}
+			className={` flex md:gap-4 gap-2 border-t md:pt-4 pt-2 
+			${firstPost ? 'border-t-transparent' : ''} 
+			${secondPost ? 'md:border-t-transparent' : ''}`}
 		>
 			<Link
 				href={`/recipes/${slug}`}
@@ -62,11 +62,11 @@ function RecipeCard({
 			<div className="flex-1 flex flex-col justify-center">
 				<Link
 					href={`/recipes/${slug}`}
-					className="text-semibold lg:text-xl text-lg font-serif text-black line-clamp-2 capitalize"
+					className="text-semibold leading-6 text-xl font-serif text-black line-clamp-2 capitalize hover:text-primary"
 				>
 					{name}
 				</Link>
-				<span className="text-sm block whitespace-nowrap">
+				<span className="text-sm block whitespace-nowrap leading-none mt-2">
 					{date_format}
 				</span>
 				{rating && (
@@ -86,28 +86,34 @@ function RecipeCard({
 				handleCloseConfirm={() => setShowConfirmDelete(false)}
 			/>
 			<div
-				className={`h-full  rounded overflow-hidden ${
-					smallCard && 'md:shadow-md border'
+				className={`h-full  rounded overflow-hidden   ${
+					smallCard && 'md:shadow md:hover:shadow-lg border'
 				} ${
 					border ? 'pb-8 mt-8 border-b border-border' : ''
-				} ${className}`}
+				} ${className} ${
+					isSlider ? 'mb-5 ' : 'transition-all duration-300'
+				}`}
 			>
 				<div
-					className={`relative md:h-56 h-48 ${
-						lgCard ? 'lg:col-span-5' : ''
+					className={`relative  ${
+						lgCard ? 'lg:col-span-5 h-full w-full' : 'md:h-56 h-48'
 					}`}
 				>
 					<Link
-						href={
+						href={`${
 							secondary
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
-						}
+						} ${lgCard ? ' w-full' : ''}`}
 					>
 						<Img
 							src={main_image}
 							alt={name}
-							className="md:h-56 h-48 "
+							className={`${
+								lgCard
+									? 'lg:h-full w-full h-56'
+									: 'md:h-56 h-48'
+							}`}
 							cover
 							title={name}
 						/>
@@ -116,72 +122,48 @@ function RecipeCard({
 					{secondary ? null : (
 						<Tooltip
 							content={
-								actBookmark
-									? 'Remove collection'
-									: 'Add collection'
+								actBookmark ? 'Remove wishlist' : 'Add wishlist'
 							}
 						>
 							<button
 								onClick={() =>
 									handleToggleBookmark(actBookmark, id)
 								}
-								className={`p-2 rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
-									actBookmark
-										? 'bg-white text-primary'
-										: 'bg-primary text-white'
+								className={`p-2 bg-whiteTransparent rounded-full  text-xl absolute top-2 right-2 shadow-lg ${
+									actBookmark ? ' text-red' : ' text-primary'
 								} `}
 							>
-								<BsBookmarksFill />
+								<AiFillHeart />
 							</button>
 						</Tooltip>
 					)}
 				</div>
 				<div
-					className={`md:px-4 px-2 pt-3  pb-4  ${
-						lgCard ? 'lg:col-span-7' : ''
+					className={` pt-3  pb-4  ${
+						lgCard ? 'lg:col-span-7' : 'md:px-4 px-2'
 					}`}
 				>
 					<div>
-						{category && (
-							<span className="tag font-bold text-[0.68rem] uppercase  !text-red2 inline-flex  rounded-md gap-2 leading-7 items-center">
-								<HiOutlineTag />
-								{category}
-							</span>
-						)}
+						<Category category={category} />
 						<Link
 							href={
 								secondary
 									? `/user/recipe/${slug}`
 									: `/recipes/${slug}`
 							}
-							className={`inline text-black  font-serif capitalize line-clamp-2 ${
+							className={`inline text-black  font-serif capitalize ${
 								smallCard
 									? 'text-2xl'
 									: lgCard
 									? 'text-2xl '
 									: 'text-xl'
-							}    hover:text-primaryDark transition-all duration-200`}
+							}    hover:text-primaryDark transition-all duration-200 ${
+								isSlider ? ' line-clamp-1' : ' line-clamp-2'
+							}`}
 							title={name}
 						>
 							{name}
 						</Link>
-						{/* {smallCard && (
-							<>
-								<p className="mt-1  text-lg line-clamp-2">
-									{summaryMarkup}
-								</p>
-								<Link
-									className="underline text-[14px] text-primary hover:text-primaryDark"
-									href={
-										secondary
-											? `/user/recipe/${slug}`
-											: `/recipes/${slug}`
-									}
-								>
-									Read more
-								</Link>
-							</>
-						)} */}
 					</div>
 
 					<div
@@ -197,13 +179,14 @@ function RecipeCard({
 									lgCard ? 'text-base mr-3' : 'text-sm'
 								} flex items-center gap-1`}
 							>
+								{lgCard && <MdDateRange />}
 								{date_format}
 							</span>
 						)}
 						{rating ? (
 							<Rating
 								number={rating}
-								small={smallCard}
+								small={smallCard || lgCard}
 								count={reviews_count}
 							/>
 						) : null}
@@ -211,22 +194,21 @@ function RecipeCard({
 
 					{summaryMarkup && lgCard && (
 						<>
-							<p className="mt-1  text-lg line-clamp-4">
+							<p className="mt-2 text-base line-clamp-4">
 								{summaryMarkup}
 							</p>
-							{lgCard && (
-								<Button
-									type="link"
-									href={
-										secondary
-											? `/user/recipe/${slug}`
-											: `/recipes/${slug}`
-									}
-									className="mt-4  !h-9 !text-[0.7rem] tracking-[0.2em]"
-								>
-									Continue Reading
-								</Button>
-							)}
+
+							<Button
+								type="link"
+								href={
+									secondary
+										? `/user/recipe/${slug}`
+										: `/recipes/${slug}`
+								}
+								className="md:mt-4 mt-2  !h-9 !text-[0.7rem] tracking-[0.2em]"
+							>
+								Continue Reading
+							</Button>
 						</>
 					)}
 

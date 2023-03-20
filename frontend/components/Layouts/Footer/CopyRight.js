@@ -24,7 +24,7 @@ function CopyRight() {
 						Contact
 					</Link>
 				</div>
-				<span>© 2023. HomeCook. All rights reserved.</span>
+				<span className='text-base'>© 2023. HomeCook. All rights reserved.</span>
 			</div>
 		</div>
 	);

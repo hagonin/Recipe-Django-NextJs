@@ -1,57 +1,56 @@
-import { useAuthContext } from '@context/auth-context';
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
 import Img from '@components/UI/Image';
 import CollectionPics from './CollectionPics';
 import CommonSection from './CommonSection';
-import UserSection from './UserSection';
-import Loader from '@components/UI/Loader';
 import Tags from './Tags';
 import LastPost from '../../../Recipe/LastestRecipes';
 import { useRouter } from 'next/router';
+import { useRecipeContext } from '@context/recipe-context';
+import Link from 'next/link';
+import Loader from '@components/UI/Loader';
+import { meta } from '@utils/constants';
 
 function Widget() {
-	const { isAuthenticated, loading, user } = useAuthContext();
-
 	const router = useRouter();
-	const bannerImg =
-		'https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/06/promo_2_2item.jpg';
-
+	const { photoRandom } = useRecipeContext();
 	const onSubmitSearch = (data) =>
 		router.push({
 			pathname: '/search',
 			query: data,
 		});
+
 	return (
-		<section className="flex flex-col gap-y-10">
-			{loading ? (
-				<CommonSection>
-					<Loader />
-				</CommonSection>
-			) : isAuthenticated ? (
-				<UserSection
-					name={user.username}
-					bio={user.bio}
-					avatar={user.avatar}
-				/>
-			) : null}
+		<section className="flex flex-col lg:gap-y-8 md:gap-y-6 gap-y-4">
+			<CommonSection title="About Us">
+				<p className="text-center ">
+					<span className="font-bold text-primary">HomeCook</span>
+					{meta.introWeb}
+				</p>
+			</CommonSection>
 			<CollectionPics />
 			<CommonSection title="LATEST POSTS">
 				<LastPost />
 			</CommonSection>
 			<CommonSection title="Banner">
-				<Img
-					src={bannerImg}
-					alt="banner"
-					className="h-[300px]"
-					cover
-				/>
+				{photoRandom ? (
+					<Link href={`/recipes/${photoRandom?.slug}`}>
+						<Img
+							src={photoRandom?.src}
+							alt="banner"
+							className="lg:h-[300px] md:h-44 h-[300px]"
+							cover
+						/>
+					</Link>
+				) : (
+					<Loader type="square" />
+				)}
 			</CommonSection>
 			<CommonSection title="newsletter">
-				<span className="block text-center mb-4">
+				<span className="block md:text-base text-xbase text-center mb-3">
 					Subscribe to receive new recipes straight to your inbox!
 				</span>
-				<SubscribeForm secondary />
+				<SubscribeForm third />
 			</CommonSection>
 			<CommonSection title="tags">
 				<Tags />

@@ -1,26 +1,45 @@
-import {
-	HiOutlineChevronDoubleLeft,
-	HiOutlineChevronDoubleRight,
-} from 'react-icons/hi';
-
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
-import Button from '@components/UI/Button';
 import { useRecipeContext } from '@context/recipe-context';
-import usePagination from 'hook/usePagination';
+import { usePaginationByApi } from 'hook/usePagination';
 import Loader from '@components/UI/Loader';
-import { NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
+
+import { TitlePrimary } from '@components/UI/Title';
+import Pagination from '@components/UI/Pagination';
+import ShowPages from '@components/UI/Pagination/ShowPages';
+import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
 function Recipe() {
-	const { checkBookmarkAct, handleToggleBookmark, recipes } =
-		useRecipeContext();
-	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
-		usePagination({ recipes: recipes, page: NUMBER_OF_RECIPE_RECIPE_PAGE });
+	const { checkBookmarkAct, handleToggleBookmark } = useRecipeContext();
+
+	const {
+		currentPage,
+		setCurrentPage,
+		pages,
+		next,
+		previous,
+		currentRecipes,
+		isLoading,
+	} = usePaginationByApi({ limit: NUMBER_OF_RECIPE_RENDER });
+
 	return (
-		<div>
-			<h1 className="mb-10 font-serif">Discover all recipes</h1>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6">
-				{currentRecipes ? (
+		<div className="">
+			<div className="flex justify-between items-center">
+				<TitlePrimary title="Discover all recipes" />
+				<ShowPages
+					currentPage={currentPage}
+					pages={pages}
+				/>
+			</div>
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-6 md:gap-y-10 gap-y-6 mt-10">
+				{isLoading ? (
+					<>
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+						<Loader type="recipe-card" />
+					</>
+				) : (
+					currentRecipes &&
 					currentRecipes.map((item) => {
 						return (
 							<RecipeCard
@@ -42,34 +61,15 @@ function Recipe() {
 							/>
 						);
 					})
-				) : (
-					<>
-						<Loader type="recipe-card" />
-						<Loader type="recipe-card" />
-						<Loader type="recipe-card" />
-					</>
 				)}
 			</div>
-			{currentRecipes?.length > 0 && (
-				<div className="flex justify-between mt-10">
-					<Button
-						className="disabled"
-						icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-						onClick={previousPage}
-						disabled={currentPage === 1}
-					>
-						Previous Recipe
-					</Button>
-					<Button
-						className="disabled"
-						icon={{ right: <HiOutlineChevronDoubleRight /> }}
-						disabled={currentPage >= limit}
-						onClick={nextPage}
-					>
-						Next recipe
-					</Button>
-				</div>
-			)}
+			<Pagination
+				pages={pages}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+				next={next}
+				previous={previous}
+			/>
 		</div>
 	);
 }

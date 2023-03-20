@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { ENDPOINT_RECIPE_DETAIL, images } from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
-import { toast } from 'react-toastify';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import Img from '@components/UI/Image';
@@ -11,6 +10,8 @@ import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import Button from '@components/UI/Button';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 import { useRecipeContext } from '@context/recipe-context';
+import { TitlePrimary } from '@components/UI/Title';
+import toastMessage from '@utils/toastMessage';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
@@ -25,12 +26,17 @@ function AddRecipe() {
 				configAuth()
 			);
 			await mutateRecipes();
-			toast.success('Add recipe success');
+			toastMessage({
+				message: 'Recipe successfully added',
+			});
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
-		} catch ({ _error }) {
-			if (_error.ingredients) {
-				toast.error('Ingredient title must make a unique set.');
+		} catch ({ _error, status, error }) {
+			if (_error?.ingredients) {
+				toastMessage({
+					message: 'Ingredient title must make a unique set.',
+					type: 'error',
+				});
 			}
 		}
 	});
@@ -41,13 +47,16 @@ function AddRecipe() {
 
 	return (
 		<div className="container py-14 lg:w-3/4">
-			<div className="flex items-end justify-center mb-4">
+			<div className="flex items-center gap-4 justify-center">
 				<Img
 					src={images.addRecipeImg}
 					alt="add_recipe"
-					className="h-24 w-24"
+					className="h-24 w-24 -top-3"
 				/>
-				<h1 className="ml-4 mb-4">Add Recipe</h1>
+				<TitlePrimary
+					title="Add Recipe"
+					center
+				/>
 			</div>
 			<p className="text-center mb-16">
 				Uploading personal recipes is easy! Add yours to your favorites,

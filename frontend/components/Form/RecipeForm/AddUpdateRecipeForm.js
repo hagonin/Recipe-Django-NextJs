@@ -2,12 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { HiInformationCircle } from 'react-icons/hi';
 
-import {
-	InputField,
-	SelectField,
-	RichTextField,
-	Label,
-} from '@components/Form/FormControl';
+import { InputField, SelectField, Label } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
 import Ingredients from './Ingredients';
 import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
@@ -26,6 +21,7 @@ import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { info_recipeform } from './info';
 import { keyword } from '../FormControl/validate';
 import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
+import RichTextField from '../FormControl/RichText';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 	const { errors } = useAuthContext();
@@ -89,7 +85,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 		// add ...rest to form
 		Object.keys(rest).forEach((key) => {
 			const value =
-				typeof rest[key] === 'string'
+				typeof rest[key] === 'string' && key !== 'description'
 					? rest[key].toLowerCase()
 					: rest[key];
 			form.append(key, value);
@@ -312,9 +308,9 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 						error={formErr?.recipe?.source}
 						placeholder="e.g. recipe.example.com"
 						info={{
-							content: 'Where did this recipe come from ?',
-							placement: 'right',
+							content: info_recipeform.source.info,
 						}}
+						rules={{ required: 'Please enter your recipe source.' }}
 					/>
 				</div>
 			</div>
@@ -326,22 +322,23 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 			/>
 			{!isUpdate && (
 				<p className="mx-auto mt-5">
-					<FaRegLightbulb className="inline text-yellow relative -top-[2px]" />{' '}
+					<FaRegLightbulb className="inline text-yellow relative -top-[2px]" />
 					You can add more photos after you add the recipe. We all
 					love photos recipes with good finished-product photos
 					generally sort higher than those without.
 				</p>
 			)}
-			<div className="flex gap-4 mt-5 justify-end items-center">
+			<div className="flex gap-4 mt-5 justify-end items-center md:flex-row flex-col">
 				<Button
-					className="cancle lg min-w-[200px] !font-semibold"
+					className="cancle lg md:w-[200px] w-full"
 					type="reset"
 					onClick={handleCancel}
+					disabled={isSubmitting}
 				>
 					Cancel
 				</Button>
 				<Button
-					className="lg primary px-24 min-w-[200px] !font-semibold"
+					className="lg primary px-24 md:w-[200px] w-full"
 					type="submit"
 					disabled={isSubmitting}
 				>
@@ -355,13 +352,16 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 
 const Title = ({ title, info }) => (
 	<div className="flex gap-2 items-center border-b border-primary pb-1 mb-2">
-		<h2 className="font-serif">{title}</h2>
+		<h4 className="font-serif tracking-widest">{title}</h4>
 		{info && (
 			<Tippy
 				content={info.content}
-				placement={info.placement || 'top'}
+				placement={info.placement || 'auto'}
 			>
-				<button className="relative -top-1 text-primaryDark">
+				<button
+					className="relative -top-1 text-primaryDark"
+					type="button"
+				>
 					<HiInformationCircle />
 				</button>
 			</Tippy>

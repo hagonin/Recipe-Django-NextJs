@@ -1,12 +1,13 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
 import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { Form, InputField, TextAreaField } from './FormControl';
 
-import { toast } from 'react-toastify';
+import { Form, InputField, TextAreaField } from './FormControl';
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
+
 import { email } from './FormControl/validate';
 
 function ContactForm({ onSubmit }) {
@@ -20,24 +21,25 @@ function ContactForm({ onSubmit }) {
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset();
-			toast.success('Message has been sent successfully');
 		}
 	}, [isSubmitSuccessful]);
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+			<div className="grid md:grid-cols-2 md:gap-4 gap-2 grid-cols-1">
 				<InputField
+					label="Name"
 					name="contact.name"
 					type="text"
 					register={register}
-					placeholder="Name"
+					placeholder="Enter your name"
 					icon={<FaUserAlt />}
 				/>
 				<InputField
+					label="Email"
 					name="contact.email"
 					type="email"
-					placeholder="Email"
+					placeholder="Enter your email"
 					register={register}
 					rules={{
 						required: 'Please provide your email',
@@ -49,14 +51,15 @@ function ContactForm({ onSubmit }) {
 				/>
 			</div>
 			<TextAreaField
+				label="Message"
 				name="contact.message"
 				register={register}
 				rows="6"
-				placeholder="Message"
+				placeholder="Enter your message or any question to us."
 			/>
 			<Button
 				type="submit"
-				className="lg primary md:max-w-[200px]"
+				className="lg primary md:max-w-[230px] mt-4"
 				disabled={isSubmitting}
 			>
 				{isSubmitting ? <Loader type="submitting" /> : null} Send

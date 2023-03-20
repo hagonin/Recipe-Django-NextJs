@@ -5,24 +5,29 @@ import { HiInformationCircle } from 'react-icons/hi';
 
 const Label = ({ label, name, info, required }) => {
 	return (
-		<div className="flex gap-2 items-center">
+		<div className="flex gap-1 items-center">
 			<div className="flex gap-1">
 				{label && (
 					<label
-						className="block text-black text-lg font-medium mb-1"
+						className="block text-black text-base font-medium mb-[2px] tracking-wider"
 						htmlFor={name}
 					>
 						{label}
-						{required && <span className="text-red ml-1 font-bold">*</span>}
+						{required && (
+							<span className="text-red ml-1 font-bold">*</span>
+						)}
 					</label>
 				)}
 			</div>
 			{info && (
 				<Tippy
 					content={info.content}
-					placement={info.placement || 'right'}
+					placement={info.placement || 'auto'}
 				>
-					<button className="relative -top-1 text-primaryDark">
+					<button
+						className="relative -top-[1px] text-primaryDark "
+						type="button"
+					>
 						<HiInformationCircle />
 					</button>
 				</Tippy>

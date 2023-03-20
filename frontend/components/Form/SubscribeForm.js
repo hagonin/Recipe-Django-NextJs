@@ -1,13 +1,15 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
-import sleep from '@utils/sleep';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+
+import sleep from '@utils/sleep';
+
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
+import toastMessage from '@utils/toastMessage';
 import { Form, InputField } from './FormControl';
 import { email } from './FormControl/validate';
 
-function SubscribeForm({ secondary }) {
+function SubscribeForm({ secondary, third }) {
 	const {
 		register,
 		handleSubmit,
@@ -18,8 +20,9 @@ function SubscribeForm({ secondary }) {
 	const onSubmit = (data) => {
 		return sleep(2000, data)
 			.then((data) => {
-				console.log(data);
-				toast.success('Thank you for subscribing');
+				toastMessage({
+					message: 'Thank you for subscribing',
+				});
 			})
 			.catch();
 	};
@@ -32,8 +35,10 @@ function SubscribeForm({ secondary }) {
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
 			className={`flex  ${
-				secondary ? '!flex-col' : 'lg:w-[450px]'
-			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row`}
+				secondary || third ? '' : 'lg:w-[450px]'
+			} md:gap-4 gap-2 max-md:flex-col max-md:w-full max-md:mt-3 md:flex-row ${
+				third ? '!flex-col' : ''
+			}`}
 		>
 			<InputField
 				name="subscribe.email"

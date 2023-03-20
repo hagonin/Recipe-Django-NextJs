@@ -13,6 +13,8 @@ import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
 import VerifyEmail from '../VerifyEmaiForm/VerifyEmailModal';
+import { TitlePrimary } from '@components/UI/Title';
+import { email, password } from '../FormControl/validate';
 
 function LoginForm({ onSubmit }) {
 	const { errors, setErrors } = useAuthContext();
@@ -44,29 +46,32 @@ function LoginForm({ onSubmit }) {
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
-			<div className="flex justify-center items-center mb-10">
-				<h1 className="text-center">Login</h1>
+		<>
+			<div className="flex justify-center items-center md:mb-10 mb-7">
+				<TitlePrimary title="Login" />
 				<Img
 					alt="login_icon"
 					src={images.icon1}
 					className="md:w-20 md:h-20 w-16 h-16"
 				/>
 			</div>
-			<VerifyEmail/>
+			<VerifyEmail />
 
 			<Form onSubmit={handleSubmit(({ login }) => onSubmit(login))}>
 				<InputField
+					label="Email"
 					name="login.email"
 					type="email"
 					placeholder="Enter your email"
 					register={register}
+					rules={email}
 					error={formError?.login?.email}
 					required
 					icon={<MdEmail />}
 				/>
 
 				<InputField
+					label="Password"
 					name="login.password"
 					type="password"
 					placeholder="Enter your password"
@@ -74,9 +79,19 @@ function LoginForm({ onSubmit }) {
 					error={formError?.login?.password}
 					required
 					icon={<RiLockPasswordFill />}
+					rules={password}
+					info={{
+						content: (
+							<ul className="list-disc">
+								<li>Password must be more than 8 characters</li>
+								<li>Least one number</li>
+								<li>At least one special character</li>
+							</ul>
+						),
+					}}
 				/>
 
-				<div className="flex justify-between items-center  mb-5 mt-5 max-sm:flex-col">
+				<div className="flex justify-between items-center  mb-8 mt-1 ">
 					<CheckboxField
 						name="login.remember"
 						isSingle={{ label: 'Remember me' }}
@@ -85,7 +100,7 @@ function LoginForm({ onSubmit }) {
 					/>
 					<Link
 						href="/resetpassword"
-						className="text-lg font-semibold hover:text-primary max-sm:mt-2"
+						className="text-base font-medium text-primaryDark relative -top-[3px]"
 					>
 						Forgot Password?
 					</Link>
@@ -100,16 +115,17 @@ function LoginForm({ onSubmit }) {
 				</Button>
 			</Form>
 
-			<p className="text-center mt-5">
-				Create an account?
+			<p className="text-center mt-5 text-lg">
+				New cuisinier?
 				<Link
 					href="/signup"
-					className="ml-2 underline font-semibold hover:text-primary "
+					className="ml-2 underline font-medium text-primaryDark"
 				>
-					Register
+					Create an account
 				</Link>
 			</p>
-		</div>
+			
+		</>
 	);
 }
 

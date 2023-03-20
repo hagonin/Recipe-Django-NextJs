@@ -75,7 +75,7 @@ function UpdateProfileForm({
 
 	return (
 		<Form
-			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6"
+			className="grid md:grid-cols-12 grid-cols-1 md:gap-4 lg:gap-6 gap-6 mt-16"
 			onSubmit={handleSubmit(createForm)}
 		>
 			<div className="md:col-span-4 flex flex-col items-center ">
@@ -126,12 +126,14 @@ function UpdateProfileForm({
 						className="lg cancle w-36"
 						type="button"
 						onClick={handleReset}
+						disabled={isSubmitting}
 					>
 						Reset
 					</Button>
 					<Button
 						type="submit"
 						className="lg primary w-36"
+						disabled={isSubmitting}
 					>
 						{isSubmitting && <Loader type="submitting" />}
 						Save

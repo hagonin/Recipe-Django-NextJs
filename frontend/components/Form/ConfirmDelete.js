@@ -16,11 +16,11 @@ function ConfirmDelete({ handleDelete, showConfirm, handleCloseConfirm }) {
 			handleCloseModal={handleCloseConfirm}
 			disabled={isSubmitting}
 		>
-			<div className=" pt-2 flex flex-col">
+			<div className=" pt-2 flex flex-col gap-4">
 				<h4>Are you sure you want to delete ?</h4>
 				<Form
 					onSubmit={handleSubmit(handleDelete)}
-					className="!flex-row gap-2 mt-5 justify-center"
+					className="!flex-row gap-2 justify-center"
 				>
 					<Button
 						type="button"

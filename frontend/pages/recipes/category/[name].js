@@ -1,38 +1,44 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { categoryList, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
+
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { categoryList, NUMBER_OF_RECIPE_RECIPE_PAGE } from '@utils/constants';
-import usePagination from 'hook/usePagination';
-import Button from '@components/UI/Button';
-import {
-	HiOutlineChevronDoubleLeft,
-	HiOutlineChevronDoubleRight,
-} from 'react-icons/hi';
+import { usePaginationByApi } from 'hook/usePagination';
 import Loader from '@components/UI/Loader';
+import { TitlePrimary } from '@components/UI/Title';
+import Pagination from '@components/UI/Pagination';
+import ShowPages from '@components/UI/Pagination/ShowPages';
 
 function CategoryPage() {
 	const {
 		query: { name },
 	} = useRouter();
-	const { handleToggleBookmark, checkBookmarkAct, recipes } =
-		useRecipeContext();
+	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	const [category, setCategory] = useState(null);
-	const { nextPage, previousPage, currentRecipes, currentPage, limit } =
-		usePagination({
-			page: NUMBER_OF_RECIPE_RECIPE_PAGE,
-			recipes: category?.recipes,
-		});
+	const {
+		currentPage,
+		setCurrentPage,
+		pages,
+		next,
+		previous,
+		currentRecipes,
+		isLoading,
+		mutate,
+	} = usePaginationByApi({
+		limit: NUMBER_OF_RECIPE_RENDER,
+		category: name,
+	});
 
 	useEffect(() => {
-		if (recipes && name) {
-			const arr = recipes.filter((recipe) => recipe.category === name);
+		if (name) {
 			const [info] = categoryList.filter((item) => item.name === name);
-			return setCategory({ recipes: arr, ...info });
+			setCategory({ ...info });
+			mutate();
 		}
-	}, [name, recipes]);
+	}, [name]);
 	return (
 		<>
 			<>
@@ -41,14 +47,18 @@ function CategoryPage() {
 						<Img
 							src={category.cover}
 							alt={category.name}
-							className="h-[400px] w-full"
+							className="h-[400px] w-full mb-6"
 							cover
 						/>
-						<h1 className="mt-6 capitalize font-serif">{category.name}</h1>
-						<p className="mt-3 text-lg">{category.desc}</p>
+						<TitlePrimary title={category.name} />
+						<p className="mt-3">{category.desc}</p>
 					</div>
 				)}
-				<div className="flex flex-col gap-y-8 mt-10">
+				<div className="flex flex-col lg:gap-y-8 gap-y-6 mt-10">
+					<ShowPages
+						currentPage={currentPage}
+						pages={pages}
+					/>
 					{currentRecipes ? (
 						currentRecipes.map((recipe) => (
 							<RecipeCard
@@ -65,7 +75,7 @@ function CategoryPage() {
 								handleToggleBookmark={handleToggleBookmark}
 								actBookmark={checkBookmarkAct(recipe.id)}
 								lgCard
-								className="grid lg:grid-cols-12 md:gap-6 grid-cols-1 pb-8 border-b"
+								className="grid lg:grid-cols-12 lg:gap-6 md:gap-4   grid-cols-1 lg:pb-8  pb-2 border-b items-center"
 							/>
 						))
 					) : (
@@ -75,26 +85,13 @@ function CategoryPage() {
 					)}
 				</div>
 
-				{currentRecipes?.length > 0 && (
-					<div className="flex justify-between mt-10">
-						<Button
-							icon={{ left: <HiOutlineChevronDoubleLeft /> }}
-							onClick={previousPage}
-							disabled={currentPage === 1}
-							className="disabled"
-						>
-							Previous Recipe
-						</Button>
-						<Button
-							icon={{ right: <HiOutlineChevronDoubleRight /> }}
-							disabled={currentPage >= limit}
-							onClick={nextPage}
-							className="disabled"
-						>
-							Next recipe
-						</Button>
-					</div>
-				)}
+				<Pagination
+					next={next}
+					previous={previous}
+					currentPage={currentPage}
+					pages={pages}
+					setCurrentPage={setCurrentPage}
+				/>
 			</>
 		</>
 	);

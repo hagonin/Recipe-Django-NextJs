@@ -7,17 +7,15 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
-import getRandomRecipes from '@utils/getRandomRecipes';
 import Loader from '@components/UI/Loader';
 
 export default function Home() {
 	const { recipes, topRating } = useRecipeContext();
 	const [categories, setCategories] = useState(null);
-	// const [randomRecipes, setRandomRecipes] = (null);
 
 	useEffect(() => {
 		if (recipes) {
-			const arr = categoryList.map(({ id, name, desc }) => ({
+			let arr = categoryList.map(({ id, name, desc }) => ({
 				id,
 				name,
 				desc,
@@ -25,17 +23,20 @@ export default function Home() {
 					.filter((recipe) => recipe.category === name)
 					.splice(0, 3),
 			}));
+			arr = [...arr]
+				.sort((a, b) => b.recipes.length - a.recipes.length)
+				.splice(0, 6);
 			setCategories(arr);
-
-			// const randoms = getRandomRecipes(recipes);
-			// setRandomRecipes(randoms);
 		}
 	}, [recipes]);
 
 	return (
 		<>
-			{topRating && (
-				<Slider>
+			{topRating ? (
+				<Slider
+					className="mt-8"
+					loop={true}
+				>
 					{topRating.map((recipe, index) => {
 						return (
 							<Slide
@@ -49,6 +50,10 @@ export default function Home() {
 						);
 					})}
 				</Slider>
+			) : (
+				<div className="container pt-10">
+					<Loader type="slider" />
+				</div>
 			)}
 
 			<SubscribeSection />
@@ -56,12 +61,13 @@ export default function Home() {
 			<WidgetLayout>
 				{categories ? (
 					categories.map(
-						(category) =>
+						(category, index) =>
 							category.recipes.length > 0 && (
 								<GroupCategory
 									key={category.id}
 									list={category.recipes}
 									name={category.name}
+									hasBorder={index !== 0}
 								/>
 							)
 					)

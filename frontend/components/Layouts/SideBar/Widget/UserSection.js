@@ -3,6 +3,7 @@ import SocialLink from '@components/UI/SocialLink';
 import { images } from '@utils/constants';
 import { garamond } from '@utils/fonts';
 import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
+import { memo } from 'react';
 import CommonSection from './CommonSection';
 
 function UserSection({ name, bio, avatar }) {
@@ -35,4 +36,4 @@ function UserSection({ name, bio, avatar }) {
 	);
 }
 
-export default UserSection;
+export default memo(UserSection);

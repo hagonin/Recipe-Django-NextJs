@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import { useAuthContext } from '@context/auth-context';
 
@@ -16,22 +16,35 @@ import NavCategory from './NavCategory';
 import { BsMenuApp, BsMenuButton } from 'react-icons/bs';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { GrClose } from 'react-icons/gr';
+import Logo from '../Logo';
+import { useRouter } from 'next/router';
 
 function NavMobi() {
+	const router = useRouter();
 	const { isAuthenticated, user, logout } = useAuthContext();
 	const [showNavMobi, setShowNavMobi] = useState(false);
 	const toggleNavMobi = () => {
 		setShowNavMobi(!showNavMobi);
 	};
 
+	useEffect(() => {
+		setShowNavMobi(false);
+	}, [router]);
+
 	return (
-		<div className="lg:hidden ">
-			<button
-				className="cursor-pointer"
-				onClick={toggleNavMobi}
-			>
-				<AiOutlineMenu className="text-[2rem]" />
-			</button>
+		<>
+			<div className="bg-white max-lg:shadow-sm   lg:h-logo-bar-pc h-logo-bar-mobile lg:mt-search-bar max-lg:fixed top-search-bar left-0 w-full max-lg:z-[333]">
+				<div className="container flex lg:justify-center justify-between h-full">
+					<Logo className="mx-auto " />
+					<button
+						className="cursor-pointer lg:hidden"
+						onClick={toggleNavMobi}
+					>
+						<AiOutlineMenu className="text-[2rem]" />
+					</button>
+				</div>
+			</div>
+
 			<Transition.Root show={showNavMobi}>
 				<Transition.Child
 					as={Fragment}
@@ -43,7 +56,7 @@ function NavMobi() {
 					leaveTo="opacity-0"
 				>
 					<div
-						className="fixed inset-0 z-10 bg-[rgba(0,0,0,0.15)]"
+						className="fixed inset-0 z-[555] bg-[rgba(0,0,0,0.3)]"
 						onClick={toggleNavMobi}
 					></div>
 				</Transition.Child>
@@ -56,28 +69,23 @@ function NavMobi() {
 					leaveFrom="translate-x-0"
 					leaveTo="-translate-x-full"
 				>
-					<nav className="fixed top-0 left-0 bottom-0 z-20  w-[60%] py-12  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg">
+					<nav className="fixed top-0 left-0 bottom-0 z-[666]  py-10  bg-white overflow-y-auto overflow-x-hidden scrollbar shadow-lg min-w-[250px]">
 						<button
-							className="absolute top-3 right-3 text-[2rem]"
+							className="absolute top-[10px] right-3 text-[1.6rem]"
 							onClick={toggleNavMobi}
 						>
 							<GrClose />
 						</button>
-
 						{isAuthenticated && (
-							<div className="flex gap-4 items-center my-5">
-								<div>
-									<Img
-										src={
-											user?.avatar || images.defaultAvatar
-										}
-										alt="avatar"
-										className="h-16 w-16 border-border rounded-full ml-5 overflow-hidden"
-										cover
-									/>
-								</div>
-								<div>
-									<span className="text-2xl text-black font-bold block">
+							<div className="flex gap-4 items-center mb-5 mt-3">
+								<Img
+									src={user?.avatar || images.defaultAvatar}
+									alt="avatar"
+									className="h-16 w-16 border-border rounded-full ml-5 overflow-hidden"
+									cover
+								/>
+								<div className="pr-5">
+									<span className="md:text-2xl text-xl text-black font-bold block">
 										{user?.username}
 									</span>
 									<span className="text-second block ">
@@ -112,13 +120,13 @@ function NavMobi() {
 						) : (
 							<>
 								<NavItem href="/login">
-									<span>
-										<FiLogIn className="text-xl inline-block relative -mt-1 mr-2" />
+									<span className=" text-xl ">
+										<FiLogIn className="inline-block relative -mt-1 mr-2" />
 										Login
 									</span>
 								</NavItem>
 								<NavItem href="/signup">
-									<span>
+									<span className=" text-xl ">
 										<FiUserPlus className="text-xl inline-block relative -mt-1 mr-2" />
 										Signup
 									</span>
@@ -140,7 +148,7 @@ function NavMobi() {
 					</nav>
 				</Transition.Child>
 			</Transition.Root>
-		</div>
+		</>
 	);
 }
 

@@ -59,6 +59,7 @@ function SearchForm({ onSubmit, secondary }) {
 		<form
 			onSubmit={handleSubmit(handleBeforeSubmit)}
 			noValidate={true}
+			className="max-md:w-full"
 		>
 			{secondary ? (
 				<div className="flex flex-col gap-4 w-full">
@@ -86,7 +87,7 @@ function SearchForm({ onSubmit, secondary }) {
 					ref={searchBoxRef}
 				>
 					<button
-						className="px-2 text-2xl"
+						className="px-2 lg:text-2xl md:text-3xl text-5xl"
 						type="submit"
 					>
 						<MdSearch />
@@ -95,28 +96,36 @@ function SearchForm({ onSubmit, secondary }) {
 						id="search"
 						type="text"
 						placeholder="Type to search"
-						className="text-lg lg:w-[300px] pr-2 placeholder-white bg-transparent outline-none "
+						className="text-lg lg:w-[300px] w-full pr-2 placeholder-white bg-transparent outline-none "
 						{...register('search', {
 							required: true,
 							onChange: handleChange,
 						})}
 					/>
 					{listSuggest.length > 0 && (
-						<div className="absolute z-[999] top-full left-8 w-full bg-white shadow-md py-2 rounded-b-md max-h-[50vh] overflow-y-auto scrollbar">
-							<ul className="text-black text-base list-none p-0 m-0 ">
-								{listSuggest.map((suggest, index) => (
-									<li
-										key={index}
-										className="hover:bg-third px-3 py-1 cursor-pointer"
-										onClick={() =>
-											handleBeforeSubmit({ suggest })
-										}
-									>
-										{suggest}
-									</li>
-								))}
-							</ul>
-						</div>
+						<>
+							<div
+								className="block md:hidden fixed  top-12 left-0 z-10 right-0 bottom-0 bg-[rgba(0,0,0,0.5)]"
+								onClick={handleReset}
+							></div>
+							<div className="absolute top-full z-20 left-9 right-7 bg-white shadow-md py-2 rounded-b-md overflow-hidden max-h-[50vh] overflow-y-auto scrollbar">
+								<ul className="text-black text-base list-none p-0 m-0 ">
+									{listSuggest.map((suggest, index) => (
+										<li
+											key={index}
+											className="hover:bg-third px-3 py-1 cursor-pointer"
+											onClick={() =>
+												handleBeforeSubmit({
+													search: suggest,
+												})
+											}
+										>
+											{suggest}
+										</li>
+									))}
+								</ul>
+							</div>
+						</>
 					)}
 
 					<div className="flex items-center justify-center px-2">
@@ -124,7 +133,7 @@ function SearchForm({ onSubmit, secondary }) {
 						{isTyping && (
 							<button
 								type="button"
-								className="text-xl text-white cursor-pointer relative top-[1px]"
+								className="lg:text-xl text-2xl text-white cursor-pointer relative top-[1px]"
 								onClick={handleReset}
 							>
 								<MdOutlineClose />

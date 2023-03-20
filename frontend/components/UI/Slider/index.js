@@ -1,25 +1,35 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 
 import ArrowBtn from './ArrowBtn';
 import Pagination from './Pagination';
-import { SLIDES_ON_DESKTOP } from '@utils/constants';
 
-function Slider({ children, noBtn }) {
+function Slider({
+	children,
+	smallBtn,
+	slideOnMobile = 1,
+	slideOnTablet = 2,
+	slideOnPc = 3,
+	className,
+	loop,
+}) {
 	const [loaded, setLoaded] = useState(false);
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [sliderRef, instanceRef] = useKeenSlider({
+		loop: loop,
 		breakpoints: {
+			'(max-width: 768px)': {
+				slides: { perView: slideOnMobile, spacing: 8 },
+			},
 			'(min-width: 768px)': {
-				slides: { perView: 2, spacing: 16 },
+				slides: { perView: slideOnTablet, spacing: 16 },
 			},
 			'(min-width: 1024px)': {
-				slides: { perView: SLIDES_ON_DESKTOP, spacing: 24 },
+				slides: { perView: slideOnPc, spacing: 24 },
 			},
 		},
-		slides: { perView: 1 },
 		created: () => {
 			setLoaded(true);
 		},
@@ -27,6 +37,7 @@ function Slider({ children, noBtn }) {
 			setCurrentSlide(slider.track.details.rel);
 		},
 	});
+	const [limit, setLimit] = useState(null);
 
 	const handleNext = useCallback(() => {
 		instanceRef.current?.next();
@@ -47,33 +58,61 @@ function Slider({ children, noBtn }) {
 		};
 	}, [loaded]);
 
+	const onResize = useCallback(() => {
+		if (window) {
+			const w = window.innerWidth;
+			w < 768 && setLimit(slideOnMobile);
+			w > 768 && w < 1024 && setLimit(slideOnTablet);
+		}
+	});
+
+	useLayoutEffect(() => {
+		window.addEventListener('resize', onResize);
+		return () => {
+			window.removeEventListener('resize', onResize);
+		};
+	}, [limit]);
+
+	useEffect(() => {
+		onResize();
+	}, []);
+
 	return (
-		<section className="container mt-3 relative">
+		<section className={`container relative ${className}`}>
 			<div
 				ref={sliderRef}
 				className="keen-slider"
 			>
 				{children}
-				{loaded && children.length > SLIDES_ON_DESKTOP && !noBtn && (
+				{/* button on pc */}
+				{loaded && children.length > slideOnPc && (
 					<>
 						<ArrowBtn
 							onClick={handlePrev}
-							disabled={currentSlide === 0}
+							disabled={currentSlide === 0 && !loop}
+							smallBtn={smallBtn}
 						/>
 						<ArrowBtn
 							right
+							smallBtn={smallBtn}
 							onClick={handleNext}
 							disabled={
-								currentSlide ===
-								children.length - SLIDES_ON_DESKTOP
+								!loop &&
+								currentSlide === children.length - slideOnPc
 							}
 						/>
 					</>
 				)}
 			</div>
-			{loaded && (
+
+			{/* pagination on tablet mobile */}
+			{loaded && limit && (
 				<Pagination
-					dots={instanceRef.current?.track.details?.slides.length}
+					dots={
+						limit === 2
+							? instanceRef.current.slides.length - 1
+							: instanceRef.current.slides.length
+					}
 					currentSlide={currentSlide}
 					handleGoTo={instanceRef.current?.moveToIdx}
 				/>

@@ -1,39 +1,93 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import useSWR from 'swr';
+import api from '@services/axios';
+import { ENDPOINT_RECIPE, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
-function usePagination({ page = 4, recipes }) {
+function usePagination({ limitPerPage = 4, recipes, total, noScroll }) {
 	const [currentRecipes, setCurrentRecipes] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const recipePerPage = useRef(page);
+	const pages = useMemo(() => {
+		return Math.ceil(total / limitPerPage);
+	});
 
-	const limit = useMemo(() => {
-		if (recipes) {
-			return (recipes?.length / recipePerPage.current).toFixed(0) * 1;
-		}
-	}, [recipes]);
-
-	const nextPage = () => {
-		setCurrentPage(currentPage + 1);
+	const goToPage = () => {
+		const firstIndex = currentPage * limitPerPage - limitPerPage;
+		const lastIndex = currentPage * limitPerPage;
+		const newRecipes = [...recipes].slice(firstIndex, lastIndex);
+		setCurrentRecipes(newRecipes);
+		!noScroll && window.scrollTo({ top: 0 });
 	};
 
-	const previousPage = () => {
-		setCurrentPage(currentPage - 1);
-	};
+	const next = () => currentPage < pages && setCurrentPage(currentPage + 1);
 
+	const previous = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 	useEffect(() => {
 		if (recipes) {
-			const lastIndex = recipePerPage.current * currentPage;
-			const firstIndex = lastIndex - recipePerPage.current;
-			const results = [...recipes].slice(firstIndex, lastIndex);
-			setCurrentRecipes(results);
+			goToPage();
 		}
-	}, [recipes, currentPage]);
+	}, [currentPage, recipes]);
+
 	return {
-		nextPage,
-		previousPage,
 		currentRecipes,
 		currentPage,
-		limit,
+		pages,
+		setCurrentPage,
+		next,
+		previous,
+	};
+}
+
+function usePaginationByApi(config) {
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const { data, mutate, isLoading, isValidating } = useSWR(
+		{
+			...config,
+			url: config.url || ENDPOINT_RECIPE,
+			limit: config.limit || NUMBER_OF_RECIPE_RENDER,
+			page: currentPage,
+		},
+		({ url, limit, page, ...config }) =>
+			api.get(url, {
+				params: {
+					p: limit,
+					page: page,
+					...config,
+				},
+				cd: Date.now(),
+			})
+	);
+	const pages = useMemo(() => {
+		console.log(1);
+		return data?.data?.total_pages;
+	}, [data]);
+
+	const next = useCallback(() => {
+		currentPage < pages && setCurrentPage(currentPage + 1);
+	}, [pages, currentPage]);
+
+	const previous = useCallback(() => {
+		currentPage > 1 && setCurrentPage(currentPage - 1);
+	}, [pages, currentPage]);
+
+	useEffect(() => {
+		mutate().then(() => window.scrollTo({ top: 0 }));
+	}, [currentPage]);
+	console.log(data);
+
+	return {
+		currentRecipes: data?.data?.results,
+		currentPage,
+		pages,
+		setCurrentPage,
+		next,
+		previous,
+		isLoading,
+		mutate,
+		isValidating,
+		total: data?.data?.count,
 	};
 }
 
 export default usePagination;
+export { usePaginationByApi };

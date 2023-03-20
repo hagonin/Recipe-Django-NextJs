@@ -1,40 +1,36 @@
 import { useRecipeContext } from '@context/recipe-context';
-
-import { ToastContainer, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { Toaster } from 'react-hot-toast';
 import Footer from './Footer';
 import Header from './Header';
 import Loader from '@components/UI/Loader';
-
-const contextClass = {
-	success: 'bg-[#edfce9]',
-	error: 'bg-[#ffe6e6]',
-};
+import { useRouter } from 'next/router';
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();
-	// const { loading: loadAuth } = useAuthContext();
+	const { pathname } = useRouter();
+
 	return (
 		<>
-			<Header />
-			<div className="max-md:mt-[128px] py-1 md:mt-32 lg:mt-0 mt-0">
-				{children}
-			</div>
-			<Footer />
-			<ToastContainer
+			{pathname === '/login' || pathname === '/signup' || pathname === '/404' ||pathname=== '/resetpassword'? (
+				children
+			) : (
+				<>
+					<Header />
+					<div className="max-lg:pt-32 max-lg:mb-10">{children}</div>
+					<Footer />
+				</>
+			)}
+
+			<Toaster
 				position="top-right"
-				autoClose={1000}
-				transition={Slide}
-				toastClassName={({ type }) =>
-					contextClass[type] +
-					' relative flex px-2 pb-2 rounded-md justify-between overflow-hidden cursor-pointer border'
-				}
-				bodyClassName={() => 'text-lg text-black flex p-3'}
-				icon={false}
+				reverseOrder={false}
+				toastOptions={{
+					duration: 2200,
+				}}
 			/>
+
 			{loading || loadingRecipes ? (
-				<div className="fixed inset-0 bg-[rgba(255,255,255,0.7)] flex mt-44">
+				<div className="fixed inset-0 bg-[rgba(255,255,255,0.8)] z-[999] flex">
 					<Loader type="handle" />
 				</div>
 			) : null}

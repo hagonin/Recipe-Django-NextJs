@@ -9,15 +9,25 @@ import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { TitlePrimary } from '@components/UI/Title';
+import {
+	email,
+	first_name,
+	last_name,
+	name,
+	password,
+	user_name,
+} from './FormControl/validate';
 
 function SignUpForm({ onSubmit }) {
-	const { errors, setErrors, registerSuccess } = useAuthContext();
+	const { errors, setErrors } = useAuthContext();
 	const {
 		handleSubmit,
 		register,
-		formState: { errors: formError, isSubmitting, isSubmitSuccessful },
+		formState: { errors: formError, isSubmitting },
 		setError,
 		reset,
+		watch,
 	} = useForm();
 	useEffect(() => {
 		errors?.register?.username &&
@@ -44,18 +54,15 @@ function SignUpForm({ onSubmit }) {
 			});
 	}, [errors]);
 
-	
 	useEffect(() => {
 		setErrors(null);
 		reset();
 	}, []);
 
 	return (
-		<div className="bg-white  rounded-xl pt-6 pb-9 px-8  border my-10 md:shadow-xl">
-			
-
+		<>
 			<div className="flex justify-center items-center ">
-				<h1 className="text-center">Register</h1>
+				<TitlePrimary title="Register" />
 				<Img
 					alt="login_icon"
 					src="/static/images/login.png"
@@ -66,32 +73,41 @@ function SignUpForm({ onSubmit }) {
 				Welcome. We are glad you are here.
 			</p>
 			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
+				<div className="flex gap-4 flex-col md:flex-row">
+					<InputField
+						label="First name"
+						name="register.first_name"
+						type="text"
+						placeholder="Enter your first name"
+						register={register}
+						error={formError?.register?.first_name}
+						rules={first_name}
+					/>
+
+					<InputField
+						label="Last name"
+						name="register.last_name"
+						type="text"
+						placeholder="Enter your last name"
+						register={register}
+						error={formError?.register?.last_name}
+						rules={last_name}
+					/>
+				</div>
+
 				<InputField
+					label="Username"
 					name="register.username"
 					type="text"
 					placeholder="Enter your name"
 					register={register}
 					error={formError?.register?.username}
 					required
+					rules={user_name}
 				/>
 
 				<InputField
-					name="register.first_name"
-					type="text"
-					placeholder="Enter your first name"
-					register={register}
-					error={formError?.register?.first_name}
-				/>
-
-				<InputField
-					name="register.last_name"
-					type="text"
-					placeholder="Enter your last name"
-					register={register}
-					error={formError?.register?.last_name}
-				/>
-
-				<InputField
+					label="Email"
 					name="register.email"
 					type="email"
 					placeholder="Enter your email"
@@ -99,9 +115,11 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.email}
 					required
 					icon={<MdEmail />}
+					rules={email}
 				/>
 
 				<InputField
+					label="Password"
 					name="register.password"
 					type="password"
 					placeholder="Enter your password"
@@ -109,9 +127,20 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.password}
 					required
 					icon={<RiLockPasswordFill />}
+					rules={password}
+					info={{
+						content: (
+							<ul className="list-disc">
+								<li>Password must be more than 8 characters</li>
+								<li>Least one number</li>
+								<li>At least one special character</li>
+							</ul>
+						),
+					}}
 				/>
 
 				<InputField
+					label="Confirm password"
 					name="register.confirm_password"
 					type="password"
 					placeholder="Confirm password"
@@ -119,6 +148,14 @@ function SignUpForm({ onSubmit }) {
 					error={formError?.register?.confirm_password}
 					required
 					icon={<RiLockPasswordFill />}
+					rules={{
+						required: 'Please enter your confirm password',
+						validate: (val) => {
+							if (watch('register.password') != val) {
+								return 'Your passwords do no match';
+							}
+						},
+					}}
 				/>
 
 				<Button
@@ -130,24 +167,24 @@ function SignUpForm({ onSubmit }) {
 					create account
 				</Button>
 
-				<p className="text-center mt-4">
+				<p className="text-center text-lg">
 					Have an account?
 					<Link
 						href="/login"
-						className="ml-2 underline font-semibold text-primary "
+						className="ml-2 underline font-medium text-primaryDark "
 					>
 						Login
 					</Link>
 				</p>
-				<span className="text-base text-center px-12">
+				<span className="lg:text-base text-base text-center ">
 					By clicking "Create Account", I consent to
 					<Link
 						href="/"
 						className="underline text-primary ml-1"
 					>
 						the Terms of Services
-					</Link>{' '}
-					and{' '}
+					</Link>
+					and
 					<Link
 						href="/"
 						className="underline text-primary"
@@ -157,7 +194,7 @@ function SignUpForm({ onSubmit }) {
 					.
 				</span>
 			</Form>
-		</div>
+		</>
 	);
 }
 

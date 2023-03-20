@@ -1,6 +1,7 @@
 import { useKeenSlider } from 'keen-slider/react';
 import Img from '../Image';
 import 'keen-slider/keen-slider.min.css';
+import { useState } from 'react';
 
 function ThumbnailPlugin(mainRef) {
 	return (slider) => {
@@ -18,8 +19,10 @@ function ThumbnailPlugin(mainRef) {
 				slide.addEventListener('click', () => {
 					if (mainRef.current) mainRef.current.moveToIdx(idx);
 				});
+				
 			});
 		}
+		
 
 		slider.on('created', () => {
 			if (!mainRef.current) return;
@@ -35,24 +38,32 @@ function ThumbnailPlugin(mainRef) {
 	};
 }
 
-function Thumbnail({ images }) {
+function Thumbnail({
+	images,
+	slideOnMobile = 3,
+	slideOnTablet = 4,
+	slideOnPc = 6,
+}) {
+	const [indexCurrent, setIndexCurrent] = useState(0);
 	const [sliderRef, instanceRef] = useKeenSlider({
 		initial: 0,
+		slideChanged: (slider) => {
+			setIndexCurrent(slider.track.details.rel);
+		},
 	});
 
 	const [thumbnailRef] = useKeenSlider(
 		{
 			initial: 0,
-			slides: {
-				perView: 2,
-				spacing: 10,
-			},
 			breakpoints: {
+				'(max-width: 768px)': {
+					slides: { perView: slideOnMobile, spacing: 8 },
+				},
 				'(min-width: 768px)': {
-					slides: { perView: 4, spacing: 16 },
+					slides: { perView: slideOnTablet, spacing: 12 },
 				},
 				'(min-width: 1024px)': {
-					slides: { perView: 5, spacing: 24 },
+					slides: { perView: slideOnPc, spacing: 16 },
 				},
 			},
 		},
@@ -62,18 +73,17 @@ function Thumbnail({ images }) {
 		<>
 			<div
 				ref={sliderRef}
-				className="keen-slider"
+				className="keen-slider mt-10"
 			>
-				{images.map((img) => (
+				{images.map((img, index) => (
 					<div
 						className="keen-slider__slide"
-						key={img.id}
+						key={index}
 					>
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-72 w-72 mx-auto "
-							cover
+							className="h-72 w-full mx-auto "
 						/>
 					</div>
 				))}
@@ -81,17 +91,19 @@ function Thumbnail({ images }) {
 
 			<div
 				ref={thumbnailRef}
-				className="keen-slider thumbnail mt-6 justify-center border-y py-2 bg-third"
+				className="keen-slider thumbnail mt-6 border-y py-2 bg-third"
 			>
-				{images.map((img) => (
+				{images.map((img, index) => (
 					<div
-						className="keen-slider__slide rounded border-border"
-						key={img.id}
+						className={`keen-slider__slide rounded border-2 md:h-20 h-24 cursor-pointer ${
+							indexCurrent === index ? 'border-primary' : ''
+						}`}
+						key={index}
 					>
 						<Img
 							src={img.image}
 							alt={img.caption}
-							className="h-20 rounded-md"
+							className="h-full rounded-md"
 							cover
 						/>
 					</div>

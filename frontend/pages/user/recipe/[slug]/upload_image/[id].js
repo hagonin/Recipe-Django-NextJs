@@ -1,19 +1,13 @@
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
-import {
-	ENDPOINT_RECIPE_DETAIL,
-	ENDPOINT_RECIPE_IMAGE,
-	images,
-} from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
-import Img from '@components/UI/Image';
-import { GrTip } from 'react-icons/gr';
-import { MdOutlineTipsAndUpdates } from 'react-icons/md';
+import { TitlePrimary } from '@components/UI/Title';
+import toastMessage from '@utils/toastMessage';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -29,30 +23,23 @@ function UploadImagePage() {
 				form,
 				configAuth()
 			);
-			toast.success('Upload new photo success');
+			toastMessage({
+				message: 'Photos successfully changed',
+			});
 			router.push(`/user/recipe/${slug}`);
 		} catch {}
 	};
 	return (
 		<div className="container py-14">
-			<h1 className="text-center mb-14">Upload photo</h1>
+			<TitlePrimary
+				title="Manage photo"
+				center
+			/>
 
 			<UploadPhoto
 				onSubmit={onUploadPhoto}
 				recipe={id}
 			/>
-			<div className="mt-5 font-medium text-base w-[400px]  mx-auto bg-third p-3 rounded-md text-center">
-				<div className="flex justify-center">
-					<span>
-						<MdOutlineTipsAndUpdates className="text-yellow text-3xl relative top-1 mr-2" />
-					</span>
-					<b>Tips for snapping the perfect recipe photo:</b>
-				</div>
-				<p>
-					(1) Getting the lighting right. (2) Picking the right angle.
-					(3)Styling to set the scene. (4) Editing your recipe photos
-				</p>
-			</div>
 		</div>
 	);
 }

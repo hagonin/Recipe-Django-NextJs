@@ -1,20 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import api from '@services/axios';
-import {
-	ENDPOINT_RECIPE,
-	ENDPOINT_RECIPE_READ,
-	images,
-} from '@utils/constants';
-import Link from 'next/link';
-import { FaSearch } from 'react-icons/fa';
+import { ENDPOINT_RECIPE, images } from '@utils/constants';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
 import { useRecipeContext } from '@context/recipe-context';
-import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
 
@@ -25,7 +18,7 @@ function Search() {
 
 	const [queryParams, setQueryParams] = useState(query);
 	const { data, isLoading, isValidating } = useSWR(
-		[ENDPOINT_RECIPE_READ, queryParams],
+		[ENDPOINT_RECIPE, queryParams],
 		([url, queryParams = {}]) => {
 			return api.get(url, {
 				params: queryParams,
@@ -40,19 +33,31 @@ function Search() {
 
 	return (
 		<div className="container">
-			<h1 className=" flex gap-4">
-				<FaSearch className="relative top-[1px]" /> Search Result:
-				{data?.data?.results.length > 0 && data?.data?.results.length}
-			</h1>
+			<div className=" flex gap-3">
+				{data?.data?.results.length > 0 && (
+					<span className="text-xl text-black">
+						Showing
+						<span className="mx-2 text-2xl text-black font-semibold">
+							{data?.data?.results.length}
+						</span>
+						{`result${
+							data?.data?.results.length > 1 ? 's' : ''
+						} for `}
+						<span className="text-xl text-black font-semibold">
+							{query.search || query.ingredients__title}
+						</span>
+					</span>
+				)}
+			</div>
 
 			{isLoading || isValidating ? (
-				<div className="flex justify-center mt-10">
+				<div className="flex justify-center my-10">
 					<Loader type="searching" />
 				</div>
 			) : (
-				<div className="mt-7 flex flex-col gap-4">
+				<div className="md:mt-5 my-4 flex flex-col gap-4">
 					{data?.data?.results.length > 0 ? (
-						data?.data?.results.map((item) => (
+						data?.data?.results.map((item, index) => (
 							<RecipeCard
 								key={item.id}
 								slug={item.slug}
@@ -61,19 +66,29 @@ function Search() {
 								date={item.updated_at}
 								reviews_count={item.reviews_count}
 								rating={item.rating}
-								lastPost
+								lastestRecipe
+								firstPost={index === 0}
 							/>
 						))
 					) : (
 						<>
-							<Img
-								src={images.no_search}
-								alt="no result"
-								className="h-24 w-24 mx-auto my-10"
-							/>
-							<h4 className="text-center mb-16">
-								Sorry. No result found.
-							</h4>
+							<div className="flex justify-center items-center mb-10 gap-2">
+								<div>
+									<Img
+										src={images.no_search}
+										alt="no result"
+										className="h-20 w-20"
+									/>
+								</div>
+								<span className="text-center text-lg md:w-1/3 ">
+									Sorry, we couldn’t find any matches for
+									<span className="text-lg font-semibold mx-1 text-black">
+										{query.search ||
+											query.ingredients__title}
+									</span>{' '}
+									recipes
+								</span>
+							</div>
 
 							<TopRating recipes={topRating} />
 						</>

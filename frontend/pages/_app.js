@@ -5,9 +5,12 @@ import Head from 'next/head';
 import '@styles/globals.css';
 import RecipeProvider from '@context/recipe-context';
 import { libre_baskerville, open_sans } from '@utils/fonts';
+import { useRouter } from 'next/router';
+import { Fragment } from 'react';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);
+	
 	return (
 		<>
 			<Head>

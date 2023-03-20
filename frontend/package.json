@@ -20,9 +20,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.2",
+    "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
     "react-quill": "^2.0.0",
-    "react-toastify": "^9.1.1",
     "sharp": "^0.31.3",
     "swr": "^2.0.4"
   },

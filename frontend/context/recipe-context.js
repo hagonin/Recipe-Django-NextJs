@@ -5,8 +5,9 @@ import {
 	ENDPOINT_RECIPE_READ,
 } from '@utils/constants';
 import noCache from '@utils/noCache';
+import toastMessage from '@utils/toastMessage';
 import useRecipes from 'hook/useRecipes';
-import { toast } from 'react-toastify';
+
 import { useAuthContext } from './auth-context';
 
 const { createContext, useContext, useState, useEffect } = require('react');
@@ -14,7 +15,7 @@ const { createContext, useContext, useState, useEffect } = require('react');
 const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
-	const { configAuth, user, setUser } = useAuthContext();
+	const { configAuth, user, setUser, isAuthenticated } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 	const [slugUpdate, setSlugUpdate] = useState(null);
 	const {
@@ -25,6 +26,7 @@ const RecipeProvider = ({ children }) => {
 		keywords,
 		photos,
 		topRating,
+		photoRandom,
 	} = useRecipes();
 
 	const deleteRecipe = (slug) =>
@@ -34,8 +36,13 @@ const RecipeProvider = ({ children }) => {
 		api.delete(`${ENDPOINT_RECIPE_IMAGE}${id}/`, configAuth());
 
 	const handleToggleBookmark = async (act, id) => {
-		setLoading(true);
+		if (!isAuthenticated)
+			return toastMessage({
+				message: 'Please login first',
+				type: 'error',
+			});
 		if (!act) {
+			setLoading(true);
 			api.post(
 				`user/profile/${user?.id}/bookmarks`,
 				{
@@ -48,7 +55,10 @@ const RecipeProvider = ({ children }) => {
 					return { ...pre, bookmarks: newBookmarks };
 				});
 				setLoading(false);
-				toast.success('Add bookmark success');
+				toastMessage({
+					message: 'Recipe added to wishlist successfully',
+					type: 'success',
+				});
 			});
 		} else {
 			api.delete(`user/profile/${user?.id}/bookmarks`, {
@@ -63,7 +73,10 @@ const RecipeProvider = ({ children }) => {
 					);
 					return { ...pre, bookmarks: newBookmarks };
 				});
-				toast.success('Remove bookmark success');
+				toastMessage({
+					message: 'Recipe removed from wishlist successfully',
+					type: 'success',
+				});
 				setLoading(false);
 			});
 		}
@@ -77,7 +90,7 @@ const RecipeProvider = ({ children }) => {
 		0;
 	const fetcher = async (url) =>
 		await api
-			.get(url, configAuth())
+			.get(`${url}${noCache()}`, configAuth())
 			.then((res) => res?.data?.results || res?.data);
 
 	return (
@@ -100,6 +113,7 @@ const RecipeProvider = ({ children }) => {
 				keywords,
 				topRating,
 				photos,
+				photoRandom,
 			}}
 		>
 			{children}

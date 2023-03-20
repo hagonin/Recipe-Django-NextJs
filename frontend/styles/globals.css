@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
    html {
-      @apply  text-second leading-7 ;
+      @apply  text-second leading-7;
    }
-   p, span {
-    @apply text-base;
+
+   
+   p {
+    @apply md:text-base text-xbase;
    }
 
     input::-webkit-outer-spin-button,
@@ -16,13 +19,21 @@
       margin: 0;
     }
 
+    input:-webkit-autofill {
+      -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+      -webkit-transition-delay: 9999s;
+    }
+
+
+
+
     /* Firefox */
     input[type=number] {
       -moz-appearance: textfield;
     }
     
     h1 {
-       @apply text-5xl font-medium text-black;
+       @apply text-5xl font-medium text-black leading-8;
     }
 
     h2 {
@@ -50,21 +61,22 @@
     }
     
     ul {
-      @apply list-decimal ml-6;
+      @apply list-decimal ml-6 text-base;
     }
     ol {
-      @apply list-disc ml-6;
+      @apply list-disc ml-6 text-base;
     }
     
 }
 
 @layer components {
+  
     .container {
-        @apply xl:max-w-[1110px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+        @apply xl:max-w-[1280px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
 
     .btn {
-      @apply text-sm font-medium text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-sm tracking-[0.2em] font-medium text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
@@ -91,7 +103,7 @@
       @apply bg-
     } */
     .btn.verify {
-      @apply text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
+      @apply tracking-[0.2em] !text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
     }
 
     .btn.wFull {
@@ -119,6 +131,9 @@
 
 
 @layer utilities  {
+  
+
+
   .scrollbar::-webkit-scrollbar {
     width: 5px;
   }
@@ -135,4 +150,12 @@
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: #c0a0b9;
   }
+
+  .markupBox p {
+    @apply first-letter:capitalize;
+  }
+}
+
+.ql-container.ql-snow {
+  height: 350px
 }

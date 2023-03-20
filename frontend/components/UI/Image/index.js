@@ -1,3 +1,4 @@
+import { images } from '@utils/constants';
 import Image from 'next/image';
 
 function Img({ alt, src, cover, className, ...props }) {

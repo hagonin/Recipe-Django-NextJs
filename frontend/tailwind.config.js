@@ -16,6 +16,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			// backgroundImage: {
+			// 	hero: `url('${images}')`,
+			// },
 			fontFamily: {
 				sans: ['var(--nunito-sans)', ...fontFamily.sans],
 				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
@@ -33,9 +36,11 @@ module.exports = {
 				border: '#e6e6e6',
 				red: '#e3304e',
 				red2: '#d85734',
+				red3: '#DF7857',
 				redLight: 'rgba(243, 58, 89, 0.15)',
 				yellow: '#FFC438',
 				yellowDark: '#f0b62d',
+				whiteTransparent: 'rgba(255, 255, 255, 0.8)',
 			},
 			animation: {
 				'spin-slow': 'spin 2s linear infinite',
@@ -58,7 +63,8 @@ module.exports = {
 		fontSize: {
 			xsm: '0.625rem', //10px
 			sm: '0.75rem', //12px
-			base: '0.875rem', //14px
+			xbase: '0.813rem', //13px
+			base: '0.875rem',//14px
 			lg: '0.9375rem', //15px
 			xl: '1rem', //16px
 			'2xl': '1.125rem', //18px

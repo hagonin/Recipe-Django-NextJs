@@ -24,7 +24,7 @@ function Loader({ type }) {
 			);
 		case 'recipe-small-card':
 			return (
-				<div className="animate-pulse flex md:flex-row flex-col gap-4 items-center">
+				<div className="animate-pulse flex  gap-4 items-center">
 					<div className="h-24 w-32 bg-gray-200 rounded-md"></div>
 					<div className="w-full">
 						<div className="h-4 w-full  bg-gray-200 rounded-md"></div>
@@ -130,6 +130,22 @@ function Loader({ type }) {
 						alt="loader"
 						className="h-20 w-20"
 					/>
+				</div>
+			);
+		case 'square':
+			return (
+				<div className="animate-pulse  h-48 w-full border bg-gray-200 shadow-md rounded-md"></div>
+			);
+		case 'square-small':
+			return (
+				<div className="animate-pulse  h-32 w-full border bg-gray-200 shadow-md rounded-md"></div>
+			);
+		case 'slider':
+			return (
+				<div className="flex lg:gap-6 md:gap4 gap-2">
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md"></div>
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md hidden md:block"></div>
+					<div className="animate-pulse  h-[400px] w-full border bg-gray-200 shadow-md rounded-md hidden lg:block"></div>
 				</div>
 			);
 		default:

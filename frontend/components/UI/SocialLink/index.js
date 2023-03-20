@@ -1,3 +1,4 @@
+import { AiFillInstagram } from 'react-icons/ai';
 import {
 	FaInstagram,
 	FaFacebookF,
@@ -19,7 +20,7 @@ function SocialLink({
 			id: 2,
 			name: 'Instagram',
 			href: 'https://vi-vn.facebook.com/',
-			icon: <FaInstagram />,
+			icon: <AiFillInstagram />,
 		},
 		{
 			id: 3,
