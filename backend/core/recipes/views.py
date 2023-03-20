@@ -8,6 +8,7 @@ from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,UpdateModel
 from rest_framework.permissions import IsAuthenticated,AllowAny  
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.throttling import AnonRateThrottle,UserRateThrottle
 
 from . import serializers
 from .paginations import RecipeCustomPagination
@@ -45,11 +46,11 @@ class RecipeDetailViewSet(CreateModelMixin,
     queryset = Recipe.objects.all()   
     permission_classes = [IsOwner]
     serializer_class = serializers.RecipeDetailWriteSerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
     filter_backends = (SearchVectorFilter,DjangoFilterBackend,OrderingFilter)
     search_fields = ['search_vector']
     ordering_fields = ['created_at']
     filterset_fields = ('category','ingredients__title', 'title')
-
     
     def _params_to_ints(self, qs):
         """Convert a list of strings to integers."""
