@@ -29,7 +29,13 @@ class UserSerializer(serializers.ModelSerializer):
         
         extra_kwargs = {'password': {'write_only': True}}
 
+class UserShortSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
 
+    class Meta:
+        model = CustomUser
+        fields = ('id','username','profile')
+    
 class RegistrationSerializer(serializers.ModelSerializer):
     """
     Serialize registration requests and create a new user.

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from datetime import datetime, timezone
 from .models import Recipe, RecipeReview, Ingredient,RecipeImage
-from users.serializers import UserSerializer
+from users.serializers import UserShortSerializer
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -35,17 +35,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         return obj.get_total_number_of_bookmarks()
     
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserShortSerializer(read_only=True)
     date_added = serializers.SerializerMethodField()
 
-    class Meta: 
-        model = RecipeReview
-        fields = ('id','user','title', 'slug','rating','date_added',
-                'content')
-        extra_kwargs = {
-            'slug': {'read_only': True}
-        }
-    
     def get_date_added(self, obj):
         now = datetime.now(timezone.utc)
         diff = now - obj.date_added
@@ -62,25 +54,33 @@ class ReviewSerializer(serializers.ModelSerializer):
         else:
             return 'just now'
 
+
+    class Meta: 
+        model = RecipeReview
+        fields = ('id','user','title', 'slug','rating','date_added',
+                'content')
+        extra_kwargs = {
+            'slug': {'read_only': True}
+        }
+    
 class RecipeDetailReadSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+    user = UserShortSerializer(read_only=True)   
     ingredients = IngredientSerializer(many=True)
     images = ImageSerializer(many=True,required=False)
-    reviews = serializers.SerializerMethodField(method_name='get_reviews', read_only=True)
+    reviews = serializers.SerializerMethodField(read_only=True)
     total_number_of_bookmarks = serializers.ReadOnlyField()
-    reviews_count = serializers.ReadOnlyField()
-    rating = serializers.ReadOnlyField()
+    rating = serializers.FloatField(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ('id','user','bio','title','slug','category','main_image','rating', 'ingredients',
+        fields = ('id','user','title','slug','category','main_image','rating', 'ingredients',
                 'description', 'instructions', 'images', 'serving', 'prep_time','cook_time','search_vector',
                 'created_at','updated_at','source','notes','total_number_of_bookmarks',
                 'reviews', 'reviews_count')
 
     def get_reviews(self, obj):
-        reviews = obj.reviews.all()
-        serializer = ReviewSerializer(reviews, many=True)
+        queryset = obj.reviews.all()
+        serializer = ReviewSerializer(queryset, many=True)
         return serializer.data
     
 class RecipeDetailWriteSerializer(serializers.ModelSerializer):
