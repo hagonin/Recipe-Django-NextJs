@@ -219,7 +219,7 @@ export const meta = {
 			},
 			{
 				key: 'Supportive',
-				content: 'Struggling with dinner inspo? We’re here to help!.',
+				content: 'Struggling with dinner inspo? We’re here to help!',
 			},
 			{
 				key: 'Creative',

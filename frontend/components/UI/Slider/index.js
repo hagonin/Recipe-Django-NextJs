@@ -89,7 +89,7 @@ function Slider({
 					<>
 						<ArrowBtn
 							onClick={handlePrev}
-							disabled={currentSlide === 0}
+							disabled={currentSlide === 0 && !loop}
 							smallBtn={smallBtn}
 						/>
 						<ArrowBtn
@@ -97,6 +97,7 @@ function Slider({
 							smallBtn={smallBtn}
 							onClick={handleNext}
 							disabled={
+								!loop &&
 								currentSlide === children.length - slideOnPc
 							}
 						/>

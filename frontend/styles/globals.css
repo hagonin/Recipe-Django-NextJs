@@ -9,8 +9,8 @@
    }
 
    
-   p, span, ul, li, ol {
-    @apply text-base;
+   p {
+    @apply md:text-base text-xbase;
    }
 
     input::-webkit-outer-spin-button,

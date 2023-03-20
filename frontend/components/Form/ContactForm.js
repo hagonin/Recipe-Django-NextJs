@@ -26,7 +26,7 @@ function ContactForm({ onSubmit }) {
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<div className="grid md:grid-cols-2 gap-4 grid-cols-1">
+			<div className="grid md:grid-cols-2 md:gap-4 gap-2 grid-cols-1">
 				<InputField
 					label="Name"
 					name="contact.name"
@@ -59,7 +59,7 @@ function ContactForm({ onSubmit }) {
 			/>
 			<Button
 				type="submit"
-				className="lg primary md:max-w-[230px]"
+				className="lg primary md:max-w-[230px] mt-4"
 				disabled={isSubmitting}
 			>
 				{isSubmitting ? <Loader type="submitting" /> : null} Send

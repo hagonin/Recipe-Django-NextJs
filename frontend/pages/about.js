@@ -20,10 +20,10 @@ function About(props) {
 			/>
 			<SubTitle title="Above all, we are:" />
 
-			<ul className="mt-3 text-base list-disc">
+			<ul className="mt-3 lg:text-base text-xbase list-disc marker:text-red3">
 				{meta.about.list.map(({ key, content }) => (
 					<li>
-						<span className="font-bold text-red3 mr-2">{key}</span>
+						<span className="font-semibold text-red3 mr-2">{key}</span>
 						{content}
 					</li>
 				))}
