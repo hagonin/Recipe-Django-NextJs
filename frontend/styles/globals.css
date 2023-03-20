@@ -76,7 +76,7 @@
     }
 
     .btn {
-      @apply text-sm tracking-[0.2em] font-medium text-black uppercase  h-[36px] px-4 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+      @apply text-sm tracking-[0.2em] font-medium text-black uppercase  h-[32px] px-3 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
     }
 
     .btn.primary {
@@ -88,7 +88,7 @@
     }
 
     .btn.tag {
-      @apply text-black font-light text-[0.7rem] h-[24px] px-3 bg-grey hover:bg-primary hover:border-primary hover:text-white;
+      @apply text-black font-light text-[0.6rem] h-[20px] px-2 bg-grey hover:bg-primary hover:border-primary hover:text-white;
     }
 
     .btn.lg {

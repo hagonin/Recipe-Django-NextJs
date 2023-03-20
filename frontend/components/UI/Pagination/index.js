@@ -7,20 +7,17 @@ function Pagination({
 	next,
 	previous,
 	small,
+	onlyNumber,
 }) {
 	return (
-		<div className="flex justify-center mt-10 gap-2 flex-wrap ">
+		<div
+			className={`flex justify-center ${
+				small ? 'mt-2' : 'mt-10'
+			} gap-2 flex-wrap`}
+		>
 			{pages ? (
 				<>
-					{small ? (
-						<button
-							onClick={previous}
-							disabled={currentPage === 1}
-							className={`border rounded-md p-1 text-black bg-third border-border hover:bg-red3 hover:text-white transition-all disabled:hover:bg-third disabled:hover:text-black`}
-						>
-							<BsChevronLeft />
-						</button>
-					) : (
+					{!onlyNumber && (
 						<Button
 							iconLeft={<BsChevronLeft />}
 							label="PRE"
@@ -33,7 +30,7 @@ function Pagination({
 						return small ? (
 							<button
 								key={index}
-								className={`mx-1 ${
+								className={`mx-1 text-base ${
 									currentPage === index
 										? 'underline text-red3'
 										: ''
@@ -45,7 +42,7 @@ function Pagination({
 						) : (
 							<button
 								key={index}
-								className={`py-1 px-4 rounded-md ${
+								className={`px-4 rounded-md ${
 									currentPage === index
 										? 'bg-primary text-white border-primary'
 										: 'hover:bg-primaryLight'
@@ -56,15 +53,7 @@ function Pagination({
 							</button>
 						);
 					})}
-					{small ? (
-						<button
-							onClick={next}
-							disabled={currentPage === pages}
-							className={`border rounded-md p-1 text-black bg-third border-border hover:bg-red3 hover:text-white transition-all disabled:hover:bg-third disabled:hover:text-black`}
-						>
-							<BsChevronRight />
-						</button>
-					) : (
+					{!onlyNumber && (
 						<Button
 							onClick={next}
 							iconRight={<BsChevronRight />}
@@ -84,7 +73,7 @@ const Button = ({ onClick, disabled, label, iconLeft, iconRight }) => (
 	<button
 		onClick={onClick}
 		disabled={disabled}
-		className="text-sm tracking-widest py-1 px-3 rounded-md border-2 border-border hover:border-primary text-black hover:bg-primaryLight hover:text-primary font-semibold focus-visible:outline-primary disabled:opacity-50 disabled:hover:bg-transparent  disabled:hover:border-border disabled:hover:text-black flex items-center gap-1 transition-all"
+		className="text-sm py-[2px] tracking-widest px-2 rounded-md border-2 border-border hover:border-primary text-black hover:bg-primaryLight hover:text-primary font-semibold focus-visible:outline-primary disabled:opacity-50 disabled:hover:bg-transparent  disabled:hover:border-border disabled:hover:text-black flex items-center gap-1 transition-all"
 	>
 		{iconLeft && iconLeft}
 		{label}

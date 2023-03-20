@@ -77,7 +77,9 @@ function PreviewRecipe({
 							)}
 							{updated_at && (
 								<div className="flex gap-2">
-									<span className="text-base">Updated at:</span>
+									<span className="text-base">
+										Updated at:
+									</span>
 									<span className="text-base text-semibold text-black relative top-[1px]">
 										{formatDate(updated_at)}
 									</span>
@@ -138,7 +140,7 @@ function PreviewRecipe({
 			<p className="relative -top-3">
 				Add more photos to make your recipe fantasy
 			</p>
-			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 my-4">
+			<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 mt-4 mb-6">
 				{images?.map((img, index) => {
 					return (
 						<div
@@ -163,20 +165,10 @@ function PreviewRecipe({
 					</Button>
 				</Child>
 				<Child>
-					<Button
-						onClick={goToUpdate}
-						icon={{ left: <MdUpdate /> }}
-					>
-						Update Recipe
-					</Button>
+					<Button onClick={goToUpdate}>Update Recipe</Button>
 				</Child>
 				<Child>
-					<Button
-						onClick={goToUploadPhoto}
-						icon={{ left: <MdPhoto /> }}
-					>
-						Manage Photos
-					</Button>
+					<Button onClick={goToUploadPhoto}>Manage Photos</Button>
 				</Child>
 				<Child>
 					<Button onClick={() => setShowConfirmDeleteRecipe(true)}>

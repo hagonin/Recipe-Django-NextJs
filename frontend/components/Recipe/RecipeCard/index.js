@@ -104,7 +104,8 @@ function RecipeCard({
 							secondary
 								? `/user/recipe/${slug}`
 								: `/recipes/${slug}`
-						} ${lgCard ? ' w-full' : ''}`}
+						}`}
+						// className={`${lgCard ? ' w-full' : ''}`}
 					>
 						<Img
 							src={main_image}

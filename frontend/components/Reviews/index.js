@@ -27,7 +27,7 @@ function Reviews({
 		noScroll: true,
 	});
 	return (
-		<div className=" pt-4 pb-8 md:px-6 px-4 bg-third rounded-md mt-16">
+		<div className=" pt-4 pb-6 md:px-6 px-4 bg-third rounded-md mt-8">
 			<Title
 				title={`${reviews.length} Comment${
 					reviews.length > 1 ? 's' : ''
@@ -35,7 +35,7 @@ function Reviews({
 				center
 			/>
 
-			<div className="mb-10">
+			<div className="mb-3">
 				{reviewsCurrent?.length > 0 ? (
 					<>
 						{reviewsCurrent.map((review, index) => (
@@ -52,6 +52,7 @@ function Reviews({
 						))}
 						<Pagination
 							small
+							onlyNumber
 							pages={pages}
 							currentPage={currentPage}
 							setCurrentPage={setCurrentPage}
@@ -63,17 +64,17 @@ function Reviews({
 					'There are no reviews yet. Be the first!'
 				)}
 			</div>
-			<div className="mt-3">
-				{currentUserId ? <ReviewForm onSubmit={onSubmit} /> : null}
-			</div>
-			{currentUserId ? null : (
-				<div className=" mt-5">
+
+			{currentUserId ? (
+				<ReviewForm onSubmit={onSubmit} />
+			) : (
+				<div className=" mt-3">
 					<p>
 						What do you think of this recipe? Share your experience
 						to help others.
 					</p>
 					<button
-						className="hover:underline font-medium text-base italic hover:text-primary"
+						className="underline font-medium text-base italic hover:text-primary"
 						onClick={goToLogin}
 					>
 						Login to add rating and review
