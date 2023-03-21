@@ -71,7 +71,7 @@ function SignUpForm({ onSubmit }) {
 				/>
 			</div>
 			<p className="text-center mb-10">
-				Welcome. We are glad you are here.
+				Welcome to HomeCook, the perfect place for food lovers!
 			</p>
 			<Form onSubmit={handleSubmit((data) => onSubmit(data.register))}>
 				<div className="flex gap-4 flex-col md:flex-row">
@@ -159,11 +159,11 @@ function SignUpForm({ onSubmit }) {
 					disabled={isSubmitting}
 				>
 					{isSubmitting && <Loader type="submitting" />}
-					create account
+					create an account
 				</Button>
 
 				<p className="text-center text-lg">
-					Have an account?
+					Already have an account?
 					<Link
 						href="/login"
 						className="ml-2 underline font-medium text-primaryDark "
@@ -173,17 +173,11 @@ function SignUpForm({ onSubmit }) {
 				</p>
 				<span className="lg:text-base text-base text-center ">
 					By clicking "Create Account", I consent to
-					<Link
-						href="/"
-						className="underline text-primary mx-1"
-					>
+					<Link href="/" className="underline text-primary mx-1">
 						the Terms of Services
 					</Link>
 					and
-					<Link
-						href="/"
-						className="underline text-primary mx-1"
-					>
+					<Link href="/" className="underline text-primary mx-1">
 						Privacy Policy
 					</Link>
 					.

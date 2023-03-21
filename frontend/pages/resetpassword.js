@@ -40,7 +40,7 @@ function RequestResetPassword(props) {
 				uidb64: props?.uidb64,
 			})
 			.then((res) => {
-				toastMessage({ message: 'Password reset success.' });
+				toastMessage({ message: 'Your password has been reset successfully.' });
 				router.push('/login');
 			})
 			.catch(({ status, _error }) => {
@@ -49,22 +49,14 @@ function RequestResetPassword(props) {
 				} else if (status === 401) {
 					toastMessage({
 						message:
-							'This required link has expired. Please try new request',
+							'The requested link has expired. Please submit a new request!',
 					});
 				}
 			});
 	};
 
 	return (
-		<div
-			className="bg-primaryLight min-h-screen flex "
-			// style={{
-			// 	backgroundImage: `url(${images.bgHero})`,
-			// 	backgroundPosition: 'center',
-			// 	backgroundSize: 'contain',
-			// 	backgroundRepeat: 'no-repeat',
-			// }}
-		>
+		<div className="bg-primaryLight min-h-screen flex ">
 			<div className="container py-14 m-auto">
 				<div className="md:max-w-[480px] shadow-lg mx-auto bg-white border-border rounded-md py-10 lg:px-10 md:px-8 px-4">
 					<div className="text-center mb-10 flex gap-3 justify-center items-center">
@@ -88,7 +80,7 @@ function RequestResetPassword(props) {
 								className="flex items-center hover:text-primary"
 							>
 								<FiChevronsLeft />
-								Back make request
+								Please make a new request
 							</button>
 						)}
 						<Link

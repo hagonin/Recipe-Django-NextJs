@@ -1,14 +1,16 @@
-import { BsClockFill } from 'react-icons/bs';
-import { FaUser } from 'react-icons/fa';
-import Img from '@components/UI/Image';
 import formatDate from '@utils/formatdate';
 import createMarkup from '@utils/createMarkup';
-import Thumbnail from '@components/UI/Slider/Thumbnail';
-import Ingredient from './Ingredient';
-import Rating from '@components/Reviews/Rate';
 import formatTime from '@utils/formatTime';
 import { getInstructionAsArr } from '@utils/handleInstruction';
+
+import { BsClockFill } from 'react-icons/bs';
 import { AiFillHeart } from 'react-icons/ai';
+import { FaUser } from 'react-icons/fa';
+
+import Img from '@components/UI/Image';
+import Thumbnail from '@components/UI/Slider/Thumbnail';
+import Rating from '@components/Reviews/Rate';
+import Ingredient from './Ingredient';
 import Method from './Method';
 import Notes from './Notes';
 import Source from './Source';

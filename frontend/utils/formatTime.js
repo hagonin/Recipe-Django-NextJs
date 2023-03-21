@@ -9,3 +9,4 @@ function formatTime(minutes) {
 }
 
 export default formatTime;
+

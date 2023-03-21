@@ -28,7 +28,7 @@ function Start({
 							key={id}
 							type="button"
 							onClick={() => setRating(id)}
-							className={`md:text-[2rem] text-[1.8rem]  mb-2 ${
+							className={`text-[1.4rem]  ${
 								id <= rating ? 'text-yellow' : 'text-black'
 							}`}
 							disabled={disabled}
@@ -37,7 +37,7 @@ function Start({
 						</button>
 					);
 				})}
-				<span className="mb-1">{ratingScale[rating - 1]?.content}</span>
+				<span className="text-base">{ratingScale[rating - 1]?.content}</span>
 			</div>
 		</div>
 	);

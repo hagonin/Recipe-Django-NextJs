@@ -6,12 +6,12 @@ function Img({ alt, src, cover, className, ...props }) {
 		<div className={`relative ${className}`}>
 			<Image
 				fill
-				src={src}
+				src={src || images.image_error}
 				alt={alt}
 				className={`${cover ? 'object-cover' : 'object-contain'}`}
 				sizes="(max-width: 768px) 100vw,
-              (max-width: 1024px) 50vw,
-              33vw"
+            (max-width: 1024px) 50vw,
+            33vw"
 				priority
 				{...props}
 			/>

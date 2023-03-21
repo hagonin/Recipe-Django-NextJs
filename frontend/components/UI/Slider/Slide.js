@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { images } from '@utils/constants';
 
 import Img from '../Image';
-import createMarkup from '@utils/createMarkup';
 import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
 
 function Slide({ id, image, name, description, slug }) {
@@ -19,7 +18,7 @@ function Slide({ id, image, name, description, slug }) {
 			>
 				<Img
 					src={image || images.recipe1}
-					alt={`slide ${id}`}
+					alt='recipe'
 					className="w-full h-[500px]"
 					cover
 				/>

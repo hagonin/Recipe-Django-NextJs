@@ -73,18 +73,18 @@ function Thumbnail({
 		<>
 			<div
 				ref={sliderRef}
-				className="keen-slider mt-10"
+				className="keen-slider mt-6"
 			>
 				{images.map((img, index) => (
 					<div
 						className="keen-slider__slide"
 						key={index}
 					>
-						<Img
+						{/* <Img
 							src={img.image}
-							alt={img.caption}
+							alt='recipe'
 							className="h-72 w-full mx-auto "
-						/>
+						/> */}
 					</div>
 				))}
 			</div>
@@ -102,7 +102,7 @@ function Thumbnail({
 					>
 						<Img
 							src={img.image}
-							alt={img.caption}
+							alt='recipe'
 							className="h-full rounded-md"
 							cover
 						/>

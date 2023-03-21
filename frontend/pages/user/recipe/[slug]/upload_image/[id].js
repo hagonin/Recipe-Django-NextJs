@@ -2,12 +2,13 @@ import { useRouter } from 'next/router';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
-import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL, STATUS_EXPIRED } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import { TitlePrimary } from '@components/UI/Title';
 import toastMessage from '@utils/toastMessage';
+import { AiOutlineDoubleLeft } from 'react-icons/ai';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -27,7 +28,10 @@ function UploadImagePage() {
 				message: 'Photos successfully changed',
 			});
 			router.push(`/user/recipe/${slug}`);
-		} catch {}
+		} catch ({ status }) {
+			status === STATUS_EXPIRED &&
+				router.push('/user/recipe/request_expired');
+		}
 	};
 	return (
 		<div className="container py-14">
@@ -40,6 +44,13 @@ function UploadImagePage() {
 				onSubmit={onUploadPhoto}
 				recipe={id}
 			/>
+			<button
+				className="underline flex items-center gap-2"
+				onClick={() => router.push(`/user/recipe/${slug}`)}
+			>
+				<AiOutlineDoubleLeft />
+				Come back
+			</button>
 		</div>
 	);
 }

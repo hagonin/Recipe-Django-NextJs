@@ -52,7 +52,7 @@ function ReviewCard({
 							<span className="text-sm ">{date_added}</span>
 							{hasEdit && (
 								<button
-									className="text-2xl text-red p-1 hover:underline hover:text-red"
+									className="text-2xl text-red px-1"
 									onClick={() =>
 										setShowConfirmDeleteReview(true)
 									}
