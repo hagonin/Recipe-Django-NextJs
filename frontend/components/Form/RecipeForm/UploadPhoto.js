@@ -26,7 +26,6 @@ function UploadPhoto({ onSubmit, recipe }) {
 		handleSubmit,
 		formState: { isSubmitting },
 		setValue,
-		getValues,
 	} = useForm();
 
 	const { fields, remove } = useFieldArray({
@@ -144,7 +143,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 								className="flex flex-col items-center relative"
 								key={field.id}
 							>
-								{listPhotos[index].url && (
+								{listPhotos[index]?.url && (
 									<div className="relative group rounded-md overflow-hidden w-full">
 										<Img
 											alt="recipe photo"

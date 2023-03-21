@@ -35,6 +35,8 @@ export const images = {
 	toast_error:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1678983421/static/toast_error_bysik0.png',
 	bgHero: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679300773/static/2_bvrvik.jpg',
+	image_error:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679407331/static/error_idjefe.png',
 };
 
 export const categoryList = [
@@ -179,7 +181,7 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 3;
+export const EXIST_RECIPE = 15;
 export const NUMBER_OF_RECIPE_RENDER = 9;
 
 export const meta = {

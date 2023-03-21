@@ -12,8 +12,8 @@ import useRecipeBySlug from 'hook/useRecipeBySlug';
 import { useEffect } from 'react';
 import Loader from '@components/UI/Loader';
 import Author from '@components/Recipe/SingleRecipe/Author';
-import { images } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
+import { images } from '@utils/constants';
 
 function Recipe() {
 	const {
@@ -29,7 +29,6 @@ function Recipe() {
 		query: { slug },
 	} = router;
 	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
-
 	const handleSubmitReview = async (data) => {
 		try {
 			await api.post(

@@ -104,7 +104,7 @@ function Ingredient({ ingredients, isPreview }) {
 }
 
 const Quantity = ({ quantity }) => {
-	const indexFraction = quantity.indexOf('/');
+	const indexFraction = quantity?.indexOf('/');
 	if (indexFraction > -1) {
 		const fraction = quantity.slice(indexFraction - 1);
 		const fractionFromCharCode = convertFractiontoUnicode(fraction);

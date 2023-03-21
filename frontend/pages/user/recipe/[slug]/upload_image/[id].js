@@ -8,6 +8,7 @@ import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import { TitlePrimary } from '@components/UI/Title';
 import toastMessage from '@utils/toastMessage';
+import { AiOutlineDoubleLeft } from 'react-icons/ai';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -40,6 +41,13 @@ function UploadImagePage() {
 				onSubmit={onUploadPhoto}
 				recipe={id}
 			/>
+			<button
+				className="underline flex items-center gap-2"
+				onClick={() => router.push(`/user/recipe/${slug}`)}
+			>
+				<AiOutlineDoubleLeft />
+				Come back
+			</button>
 		</div>
 	);
 }

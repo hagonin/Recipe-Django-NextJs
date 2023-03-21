@@ -28,7 +28,7 @@ function Start({
 							key={id}
 							type="button"
 							onClick={() => setRating(id)}
-							className={`md:text-[2rem] text-[1.8rem]  mb-2 ${
+							className={`text-[1.6rem]  mb-2 ${
 								id <= rating ? 'text-yellow' : 'text-black'
 							}`}
 							disabled={disabled}

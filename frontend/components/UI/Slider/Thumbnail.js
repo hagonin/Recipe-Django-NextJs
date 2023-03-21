@@ -80,11 +80,11 @@ function Thumbnail({
 						className="keen-slider__slide"
 						key={index}
 					>
-						<Img
+						{/* <Img
 							src={img.image}
-							alt={img.caption}
+							alt='recipe'
 							className="h-72 w-full mx-auto "
-						/>
+						/> */}
 					</div>
 				))}
 			</div>
@@ -102,7 +102,7 @@ function Thumbnail({
 					>
 						<Img
 							src={img.image}
-							alt={img.caption}
+							alt='recipe'
 							className="h-full rounded-md"
 							cover
 						/>
