@@ -18,6 +18,7 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { MdAddToPhotos, MdDelete, MdPhotoAlbum } from 'react-icons/md';
 import ConfirmDelete from '../ConfirmDelete';
 import { Form, InputField } from '../FormControl';
+import { images as imageDefault } from '@utils/constants';
 
 function UploadPhoto({ onSubmit, recipe }) {
 	const {
@@ -96,7 +97,10 @@ function UploadPhoto({ onSubmit, recipe }) {
 	useEffect(() => {
 		if (data) {
 			const images = data.images.map(async (img) => {
-				const file = await getFileFromUrl(img.image, 'recipe.png');
+				const file = await getFileFromUrl(
+					img.image || imageDefault.recipe_default,
+					'recipe.png'
+				);
 				return { ...img, image: file, url: img.image };
 			});
 			Promise.all(images).then((res) => setListPhotos(res));
@@ -129,7 +133,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 
 			{}
 			{isLoading ? (
-				<div className='flex items-center justify-center'>
+				<div className="flex items-center justify-center">
 					<Loader type="searching" />
 				</div>
 			) : listPhotos.length > 0 ? (

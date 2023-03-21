@@ -181,7 +181,7 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 15;
+export const EXIST_RECIPE = 18;
 export const NUMBER_OF_RECIPE_RENDER = 9;
 
 export const meta = {
@@ -198,7 +198,8 @@ export const meta = {
 		},
 		{
 			id: 3,
-			content: 'Interact with other users and discuss about their recipes',
+			content:
+				'Interact with other users and discuss about their recipes',
 		},
 		{
 			id: 4,
@@ -208,9 +209,9 @@ export const meta = {
 	],
 
 	about: {
-		history: "Welcome to HomeCook, the online community dedicated to all things cooking! Are you passionate about food and love to share your culinary creations with others? Do you enjoy trying out new recipes and experimenting with different ingredients? Then you've come to the right place!HomeCook is a community of home cooks just like you, who are interested in connecting with others who share their passion for cooking. Whether you're a seasoned pro or just starting out in the kitchen, we welcome all levels of experience and all types of cuisine.Our website features a wealth of resources to help you on your culinary journey, including recipes, cooking tips, and articles on the latest trends in food and cooking. You can also connect with other home cooks from around the world, share your own recipes and tips, and participate in fun challenges and contests.We're always looking for enthusiastic contributors to join our team of editors, designers, programmers, recipe developers, and more. If you're interested in getting involved or have any questions about our community, please don't hesitate to contact us. We'd love to hear from you!Thank you for your interest in HomeCook. We look forward to cooking with you!",
-		title:
-			"Home cooks are the unsung heroes of the kitchen, and HomeCook is a community built by and for these culinary experts. From those who take the time to perfect a beef bourguignon on the weekend to those who prefer the ease of a slow-cooker recipe, HomeCook is a place for all types of home cooks. Whether you're a baker who spends hours creating a showstopping cake or someone who simply jazzes up boxed brownies for a quick dessert, HomeCook celebrates your efforts. With a focus on connecting home cooks with each other, HomeCook is the world's leading digital food brand. Our mission is to keep our community of over 60 million home cooks engaged, inspired, and connected. By bringing together home cooks from all walks of life, HomeCook aims to foster a sense of community and shared passion for cooking. Together, we can learn from each other, share tips and tricks, and support one another on our culinary journeys.",
+		history:
+			"the online community dedicated to all things cooking! Are you passionate about food and love to share your culinary creations with others? Do you enjoy trying out new recipes and experimenting with different ingredients? Then you've come to the right place! HomeCook is a community of home cooks just like you, who are interested in connecting with others who share their passion for cooking. Whether you're a seasoned pro or just starting out in the kitchen, we welcome all levels of experience and all types of cuisine. Our website features a wealth of resources to help you on your culinary journey, including recipes, cooking tips, and articles on the latest trends in food and cooking. You can also connect with other home cooks from around the world, share your own recipes and tips, and participate in fun challenges and contests. We're always looking for enthusiastic contributors to join our team of editors, designers, programmers, recipe developers, and more. If you're interested in getting involved or have any questions about our community, please don't hesitate to contact us. We'd love to hear from you! Thank you for your interest in HomeCook. We look forward to cooking with you!",
+		title: "is a community built by and for these culinary experts. From those who take the time to perfect a beef bourguignon on the weekend to those who prefer the ease of a slow-cooker recipe, HomeCook is a place for all types of home cooks. Whether you're a baker who spends hours creating a showstopping cake or someone who simply jazzes up boxed brownies for a quick dessert, HomeCook celebrates your efforts. With a focus on connecting home cooks with each other, HomeCook is the world's leading digital food brand. Our mission is to keep our community of over 60 million home cooks engaged, inspired, and connected. By bringing together home cooks from all walks of life, HomeCook aims to foster a sense of community and shared passion for cooking. Together, we can learn from each other, share tips and tricks, and support one another on our culinary journeys.",
 		list: [
 			{
 				key: 'Friendly',
@@ -230,7 +231,8 @@ export const meta = {
 			},
 			{
 				key: 'Down-to-Earth',
-				content: "Good food doesn't have to be complicated to be great.",
+				content:
+					"Good food doesn't have to be complicated to be great.",
 			},
 			{
 				key: 'Fun Like you',
@@ -239,7 +241,7 @@ export const meta = {
 			},
 		],
 		message:
-			'Become a part of our team of passionate editors, designers, programmers, recipe developers, and others as we work together to develop the largest food website in the world.',
+			'Become a part of our team of passionate editors, designers, programmers, recipe developers, and others as we work together to develop the largest ',
 	},
 	contact:
 		"We appreciate your personal notes and value your feedback. Please feel free to contact us using the form below, and we'll get back to you as soon as possible. Thank you for your support!",
@@ -250,4 +252,5 @@ export const toast_message = {
 };
 
 // 5 hour 18000
-export const REQUESR_EXPIRE = 10;
+// export const REQUESR_EXPIRE = 17;
+export const STATUS_EXPIRED = 429;

@@ -6,14 +6,11 @@ import { useRecipeContext } from '@context/recipe-context';
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 import toastMessage from '@utils/toastMessage';
+import { STATUS_EXPIRED } from '@utils/constants';
 
 function RecipePreView() {
-	const {
-		deleteRecipe,
-		setLoading,
-		getRecipeBySlug,
-		mutateRecipes,
-	} = useRecipeContext();
+	const { deleteRecipe, setLoading, getRecipeBySlug, mutateRecipes } =
+		useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },
@@ -32,12 +29,18 @@ function RecipePreView() {
 		router.push(`/recipes/${recipe?.slug}`)
 	);
 
-	const handleDeleteRecipe = useCallback(async () => {
-		await deleteRecipe(recipe?.slug);
-		toastMessage({
-			message: 'Recipe successfully deleted',
-		});
-		router.push('/user/profile');
+	const handleDeleteRecipe = useCallback(() => {
+		deleteRecipe(recipe?.slug)
+			.then(() => {
+				toastMessage({
+					message: 'Recipe successfully deleted',
+				});
+				router.push('/user/profile');
+			})
+			.catch(({ status }) => {
+				status === STATUS_EXPIRED &&
+					router.push('/user/recipe/request_expired');
+			});
 	});
 
 	const goToUploadPhoto = useCallback(() =>

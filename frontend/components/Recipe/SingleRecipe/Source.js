@@ -2,18 +2,30 @@ import { isValidHttpUrl } from '@utils/checkValidHttpUrl';
 import Link from 'next/link';
 
 function Source({ source }) {
-	if (isValidHttpUrl(source)) {
-		return (
-			<Link
+	return isValidHttpUrl(source) ? (
+		<p className="italic mt-3">
+			If you desire additional tips, read further
+			<a
 				href={source}
-				className="italic mt-3 underline"
+				className="underline ml-1"
 			>
-				Source: {source}
-			</Link>
-		);
-	} else {
-		return <p className="italic mt-3">Source: {source}</p>;
-	}
+				herein
+			</a>
+			.
+		</p>
+	) : null;
+	// if (isValidHttpUrl(source)) {
+	// 	return (
+	// 		<Link
+	// 			href={source}
+	// 			className="italic mt-3 underline"
+	// 		>
+	// 			Source: {source}
+	// 		</Link>
+	// 	);
+	// } else {
+	// 	return ;
+	// }
 }
 
 export default Source;

@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import { images, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
+import { images, NUMBER_OF_RECIPE_RENDER, STATUS_EXPIRED } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
 import usePagination from 'hook/usePagination';
 
@@ -63,11 +63,15 @@ function Profile() {
 			toastMessage({
 				message: 'Successfully deleted recipe',
 			});
-		} catch (err) {
-			toastMessage({
-				message: 'Delete recipe failed',
-				type: 'error',
-			});
+		} catch ({ status }) {
+			if (status === STATUS_EXPIRED) {
+				router.push('/user/recipe/request_expired');
+			} else {
+				toastMessage({
+					message: 'Delete recipe failed',
+					type: 'error',
+				});
+			}
 		}
 	};
 

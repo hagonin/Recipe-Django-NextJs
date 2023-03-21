@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINT_RECIPE_DETAIL, images } from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL, images, STATUS_EXPIRED } from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 
@@ -32,6 +32,7 @@ function AddRecipe() {
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
 		} catch ({ _error, status, error }) {
+			status === STATUS_EXPIRED && router.push('/user/recipe/request_expired');
 			if (_error?.ingredients) {
 				toastMessage({
 					message: 'Ingredient title must make a unique set.',
