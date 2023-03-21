@@ -186,7 +186,7 @@ export const NUMBER_OF_RECIPE_RENDER = 9;
 
 export const meta = {
 	introWeb:
-		" celebrates the idea that the best cooks are the ones who cook at home. We believe that special recipes hold a special place in our hearts and memories, whether it's a family gathering around a holiday table or friends celebrating a special occasion together.",
+		'HomeCook celebrates amateur home cooks and the special recipes that bind families and friends. We believe cherished recipes have deep sentimental value, connecting loved ones over holiday meals, special occasions, and everyday moments shared cooking and dining together. These culinary traditions form heartfelt memories to last a lifetime.',
 	signup_content: [
 		{
 			id: 1,
@@ -251,3 +251,6 @@ export const meta = {
 export const toast_message = {
 	contact: "We've received your message and will reply as soon as possible.",
 };
+
+// 5 hour 18000
+export const REQUESR_EXPIRE = 10;

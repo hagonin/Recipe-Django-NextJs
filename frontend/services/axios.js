@@ -22,12 +22,12 @@ api.interceptors.response.use(
 		const status = error?.response?.status;
 		const _error = error?.response?.data;
 		const _config = error?.config;
-		if (status === 429) {
-			toastMessage({
-				message: 'Many request 429. Try after...',
-				type: 'error',
-			});
-		}
+		// if (status === 429) {
+		// 	toastMessage({
+		// 		message: 'Many request 429. Try after...',
+		// 		type: 'error',
+		// 	});
+		// }
 		return Promise.reject({ status, _error, _config, error });
 	}
 );
