@@ -1,4 +1,3 @@
-import { images } from '@utils/constants';
 import Image from 'next/image';
 
 function Img({ alt, src, cover, className, ...props }) {
@@ -10,8 +9,8 @@ function Img({ alt, src, cover, className, ...props }) {
 				alt={alt}
 				className={`${cover ? 'object-cover' : 'object-contain'}`}
 				sizes="(max-width: 768px) 100vw,
-              (max-width: 1024px) 50vw,
-              33vw"
+            (max-width: 1024px) 50vw,
+            33vw"
 				priority
 				{...props}
 			/>

@@ -18,10 +18,9 @@ Homecook is built with Next.js and TailwindCSS and incorporates a robust Django 
 ## Screenshots
 
 <img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/homepage-1_etowig.jpg" alt="homepage" style="width:50%;">
-<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/profile_ywfkq5.jpg" alt="profile" style="width:50%;"
-![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965387/screenshots/category-page_bntmep.jpg)
-![Screenshots](https://res.cloudinary.com/dui608qtq/image/upload/v1678965448/screenshots/single-page_hzkcw4.jpg)
-
+<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965198/screenshots/profile_ywfkq5.jpg" alt="profile" style="width:50%;">
+<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965387/screenshots/category-page_bntmep.jpg" alt="profile" style="width:50%;">
+<img src="https://res.cloudinary.com/dui608qtq/image/upload/v1678965448/screenshots/single-page_hzkcw4.jpg" alt="profile" style="width:50%;">
 
 ## Technologies
 - Next.js 13.1.2

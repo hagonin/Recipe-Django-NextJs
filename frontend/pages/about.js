@@ -11,6 +11,7 @@ function About(props) {
 	return (
 		<div>
 			<TitlePrimary title="About" />
+			<p className="mt-3">{meta.about.history}</p>
 			<SubTitle title="Who we are ?" />
 			<p className="mt-3">{meta.about.title}</p>
 			<Img
@@ -18,7 +19,7 @@ function About(props) {
 				alt="about"
 				className="my-5"
 			/>
-			<SubTitle title="Above all, we are:" />
+			<SubTitle title="We are:" />
 
 			<ul className="mt-3 lg:text-base text-xbase list-disc marker:text-red3">
 				{meta.about.list.map(({ key, content }) => (
@@ -32,10 +33,7 @@ function About(props) {
 			<p className="mt-3">
 				{meta.about.message}
 				{!isAuthenticated && (
-					<Link
-						href="/signup"
-						className="text-lg text-primary underline ml-2"
-					>
+					<Link href="/signup" className="text-lg text-primary underline ml-2">
 						Register here
 					</Link>
 				)}

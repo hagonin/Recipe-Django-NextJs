@@ -24,10 +24,11 @@ function Login() {
 						className="w-full md:h-72 h-36 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Welcome back" />
-					<p className='text-base text-center'>
-						It's nice to see you again.
-						<br className="block md:hidden" /> Log in to continue to
-						your account.
+					<p className="text-base text-center">
+						It's nice to see you again. Connect now to save recipes and view
+						personalized content.
+						<br className="block md:hidden" /> Please log in to access your
+						account.
 					</p>
 				</div>
 			</div>

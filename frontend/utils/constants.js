@@ -184,7 +184,7 @@ export const NUMBER_OF_RECIPE_RENDER = 9;
 
 export const meta = {
 	introWeb:
-		" celebrates the idea that the best cooks are the ones who cook at home. We believe that special recipes hold a special place in our hearts and memories, whether it's a family gathering around a holiday table or friends celebrating a special occasion together.",
+		' celebrates amateur home cooks and the special recipes that bind families and friends. We believe cherished recipes have deep sentimental value, connecting loved ones over holiday meals, special occasions, and everyday moments shared cooking and dining together. These culinary traditions form heartfelt memories to last a lifetime.',
 	signup_content: [
 		{
 			id: 1,
@@ -196,8 +196,7 @@ export const meta = {
 		},
 		{
 			id: 3,
-			content:
-				'Interact with other users and discuss about their recipes',
+			content: 'Interact with other users and discuss about their recipes',
 		},
 		{
 			id: 4,
@@ -207,43 +206,41 @@ export const meta = {
 	],
 
 	about: {
-		title: "Home cooks are our heroes—it's as simple as that. HomeCook is a community built by and for kitchen experts: The cooks who will dedicate the weekend to a perfect beef bourguignon but love the simplicity of a slow-cooker rendition, too. The bakers who labor over a showstopping 9-layer cake but will just as happily doctor boxed brownies for a decadent weeknight dessert. The entertainers who just want a solid snack spread, without tons of dirty dishes at the end of the night. Most importantly, HomeCook connects home cooks with their greatest sources of inspiration — other home cooks. We're the world's leading digital food brand, and that inspires us to do everything possible to keep our community connected. Sixty-million home cooks deserve no less.",
+		history: "Welcome to HomeCook, the online community dedicated to all things cooking! Are you passionate about food and love to share your culinary creations with others? Do you enjoy trying out new recipes and experimenting with different ingredients? Then you've come to the right place!HomeCook is a community of home cooks just like you, who are interested in connecting with others who share their passion for cooking. Whether you're a seasoned pro or just starting out in the kitchen, we welcome all levels of experience and all types of cuisine.Our website features a wealth of resources to help you on your culinary journey, including recipes, cooking tips, and articles on the latest trends in food and cooking. You can also connect with other home cooks from around the world, share your own recipes and tips, and participate in fun challenges and contests.We're always looking for enthusiastic contributors to join our team of editors, designers, programmers, recipe developers, and more. If you're interested in getting involved or have any questions about our community, please don't hesitate to contact us. We'd love to hear from you!Thank you for your interest in HomeCook. We look forward to cooking with you!",
+		title:
+			"Home cooks are the unsung heroes of the kitchen, and HomeCook is a community built by and for these culinary experts. From those who take the time to perfect a beef bourguignon on the weekend to those who prefer the ease of a slow-cooker recipe, HomeCook is a place for all types of home cooks. Whether you're a baker who spends hours creating a showstopping cake or someone who simply jazzes up boxed brownies for a quick dessert, HomeCook celebrates your efforts. With a focus on connecting home cooks with each other, HomeCook is the world's leading digital food brand. Our mission is to keep our community of over 60 million home cooks engaged, inspired, and connected. By bringing together home cooks from all walks of life, HomeCook aims to foster a sense of community and shared passion for cooking. Together, we can learn from each other, share tips and tricks, and support one another on our culinary journeys.",
 		list: [
 			{
 				key: 'Friendly',
-				content:
-					'We love trading ideas and hanging out with fellow home cooks.',
+				content: 'We love connecting with fellow home cooks.',
 			},
 			{
 				key: 'Supportive',
-				content: 'Struggling with dinner inspo? We’re here to help!',
+				content: "Need dinner inspiration? We're here to help",
 			},
 			{
 				key: 'Creative',
-				content:
-					'Cooking is an art. We like to experiment and express ourselves.',
+				content: 'We like to explore and try new recipes.',
 			},
 			{
 				key: 'Approachable',
-				content:
-					"We don't judge—all cooking levels and recipes are welcome.",
+				content: 'All skill levels and recipes welcome. No judgment.',
 			},
 			{
 				key: 'Down-to-Earth',
-				content:
-					'We love good food, period. It doesn’t need to be fussy to be great.',
+				content: "Good food doesn't have to be complicated to be great.",
 			},
 			{
 				key: 'Fun Like you',
 				content:
-					'We enjoy friends, family, cooking, and having a good laugh.',
+					'We value the same things you do—friends, family, cooking, and laughs.',
 			},
 		],
 		message:
-			"Join our team of enthusiastic editors, designers, programmers, recipe developers, and more as we build out the world's largest food site.",
+			'Become a part of our team of passionate editors, designers, programmers, recipe developers, and others as we work together to develop the largest food website in the world.',
 	},
 	contact:
-		'We are always on the lookout for talented new writers, recipe developers, equipment reviewers, and photographers who love cooking to join our team of contributors. Please contact with us via email.',
+		"We appreciate your personal notes and value your feedback. Please feel free to contact us using the form below, and we'll get back to you as soon as possible. Thank you for your support!",
 };
 
 export const toast_message = {

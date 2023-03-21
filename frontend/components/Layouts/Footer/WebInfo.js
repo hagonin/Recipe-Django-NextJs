@@ -5,16 +5,12 @@ import { images } from '@utils/constants';
 function WebInfo() {
 	return (
 		<div className="md:col-span-4 ">
-			<Img
-				src={images.logo}
-				alt="logo"
-				className="h-20 w-44"
-			/>
+			<Img src={images.logo} alt="logo" className="h-20 w-44" />
 
 			<p className="mb-5 text-justify w-[95%]">
-				We all love convenience food, but one of the simplest ways to
-				improve your health is by preparing more home-cooked meals.
-				HomeCook will help you how to get started.
+				Discover the benefits of home-cooked meals and improve your health with
+				HomeCook's guidance. Start cooking with ease and say goodbye to
+				convenience food cravings.
 			</p>
 			<SocialLink color="black" />
 		</div>

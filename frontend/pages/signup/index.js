@@ -50,10 +50,7 @@ function SignUp() {
 						We have sent an email verify to activate your account.
 						<br />
 						The link will
-						<span className="text-red2 font-semibold">
-							{' '}
-							expire in 3 hours.
-						</span>
+						<span className="text-red2 font-semibold"> expire in 3 hours.</span>
 						<br />
 						Please check it and
 						<Button
@@ -64,9 +61,7 @@ function SignUp() {
 						</Button>
 					</p>
 					<div className="flex flex-col mt-3 bg-third pt-1 pb-3 px-8 rounded-md">
-						<p className="text-base">
-							Don't you see any verify email ?
-						</p>
+						<p className="text-base">Don't you see any verify email ?</p>
 						<VerifyEmailForm
 							handleEffectAfterResend={handleEffectAfterResend}
 						/>
@@ -80,14 +75,11 @@ function SignUp() {
 						src={images.signup}
 						className="w-full md:h-72 h-44 md:mb-10 mb-3"
 					/>
-					<TitlePrimary title="Create An Account" />
-					<h2 className="font-serif mt-2">What you will get?</h2>
+					<TitlePrimary title="Don't miss out" />
+					<h4 className="font-serif mt-2">Join our community today</h4>
 					<ul className="p-0 m-0 md:mt-5 mt-3">
 						{meta.signup_content.map((item) => (
-							<li
-								className="flex text-base"
-								key={item.id}
-							>
+							<li className="flex text-base" key={item.id}>
 								<span className="mr-2 relative top-[6px] text-primary">
 									<BsCheck2Circle />
 								</span>
