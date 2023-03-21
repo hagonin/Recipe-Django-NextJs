@@ -24,7 +24,7 @@ function ToastMessage({ message, type, id, visible }) {
 				leaveTo="opacity-100 translate-x-[500px]"
 			>
 				<div
-					className={`flex items-center gap-2 border rounded-md py-2 px-4 bg-white shadow-xl relative top-10 ${
+					className={`flex items-center gap-2 border rounded-md py-1 px-3 bg-white shadow-xl relative top-10 ${
 						type === 'error'
 							? 'border-red'
 							: type === 'success'
@@ -35,14 +35,14 @@ function ToastMessage({ message, type, id, visible }) {
 					{type === 'success' ? (
 						<Img
 							src={images.toast_success}
-							className="h-9 w-9 relative -top-[2px]"
+							className="h-7 w-7 relative -top-[2px]"
 							alt="success"
 							cover
 						/>
 					) : type === 'error' ? (
 						<Img
 							src={images.toast_error}
-							className="h-8 w-8 relative -top-[2px]"
+							className="h-7 w-7 relative -top-[2px]"
 							alt="success"
 							cover
 						/>

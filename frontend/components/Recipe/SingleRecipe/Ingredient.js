@@ -1,35 +1,13 @@
 import Title from '@components/UI/Title';
 import { convertFractiontoUnicode } from '@utils/convertFractionToUnicode';
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
+import { handleUnit } from '@utils/handleUnit';
 import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
 import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {
 	const ingredient = handleIngredientFromArr(ingredients);
-	const handleUnit = (unit, quantity) => {
-		let total = 0;
-		const indexFraction = quantity?.indexOf('/');
-		console.log(indexFraction);
-		if (indexFraction > -1) {
-			total += quantity[indexFraction - 1] / quantity[indexFraction + 1];
-			total += quantity.slice(0, indexFraction - 1).trim() * 1;
-		} else {
-			total += quantity * 1;
-		}
 
-		switch (true) {
-			case unit === 'teaspoon(s)' && total <= 1:
-				return 'teaspoon';
-			case unit === 'tablespoon(s)' && total <= 1:
-				return 'tablespoon';
-			case unit === 'pound(s)' && total <= 1:
-				return 'pound';
-			case unit === 'cup(s)' && total <= 1:
-				return 'cup';
-			default:
-				return unit;
-		}
-	};
 	return (
 		<div>
 			<Title

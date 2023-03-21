@@ -140,7 +140,7 @@ function PreviewRecipe({
 				Add more photos to make your recipe fantasy
 			</p>
 			{images.length > 0 ? (
-				<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 mt-4">
+				<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-2 mb-4">
 					{images.map((img, index) => {
 						return (
 							<div

@@ -21,7 +21,14 @@ function Author({ name, avatar, bio, slug }) {
 						bottom="mb-2"
 					/>
 				</Link>
-				<p className="line-clamp-4">{bio}</p>
+				<span className="line-clamp-4 text-base">{bio}</span>
+				<Link
+					href={`/recipes/${slug}/author`}
+					className="underline hover:text-primaryDark text-base"
+				>
+					Read more
+				</Link>
+
 				{/* <SocialLink color="grey" /> */}
 			</div>
 		</div>
