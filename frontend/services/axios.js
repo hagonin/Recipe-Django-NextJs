@@ -22,7 +22,6 @@ api.interceptors.response.use(
 		const status = error?.response?.status;
 		const _error = error?.response?.data;
 		const _config = error?.config;
-		console.log(status);
 		if (status === 429) {
 			toastMessage({
 				message: 'Many request 429. Try after...',
