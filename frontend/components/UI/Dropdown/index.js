@@ -5,7 +5,7 @@ import Button from '../Button';
 function DropDown({ children }) {
 	const [show, setShow] = useState(false);
 	return (
-		<div className="relative inline-block">
+		<div className="relative inline-block mt-6">
 			<Button
 				className="primary"
 				onClick={() => setShow(!show)}
