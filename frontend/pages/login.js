@@ -13,8 +13,8 @@ function Login() {
 
 	return (
 		<div className="bg-primaryLight w-full min-h-screen flex">
-			<div className="container m-auto flex md:flex-row flex-col items-center justify-center  lg:gap-12 gap-6 py-10">
-				<div className=" bg-white md:w-[500px] w-full  rounded-xl pt-6 pb-9 md:px-8 px-4  border md:shadow-xl ">
+			<div className="container m-auto flex md:flex-row flex-col items-center justify-center lg:gap-16 gap-6 py-10">
+				<div className=" bg-white md:w-[500px] w-full  rounded-xl pt-6 pb-9 md:px-8 px-4 border md:shadow-xl ">
 					<LoginForm onSubmit={login} />
 				</div>
 				<div className="flex flex-col items-center justify-center max-md:-order-1">
@@ -24,7 +24,7 @@ function Login() {
 						className="w-full md:h-72 h-36 md:mb-10 mb-3"
 					/>
 					<TitlePrimary title="Welcome back" />
-					<p className="text-base text-center ">
+					<p className="md:text-base text-sm text-center ">
 						It's nice to see you again <br /> Connect now to save
 						and view personalized recipes <br /> Please log
 						in to access your account
