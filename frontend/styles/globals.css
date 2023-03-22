@@ -7,8 +7,6 @@
    html {
       @apply  text-second leading-7;
    }
-
-   
    p {
     @apply text-base;
    }
@@ -23,9 +21,6 @@
       -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
       -webkit-transition-delay: 9999s;
     }
-
-
-
 
     /* Firefox */
     input[type=number] {
@@ -99,9 +94,6 @@
       @apply text-base h-12 px-5;
     }
 
-    /* .btn.third {
-      @apply bg-
-    } */
     .btn.verify {
       @apply tracking-[0.2em] !text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
     }

@@ -57,7 +57,7 @@ function SingRecipe({
 				className="mt-4 w-full h-[600px] mx-auto "
 				cover
 			/>
-			<div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 border-y border-border mt-8 py-3 text-sm md:gap-4 gap-2 mb-5">
+			<div className="flex lg:gap-x-12 md:gap-x-8 gap-x-10  gap-y-2 flex-wrap border-y border-border mt-8 py-3 text-sm mb-5">
 				<TimerBox
 					prep_time={prep_time}
 					cook_time={cook_time}

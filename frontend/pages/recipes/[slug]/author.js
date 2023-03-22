@@ -15,19 +15,24 @@ function Author() {
 
 	return (
 		<div className="lg:w-2/3 md:w-4/5 mx-auto">
-			<TitlePrimary title="About author" center />
+			<TitlePrimary
+				title="About author"
+				center
+			/>
 			<div className="bg-third top-full bottom-full rounded-md mt-5 md:py-8 md:px-8 px-4 py-6 flex flex-col items-center gap-4">
-				<Img
-					src={data?.user?.profile?.avatar}
-					alt={data?.user?.username}
-					className="h-[200px] w-[200px] rounded-full mx-auto overflow-hidden border "
-					cover
-				/>
-				<span
-					className={`${satisfy.className} text-[2rem] `}
-				>
-					{data?.user?.username}
-				</span>
+				{data && (
+					<>
+						<Img
+							src={data?.user?.profile?.avatar}
+							alt={data?.user?.username}
+							className="h-[200px] w-[200px] rounded-full mx-auto overflow-hidden border "
+							cover
+						/>
+						<span className={`${satisfy.className} text-[2rem] `}>
+							{data?.user?.username}
+						</span>
+					</>
+				)}
 				<p>{data?.user?.profile?.bio}</p>
 				<SocialLink color="grey" />
 			</div>
@@ -38,6 +43,7 @@ function Author() {
 				<BsChevronDoubleLeft />
 				Continue read the recipe
 			</button>
+			a
 		</div>
 	);
 }

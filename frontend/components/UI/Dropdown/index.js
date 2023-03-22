@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Button from '../Button';
 
-function DropDown({ children }) {
+function DropDown({ children, label }) {
 	const [show, setShow] = useState(false);
 	return (
-		<div className="relative inline-block mt-6">
+		<div className="relative inline-block mt-2">
 			<Button
 				className="primary"
 				onClick={() => setShow(!show)}
 			>
-				Select an action
+				{label}
 			</Button>
 
 			{show && (

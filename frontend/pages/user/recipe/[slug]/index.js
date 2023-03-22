@@ -17,10 +17,6 @@ function RecipePreView() {
 	} = router;
 	const [recipe, setRecipe] = useState(null);
 
-	const goToUploadPhotos = useCallback(() =>
-		router.push(`/user/recipe/${recipe?.slug}/upload_image/${recipe?.id}`)
-	);
-
 	const goToUpdate = useCallback(() =>
 		router.push(`/user/recipe/${recipe?.slug}/update`)
 	);

@@ -13,7 +13,7 @@ function Ingredient({ ingredients, isPreview }) {
 		<div>
 			<Title
 				title="Ingredients"
-				bottom="mb-2"
+				bottom="mb-3"
 			/>
 			<div className={`flex flex-col ${isPreview ? '' : 'lg:w-[80%]'}`}>
 				<div className="flex flex-col ">

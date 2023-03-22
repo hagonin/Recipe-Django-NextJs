@@ -16,9 +16,6 @@ module.exports = {
 			},
 		},
 		extend: {
-			// backgroundImage: {
-			// 	hero: `url('${images}')`,
-			// },
 			fontFamily: {
 				sans: ['var(--nunito-sans)', ...fontFamily.sans],
 				serif: ['var(--libre-baskerville)', ...fontFamily.serif],
@@ -28,6 +25,7 @@ module.exports = {
 				primaryLight: '#7ba39617',
 				primaryDark: '#79aa9e',
 				primaryDark2: '#6f9e92',
+				primary3: '#f5fffd',
 				primaryTransparent: 'rgb(150, 183, 174, 0.85)',
 				second: '#757575',
 				third: '#F9F8F3',

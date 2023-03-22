@@ -3,7 +3,10 @@ import Title from '@components/UI/Title';
 function Method({ instructionsArr }) {
 	return instructionsArr ? (
 		<div>
-			<Title title="Method" />
+			<Title
+				title="Method"
+				bottom="mb-3"
+			/>
 			<ul className=" flex flex-col gap-2 p-0 m-0">
 				{instructionsArr.map(({ content }, index) => (
 					<li
