@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRecipeContext } from '@context/recipe-context';
+import Loader from '@components/UI/Loader';
 import Img from '@components/UI/Image';
 import CommonSection from './CommonSection';
-import { useRecipeContext } from '@context/recipe-context';
-import { useEffect, useState } from 'react';
-import Loader from '@components/UI/Loader';
 
 function CollectionPics({ isFooter }) {
 	const { photos } = useRecipeContext();

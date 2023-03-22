@@ -1,5 +1,5 @@
-import { isValidHttpUrl } from '@utils/checkValidHttpUrl';
 import Link from 'next/link';
+import { isValidHttpUrl } from '@utils/checkValidHttpUrl';
 
 function Source({ source }) {
 	return isValidHttpUrl(source) ? (
@@ -14,18 +14,6 @@ function Source({ source }) {
 			.
 		</p>
 	) : null;
-	// if (isValidHttpUrl(source)) {
-	// 	return (
-	// 		<Link
-	// 			href={source}
-	// 			className="italic mt-3 underline"
-	// 		>
-	// 			Source: {source}
-	// 		</Link>
-	// 	);
-	// } else {
-	// 	return ;
-	// }
 }
 
 export default Source;

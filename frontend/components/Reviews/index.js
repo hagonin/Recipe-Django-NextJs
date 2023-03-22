@@ -1,9 +1,9 @@
-import ReviewForm from '@components/Form/ReviewsForm';
-import Pagination from '@components/UI/Pagination';
-import Title from '@components/UI/Title';
 import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 import usePagination from 'hook/usePagination';
 
+import ReviewForm from '@components/Form/ReviewsForm';
+import Pagination from '@components/UI/Pagination';
+import Title from '@components/UI/Title';
 import ReviewCard from './ReviewCard';
 
 function Reviews({

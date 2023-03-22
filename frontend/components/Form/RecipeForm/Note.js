@@ -1,8 +1,7 @@
-import Button from '@components/UI/Button';
 import { useEffect, useState } from 'react';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { Label, TextAreaField } from '../FormControl';
+import Button from '@components/UI/Button';
 
 function Note({ register, handleUngister, handleRegister, initValue }) {
 	const [show, setShow] = useState(false);

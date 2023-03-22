@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { images } from '@utils/constants';
+
 import Img from '@components/UI/Image';
 import Button from '@components/UI/Button';
 

@@ -1,10 +1,11 @@
+import { useRouter } from 'next/router';
+
 import { useAuthContext } from '@context/auth-context';
 import { images } from '@utils/constants';
 
 import LoginForm from '@components/Form/LoginForm';
 import Img from '@components/UI/Image';
 import { TitlePrimary } from '@components/UI/Title';
-import { useRouter } from 'next/router';
 
 function Login() {
 	const router = useRouter();

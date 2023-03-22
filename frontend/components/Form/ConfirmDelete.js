@@ -1,7 +1,8 @@
+import { useForm } from 'react-hook-form';
+
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
-import { useForm } from 'react-hook-form';
 import { Form } from './FormControl';
 
 function ConfirmDelete({ handleDelete, showConfirm, handleCloseConfirm }) {

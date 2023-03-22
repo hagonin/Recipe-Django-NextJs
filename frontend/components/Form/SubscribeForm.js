@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import sleep from '@utils/sleep';
+import toastMessage from '@utils/toastMessage';
 
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import toastMessage from '@utils/toastMessage';
 import { Form, InputField } from './FormControl';
 import { email } from './FormControl/validate';
 

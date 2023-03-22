@@ -1,6 +1,6 @@
+import useQuery from 'hook/useQuery';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Loader from '@components/UI/Loader';
-import useQuery from 'hook/useQuery';
 
 function LastPost({ isFooter, number = 3 }) {
 	const { data } = useQuery(number, { ordering: 'created_at' });
@@ -26,7 +26,6 @@ function LastPost({ isFooter, number = 3 }) {
 						firstPost={index === 0}
 						secondPost={index === 1 && isFooter}
 						lastestRecipe
-						// noBorder={index === 0 || (isFooter && index === 1)}
 					/>
 				))
 			) : (

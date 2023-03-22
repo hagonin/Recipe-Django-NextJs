@@ -1,17 +1,17 @@
+import { useState } from 'react';
 import Link from 'next/link';
-import formatDate from '@utils/formatdate';
 import { AiFillHeart } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
+import formatDate from '@utils/formatdate';
 import { MdAddPhotoAlternate, MdDateRange, MdDelete } from 'react-icons/md';
+
+import Tooltip from '@components/UI/Tooltip';
+import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
+import Category from '../SingleRecipe/Category';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Rating from '@components/Reviews/Rate';
 import ConfirmDelete from '@components/Form/ConfirmDelete';
-import { useState } from 'react';
-import Tooltip from '@components/UI/Tooltip';
-import getPlainTextFromHtml from '@utils/getPlainTextFromHtml';
-import { FaTags } from 'react-icons/fa';
-import Category from '../SingleRecipe/Category';
 
 function RecipeCard({
 	name,

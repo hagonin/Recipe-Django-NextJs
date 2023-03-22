@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
+
 import api from '@services/axios';
 import { ENDPOINT_RECIPE, images } from '@utils/constants';
+import { useRecipeContext } from '@context/recipe-context';
 
 import WidgetLayout from '@components/Layouts/WidgetLayout';
-import useSWR from 'swr';
 import RecipeCard from '@components/Recipe/RecipeCard';
 import Img from '@components/UI/Image';
-import { useRecipeContext } from '@context/recipe-context';
 import Loader from '@components/UI/Loader';
 import TopRating from '@components/Recipe/TopRating';
 

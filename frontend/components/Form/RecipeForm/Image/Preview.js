@@ -1,9 +1,8 @@
-import Button from '@components/UI/Button';
-import Img from '@components/UI/Image';
-import { images } from '@utils/constants';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { images } from '@utils/constants';
 import { BsUpload } from 'react-icons/bs';
 import { MdChangeCircle, MdDelete } from 'react-icons/md';
+import Img from '@components/UI/Image';
 
 function Preview({ name, handleChangeImage, handleDelete }) {
 	const [preview, setPreview] = useState(null);

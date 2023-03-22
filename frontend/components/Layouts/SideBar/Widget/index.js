@@ -1,3 +1,10 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { useRecipeContext } from '@context/recipe-context';
+import { meta } from '@utils/constants';
+
+import Loader from '@components/UI/Loader';
 import SearchForm from '@components/Form/SearchForm';
 import SubscribeForm from '@components/Form/SubscribeForm';
 import Img from '@components/UI/Image';
@@ -5,11 +12,6 @@ import CollectionPics from './CollectionPics';
 import CommonSection from './CommonSection';
 import Tags from './Tags';
 import LastPost from '../../../Recipe/LastestRecipes';
-import { useRouter } from 'next/router';
-import { useRecipeContext } from '@context/recipe-context';
-import Link from 'next/link';
-import Loader from '@components/UI/Loader';
-import { meta } from '@utils/constants';
 
 function Widget() {
 	const router = useRouter();

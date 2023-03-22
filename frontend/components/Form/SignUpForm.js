@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+
+import { MdEmail } from 'react-icons/md';
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { useAuthContext } from '@context/auth-context';
 
 import { Form, InputField } from './FormControl';
 import Img from '@components/UI/Image';
 import Button from '@components/UI/Button';
-import { useAuthContext } from '@context/auth-context';
 import Loader from '@components/UI/Loader';
-import { MdEmail } from 'react-icons/md';
-import { RiLockPasswordFill } from 'react-icons/ri';
 import { TitlePrimary } from '@components/UI/Title';
 import {
 	email,

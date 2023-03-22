@@ -1,26 +1,28 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { HiInformationCircle } from 'react-icons/hi';
 
-import { InputField, SelectField, Label } from '@components/Form/FormControl';
-import Button from '@components/UI/Button';
-import Ingredients from './Ingredients';
-import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
-import Image from './Image';
+import { useAuthContext } from '@context/auth-context';
 
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 
+import { HiInformationCircle } from 'react-icons/hi';
 import { FaRegLightbulb } from 'react-icons/fa';
+
+import { categoryList, EXIST_RECIPE, images } from '@utils/constants';
+import { getFileFromUrl } from '@utils/getFileFromUrl';
+import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
+
+import { InputField, SelectField, Label } from '@components/Form/FormControl';
+import Button from '@components/UI/Button';
+import Ingredients from './Ingredients';
+import Image from './Image';
 import Loader from '@components/UI/Loader';
 import Instructions from './Instructions';
-import { useAuthContext } from '@context/auth-context';
 import Note from './Note';
-import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { info_recipeform } from '../FormControl/info';
 import { keyword } from '../FormControl/validate';
-import { getInstructionAsDrawHtml } from '@utils/handleInstruction';
 import RichTextField from '../FormControl/RichText';
 
 function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {

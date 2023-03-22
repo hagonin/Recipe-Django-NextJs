@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { MdEmail, MdSecurity } from 'react-icons/md';
+import { AiFillEdit } from 'react-icons/ai';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
@@ -7,8 +9,6 @@ import { images, NUMBER_OF_RECIPE_RENDER, STATUS_EXPIRED } from '@utils/constant
 import toastMessage from '@utils/toastMessage';
 import usePagination from 'hook/usePagination';
 
-import { MdEmail, MdSecurity } from 'react-icons/md';
-import { AiFillEdit } from 'react-icons/ai';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import RecipeCard from '@components/Recipe/RecipeCard';

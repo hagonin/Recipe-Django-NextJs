@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import formatDate from '@utils/formatdate';
 import createMarkup from '@utils/createMarkup';
 import formatTime from '@utils/formatTime';
@@ -15,7 +17,6 @@ import Method from './Method';
 import Notes from './Notes';
 import Source from './Source';
 import Category from './Category';
-import Link from 'next/link';
 
 function SingRecipe({
 	id,
@@ -70,7 +71,7 @@ function SingRecipe({
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
-						<span className="block mt-1 flex gap-2 text-base">
+						<span className="mt-1 flex gap-2 text-base">
 							{`${updated_at_format} / by ${author}`}
 							<Category
 								category={category}

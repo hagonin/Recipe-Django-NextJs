@@ -1,6 +1,6 @@
-import { ENDPOINT_RECIPE } from '@utils/constants';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { ENDPOINT_RECIPE } from '@utils/constants';
 import fetcher from './fetcher';
 
 const useRecipes = () => {
@@ -39,8 +39,6 @@ const useRecipes = () => {
 				slug: item.slug,
 			}));
 			setPhotos(arrPhotos);
-
-			//random photo
 		}
 	}, [data]);
 

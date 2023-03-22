@@ -1,6 +1,5 @@
 import Img from '@components/UI/Image';
 import { images } from '@utils/constants';
-import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { useEffect, useRef, useState } from 'react';
 import { BsCamera } from 'react-icons/bs';
 

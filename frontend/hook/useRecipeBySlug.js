@@ -1,5 +1,5 @@
-import { ENDPOINT_RECIPE_READ } from '@utils/constants';
 import useSWR from 'swr';
+import { ENDPOINT_RECIPE_READ } from '@utils/constants';
 import fetcher from './fetcher';
 
 function useRecipeBySlug(slug) {

@@ -1,11 +1,13 @@
+import { useRouter } from 'next/router';
+import { BsChevronDoubleLeft } from 'react-icons/bs';
+
+import { satisfy } from '@utils/fonts';
+import useRecipeBySlug from 'hook/useRecipeBySlug';
+
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
 import { TitlePrimary } from '@components/UI/Title';
-import { satisfy } from '@utils/fonts';
-import useRecipeBySlug from 'hook/useRecipeBySlug';
-import { useRouter } from 'next/router';
-import { BsChevronDoubleLeft } from 'react-icons/bs';
 
 function Author() {
 	const router = useRouter();

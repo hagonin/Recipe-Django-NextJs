@@ -1,9 +1,11 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
-import { useAuthContext } from '@context/auth-context';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { useAuthContext } from '@context/auth-context';
 import { RiLockPasswordLine } from 'react-icons/ri';
+
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
 import { Form, InputField, password } from './FormControl';
 import { info_recipeform } from './FormControl/info';
 

@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import Loader from '@components/UI/Loader';
 import { useAuthContext } from '@context/auth-context';
-import { useRouter } from 'next/router';
 
 function PrivateRoutes({ children }) {
 	const router = useRouter();

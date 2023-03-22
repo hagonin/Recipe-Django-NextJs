@@ -1,11 +1,10 @@
-import { categoryList } from '@utils/constants';
 import Link from 'next/link';
 import { memo, useState } from 'react';
 import {
 	MdOutlineKeyboardArrowUp,
 	MdOutlineKeyboardArrowDown,
 } from 'react-icons/md';
-
+import { categoryList } from '@utils/constants';
 import NavItem from './NavItem';
 
 function NavCategory() {

@@ -1,6 +1,5 @@
-import api from '@services/axios';
-import { ENDPOINT_RECIPE, ENDPOINT_RECIPE_READ } from '@utils/constants';
 import useSWR from 'swr';
+import { ENDPOINT_RECIPE } from '@utils/constants';
 import fetcher from './fetcher';
 
 function useQuery(numberOfResult, query) {

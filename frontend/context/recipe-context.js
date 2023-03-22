@@ -1,3 +1,4 @@
+import { createContext, useContext, useState } from 'react';
 import api from '@services/axios';
 import {
 	ENDPOINT_RECIPE_DETAIL,
@@ -6,11 +7,11 @@ import {
 } from '@utils/constants';
 import noCache from '@utils/noCache';
 import toastMessage from '@utils/toastMessage';
+
 import useRecipes from 'hook/useRecipes';
 
 import { useAuthContext } from './auth-context';
 
-const { createContext, useContext, useState, useEffect } = require('react');
 
 const RecipeContext = createContext();
 

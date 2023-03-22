@@ -27,7 +27,7 @@ function Contact() {
 			<Banner />
 			<WidgetLayout>
 				<TitlePrimary title="Contact" />
-				<p className="mt-3 mb-10">{meta.contact}</p>
+				<p className="mt-3 mb-4">{meta.contact}</p>
 				<ContactForm onSubmit={onSubmit} />
 			</WidgetLayout>
 		</>

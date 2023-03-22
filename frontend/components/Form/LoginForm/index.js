@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAuthContext } from '@context/auth-context';
 import { images } from '@utils/constants';
 
-import { CheckboxField, Form, InputField } from '../FormControl';
+import { Form, InputField } from '../FormControl';
 import Img from '@components/UI/Image';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';

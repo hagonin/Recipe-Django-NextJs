@@ -1,3 +1,9 @@
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+import useRecipeBySlug from 'hook/useRecipeBySlug';
+import toastMessage from '@utils/toastMessage';
+import { images } from '@utils/constants';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 
@@ -7,13 +13,8 @@ import SingRecipe from '@components/Recipe/SingleRecipe';
 import SubscribeSection from '@components/SubcribeSection';
 import Reviews from '@components/Reviews';
 import { useRecipeContext } from '@context/recipe-context';
-import { useRouter } from 'next/router';
-import useRecipeBySlug from 'hook/useRecipeBySlug';
-import { useEffect } from 'react';
 import Loader from '@components/UI/Loader';
 import Author from '@components/Recipe/SingleRecipe/Author';
-import toastMessage from '@utils/toastMessage';
-import { images } from '@utils/constants';
 
 function Recipe() {
 	const {

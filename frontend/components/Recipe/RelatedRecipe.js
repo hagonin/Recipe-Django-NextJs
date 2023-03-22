@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
+import useQuery from 'hook/useQuery';
+import { useRecipeContext } from '@context/recipe-context';
+
+import RecipeCard from './RecipeCard';
 import Loader from '@components/UI/Loader';
 import Slider from '@components/UI/Slider';
 import Title from '@components/UI/Title';
-import { useRecipeContext } from '@context/recipe-context';
-import useQuery from 'hook/useQuery';
-import { useEffect, useState } from 'react';
-import RecipeCard from './RecipeCard';
 
 function RelatedRecipe({ categoryName, except }) {
 	const { data: recipes, isLoading } = useQuery(null, {

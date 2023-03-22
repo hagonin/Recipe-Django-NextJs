@@ -1,7 +1,6 @@
-import Img from '@components/UI/Image';
-import SocialLink from '@components/UI/SocialLink';
-import Title from '@components/UI/Title';
 import Link from 'next/link';
+import Img from '@components/UI/Image';
+import Title from '@components/UI/Title';
 
 function Author({ name, avatar, bio, slug }) {
 	return (

@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useAuthContext } from '@context/auth-context';
+import { MdEmail } from 'react-icons/md';
 
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-
-import { MdEmail } from 'react-icons/md';
 import { InputField, Form } from '../FormControl';
 import { email } from '../FormControl/validate';
 

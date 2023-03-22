@@ -1,6 +1,6 @@
-import Button from '@components/UI/Button';
-import { tags } from '@utils/constants';
 import { useRouter } from 'next/router';
+import { tags } from '@utils/constants';
+import Button from '@components/UI/Button';
 
 function Tags() {
 	const router = useRouter();
