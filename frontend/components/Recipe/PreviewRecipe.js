@@ -158,7 +158,7 @@ function PreviewRecipe({
 				</div>
 			) : null}
 
-			<DropDown>
+			<DropDown label="Select an action">
 				<Child>
 					<Button onClick={goToRecipeSingle}>
 						Go to this publish recipe

@@ -2,9 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFieldArray, useForm } from 'react-hook-form';
 
-import {
-	images,
-} from '@utils/constants';
+import { images } from '@utils/constants';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
 import { images as imageDefault } from '@utils/constants';
 
@@ -12,7 +10,7 @@ import useRecipeBySlug from 'hook/useRecipeBySlug';
 import { MdAddToPhotos } from 'react-icons/md';
 
 import ConfirmDelete from '../ConfirmDelete';
-import { Form, InputField } from '../FormControl';
+import { Form } from '../FormControl';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
 import Loader from '@components/UI/Loader';
@@ -105,7 +103,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 	}, [data]);
 
 	return (
-		<div className="mt-6 ">
+		<div className="mt-10 ">
 			<ConfirmDelete
 				handleDelete={handleDelete}
 				showConfirm={showConfirmDelete}
@@ -128,7 +126,6 @@ function UploadPhoto({ onSubmit, recipe }) {
 				Add Photo
 			</Button>
 
-			{}
 			{isLoading ? (
 				<div className="flex items-center justify-center">
 					<Loader type="searching" />
@@ -136,9 +133,9 @@ function UploadPhoto({ onSubmit, recipe }) {
 			) : listPhotos.length > 0 ? (
 				<Form
 					onSubmit={handleSubmit(createFormData)}
-					className="!flex-row gap-4 flex-wrap"
+					className="gap-4 flex-wrap justify-center items-center"
 				>
-					<div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-6">
+					<div className="flex flex-wrap lg:gap-6 md:gap-4 gap-2 justify-center">
 						{fields.map((field, index) => (
 							<div
 								className="flex flex-col items-center relative"
@@ -165,11 +162,14 @@ function UploadPhoto({ onSubmit, recipe }) {
 										</div>
 									</div>
 								)}
-								<InputField
+								
+								<input
 									type="text"
-									name={`upload_photo.${index}.caption`}
-									register={register}
-									label="Caption (optional)"
+									{...register(
+										`upload_photo.${index}.caption`
+									)}
+									className="text-base border-b border-border outline-none px-2 py-1"
+									placeholder="caption"
 								/>
 							</div>
 						))}

@@ -1,8 +1,8 @@
-import { Transition } from '@headlessui/react';
-import { images } from '@utils/constants';
 import { Fragment, useLayoutEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
+import { Transition } from '@headlessui/react';
+import { images } from '@utils/constants';
 import Img from './Image';
 
 function ToastMessage({ message, type, id, visible }) {
@@ -28,7 +28,7 @@ function ToastMessage({ message, type, id, visible }) {
 						type === 'error'
 							? 'border border-l-4 border-red2 bg-red4 text-red '
 							: type === 'success'
-							? 'border-primaryDark border border-l-4 bg-white text-primaryDark'
+							? 'border-primaryDark border border-l-4 text-primaryDark bg-primary3'
 							: null
 					}`}
 				>
