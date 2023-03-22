@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+   html {
+      @apply  text-second leading-7;
+   }
+   p {
+    @apply text-base;
+   }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input:-webkit-autofill {
+      -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+      -webkit-transition-delay: 9999s;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    
+    h1 {
+       @apply text-5xl font-medium text-black leading-8;
+    }
+
+    h2 {
+       @apply text-4xl font-medium text-black;
+    } 
+
+    h3 {
+       @apply text-3xl font-medium text-black;
+    }
+
+    h4 {
+       @apply text-2xl font-medium text-black;
+    }
+    
+    h5 {
+       @apply text-xl font-medium text-black;
+    }
+
+    h6 {
+       @apply text-lg font-medium text-black;
+    }
+
+    a, [href] {
+      @apply no-underline;
+    }
+    
+    ul {
+      @apply list-decimal ml-6 text-base;
+    }
+    ol {
+      @apply list-disc ml-6 text-base;
+    }
+    
+}
+
+@layer components {
+  
+    .container {
+        @apply 2xl:max-w-[1280px] xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+    }
+
+    .btn {
+      @apply text-sm tracking-[0.2em] font-medium text-black uppercase  h-[32px] px-3 hover:text-white border border-border bg-white hover:bg-primary hover:border-primary inline-flex items-center justify-center transition-all duration-300 rounded outline-none
+    }
+
+    .btn.primary {
+      @apply text-white  border-transparent bg-primary hover:bg-primaryDark
+    }
+
+    .btn.secondary {
+      @apply bg-yellow text-white hover:bg-yellowDark border-yellowDark;
+    }
+
+    .btn.tag {
+      @apply text-black font-light text-[0.6rem] h-[20px] px-2 bg-grey hover:bg-primary hover:border-primary hover:text-white;
+    }
+
+    .btn.lg {
+      @apply text-base h-10 px-6 tracking-[0.2em] !text-sm;
+    }
+
+     .btn.login {
+      @apply text-base h-12 px-5;
+    }
+
+    .btn.verify {
+      @apply tracking-[0.2em] !text-sm text-white bg-[#E74C3C] opacity-80 hover:opacity-100 hover:border-[#ff9264];
+    }
+
+    .btn.wFull {
+      @apply w-full;
+    }
+
+    .btn.cancle {
+      @apply  border-2  text-red hover:bg-transparent border-red;
+    }
+
+    .btn.reset {
+      @apply text-primary border-primary hover:bg-primaryLight hover:border-primaryDark;
+    }
+
+    .btn.outline {
+      @apply border-2 border-primaryDark text-primaryDark hover:bg-transparent hover:opacity-50;
+    }
+
+    .btn.disabled:disabled {
+      @apply bg-transparent hover:bg-transparent hover:text-black hover:border-border;
+    }
+
+
+}
+
+
+@layer utilities  {
+  
+
+
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: #f7f4ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-md;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  }
+
+  .markupBox p {
+    @apply first-letter:capitalize;
+  }
+}
+
+.ql-container.ql-snow {
+  height: 350px
+}

@@ -1,0 +1,5 @@
+
+backend/env/
+backend/core/.env
+images/
+.vscode/
