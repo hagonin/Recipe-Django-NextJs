@@ -181,7 +181,7 @@ export const ENDPOINT_RECIPE_IMAGE = '/recipe/recipe-image/';
 
 export const ENDPOINT_INGREDIENT = '/recipe/ingredient/';
 
-export const EXIST_RECIPE = 18;
+export const EXIST_RECIPE = 1;
 export const NUMBER_OF_RECIPE_RENDER = 9;
 
 export const meta = {
@@ -198,8 +198,7 @@ export const meta = {
 		},
 		{
 			id: 3,
-			content:
-				'Interact with other users and discuss about their recipes',
+			content: 'Interact with other users and discuss about their recipes',
 		},
 		{
 			id: 4,
@@ -251,6 +250,4 @@ export const toast_message = {
 	contact: "We've received your message and will reply as soon as possible.",
 };
 
-// 5 hour 18000
-// export const REQUESR_EXPIRE = 17;
 export const STATUS_EXPIRED = 429;

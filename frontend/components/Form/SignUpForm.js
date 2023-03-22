@@ -174,17 +174,11 @@ function SignUpForm({ onSubmit }) {
 				</p>
 				<span className="lg:text-base text-base text-center ">
 					By clicking "Create Account", I consent to
-					<Link
-						href="/"
-						className="underline text-primary mx-1"
-					>
+					<Link href="/" className="underline text-primary mx-1">
 						the Terms of Services
 					</Link>
 					and
-					<Link
-						href="/"
-						className="underline text-primary mx-1"
-					>
+					<Link href="/" className="underline text-primary mx-1">
 						Privacy Policy
 					</Link>
 					.
