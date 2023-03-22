@@ -28,7 +28,7 @@ function ToastMessage({ message, type, id, visible }) {
 						type === 'error'
 							? 'border border-l-4 border-red2 bg-red4 text-red '
 							: type === 'success'
-							? 'border-primaryDark border border-l-4 text-primaryDark bg-primary3'
+							? 'border-primaryDark border border-l-4 text-black bg-primary3'
 							: null
 					}`}
 				>
