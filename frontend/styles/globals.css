@@ -10,7 +10,7 @@
 
    
    p {
-    @apply md:text-base text-xbase;
+    @apply text-base;
    }
 
     input::-webkit-outer-spin-button,
@@ -72,7 +72,7 @@
 @layer components {
   
     .container {
-        @apply xl:max-w-[1280px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
+        @apply 2xl:max-w-[1280px] xl:max-w-[1200px] lg:max-w-[960px] md:max-w-[720px] default:max-w-[600px]
     }
 
     .btn {

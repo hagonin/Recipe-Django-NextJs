@@ -15,6 +15,7 @@ import Method from './Method';
 import Notes from './Notes';
 import Source from './Source';
 import Category from './Category';
+import Link from 'next/link';
 
 function SingRecipe({
 	id,
@@ -36,6 +37,7 @@ function SingRecipe({
 	handleToggleBookmark,
 	category,
 	source,
+	scrollTo,
 }) {
 	const actBookmark = checkBookmarkAct(id);
 	const updated_at_format = formatDate(updated_at);
@@ -76,11 +78,13 @@ function SingRecipe({
 							/>
 						</span>
 						{rating && (
-							<Rating
-								number={rating}
-								count={reviews_count}
-								isAverage
-							/>
+							<Link href={scrollTo}>
+								<Rating
+									number={rating}
+									count={reviews_count}
+									isAverage
+								/>
+							</Link>
 						)}
 
 						<div className="flex flex-wrap gap-x-6 my-3 ">
@@ -136,7 +140,7 @@ export const TimerBox = ({ prep_time, cook_time, serving }) => (
 	<>
 		{prep_time && (
 			<Timer>
-				<BsClockFill/>
+				<BsClockFill />
 				Prepare time: {formatTime(prep_time)}
 			</Timer>
 		)}

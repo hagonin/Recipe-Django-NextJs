@@ -11,7 +11,7 @@ module.exports = {
 		container: {
 			center: true,
 			padding: {
-				DEFAULT: '1rem',
+				DEFAULT: '1.12rem',
 				md: '0rem',
 			},
 		},
@@ -27,6 +27,7 @@ module.exports = {
 				primary: '#96b7ae',
 				primaryLight: '#7ba39617',
 				primaryDark: '#79aa9e',
+				primaryDark2: '#6f9e92',
 				primaryTransparent: 'rgb(150, 183, 174, 0.85)',
 				second: '#757575',
 				third: '#F9F8F3',
@@ -37,10 +38,11 @@ module.exports = {
 				red: '#e3304e',
 				red2: '#d85734',
 				red3: '#DF7857',
+				red4: '#FEF0F0',
 				redLight: 'rgba(243, 58, 89, 0.15)',
 				yellow: '#FFC438',
 				yellowDark: '#f0b62d',
-				whiteTransparent: 'rgba(255, 255, 255, 0.8)',
+				whiteTransparent: 'rgba(255, 255, 255, 0.87)',
 			},
 			animation: {
 				'spin-slow': 'spin 2s linear infinite',
@@ -64,7 +66,7 @@ module.exports = {
 			xsm: '0.625rem', //10px
 			sm: '0.75rem', //12px
 			xbase: '0.813rem', //13px
-			base: '0.875rem',//14px
+			base: '0.875rem', //14px
 			lg: '0.9375rem', //15px
 			xl: '1rem', //16px
 			'2xl': '1.125rem', //18px

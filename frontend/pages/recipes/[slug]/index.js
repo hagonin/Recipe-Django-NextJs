@@ -75,6 +75,7 @@ function Recipe() {
 						cover={data.main_image}
 						checkBookmarkAct={checkBookmarkAct}
 						handleToggleBookmark={handleToggleBookmark}
+						scrollTo={`#review_${slug}`}
 					/>
 					<Author
 						name={data?.user?.username}
@@ -101,6 +102,7 @@ function Recipe() {
 						currentUserId={user?.id}
 						handleDelete={handleDelete}
 						goToLogin={goToLogin}
+						id_scroll={`review_${slug}`}
 					/>
 				</>
 			) : null}

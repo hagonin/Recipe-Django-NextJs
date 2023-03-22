@@ -187,11 +187,13 @@ function RecipeCard({
 							</span>
 						)}
 						{rating ? (
-							<Rating
-								number={rating}
-								small={smallCard || lgCard}
-								count={reviews_count}
-							/>
+							<Link href={`/recipes/${slug}`}>
+								<Rating
+									number={rating}
+									small={smallCard || lgCard}
+									count={reviews_count}
+								/>
+							</Link>
 						) : null}
 					</div>
 

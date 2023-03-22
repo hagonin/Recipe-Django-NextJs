@@ -80,11 +80,11 @@ function Thumbnail({
 						className="keen-slider__slide"
 						key={index}
 					>
-						{/* <Img
+						<Img
 							src={img.image}
 							alt='recipe'
 							className="h-72 w-full mx-auto "
-						/> */}
+						/>
 					</div>
 				))}
 			</div>
