@@ -41,9 +41,8 @@ function Author() {
 				onClick={() => router.push(`/recipes/${router?.query?.slug}`)}
 			>
 				<BsChevronDoubleLeft />
-				Continue read the recipe
+				Back
 			</button>
-			a
 		</div>
 	);
 }

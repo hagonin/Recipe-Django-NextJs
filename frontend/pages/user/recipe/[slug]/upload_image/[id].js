@@ -49,7 +49,7 @@ function UploadImagePage() {
 				onClick={() => router.push(`/user/recipe/${slug}`)}
 			>
 				<AiOutlineDoubleLeft />
-				Come back
+				Back
 			</button>
 		</div>
 	);
