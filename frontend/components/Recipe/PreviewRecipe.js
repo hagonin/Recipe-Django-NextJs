@@ -1,14 +1,13 @@
 import { memo, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import createMarkup from '@utils/createMarkup';
-
-import Img from '@components/UI/Image';
 import formatDate from '@utils/formatdate';
-import Ingredient from './SingleRecipe/Ingredient';
-import ConfirmDelete from '@components/Form/ConfirmDelete';
-import { useRouter } from 'next/router';
 import { getInstructionAsArr } from '@utils/handleInstruction';
 
+import Img from '@components/UI/Image';
+import Ingredient from './SingleRecipe/Ingredient';
+import ConfirmDelete from '@components/Form/ConfirmDelete';
 import Title from '@components/UI/Title';
 import DropDown, { Child } from '@components/UI/Dropdown';
 import { TimerBox } from './SingleRecipe';

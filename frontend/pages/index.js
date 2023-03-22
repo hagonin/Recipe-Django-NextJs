@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import { categoryList } from '@utils/constants';
 import { useRecipeContext } from '@context/recipe-context';
-import { useEffect, useState } from 'react';
 
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
@@ -34,7 +34,7 @@ export default function Home() {
 		<>
 			{topRating ? (
 				<Slider
-					className="mt-8"
+					className="mt-10"
 					loop={true}
 				>
 					{topRating.map((recipe, index) => {
@@ -68,6 +68,7 @@ export default function Home() {
 									list={category.recipes}
 									name={category.name}
 									hasBorder={index !== 0}
+									isFirst={index === 0}
 								/>
 							)
 					)

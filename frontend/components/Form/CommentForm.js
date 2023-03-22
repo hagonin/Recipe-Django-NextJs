@@ -1,5 +1,6 @@
-import Button from '@components/UI/Button';
 import { useForm } from 'react-hook-form';
+
+import Button from '@components/UI/Button';
 import { CheckboxField, Form, InputField, TextAreaField } from './FormControl';
 
 const init = {

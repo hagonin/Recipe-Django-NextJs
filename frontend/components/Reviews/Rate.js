@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 
 function number({ number, count, small }) {

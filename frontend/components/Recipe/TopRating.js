@@ -1,5 +1,4 @@
 import Loader from '@components/UI/Loader';
-import useQuery from 'hook/useQuery';
 import RecipeCard from './RecipeCard';
 
 function TopRating({ recipes }) {

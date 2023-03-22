@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
+import { AiOutlineDoubleLeft } from 'react-icons/ai';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
+import toastMessage from '@utils/toastMessage';
 import { ENDPOINT_RECIPE_DETAIL, STATUS_EXPIRED } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import { TitlePrimary } from '@components/UI/Title';
-import toastMessage from '@utils/toastMessage';
-import { AiOutlineDoubleLeft } from 'react-icons/ai';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();

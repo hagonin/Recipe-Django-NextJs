@@ -1,6 +1,7 @@
+import { images } from '@utils/constants';
+
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
-import { images } from '@utils/constants';
 
 function WebInfo() {
 	return (

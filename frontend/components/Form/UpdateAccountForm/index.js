@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+
+import { useAuthContext } from '@context/auth-context';
+
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 import { Form, InputField, TextAreaField } from '../FormControl';
 import PreviewImg from './Preview';
-import { useAuthContext } from '@context/auth-context';
-import { useEffect } from 'react';
 
 function UpdateProfileForm({
 	username,

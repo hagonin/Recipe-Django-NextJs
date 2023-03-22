@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { FiChevronsLeft, FiLogIn } from 'react-icons/fi';
-
+import { FiChevronsLeft } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+
 import { useAuthContext } from '@context/auth-context';
 import {
 	ENDPOINT_PASSWORD_RESET_COMPLETE,

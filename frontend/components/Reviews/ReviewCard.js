@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
+
+import { images } from '@utils/constants';
+
 import ConfirmDelete from '@components/Form/ConfirmDelete';
 import Rating from '@components/Reviews/Rate';
-import { images } from '@utils/constants';
 import Img from '../UI/Image';
 
 function ReviewCard({

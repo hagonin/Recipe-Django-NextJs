@@ -1,16 +1,17 @@
+import { useRouter } from 'next/router';
+import { useCallback, useState } from 'react';
+import { BsCheck2Circle } from 'react-icons/bs';
+
+import { useAuthContext } from '@context/auth-context';
+import api from '@services/axios';
 import { ENDPOINT_REGISTER, images, meta } from '@utils/constants';
 
 import SignUpForm from '@components/Form/SignUpForm';
 import Img from '@components/UI/Image';
-import { useAuthContext } from '@context/auth-context';
 import ModalPrimary from '@components/UI/Modal/ModalPrimary';
 import VerifyEmailForm from '@components/Form/VerifyEmaiForm';
-import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
-import api from '@services/axios';
 import { TitlePrimary } from '@components/UI/Title';
 import Button from '@components/UI/Button';
-import { BsCheck2Circle } from 'react-icons/bs';
 
 function SignUp() {
 	const router = useRouter();

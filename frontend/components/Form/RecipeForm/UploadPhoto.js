@@ -1,24 +1,21 @@
-import Button from '@components/UI/Button';
-import Img from '@components/UI/Image';
-import Loader from '@components/UI/Loader';
-import { useRecipeContext } from '@context/recipe-context';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useFieldArray, useForm } from 'react-hook-form';
+
 import {
-	ENDPOINT_RECIPE_DETAIL,
-	ENDPOINT_RECIPE_READ,
 	images,
 } from '@utils/constants';
 import { getFileFromUrl } from '@utils/getFileFromUrl';
-import useQuery from 'hook/useQuery';
+import { images as imageDefault } from '@utils/constants';
+
 import useRecipeBySlug from 'hook/useRecipeBySlug';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { FaLine } from 'react-icons/fa';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { MdAddToPhotos, MdDelete, MdPhotoAlbum } from 'react-icons/md';
+import { MdAddToPhotos } from 'react-icons/md';
+
 import ConfirmDelete from '../ConfirmDelete';
 import { Form, InputField } from '../FormControl';
-import { images as imageDefault } from '@utils/constants';
+import Button from '@components/UI/Button';
+import Img from '@components/UI/Image';
+import Loader from '@components/UI/Loader';
 
 function UploadPhoto({ onSubmit, recipe }) {
 	const {

@@ -1,6 +1,7 @@
-import { ratingScale } from '@utils/constants';
 import { useEffect, useState } from 'react';
+import { ratingScale } from '@utils/constants';
 import { HiStar } from 'react-icons/hi';
+
 import { Label } from '../FormControl';
 
 function Start({

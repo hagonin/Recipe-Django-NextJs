@@ -1,9 +1,9 @@
-import ReviewForm from '@components/Form/ReviewsForm';
-import Pagination from '@components/UI/Pagination';
-import Title from '@components/UI/Title';
 import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 import usePagination from 'hook/usePagination';
 
+import ReviewForm from '@components/Form/ReviewsForm';
+import Pagination from '@components/UI/Pagination';
+import Title from '@components/UI/Title';
 import ReviewCard from './ReviewCard';
 
 function Reviews({
@@ -12,6 +12,7 @@ function Reviews({
 	currentUserId,
 	handleDelete,
 	goToLogin,
+	id_scroll
 }) {
 	const {
 		currentRecipes: reviewsCurrent,
@@ -27,7 +28,10 @@ function Reviews({
 		noScroll: true,
 	});
 	return (
-		<div className=" pt-4 pb-6 md:px-6 px-4 bg-third rounded-md mt-8">
+		<div
+			className=" pt-4 pb-6 md:px-6 px-4 bg-third rounded-md mt-8"
+			id={id_scroll}
+		>
 			<Title
 				title={`${reviews.length} Comment${
 					reviews.length > 1 ? 's' : ''

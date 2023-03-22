@@ -1,8 +1,9 @@
+import { useFieldArray } from 'react-hook-form';
+import { unit } from '@utils/constants';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
+
 import { Error, Label } from '@components/Form/FormControl';
 import Button from '@components/UI/Button';
-import { unit } from '@utils/constants';
-import { useFieldArray } from 'react-hook-form';
-import { AiOutlineMinusCircle } from 'react-icons/ai';
 
 function IngredientItem({ register, control, name, error, exist_recipe }) {
 	const { fields, append, remove } = useFieldArray({

@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { MdOutlineClose, MdSearch } from 'react-icons/md';
-import Loader from '@components/UI/Loader';
 import { useForm } from 'react-hook-form';
-import { InputField } from './FormControl';
-import Button from '@components/UI/Button';
-import { useRecipeContext } from '@context/recipe-context';
+import { useEffect, useRef, useState } from 'react';
+import { MdOutlineClose, MdSearch } from 'react-icons/md';
 import { RiLoader4Line } from 'react-icons/ri';
+import { useRecipeContext } from '@context/recipe-context';
+import { InputField } from './FormControl';
+import Loader from '@components/UI/Loader';
+import Button from '@components/UI/Button';
 
 function SearchForm({ onSubmit, secondary }) {
 	const {

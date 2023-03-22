@@ -1,9 +1,9 @@
-import { useRecipeContext } from '@context/recipe-context';
+import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
+import { useRecipeContext } from '@context/recipe-context';
 import Footer from './Footer';
 import Header from './Header';
 import Loader from '@components/UI/Loader';
-import { useRouter } from 'next/router';
 
 function RootLayout({ children }) {
 	const { loading, loadingRecipes } = useRecipeContext();

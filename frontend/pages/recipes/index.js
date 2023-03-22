@@ -1,13 +1,13 @@
-import WidgetLayout from '@components/Layouts/WidgetLayout';
-import RecipeCard from '@components/Recipe/RecipeCard';
 import { useRecipeContext } from '@context/recipe-context';
 import { usePaginationByApi } from 'hook/usePagination';
-import Loader from '@components/UI/Loader';
+import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
+import WidgetLayout from '@components/Layouts/WidgetLayout';
+import RecipeCard from '@components/Recipe/RecipeCard';
+import Loader from '@components/UI/Loader';
 import { TitlePrimary } from '@components/UI/Title';
 import Pagination from '@components/UI/Pagination';
 import ShowPages from '@components/UI/Pagination/ShowPages';
-import { NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 
 function Recipe() {
 	const { checkBookmarkAct, handleToggleBookmark } = useRecipeContext();

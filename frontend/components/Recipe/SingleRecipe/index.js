@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import formatDate from '@utils/formatdate';
 import createMarkup from '@utils/createMarkup';
 import formatTime from '@utils/formatTime';
@@ -36,6 +38,7 @@ function SingRecipe({
 	handleToggleBookmark,
 	category,
 	source,
+	scrollTo,
 }) {
 	const actBookmark = checkBookmarkAct(id);
 	const updated_at_format = formatDate(updated_at);
@@ -68,7 +71,7 @@ function SingRecipe({
 				<div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-6 md:gap-4 gap-6">
 					<div className="lg:col-span-8 ">
 						<h2 className="font-serif capitalize">{title}</h2>
-						<span className="block mt-1 flex gap-2 text-base">
+						<span className="mt-1 flex gap-2 text-base">
 							{`${updated_at_format} / by ${author}`}
 							<Category
 								category={category}
@@ -76,11 +79,13 @@ function SingRecipe({
 							/>
 						</span>
 						{rating && (
-							<Rating
-								number={rating}
-								count={reviews_count}
-								isAverage
-							/>
+							<Link href={scrollTo}>
+								<Rating
+									number={rating}
+									count={reviews_count}
+									isAverage
+								/>
+							</Link>
 						)}
 
 						<div className="flex flex-wrap gap-x-6 my-3 ">
@@ -136,7 +141,7 @@ export const TimerBox = ({ prep_time, cook_time, serving }) => (
 	<>
 		{prep_time && (
 			<Timer>
-				<BsClockFill/>
+				<BsClockFill />
 				Prepare time: {formatTime(prep_time)}
 			</Timer>
 		)}

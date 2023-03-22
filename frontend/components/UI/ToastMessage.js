@@ -24,11 +24,11 @@ function ToastMessage({ message, type, id, visible }) {
 				leaveTo="opacity-100 translate-x-[500px]"
 			>
 				<div
-					className={`flex items-center gap-2 border rounded-md py-1 px-3 bg-white shadow-xl relative top-10 ${
+					className={`flex items-center gap-2  rounded py-[6px] px-3 bg-white shadow-xl relative top-10 ${
 						type === 'error'
-							? 'border-red'
+							? 'border border-l-4 border-red2 bg-red4 text-red '
 							: type === 'success'
-							? 'border-primary'
+							? 'border-primaryDark border border-l-4 bg-white text-primaryDark'
 							: null
 					}`}
 				>

@@ -1,7 +1,8 @@
-import Button from '@components/UI/Button';
-import Loader from '@components/UI/Loader';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
+import Button from '@components/UI/Button';
+import Loader from '@components/UI/Loader';
 import { Form, InputField, TextAreaField } from '../FormControl';
 import Start from './Start';
 

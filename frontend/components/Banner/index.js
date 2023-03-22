@@ -1,5 +1,5 @@
 import Img from '@components/UI/Image';
-import { BsMailbox, BsPhone } from 'react-icons/bs';
+import { BsPhone } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
 
 function Banner() {

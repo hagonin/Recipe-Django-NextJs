@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
+
 import { ENDPOINT_CHANGE_PASSWORD, images } from '@utils/constants';
-import api from '@services/axios';
 import toastMessage from '@utils/toastMessage';
+import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
 
 import ChangePasswordForm from '@components/Form/ChangePasswordForm';

@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 
-import { Form, InputField, TextAreaField } from './FormControl';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
 
 import { email } from './FormControl/validate';
+import { Form, InputField, TextAreaField } from './FormControl';
 
 function ContactForm({ onSubmit }) {
 	const {

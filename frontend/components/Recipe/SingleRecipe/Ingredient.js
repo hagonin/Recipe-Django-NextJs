@@ -1,8 +1,9 @@
-import Title from '@components/UI/Title';
 import { convertFractiontoUnicode } from '@utils/convertFractionToUnicode';
 import handleIngredientFromArr from '@utils/handleIngredientFromArr';
 import { handleUnit } from '@utils/handleUnit';
 import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
+
+import Title from '@components/UI/Title';
 import Check from './Check';
 
 function Ingredient({ ingredients, isPreview }) {

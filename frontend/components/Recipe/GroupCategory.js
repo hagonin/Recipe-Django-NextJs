@@ -1,13 +1,13 @@
 import Link from 'next/link';
-import { useRecipeContext } from '@context/recipe-context';
 import { AiOutlineDoubleRight } from 'react-icons/ai';
+import { useRecipeContext } from '@context/recipe-context';
 
 import RecipeCard from './RecipeCard';
 
-function GroupCategory({ list = [], name = 'Category name', hasBorder }) {
+function GroupCategory({ list = [], name = 'Category name', hasBorder, isFirst }) {
 	const { handleToggleBookmark, checkBookmarkAct } = useRecipeContext();
 	return (
-		<div className={`border-border pb-10 pt-7 ${hasBorder ? 'border-t' : ''}`}>
+		<div className={`border-border pb-10 ${isFirst ? 'pt-3' :'pt-7'} ${hasBorder ? 'border-t' : ''}`}>
 			<div className="flex justify-between items-center mb-5">
 				<h2 className="capitalize text-4xl font-serif text-black">
 					{name}

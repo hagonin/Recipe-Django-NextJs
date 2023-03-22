@@ -1,7 +1,8 @@
+import { useForm } from 'react-hook-form';
+import { useAuthContext } from '@context/auth-context';
+
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import { useAuthContext } from '@context/auth-context';
-import { useForm } from 'react-hook-form';
 import { Form } from '../FormControl';
 
 function VerifyEmailForm({ handleEffectAfterResend }) {

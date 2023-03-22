@@ -1,7 +1,7 @@
+import { useRouter } from 'next/router';
+import { images } from '@utils/constants';
 import Button from '@components/UI/Button';
 import Img from '@components/UI/Image';
-import { images } from '@utils/constants';
-import { useRouter } from 'next/router';
 
 function NotFound() {
 	const router = useRouter();

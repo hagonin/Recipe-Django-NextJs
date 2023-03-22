@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useAuthContext } from '@context/auth-context';
 
 import Navigate from './Navigate';
@@ -7,7 +8,6 @@ import SearchForm from '@components/Form/SearchForm';
 import User from '@components/Layouts/Header/User';
 import Button from '@components/UI/Button';
 import Loader from '@components/UI/Loader';
-import { useRouter } from 'next/router';
 
 function Header() {
 	const { isAuthenticated, user, loading } = useAuthContext();

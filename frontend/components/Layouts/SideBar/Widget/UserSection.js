@@ -1,10 +1,9 @@
+import { memo } from 'react';
+import { images } from '@utils/constants';
+import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
+import CommonSection from './CommonSection';
 import Img from '@components/UI/Image';
 import SocialLink from '@components/UI/SocialLink';
-import { images } from '@utils/constants';
-import { garamond } from '@utils/fonts';
-import uppercaseFirstLetter from '@utils/uppercaseFirstLetter';
-import { memo } from 'react';
-import CommonSection from './CommonSection';
 
 function UserSection({ name, bio, avatar }) {
 	return (

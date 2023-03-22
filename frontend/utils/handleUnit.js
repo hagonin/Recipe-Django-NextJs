@@ -21,9 +21,9 @@ function handleUnit(unit, quantity) {
 			return 'pound';
 		case unit === 'pound(s)' && total > 1:
 			return 'pounds';
-		case unit === 'cup' && total <= 1:
+		case (unit === 'cup' || unit === 'cup(s)') && total <= 1:
 			return 'cup';
-		case unit === 'cup' && total > 1:
+		case (unit === 'cup' || unit === 'cup(s)') && total > 1:
 			return 'cups';
 		default:
 			return unit;

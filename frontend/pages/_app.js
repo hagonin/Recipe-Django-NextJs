@@ -1,12 +1,10 @@
-import AuthProvider from '@context/auth-context';
-import RootLayout from '@layouts/RootLayout';
-import { images } from '@utils/constants';
 import Head from 'next/head';
-import '@styles/globals.css';
+import AuthProvider from '@context/auth-context';
 import RecipeProvider from '@context/recipe-context';
+import RootLayout from '@layouts/RootLayout';
 import { libre_baskerville, open_sans } from '@utils/fonts';
-import { useRouter } from 'next/router';
-import { Fragment } from 'react';
+import { images } from '@utils/constants';
+import '@styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
 	const render = Component.getLayout || ((pages) => pages);

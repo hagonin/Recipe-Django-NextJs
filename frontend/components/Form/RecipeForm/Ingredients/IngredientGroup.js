@@ -1,11 +1,8 @@
-import { Error, InputField, Label } from '@components/Form/FormControl';
 import { useFieldArray } from 'react-hook-form';
-import { MdDeleteOutline } from 'react-icons/md';
-import IngredientItem from './IngredientItem';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
-import Button from '@components/UI/Button';
-import Tippy from '@tippyjs/react';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
+import IngredientItem from './IngredientItem';
+import { InputField } from '@components/Form/FormControl';
+import Button from '@components/UI/Button';
 
 function IngredientGroup({ control, register, name, error, exist_recipe }) {
 	const { fields, append, remove } = useFieldArray({

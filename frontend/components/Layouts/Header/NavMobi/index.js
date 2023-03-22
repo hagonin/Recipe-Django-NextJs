@@ -1,23 +1,20 @@
+import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 
-import { useAuthContext } from '@context/auth-context';
+import { Transition } from '@headlessui/react';
 
-import { images } from '@utils/constants';
-
-import { HiMenu } from 'react-icons/hi';
-import { MdClose } from 'react-icons/md';
 import { FiLogIn, FiLogOut, FiUserPlus } from 'react-icons/fi';
+import { AiOutlineMenu } from 'react-icons/ai';
+import { GrClose } from 'react-icons/gr';
+
+import { useAuthContext } from '@context/auth-context';
+import { images } from '@utils/constants';
 
 import NavItem from './NavItem';
 import SocialLink from '@components/UI/SocialLink';
 import Img from '@components/UI/Image';
-import { Transition } from '@headlessui/react';
 import NavCategory from './NavCategory';
-import { BsMenuApp, BsMenuButton } from 'react-icons/bs';
-import { AiOutlineMenu } from 'react-icons/ai';
-import { GrClose } from 'react-icons/gr';
 import Logo from '../Logo';
-import { useRouter } from 'next/router';
 
 function NavMobi() {
 	const router = useRouter();

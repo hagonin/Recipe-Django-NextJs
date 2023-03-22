@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { images } from '@utils/constants';
 
 import { BsBoxArrowRight } from 'react-icons/bs';
+
+import { images } from '@utils/constants';
+
 import { useAuthContext } from '@context/auth-context';
 import Img from '@components/UI/Image';
 
