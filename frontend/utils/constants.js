@@ -42,6 +42,8 @@ export const images = {
 	no_expired:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1679641823/static/no_expired_cfa8bf.png',
 	about: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679645730/static/about_kybrjz.png',
+	contact:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679645464/static/about_us_isrple.jpg',
 };
 
 export const categoryList = [

@@ -28,7 +28,7 @@ const useRecipes = () => {
 
 			//toprating
 			const ratings = data
-				// .filter((item) => item.rating)
+				.filter((item) => item.rating)
 				.sort((a, b) => b.rating - a.rating);
 			setTopRating(ratings);
 
