@@ -38,12 +38,11 @@ export const images = {
 	image_error:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1679407331/static/error_idjefe.png',
 	expired:
-		'https://res.cloudinary.com/dui608qtq/image/upload/v1679641609/static/expired_flwgax.png',
-	no_expired:
-		'https://res.cloudinary.com/dui608qtq/image/upload/v1679641823/static/no_expired_cfa8bf.png',
-	about: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679645730/static/about_kybrjz.png',
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679675022/static/boycooking_x7go8z.jpg',
+
+	about: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679675027/static/cooking-family_vwp6li.png',
 	contact:
-		'https://res.cloudinary.com/dui608qtq/image/upload/v1679645464/static/about_us_isrple.jpg',
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679675829/static/chinh-le-duc-vuDXJ60mJOA-unsplash_apsd4e.jpg',
 };
 
 export const categoryList = [

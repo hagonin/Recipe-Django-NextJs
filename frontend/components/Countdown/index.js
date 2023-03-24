@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { formatCounter } from '@utils/formatTime';
-import { images } from '@utils/constants';
 import { getCurrentTime, KEY_EXPIRED } from '@utils/expired_time';
+import { useRouter } from 'next/router';
 import Img from '@components/UI/Image';
-import { TitlePrimary } from '@components/UI/Title';
+import { images } from '@utils/constants';
+import Button from '@components/UI/Button';
 
 function CountDown() {
 	const [currentTime, setCurrentTime] = useState(null);
+	const router = useRouter();
 	useEffect(() => {
 		let idInterval;
 		if (currentTime === null) {
@@ -31,24 +33,28 @@ function CountDown() {
 	}, [currentTime]);
 
 	return (
-		<div className="py-10 text-center">
-			{currentTime ? (
-				<>
-					<span className="md:text-[3rem] text-[2.2rem] font-bold text-primaryDark block my-8">
-						{formatCounter(currentTime)}
-					</span>
-					<TitlePrimary title="Sorry" />
-					<p className="mx-auto mt-3 text-base">
-						You have reached the daily free upload limit for
-						Homecook.
-						<br /> You will be able to add more recipes after time
-					</p>
-				</>
-			) : (
-				<h2 className="font-serif mt-7">
-					You can add more recipes now
-				</h2>
-			)}
+		<div className="md:py-24 py-10 grid md:grid-cols-2 grid-cols-1 lg:gap-12 md:gap-4 lg:w-[60%] w-full container mx-auto max-md:text-center ">
+			<div className="max-md:order-0">
+				<h1 className="text-[2.1rem] font-bold mb-5">Oooops!</h1>
+				<p>You have reached the daily free upload limit of HomeCook</p>
+				<p>You will be able to add more recipes in</p>
+				<span className="md:text-[3rem] text-[2.8rem] font-bold text-center  text-black block md:my-16 mt-8">
+					{formatCounter(currentTime)}
+				</span>
+				<Button
+					onClick={() => router.push('/')}
+					className="primary !h-11 max-md:mt-10"
+				>
+					Back to Home
+				</Button>
+			</div>
+			<div className="max-md:order-1">
+				<Img
+					src={images.expired}
+					alt="expired"
+					className="lg:h-[300px] lg:w-[300px] md:h-[270px] md:w-[270px] h-[300px] w-[300px] mx-auto max-md:mt-5"
+				/>
+			</div>
 		</div>
 	);
 }

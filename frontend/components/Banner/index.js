@@ -9,7 +9,7 @@ function Banner() {
 			<Img
 				src={images.contact}
 				alt="banner"
-				className="h-[250px] w-full center"
+				className="h-[250px] w-full"
 				cover
 			/>
 			<div className="text-center rounded-md bg-[rgba(255,255,255,0.9)] px-3 py-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid md:grid-cols-2 grid-cols-1 lg:w-1/2 w-4/5">
