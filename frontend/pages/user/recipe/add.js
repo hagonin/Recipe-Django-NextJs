@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { ENDPOINT_RECIPE_DETAIL, images, STATUS_EXPIRED } from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL, images } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
 import api from '@services/axios';
 import { useAuthContext } from '@context/auth-context';
@@ -13,6 +13,7 @@ import Button from '@components/UI/Button';
 import AddUpdateRecipeForm from '@components/Form/RecipeForm/AddUpdateRecipeForm';
 import { useRecipeContext } from '@context/recipe-context';
 import { TitlePrimary } from '@components/UI/Title';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 function AddRecipe() {
 	const [cancel, setCancel] = useState(false);
@@ -33,13 +34,15 @@ function AddRecipe() {
 			const { slug } = res?.data;
 			router.push(`/user/recipe/${slug}`);
 		} catch ({ _error, status, error }) {
-			status === STATUS_EXPIRED && router.push('/user/recipe/request_expired');
-			if (_error?.ingredients) {
+			if (status === STATUS_EXPIRED) {
+				handleExpired();
+				router.push('/user/recipe/request_expired');
+			}
+			_error?.ingredients &&
 				toastMessage({
 					message: 'Ingredient title must make a unique set.',
 					type: 'error',
 				});
-			}
 		}
 	});
 

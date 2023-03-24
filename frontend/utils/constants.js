@@ -37,6 +37,11 @@ export const images = {
 	bgHero: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679300773/static/2_bvrvik.jpg',
 	image_error:
 		'https://res.cloudinary.com/dui608qtq/image/upload/v1679407331/static/error_idjefe.png',
+	expired:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679641609/static/expired_flwgax.png',
+	no_expired:
+		'https://res.cloudinary.com/dui608qtq/image/upload/v1679641823/static/no_expired_cfa8bf.png',
+	about: 'https://res.cloudinary.com/dui608qtq/image/upload/v1679645730/static/about_kybrjz.png',
 };
 
 export const categoryList = [
@@ -198,7 +203,8 @@ export const meta = {
 		},
 		{
 			id: 3,
-			content: 'Interact with other users and discuss about their recipes',
+			content:
+				'Interact with other users and discuss about their recipes',
 		},
 		{
 			id: 4,
@@ -208,8 +214,7 @@ export const meta = {
 	],
 
 	about: {
-		history:
-			"the online community dedicated to all things cooking!",
+		history: 'the online community dedicated to all things cooking!',
 		title: "is a community built by and for these culinary experts. From those who take the time to perfect a beef bourguignon on the weekend to those who prefer the ease of a slow-cooker recipe, HomeCook is a place for all types of home cooks. Whether you're a baker who spends hours creating a showstopping cake or someone who simply jazzes up boxed brownies for a quick dessert, HomeCook celebrates your efforts. With a focus on connecting home cooks with each other, HomeCook is the world's leading digital food brand. Our mission is to keep our community of over 60 million home cooks engaged, inspired, and connected. By bringing together home cooks from all walks of life, HomeCook aims to foster a sense of community and shared passion for cooking. Together, we can learn from each other, share tips and tricks, and support one another on our culinary journeys.",
 		list: [
 			{
@@ -249,5 +254,3 @@ export const meta = {
 export const toast_message = {
 	contact: "We've received your message and will reply as soon as possible.",
 };
-
-export const STATUS_EXPIRED = 429;

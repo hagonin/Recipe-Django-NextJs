@@ -58,7 +58,6 @@ function usePaginationByApi(config) {
 			})
 	);
 	const pages = useMemo(() => {
-		console.log(1);
 		return data?.data?.total_pages;
 	}, [data]);
 
@@ -73,7 +72,6 @@ function usePaginationByApi(config) {
 	useEffect(() => {
 		mutate().then(() => window.scrollTo({ top: 0 }));
 	}, [currentPage]);
-	console.log(data);
 
 	return {
 		currentRecipes: data?.data?.results,
