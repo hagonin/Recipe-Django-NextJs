@@ -7,7 +7,6 @@ import { TitlePrimary } from '@components/UI/Title';
 
 function CountDown() {
 	const [currentTime, setCurrentTime] = useState(null);
-
 	useEffect(() => {
 		let idInterval;
 		if (currentTime === null) {
@@ -35,32 +34,20 @@ function CountDown() {
 		<div className="py-10 text-center">
 			{currentTime ? (
 				<>
-					<Img
-						src={images.expired}
-						alt="expired"
-						className="md:h-44 md:w-44 w-32 h-32 mx-auto"
-					/>
 					<span className="md:text-[3rem] text-[2.2rem] font-bold text-primaryDark block my-8">
 						{formatCounter(currentTime)}
 					</span>
 					<TitlePrimary title="Sorry" />
 					<p className="mx-auto mt-3 text-base">
 						You have reached the daily free upload limit for
-						Homecook.<br/> At 05:00:00, you will be able to add more
-						recipes
+						Homecook.
+						<br /> You will be able to add more recipes after time
 					</p>
 				</>
 			) : (
-				<>
-					<Img
-						src={images.no_expired}
-						alt="expired"
-						className="h-44 w-44 mx-auto"
-					/>
-					<h2 className="font-serif mt-7">
-						You can add more recipes now
-					</h2>
-				</>
+				<h2 className="font-serif mt-7">
+					You can add more recipes now
+				</h2>
 			)}
 		</div>
 	);
