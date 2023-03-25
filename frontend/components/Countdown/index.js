@@ -33,8 +33,8 @@ function CountDown() {
 	}, [currentTime]);
 
 	return (
-		<div className="md:py-24 py-10 grid md:grid-cols-2 grid-cols-1 lg:gap-12 md:gap-4 lg:w-[60%] w-full container mx-auto max-md:text-center ">
-			<div className="max-md:order-0">
+		<div className="container py-6 md:py-24 flex flex-col md:flex-row gap-x-6 gap-y-2 lg:gap-x-24 items-center justify-center ">
+			<div className="max-md:order-0 max-md:text-center">
 				<h1 className="text-[2.1rem] font-bold mb-5">Oooops!</h1>
 				<p>You have reached the daily free upload limit of HomeCook</p>
 				<p>You will be able to add more recipes in</p>
@@ -48,11 +48,11 @@ function CountDown() {
 					Back to Home
 				</Button>
 			</div>
-			<div className="max-md:order-1">
+			<div className="max-md:order-first">
 				<Img
 					src={images.expired}
 					alt="expired"
-					className="lg:h-[300px] lg:w-[300px] md:h-[270px] md:w-[270px] h-[300px] w-[300px] mx-auto max-md:mt-5"
+					className="xl:h-[400px] xl:w-[450px] lg:h-[300px] lg:w-[400px] md:h-[270px] md:w-[270px] h-[300px] w-[300px] mx-auto max-md:mt-5"
 				/>
 			</div>
 		</div>
