@@ -35,7 +35,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 	const { data, mutate, isLoading } = useRecipeBySlug(router?.query?.slug);
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 	const [idDelete, setIdDelete] = useState(null);
-	const [listPhotos, setListPhotos] = useState([]);
+	const [listPhotos, setListPhotos] = useState(null);
 
 	const createFormData = useCallback(async ({ upload_photo }) => {
 		const formData = new FormData();
@@ -126,7 +126,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 				Add Photo
 			</Button>
 
-			{isLoading ? (
+			{isLoading || !listPhotos ? (
 				<div className="flex items-center justify-center">
 					<Loader type="searching" />
 				</div>
@@ -162,7 +162,7 @@ function UploadPhoto({ onSubmit, recipe }) {
 										</div>
 									</div>
 								)}
-								
+
 								<input
 									type="text"
 									{...register(

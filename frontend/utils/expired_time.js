@@ -13,8 +13,6 @@ export const getCurrentTime = () => {
 };
 
 export const handleExpired = () => {
-	if (typeof window !== 'undefined') {
-		!localStorage.getItem(KEY_EXPIRED) &&
-			localStorage.setItem(KEY_EXPIRED, getTimeExpired());
-	}
+	!localStorage.getItem(KEY_EXPIRED) &&
+		localStorage.setItem(KEY_EXPIRED, getTimeExpired());
 };

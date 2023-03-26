@@ -1,7 +1,7 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { formatCounter } from '@utils/formatTime';
 import { getCurrentTime, KEY_EXPIRED } from '@utils/expired_time';
-import { useRouter } from 'next/router';
 import Img from '@components/UI/Image';
 import { images } from '@utils/constants';
 import Button from '@components/UI/Button';

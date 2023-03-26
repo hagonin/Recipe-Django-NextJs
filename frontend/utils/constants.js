@@ -224,7 +224,7 @@ export const meta = {
 			},
 			{
 				key: 'Supportive',
-				content: "Need dinner inspiration? We're here to help",
+				content: "Need dinner inspiration? We're here to help.",
 			},
 			{
 				key: 'Creative',
