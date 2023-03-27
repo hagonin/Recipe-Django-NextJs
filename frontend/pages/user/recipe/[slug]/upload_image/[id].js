@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router';
-import { AiOutlineDoubleLeft } from 'react-icons/ai';
+import { BsArrowLeft } from 'react-icons/bs';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import toastMessage from '@utils/toastMessage';
-import { ENDPOINT_RECIPE_DETAIL, STATUS_EXPIRED } from '@utils/constants';
+import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import { TitlePrimary } from '@components/UI/Title';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 function UploadImagePage() {
 	const { configAuth } = useAuthContext();
@@ -29,26 +30,22 @@ function UploadImagePage() {
 			});
 			router.push(`/user/recipe/${slug}`);
 		} catch ({ status }) {
-			status === STATUS_EXPIRED &&
+			if (status === STATUS_EXPIRED) {
+				handleExpired();
 				router.push('/user/recipe/request_expired');
+			}
 		}
 	};
 	return (
 		<div className="container py-14">
-			<TitlePrimary
-				title="Manage photo"
-				center
-			/>
+			<TitlePrimary title="Manage photo" center />
 
-			<UploadPhoto
-				onSubmit={onUploadPhoto}
-				recipe={id}
-			/>
+			<UploadPhoto onSubmit={onUploadPhoto} recipe={id} />
 			<button
-				className="underline flex items-center gap-2"
+				className="flex items-center gap-2"
 				onClick={() => router.push(`/user/recipe/${slug}`)}
 			>
-				<AiOutlineDoubleLeft />
+				<BsArrowLeft />
 				Back
 			</button>
 		</div>

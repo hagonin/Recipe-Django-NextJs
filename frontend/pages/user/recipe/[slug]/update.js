@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { ENDPOINT_RECIPE_DETAIL, ENDPOINT_RECIPE_READ, STATUS_EXPIRED } from '@utils/constants';
+import {
+	ENDPOINT_RECIPE_DETAIL,
+	ENDPOINT_RECIPE_READ,
+} from '@utils/constants';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
@@ -34,14 +38,16 @@ function Update() {
 				setSlugUpdate(res?.data?.slug);
 			})
 			.catch(({ _error, status }) => {
-				if (_error.ingredients) {
+				_error.ingredients &&
 					toastMessage({
 						message: 'Ingredient title must make a unique set.',
 						type: 'error',
 					});
-				}
-				status === STATUS_EXPIRED &&
+
+				if (status === STATUS_EXPIRED) {
+					handleExpired();
 					router.push('/user/recipe/request_expired');
+				}
 			});
 	});
 
@@ -51,7 +57,6 @@ function Update() {
 		setLoading(true);
 		api.get(`${ENDPOINT_RECIPE_READ}${slug}/${noCache()}`)
 			.then(({ data }) => {
-				console.log(data);
 				if (data) {
 					if (data.instructions) {
 						data.instructions = getInstructionAsArr(

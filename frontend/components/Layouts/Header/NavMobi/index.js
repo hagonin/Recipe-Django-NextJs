@@ -113,6 +113,9 @@ function NavMobi() {
 								<NavItem href="/user/recipe/add">
 									Add Recipe
 								</NavItem>
+								<NavItem href={`/user/profile/`}>
+									Wishlist
+								</NavItem>
 							</>
 						) : (
 							<>

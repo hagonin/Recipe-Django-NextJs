@@ -1,13 +1,15 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
 import { categoryList } from '@utils/constants';
 import { useRecipeContext } from '@context/recipe-context';
 
+import Loader from '@components/UI/Loader';
 import GroupCategory from '@components/Recipe/GroupCategory';
 import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Slider from '@components/UI/Slider';
 import Slide from '@components/UI/Slider/Slide';
 import SubscribeSection from '@components/SubcribeSection';
-import Loader from '@components/UI/Loader';
 
 export default function Home() {
 	const { recipes, topRating } = useRecipeContext();
@@ -29,6 +31,7 @@ export default function Home() {
 			setCategories(arr);
 		}
 	}, [recipes]);
+
 
 	return (
 		<>

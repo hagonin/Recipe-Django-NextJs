@@ -2,15 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import toastMessage from '@utils/toastMessage';
-import { STATUS_EXPIRED } from '@utils/constants';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 import { useRecipeContext } from '@context/recipe-context';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
-	const { deleteRecipe, setLoading, getRecipeBySlug, mutateRecipes } =
-		useRecipeContext();
+	const { deleteRecipe, setLoading, getRecipeBySlug } = useRecipeContext();
 	const router = useRouter();
 	const {
 		query: { slug },
@@ -34,8 +33,10 @@ function RecipePreView() {
 				router.push('/user/profile');
 			})
 			.catch(({ status }) => {
-				status === STATUS_EXPIRED &&
+				if (status === STATUS_EXPIRED) {
+					handleExpired();
 					router.push('/user/recipe/request_expired');
+				}
 			});
 	});
 

@@ -4,12 +4,12 @@ import WidgetLayout from '@components/Layouts/WidgetLayout';
 import Img from '@components/UI/Image';
 import { useAuthContext } from '@context/auth-context';
 import { TitlePrimary } from '@components/UI/Title';
-import { meta } from '@utils/constants';
+import { images, meta } from '@utils/constants';
 
 function About(props) {
 	const { isAuthenticated } = useAuthContext();
 	return (
-		<div className="md:w-[80%] md:ml-[10%]">
+		<div className="md:w-[80%] md:ml-[10%] relative">
 			<TitlePrimary title="About" />
 			<p className="mt-3 text-justify">
 				<span className="font-semibold mr-1">Welcome to HomeCook,</span>
@@ -46,9 +46,9 @@ function About(props) {
 				{meta.about.title}
 			</p>
 			<Img
-				src="https://k7d2p7y5.stackpathcdn.com/cuisine-wp/wp-content/uploads/2017/03/about_page_1.jpg"
+				src={images.about}
 				alt="about"
-				className="my-5"
+				className="mt-4 w-full h-[300px]"
 			/>
 			<SubTitle title="We are:" />
 
