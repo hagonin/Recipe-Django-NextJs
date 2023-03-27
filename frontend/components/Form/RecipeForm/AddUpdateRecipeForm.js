@@ -340,7 +340,7 @@ function AddUpdateRecipeForm({ onSubmit, handleCancel, initValues, isUpdate }) {
 					Cancel
 				</Button>
 				<Button
-					className="lg primary px-24 md:w-[200px] w-full"
+					className="lg primary px-24 md:w-[210px] w-full"
 					type="submit"
 					disabled={isSubmitting}
 				>

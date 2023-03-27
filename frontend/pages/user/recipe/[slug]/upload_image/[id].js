@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { AiOutlineDoubleLeft } from 'react-icons/ai';
+import { BsArrowLeft } from 'react-icons/bs';
 
 import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
@@ -38,20 +38,14 @@ function UploadImagePage() {
 	};
 	return (
 		<div className="container py-14">
-			<TitlePrimary
-				title="Manage photo"
-				center
-			/>
+			<TitlePrimary title="Manage photo" center />
 
-			<UploadPhoto
-				onSubmit={onUploadPhoto}
-				recipe={id}
-			/>
+			<UploadPhoto onSubmit={onUploadPhoto} recipe={id} />
 			<button
-				className="underline flex items-center gap-2"
+				className="flex items-center gap-2"
 				onClick={() => router.push(`/user/recipe/${slug}`)}
 			>
-				<AiOutlineDoubleLeft />
+				<BsArrowLeft />
 				Back
 			</button>
 		</div>

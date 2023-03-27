@@ -12,29 +12,19 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Head>
-				<title>HomeCook</title>
-				<meta
-					content="width=device-width, initial-scale=1"
-					name="viewport"
-				/>
+				<title>HomeCook | Bringing the taste of home to every meal</title>
+				<meta content="width=device-width, initial-scale=1" name="viewport" />
 				<meta
 					name="description"
 					content="HomeCook brings recipes from around the world right at home!"
 				/>
 
-				<link
-					rel="icon"
-					href={images.logoIcon}
-				/>
+				<link rel="icon" href={images.logoIcon} />
 			</Head>
-			<main
-				className={`${libre_baskerville.variable} ${open_sans.className} `}
-			>
+			<main className={`${libre_baskerville.variable} ${open_sans.className} `}>
 				<AuthProvider>
 					<RecipeProvider>
-						<RootLayout>
-							{render(<Component {...pageProps} />)}
-						</RootLayout>
+						<RootLayout>{render(<Component {...pageProps} />)}</RootLayout>
 					</RecipeProvider>
 				</AuthProvider>
 			</main>
