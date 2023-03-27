@@ -1,14 +1,12 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+
 import { formatCounter } from '@utils/formatTime';
 import { getCurrentTime, KEY_EXPIRED } from '@utils/expired_time';
 import Img from '@components/UI/Image';
 import { images } from '@utils/constants';
-import Button from '@components/UI/Button';
 
 function CountDown() {
 	const [currentTime, setCurrentTime] = useState(null);
-	const router = useRouter();
 	useEffect(() => {
 		let idInterval;
 		if (currentTime === null) {
@@ -41,18 +39,13 @@ function CountDown() {
 				<span className="md:text-[3rem] text-[2.8rem] font-bold text-center  text-black block md:my-16 mt-8">
 					{formatCounter(currentTime)}
 				</span>
-				<Button
-					onClick={() => router.push('/')}
-					className="primary !h-11 max-md:mt-10"
-				>
-					Back to Home
-				</Button>
 			</div>
 			<div className="max-md:order-first">
 				<Img
 					src={images.expired}
 					alt="expired"
-					className="xl:h-[400px] xl:w-[450px] lg:h-[300px] lg:w-[400px] md:h-[270px] md:w-[270px] h-[300px] w-[300px] mx-auto max-md:mt-5"
+					className="xl:h-[400px] xl:w-[450px] lg:h-[500px] lg:w-[400px] md:h-[270px] md:w-[270px] h-[300px] w-[300px] mx-auto max-md:mt-5"
+					cover
 				/>
 			</div>
 		</div>
