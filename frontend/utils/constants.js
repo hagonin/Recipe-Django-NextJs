@@ -216,33 +216,32 @@ export const meta = {
 
 	about: {
 		history: 'the online community dedicated to all things cooking!',
-		title: "is a community built by and for these culinary experts. From those who take the time to perfect a beef bourguignon on the weekend to those who prefer the ease of a slow-cooker recipe, HomeCook is a place for all types of home cooks. Whether you're a baker who spends hours creating a showstopping cake or someone who simply jazzes up boxed brownies for a quick dessert, HomeCook celebrates your efforts. With a focus on connecting home cooks with each other, HomeCook is the world's leading digital food brand. Our mission is to keep our community of over 60 million home cooks engaged, inspired, and connected. By bringing together home cooks from all walks of life, HomeCook aims to foster a sense of community and shared passion for cooking. Together, we can learn from each other, share tips and tricks, and support one another on our culinary journeys.",
 		list: [
 			{
 				key: 'Friendly',
-				content: 'We love connecting with fellow home cooks.',
+				content: '- We love connecting with fellow home cooks.',
 			},
 			{
 				key: 'Supportive',
-				content: "Need dinner inspiration? We're here to help.",
+				content: "- Need dinner inspiration? We're here to help.",
 			},
 			{
 				key: 'Creative',
-				content: 'We like to explore and try new recipes.',
+				content: '- We like to explore and try new recipes.',
 			},
 			{
 				key: 'Approachable',
-				content: 'All skill levels and recipes welcome. No judgment.',
+				content: '- All skill levels and recipes welcome. No judgment.',
 			},
 			{
 				key: 'Down-to-Earth',
 				content:
-					"Good food doesn't have to be complicated to be great.",
+					"- Good food doesn't have to be complicated to be great.",
 			},
 			{
 				key: 'Fun Like you',
 				content:
-					'We value the same things you do—friends, family, cooking, and laughs.',
+					'- We value the same things you do—friends, family, cooking, and laughs.',
 			},
 		],
 		message:
