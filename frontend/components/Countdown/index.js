@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
 
 import { formatCounter } from '@utils/formatTime';
-import { getCurrentTime, KEY_EXPIRED } from '@utils/expired_time';
-import Img from '@components/UI/Image';
+import {
+	checkExpiredTime,
+	getCurrentTime,
+	getExpiredTimeFromLocalStage,
+	removeExpiredTime,
+} from '@utils/expired_time';
 import { images } from '@utils/constants';
+import { useAuthContext } from '@context/auth-context';
+import Img from '@components/UI/Image';
 
 function CountDown() {
+	const { user } = useAuthContext();
 	const [currentTime, setCurrentTime] = useState(null);
 	useEffect(() => {
 		let idInterval;
 		if (currentTime === null) {
 			const time =
-				localStorage.getItem(KEY_EXPIRED) &&
-				localStorage.getItem(KEY_EXPIRED) - getCurrentTime();
+				checkExpiredTime(user.id) &&
+				getExpiredTimeFromLocalStage(user.id) - getCurrentTime();
 			const parse = parseInt(time);
 			parse && setCurrentTime(parse > 0 ? parse : 0);
 		} else {
@@ -21,14 +28,14 @@ function CountDown() {
 					setCurrentTime((pre) => --pre);
 				} else {
 					setCurrentTime(null);
-					localStorage.removeItem(KEY_EXPIRED);
+					removeExpiredTime(user.id);
 				}
 			}, 1000);
 		}
 		return () => {
 			idInterval && clearInterval(idInterval);
 		};
-	}, [currentTime]);
+	}, [currentTime, user]);
 
 	return (
 		<div className="container py-6 md:py-24 flex flex-col md:flex-row gap-x-6 gap-y-2 lg:gap-x-24 items-center justify-center ">

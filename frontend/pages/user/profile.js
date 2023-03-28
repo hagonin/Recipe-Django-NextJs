@@ -5,11 +5,9 @@ import { AiFillEdit } from 'react-icons/ai';
 
 import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
-import {
-	images,
-	NUMBER_OF_RECIPE_RENDER,
-} from '@utils/constants';
+import { images, NUMBER_OF_RECIPE_RENDER } from '@utils/constants';
 import toastMessage from '@utils/toastMessage';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 import usePagination from 'hook/usePagination';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
@@ -20,7 +18,6 @@ import Tabs, { TabPanel } from '@components/UI/Tabs';
 import { TitlePrimary } from '@components/UI/Title';
 import Pagination from '@components/UI/Pagination';
 import Loader from '@components/UI/Loader';
-import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 function Profile() {
 	const { user } = useAuthContext();
@@ -68,7 +65,7 @@ function Profile() {
 			});
 		} catch ({ status }) {
 			if (status === STATUS_EXPIRED) {
-				handleExpired();
+				handleExpired(user.id);
 				router.push('/user/recipe/request_expired');
 			} else {
 				toastMessage({

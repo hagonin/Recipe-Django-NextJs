@@ -5,14 +5,14 @@ import { useAuthContext } from '@context/auth-context';
 import api from '@services/axios';
 import toastMessage from '@utils/toastMessage';
 import { ENDPOINT_RECIPE_DETAIL } from '@utils/constants';
+import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import UploadPhoto from '@components/Form/RecipeForm/UploadPhoto';
 import { TitlePrimary } from '@components/UI/Title';
-import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
 
 function UploadImagePage() {
-	const { configAuth } = useAuthContext();
+	const { configAuth, user } = useAuthContext();
 	const router = useRouter();
 	const {
 		query: { slug, id },
@@ -31,7 +31,7 @@ function UploadImagePage() {
 			router.push(`/user/recipe/${slug}`);
 		} catch ({ status }) {
 			if (status === STATUS_EXPIRED) {
-				handleExpired();
+				handleExpired(user.id);
 				router.push('/user/recipe/request_expired');
 			}
 		}
