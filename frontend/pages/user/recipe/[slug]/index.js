@@ -3,12 +3,14 @@ import { useRouter } from 'next/router';
 
 import toastMessage from '@utils/toastMessage';
 import { handleExpired, STATUS_EXPIRED } from '@utils/expired_time';
+import { useAuthContext } from '@context/auth-context';
 import { useRecipeContext } from '@context/recipe-context';
 
 import PrivateRoutes from '@components/Layouts/PrivateRoutes';
 import PreviewRecipe from '@components/Recipe/PreviewRecipe';
 
 function RecipePreView() {
+	const { user } = useAuthContext();
 	const { deleteRecipe, setLoading, getRecipeBySlug } = useRecipeContext();
 	const router = useRouter();
 	const {
@@ -34,7 +36,7 @@ function RecipePreView() {
 			})
 			.catch(({ status }) => {
 				if (status === STATUS_EXPIRED) {
-					handleExpired();
+					handleExpired(user.id);
 					router.push('/user/recipe/request_expired');
 				}
 			});
