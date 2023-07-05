@@ -1,6 +1,5 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 
 function ArrowBtn({ right, onClick, disabled, smallBtn }) {
 	return (

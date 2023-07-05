@@ -124,7 +124,6 @@ const AuthProvider = ({ children }) => {
 				router.push('/');
 			} else {
 				router.push('/user/updateprofile');
-				// toastMessage({message:'Your profile is incomplete', type:'error'})
 			}
 		} catch ({ status, _error, error }) {
 			setUser((pre) => ({ ...pre, email: email }));
